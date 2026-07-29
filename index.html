@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishi Jal - AI Smart Irrigation & Crop Advisor</title>
+    <!-- Google Fonts: Outfit & Inter for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1 class="logo-title">Krishi Jal</h1>
+                    <span class="logo-subtitle" data-i18n="logo-tagline">AI Smart Irrigation Advisor</span>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Unit Switcher -->
+                <div class="unit-toggle-container">
+                    <span class="toggle-label" data-i18n="units-celsius">°C / mm</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-units">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label" data-i18n="units-fahrenheit">°F / inches</span>
+                </div>
+
+                <!-- Language Selector -->
+                <div class="lang-selector-wrapper">
+                    <i class="fa-solid fa-language lang-icon"></i>
+                    <select id="select-lang" class="lang-select">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                        <option value="es">Español (Spanish)</option>
+                        <option value="fr">Français (French)</option>
+                        <option value="te">తెలుగు (Telugu)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                        <option value="mr">मराठी (Marathi)</option>
+                        <option value="bn">বাংলা (Bengali)</option>
+                        <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <div class="main-layout">
+            <!-- SIDEBAR: CONFIGURATION PANEL -->
+            <aside class="sidebar-config">
+                <div class="sidebar-header">
+                    <h2 class="sidebar-title"><i class="fa-solid fa-sliders"></i> <span data-i18n="config-title">Farm Settings</span></h2>
+                    <p class="sidebar-desc" data-i18n="config-desc">Define your field parameters to get custom AI advice.</p>
+                </div>
+
+                <form id="advisor-form" onsubmit="return false;">
+                    <!-- Location Selector -->
+                    <div class="form-group">
+                        <label for="select-location" class="form-label">
+                            <i class="fa-solid fa-map-location-dot"></i> <span data-i18n="label-location">Location / Region</span>
+                        </label>
+                        <input type="text" id="select-location" class="form-control" list="location-options" placeholder="Type to search region..." autocomplete="off">
+                        <datalist id="location-options"></datalist>
+                        <div class="coordinates-display" id="coords-display">
+                            Lat: -- | Lon: --
+                        </div>
+                    </div>
+
+                    <!-- Soil Selector (Automatically filled but overridable) -->
+                    <div class="form-group">
+                        <label for="select-soil" class="form-label">
+                            <i class="fa-solid fa-mountain"></i> <span data-i18n="label-soil">Soil Texture / Type</span>
+                        </label>
+                        <input type="text" id="select-soil" class="form-control" list="soil-options" placeholder="Type to search soil..." autocomplete="off">
+                        <datalist id="soil-options"></datalist>
+                        <div class="form-helper" data-i18n="soil-helper">Soil type auto-fills from region but can be modified.</div>
+                    </div>
+
+                    <!-- Crop Selector -->
+                    <div class="form-group">
+                        <label for="select-crop" class="form-label">
+                            <i class="fa-solid fa-seedling"></i> <span data-i18n="label-crop">Crop Type</span>
+                        </label>
+                        <input type="text" id="select-crop" class="form-control" list="crop-options" placeholder="Type to search crop..." autocomplete="off">
+                        <datalist id="crop-options"></datalist>
+                    </div>
+
+                    <!-- Growth Stage Selector -->
+                    <div class="form-group">
+                        <label for="select-stage" class="form-label">
+                            <i class="fa-solid fa-chart-line"></i> <span data-i18n="label-stage">Growth Stage</span>
+                        </label>
+                        <input type="text" id="select-stage" class="form-control" list="stage-options" placeholder="Type to search stage..." autocomplete="off">
+                        <datalist id="stage-options">
+                            <!-- Populated dynamically via JS -->
+                        </datalist>
+                    </div>
+
+                    <!-- Submit / Action Button -->
+                    <button type="button" id="btn-generate" class="btn btn-primary btn-block">
+                        <span data-i18n="btn-generate">Generate Irrigation Plan</span>
+                        <i class="fa-solid fa-circle-notch fa-spin btn-spinner" id="btn-spinner" style="display: none;"></i>
+                    </button>
+                </form>
+            </aside>
+
+            <!-- CONTENT AREA -->
+            <main class="content-main">
+                <!-- Navigation Tabs -->
+                <nav class="nav-tabs">
+                    <button class="tab-link active" data-tab="dashboard">
+                        <i class="fa-solid fa-gauge"></i> <span data-i18n="tab-dashboard">Dashboard</span>
+                    </button>
+                    <button class="tab-link" data-tab="advisor" id="tab-advisor-btn">
+                        <i class="fa-solid fa-robot"></i> <span data-i18n="tab-advisor">AI Advisor</span>
+                    </button>
+                    <button class="tab-link" data-tab="weather">
+                        <i class="fa-solid fa-cloud-sun-rain"></i> <span data-i18n="tab-weather">Weather Station</span>
+                    </button>
+                    <button class="tab-link" data-tab="education">
+                        <i class="fa-solid fa-book-open"></i> <span data-i18n="tab-education">Agri Guide</span>
+                    </button>
+                </nav>
+
+                <!-- TAB PANELS -->
+                <div class="tab-content">
+                    
+                    <!-- TAB 1: DASHBOARD -->
+                    <div id="dashboard" class="tab-panel active">
+                        <div class="dashboard-grid">
+                            
+                            <!-- Suitability Gauge Card -->
+                            <div class="dash-card card-highlight">
+                                <h3 class="card-title" data-i18n="dash-suitability-title">Growth Suitability Score</h3>
+                                <div class="gauge-container">
+                                    <svg viewBox="0 0 100 100" class="gauge">
+                                        <!-- Background Circle -->
+                                        <path class="gauge-bg" d="M 50 10 A 40 40 0 1 1 49.99 10" fill="none" stroke-width="8"></path>
+                                        <!-- Fill Circle -->
+                                        <path id="gauge-fill" class="gauge-fill" d="M 50 10 A 40 40 0 1 1 49.99 10" fill="none" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="251.2"></path>
+                                    </svg>
+                                    <div class="gauge-text">
+                                        <span class="gauge-value" id="growth-score-val">--%</span>
+                                        <span class="gauge-label" id="growth-verdict-lbl" data-i18n="suitability-pending">Suitability</span>
+                                    </div>
+                                </div>
+                                <div class="suitability-alert" id="suitability-badge">
+                                    <i class="fa-solid fa-circle-question"></i> <span data-i18n="suitability-alert-txt">Submit configuration to analyze</span>
+                                </div>
+                            </div>
+
+                            <!-- Weather Overview Card -->
+                            <div class="dash-card">
+                                <h3 class="card-title" data-i18n="dash-weather-title">Current Weather Conditions</h3>
+                                <div class="weather-brief" id="weather-brief-container">
+                                    <div class="weather-main-icon">
+                                        <i class="fa-solid fa-cloud-sun icon-placeholder" id="weather-main-icon-element"></i>
+                                    </div>
+                                    <div class="weather-main-details">
+                                        <span class="weather-temp" id="weather-current-temp">--°C</span>
+                                        <span class="weather-desc" id="weather-current-desc">Select region</span>
+                                    </div>
+                                </div>
+                                <div class="weather-details-grid">
+                                    <div class="weather-metric">
+                                        <span class="metric-icon"><i class="fa-solid fa-droplet"></i></span>
+                                        <div class="metric-meta">
+                                            <span class="metric-name" data-i18n="weather-humidity">Humidity</span>
+                                            <span class="metric-val" id="weather-humidity-val">--%</span>
+                                        </div>
+                                    </div>
+                                    <div class="weather-metric">
+                                        <span class="metric-icon"><i class="fa-solid fa-cloud-showers-water"></i></span>
+                                        <div class="metric-meta">
+                                            <span class="metric-name" data-i18n="weather-precipitation">Rain Probability</span>
+                                            <span class="metric-val" id="weather-precip-val">--%</span>
+                                        </div>
+                                    </div>
+                                    <div class="weather-metric">
+                                        <span class="metric-icon"><i class="fa-solid fa-wind"></i></span>
+                                        <div class="metric-meta">
+                                            <span class="metric-name" data-i18n="weather-wind">Wind Speed</span>
+                                            <span class="metric-val" id="weather-wind-val">-- km/h</span>
+                                        </div>
+                                    </div>
+                                    <div class="weather-metric">
+                                        <span class="metric-icon"><i class="fa-solid fa-sun"></i></span>
+                                        <div class="metric-meta">
+                                            <span class="metric-name" data-i18n="weather-radiation">UV Index</span>
+                                            <span class="metric-val" id="weather-uv-val">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Soil Profile Card -->
+                            <div class="dash-card">
+                                <h3 class="card-title" data-i18n="dash-soil-title">Soil Retention & Properties</h3>
+                                <div class="soil-profile-box">
+                                    <div class="soil-graphic" id="soil-visual-accent">
+                                        <!-- JS updates background color & particle animations based on soil -->
+                                        <div class="soil-particle sand"></div>
+                                        <div class="soil-particle clay"></div>
+                                    </div>
+                                    <div class="soil-profile-details">
+                                        <h4 class="soil-name-heading" id="soil-name-title">--</h4>
+                                        <p class="soil-desc" id="soil-desc-text">Select location to check soil retention capacity.</p>
+                                    </div>
+                                </div>
+                                <div class="soil-bars">
+                                    <div class="bar-group">
+                                        <span class="bar-label" data-i18n="soil-water-retention">Water Retention</span>
+                                        <div class="progress-track">
+                                            <div class="progress-bar" id="soil-bar-retention" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <span class="bar-label" data-i18n="soil-drainage">Drainage Speed</span>
+                                        <div class="progress-track">
+                                            <div class="progress-bar progress-orange" id="soil-bar-drainage" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Diagnostic Panel Card -->
+                            <div class="dash-card span-all">
+                                <h3 class="card-title" data-i18n="dash-diagnostic-title">Growth Suitability Diagnostics</h3>
+                                <ul class="diagnostic-list" id="diagnostic-list-container">
+                                    <li class="diagnostic-item info">
+                                        <span class="diag-icon"><i class="fa-solid fa-circle-info"></i></span>
+                                        <div class="diag-body">
+                                            <h4 class="diag-title" data-i18n="diag-init-title">Awaiting Input Data</h4>
+                                            <p class="diag-desc" data-i18n="diag-init-desc">Please choose your Region, Soil Type, and Crop in the Farm Settings panel and click "Generate Irrigation Plan" to start analysis.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: AI ADVISOR -->
+                    <div id="advisor" class="tab-panel">
+                        <!-- Thinking Console -->
+                        <div class="ai-console-wrapper" id="ai-console-container">
+                            <div class="console-header">
+                                <div class="console-controls">
+                                    <span class="dot red"></span>
+                                    <span class="dot yellow"></span>
+                                    <span class="dot green"></span>
+                                </div>
+                                <div class="console-title" data-i18n="console-title">Gemini 3.5 Flash Agricultural Advisor</div>
+                                <div class="console-badge">ONLINE</div>
+                            </div>
+                            <div class="console-body" id="console-output">
+                                <div class="console-line text-muted" data-i18n="console-ready-msg">> Ready for input parameter generation...</div>
+                            </div>
+                            <div class="console-input-row" id="console-input-row">
+                                <span class="console-prompt">></span>
+                                <input type="text" id="console-cmd-input" class="console-cmd-input" placeholder="Type /help or ask a question here..." autocomplete="off">
+                            </div>
+                        </div>
+
+                        <!-- Full Advisor Output (Initially hidden) -->
+                        <div class="advisor-report" id="advisor-report-container" style="display: none;">
+                            
+                            <!-- Hero Recommendation Header -->
+                            <div class="advisor-hero-card">
+                                <div class="hero-left">
+                                    <div class="ai-avatar">
+                                        <i class="fa-solid fa-robot"></i>
+                                    </div>
+                                    <div class="hero-text-block">
+                                        <h3 class="hero-title" data-i18n="advisor-report-summary">AI Irrigation Prescription</h3>
+                                        <p class="hero-subtitle" id="advisor-hero-subtitle">Based on real-time soil & weather analytics</p>
+                                    </div>
+                                </div>
+                                <div class="hero-value-badge">
+                                    <span class="hero-val-num" id="advisor-avg-water">0.0</span>
+                                    <span class="hero-val-unit" id="advisor-avg-unit">mm/day</span>
+                                </div>
+                            </div>
+
+                            <!-- 5-Day Irrigation Schedule Table -->
+                            <div class="schedule-section">
+                                <h4 class="section-title"><i class="fa-solid fa-calendar-days"></i> <span data-i18n="schedule-title">5-Day Recommended Irrigation Schedule</span></h4>
+                                <div class="table-responsive">
+                                    <table class="schedule-table">
+                                        <thead>
+                                            <tr>
+                                                <th data-i18n="table-day">Day / Date</th>
+                                                <th data-i18n="table-temp">Temp (Min/Max)</th>
+                                                <th data-i18n="table-rain">Forecast Rain</th>
+                                                <th data-i18n="table-soil-moisture">Soil Moisture Deficit</th>
+                                                <th data-i18n="table-water-needed">Irrigation Depth</th>
+                                                <th data-i18n="table-action">Action & Best Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="schedule-tbody">
+                                            <!-- Dynamically generated rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Expert Care Tips -->
+                            <div class="report-details-grid">
+                                <div class="details-card border-accent-green">
+                                    <h4 class="card-sub-title"><i class="fa-solid fa-circle-exclamation"></i> <span data-i18n="advisor-critical-tips">Critical Crop Care Tips</span></h4>
+                                    <ul class="bullet-list" id="advisor-critical-tips-list">
+                                        <!-- Dynamically generated list -->
+                                    </ul>
+                                </div>
+
+                                <div class="details-card border-accent-orange">
+                                    <h4 class="card-sub-title"><i class="fa-solid fa-water-reduction"></i> <span data-i18n="advisor-conservation-tips">Water Conservation Actions</span></h4>
+                                    <ul class="bullet-list" id="advisor-conservation-tips-list">
+                                        <!-- Dynamically generated list -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: WEATHER STATION -->
+                    <div id="weather" class="tab-panel">
+                        <div class="weather-station-grid">
+                            <!-- Weather Card Left: Live Stats -->
+                            <div class="weather-station-card highlight-left">
+                                <h3 class="weather-station-title" data-i18n="weather-station-live-title">Dynamic Weather Monitor</h3>
+                                <div class="weather-visual-showcase">
+                                    <div class="weather-pulse-icon" id="weather-details-icon">
+                                        <i class="fa-solid fa-cloud-sun"></i>
+                                    </div>
+                                    <div class="weather-pulse-details">
+                                        <div class="weather-pulse-temp" id="weather-details-temp">--°C</div>
+                                        <div class="weather-pulse-loc" id="weather-details-location">Select Region</div>
+                                        <div class="weather-pulse-condition" id="weather-details-condition">No data fetched yet</div>
+                                    </div>
+                                </div>
+                                <div class="weather-sensor-metrics">
+                                    <div class="sensor-item">
+                                        <div class="sensor-label"><i class="fa-solid fa-temperature-half"></i> <span data-i18n="weather-feels-like">Feels Like</span></div>
+                                        <div class="sensor-value" id="weather-sensor-feels">--</div>
+                                    </div>
+                                    <div class="sensor-item">
+                                        <div class="sensor-label"><i class="fa-solid fa-droplet"></i> <span data-i18n="weather-humidity">Humidity</span></div>
+                                        <div class="sensor-value" id="weather-sensor-humidity">--%</div>
+                                    </div>
+                                    <div class="sensor-item">
+                                        <div class="sensor-label"><i class="fa-solid fa-wind"></i> <span data-i18n="weather-wind">Wind Speed</span></div>
+                                        <div class="sensor-value" id="weather-sensor-wind">--</div>
+                                    </div>
+                                    <div class="sensor-item">
+                                        <div class="sensor-label"><i class="fa-solid fa-gauge-simple-high"></i> <span data-i18n="weather-pressure">Pressure</span></div>
+                                        <div class="sensor-value" id="weather-sensor-pressure">-- hPa</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Weather Card Right: 5-Day Visual Forecast -->
+                            <div class="weather-station-card">
+                                <h3 class="weather-station-title" data-i18n="weather-station-forecast-title">5-Day Meteorological Forecast</h3>
+                                <div class="forecast-cards-container" id="forecast-cards-wrapper">
+                                    <!-- Dynamic weather cards will render here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: EDUCATION CENTER (Agri Guide) -->
+                    <div id="education" class="tab-panel">
+                        <div class="education-grid">
+                            <!-- Left: Crop Catalog -->
+                            <div class="edu-section">
+                                <h3 class="edu-section-title"><i class="fa-solid fa-seedling"></i> <span data-i18n="edu-crop-catalog">Crop Agricultural Profiles</span></h3>
+                                <div class="edu-list-selector">
+                                    <select id="edu-select-crop" class="form-control">
+                                        <!-- Options populated dynamically -->
+                                    </select>
+                                </div>
+                                <div class="edu-detail-card" id="edu-crop-card">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Right: Soil Knowledge -->
+                            <div class="edu-section">
+                                <h3 class="edu-section-title"><i class="fa-solid fa-mountain"></i> <span data-i18n="edu-soil-catalog">Soil Characteristics Guide</span></h3>
+                                <div class="edu-list-selector">
+                                    <select id="edu-select-soil" class="form-control">
+                                        <!-- Options populated dynamically -->
+                                    </select>
+                                </div>
+                                <div class="edu-detail-card" id="edu-soil-card">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <p>&copy; 2026 Krishi Jal. <span data-i18n="footer-tagline">Empowering farmers with smart agronomic intelligence.</span></p>
+                <div class="footer-links">
+                    <span data-i18n="footer-interview-notes">Built for Agricultural AI Interview Demonstrations. Powered by Open-Meteo & Gemini-Core.</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MAIN APP SCRIPT -->
+    <script src="app.js"></script>
+</body>
+</html>

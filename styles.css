@@ -1,0 +1,1480 @@
+/* ==========================================================================
+   Krishi Jal - AI Smart Irrigation & Crop Advisor
+   Core Design System & Stylesheet (Vanilla CSS3)
+   ========================================================================== */
+
+:root {
+    /* Color Palette */
+    --primary-hsl: 142, 60%, 40%;
+    --primary: hsl(var(--primary-hsl));
+    --primary-light: hsl(142, 60%, 94%);
+    --primary-dark: hsl(142, 60%, 25%);
+    --secondary-hsl: 24, 60%, 40%;
+    --secondary: hsl(var(--secondary-hsl)); /* Clay Brown */
+    
+    /* Dark Theme Core (Glassmorphism Base) */
+    --bg-gradient: linear-gradient(135deg, #0d1e15 0%, #060d09 100%);
+    --panel-bg: rgba(18, 38, 28, 0.45);
+    --card-bg: rgba(26, 54, 40, 0.4);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-hover: rgba(142, 250, 185, 0.25);
+    --text-primary: #e6f3ec;
+    --text-secondary: #a3c2b2;
+    --text-muted: #6e9481;
+    --border-color: rgba(255, 255, 255, 0.08);
+    
+    /* Accents & Statuses */
+    --accent-blue: #00adb5;
+    --accent-orange: #ff9f43;
+    --accent-red: #ea5455;
+    --accent-green: #28c76f;
+    
+    /* Layout Sizes */
+    --header-height: 80px;
+    --sidebar-width: 320px;
+    --border-radius-lg: 20px;
+    --border-radius-md: 12px;
+    --border-radius-sm: 8px;
+    
+    /* Shadows */
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+    --glow-primary: 0 0 15px rgba(40, 199, 111, 0.35);
+    --glow-orange: 0 0 15px rgba(255, 159, 67, 0.35);
+}
+
+/* Base Resets & Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+}
+
+/* App Container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   1. Header Styles
+   ========================================================================== */
+.app-header {
+    height: var(--header-height);
+    background: rgba(13, 30, 21, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--border-radius-md);
+    background: linear-gradient(135deg, var(--accent-green) 0%, #157347 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glow-primary);
+}
+
+.logo-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    background: linear-gradient(to right, #ffffff, var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: -3px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Toggle Switch Styling */
+.unit-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 6px 12px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.toggle-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-green);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--accent-green);
+}
+
+input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+/* Language Dropdown Selector */
+.lang-selector-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s ease;
+}
+
+.lang-selector-wrapper:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(142, 250, 185, 0.2);
+}
+
+.lang-icon {
+    color: var(--accent-green);
+    font-size: 1.1rem;
+}
+
+.lang-select {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+}
+
+.lang-select option {
+    background: #0f241a;
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   2. Main Layout
+   ========================================================================== */
+.main-layout {
+    display: flex;
+    flex: 1;
+    position: relative;
+}
+
+/* Sidebar: Configurations */
+.sidebar-config {
+    width: var(--sidebar-width);
+    background: rgba(10, 24, 17, 0.9);
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+}
+
+.sidebar-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-title i {
+    color: var(--accent-green);
+}
+
+.sidebar-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* Form Controls */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.form-label i {
+    color: var(--accent-green);
+    margin-right: 4px;
+    width: 16px;
+}
+
+.form-control {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 12px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: var(--accent-green);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 10px rgba(40, 199, 111, 0.15);
+}
+
+.form-control option {
+    background: #0f241a;
+    color: var(--text-primary);
+}
+
+.coordinates-display {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    text-align: right;
+}
+
+.form-helper {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* Custom Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 14px 24px;
+    border-radius: var(--border-radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #157347 100%);
+    color: #ffffff;
+    box-shadow: var(--glow-primary);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 22px rgba(40, 199, 111, 0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+.btn-spinner {
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   3. Content Area & Tabbed Panels
+   ========================================================================== */
+.content-main {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+}
+
+/* Tabs Navigation */
+.nav-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 6px;
+    border-radius: var(--border-radius-lg);
+    gap: 4px;
+    border: 1px solid var(--border-color);
+    width: fit-content;
+}
+
+.tab-link {
+    background: transparent;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    padding: 10px 22px;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.tab-link.active {
+    background: var(--panel-bg);
+    color: #ffffff;
+    border: 1px solid rgba(142, 250, 185, 0.15);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Tab Panels Content */
+.tab-content {
+    flex: 1;
+    position: relative;
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   4. Dashboard Grid & Cards
+   ========================================================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.dash-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: relative;
+}
+
+.dash-card:hover {
+    border-color: var(--card-border-hover);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.card-highlight {
+    background: linear-gradient(135deg, rgba(20, 50, 35, 0.6) 0%, rgba(13, 30, 21, 0.6) 100%);
+    border: 1px solid rgba(40, 199, 111, 0.2);
+}
+
+.span-all {
+    grid-column: 1 / -1;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    letter-spacing: -0.2px;
+}
+
+/* Circular Suitability Gauge Styling */
+.gauge-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0.5rem auto;
+}
+
+.gauge {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.gauge-bg {
+    stroke: rgba(255, 255, 255, 0.06);
+}
+
+.gauge-fill {
+    stroke: var(--accent-green);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gauge-fill.warning {
+    stroke: var(--accent-orange);
+}
+
+.gauge-fill.danger {
+    stroke: var(--accent-red);
+}
+
+.gauge-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.gauge-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.gauge-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-top: -2px;
+}
+
+.suitability-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 10px 14px;
+    border-radius: var(--border-radius-md);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.suitability-alert.optimal {
+    background: rgba(40, 199, 111, 0.1);
+    color: var(--accent-green);
+    border: 1px solid rgba(40, 199, 111, 0.15);
+}
+
+.suitability-alert.warning {
+    background: rgba(255, 159, 67, 0.1);
+    color: var(--accent-orange);
+    border: 1px solid rgba(255, 159, 67, 0.15);
+}
+
+.suitability-alert.danger {
+    background: rgba(234, 84, 85, 0.1);
+    color: var(--accent-red);
+    border: 1px solid rgba(234, 84, 85, 0.15);
+}
+
+/* Weather Dashboard Card UI */
+.weather-brief {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 0.5rem;
+}
+
+.weather-main-icon {
+    font-size: 3rem;
+    color: #ff9f43;
+    animation: slowBob 4s ease-in-out infinite;
+}
+
+@keyframes slowBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.weather-main-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-temp {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.weather-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.weather-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.weather-metric {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    border-radius: var(--border-radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.metric-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius-sm);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+}
+
+.metric-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-name {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.metric-val {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Soil Dashboard Card UI */
+.soil-profile-box {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.soil-graphic {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius-md);
+    background: #4e3629; /* Mud brown default */
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.soil-particle {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.soil-particle.sand {
+    width: 4px;
+    height: 4px;
+    background: rgba(244, 208, 63, 0.4);
+}
+
+.soil-particle.clay {
+    width: 8px;
+    height: 8px;
+    background: rgba(141, 110, 99, 0.6);
+}
+
+.soil-profile-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.soil-name-heading {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.soil-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.soil-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bar-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bar-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress-track {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--accent-green);
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+}
+
+.progress-orange {
+    background: var(--accent-orange);
+}
+
+/* Diagnostic List Cards */
+.diagnostic-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.diagnostic-item {
+    display: flex;
+    gap: 16px;
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 4px solid var(--text-muted);
+}
+
+.diagnostic-item.optimal {
+    border-left-color: var(--accent-green);
+    background: rgba(40, 199, 111, 0.03);
+}
+
+.diagnostic-item.warning {
+    border-left-color: var(--accent-orange);
+    background: rgba(255, 159, 67, 0.03);
+}
+
+.diagnostic-item.danger {
+    border-left-color: var(--accent-red);
+    background: rgba(234, 84, 85, 0.03);
+}
+
+.diag-icon {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    margin-top: 2px;
+}
+
+.diagnostic-item.optimal .diag-icon { color: var(--accent-green); }
+.diagnostic-item.warning .diag-icon { color: var(--accent-orange); }
+.diagnostic-item.danger .diag-icon { color: var(--accent-red); }
+.diagnostic-item.info .diag-icon { color: var(--accent-blue); }
+
+.diag-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.diag-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.diag-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   5. AI Advisor Panel & Terminal Console
+   ========================================================================== */
+.ai-console-wrapper {
+    background: #09130e;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(40, 199, 111, 0.25);
+    box-shadow: var(--shadow-lg), var(--glow-primary);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    font-family: monospace;
+}
+
+.console-header {
+    background: rgba(40, 199, 111, 0.08);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(40, 199, 111, 0.15);
+}
+
+.console-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.console-controls .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.console-controls .dot.red { background: var(--accent-red); }
+.console-controls .dot.yellow { background: var(--accent-orange); }
+.console-controls .dot.green { background: var(--accent-green); }
+
+.console-title {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-left: 20px;
+    flex: 1;
+}
+
+.console-badge {
+    background: rgba(40, 199, 111, 0.15);
+    color: var(--accent-green);
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    border: 1px solid rgba(40, 199, 111, 0.3);
+}
+
+.console-body {
+    padding: 1.5rem;
+    max-height: 250px;
+    overflow-y: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--accent-green);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.console-line {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.console-line.text-muted {
+    color: var(--text-muted);
+}
+
+.console-line.text-white {
+    color: #ffffff;
+}
+
+.console-line.text-warning {
+    color: var(--accent-orange);
+}
+
+.console-line.text-success {
+    color: #5af78e;
+}
+
+.console-input-row {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(40, 199, 111, 0.15);
+    padding: 12px 1.5rem;
+    gap: 10px;
+    font-family: monospace;
+}
+
+.console-prompt {
+    color: var(--accent-green);
+    font-weight: 700;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.console-cmd-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 0.85rem;
+}
+
+.console-cmd-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+/* Advisor Report Panel */
+.advisor-report {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.advisor-hero-card {
+    background: linear-gradient(135deg, rgba(26, 54, 40, 0.7) 0%, rgba(13, 30, 21, 0.7) 100%);
+    border: 1px solid rgba(40, 199, 111, 0.25);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-md);
+}
+
+.hero-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ai-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(40, 199, 111, 0.15);
+    border: 1px solid rgba(40, 199, 111, 0.3);
+    color: var(--accent-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: var(--glow-primary);
+}
+
+.hero-text-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.hero-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.hero-value-badge {
+    background: rgba(40, 199, 111, 0.1);
+    border: 1px solid rgba(40, 199, 111, 0.2);
+    border-radius: var(--border-radius-md);
+    padding: 12px 24px;
+    text-align: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
+.hero-val-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent-green);
+    line-height: 1.1;
+    display: block;
+}
+
+.hero-val-unit {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Schedule Table */
+.schedule-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title i {
+    color: var(--accent-green);
+}
+
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.schedule-table th {
+    background: rgba(255,255,255,0.03);
+    padding: 14px 18px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.schedule-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.schedule-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.badge-irrigate {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(40, 199, 111, 0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(40, 199, 111, 0.25);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+.badge-skip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 159, 67, 0.15);
+    color: var(--accent-orange);
+    border: 1px solid rgba(255, 159, 67, 0.25);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Bullet list components */
+.report-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.details-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.border-accent-green {
+    border-top: 4px solid var(--accent-green);
+}
+
+.border-accent-orange {
+    border-top: 4px solid var(--accent-orange);
+}
+
+.card-sub-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.border-accent-green .card-sub-title i { color: var(--accent-green); }
+.border-accent-orange .card-sub-title i { color: var(--accent-orange); }
+
+.bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bullet-list li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.bullet-list li::before {
+    content: "•";
+    position: absolute;
+    left: 4px;
+    top: 0;
+    color: var(--accent-green);
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.border-accent-orange .bullet-list li::before {
+    color: var(--accent-orange);
+}
+
+/* ==========================================================================
+   6. Weather Station Tab
+   ========================================================================== */
+.weather-station-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 1.5rem;
+}
+
+.weather-station-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.highlight-left {
+    background: linear-gradient(180deg, rgba(20, 50, 35, 0.4) 0%, rgba(13, 30, 21, 0.4) 100%);
+    border-color: rgba(40, 199, 111, 0.15);
+}
+
+.weather-station-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+}
+
+.weather-visual-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 0;
+    gap: 12px;
+}
+
+.weather-pulse-icon {
+    font-size: 4rem;
+    color: #ffd269;
+    filter: drop-shadow(0 0 15px rgba(255,210,105,0.4));
+    animation: slowSpin 30s linear infinite;
+}
+
+@keyframes slowSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.weather-pulse-temp {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.weather-pulse-loc {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 4px;
+}
+
+.weather-pulse-condition {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.weather-sensor-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.sensor-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.03);
+    padding: 10px;
+    border-radius: var(--border-radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sensor-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sensor-label i {
+    color: var(--accent-green);
+}
+
+.sensor-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* 5-Day forecast cards row */
+.forecast-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.forecast-row-card {
+    display: grid;
+    grid-template-columns: 100px 60px 100px 100px 1fr;
+    align-items: center;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 12px 18px;
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s ease;
+}
+
+.forecast-row-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(142, 250, 185, 0.15);
+}
+
+.forecast-day {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.forecast-icon {
+    font-size: 1.3rem;
+    color: #ff9f43;
+}
+
+.forecast-temp {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.forecast-precip {
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.forecast-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: right;
+}
+
+/* ==========================================================================
+   7. Agri Guide (Education Tab)
+   ========================================================================== */
+.education-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.edu-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.edu-section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edu-section-title i {
+    color: var(--accent-green);
+}
+
+.edu-list-selector {
+    width: 100%;
+}
+
+.edu-detail-card {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    min-height: 250px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.edu-details-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.edu-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 1rem 0;
+}
+
+.edu-spec-item {
+    background: rgba(255,255,255,0.02);
+    padding: 10px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid rgba(255,255,255,0.02);
+}
+
+.edu-spec-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.edu-spec-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.edu-text-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   8. Footer
+   ========================================================================== */
+.app-footer {
+    background: rgba(13, 30, 21, 0.8);
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem 2.5rem;
+    margin-top: auto;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   9. Responsive Design Styles
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .main-layout {
+        flex-direction: column;
+    }
+    
+    .sidebar-config {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.5rem 2rem;
+    }
+    
+    .weather-station-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        padding: 0 1.25rem;
+        flex-direction: column;
+        height: auto;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        gap: 12px;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .content-main {
+        padding: 1.5rem 1.25rem;
+    }
+    
+    .report-details-grid, .education-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .forecast-row-card {
+        grid-template-columns: 70px 40px 80px 80px 1fr;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .nav-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
