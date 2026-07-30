@@ -115,6 +115,7 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.5px;
     background: linear-gradient(to right, #ffffff, var(--text-secondary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -1400,7 +1401,659 @@ input:checked + .slider:before {
 }
 
 /* ==========================================================================
-   8. Footer
+   8. Soil Lab Panel Styles
+   ========================================================================== */
+
+.soillab-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Input Card */
+.soillab-input-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.75rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 1rem;
+}
+
+.soillab-input-card .card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.soillab-input-card .card-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.sample-input-group {
+    margin-bottom: 1.1rem;
+}
+
+.sample-input-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.sample-input-group label i {
+    font-size: 0.85rem;
+    color: var(--accent-green);
+    width: 16px;
+    text-align: center;
+}
+
+.sample-input-group select,
+.sample-input-group input[type="number"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 10px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.sample-input-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a3c2b2' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.sample-input-group select:focus,
+.sample-input-group input[type="number"]:focus {
+    border-color: var(--accent-green);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 10px rgba(40, 199, 111, 0.15);
+}
+
+.sample-input-group select option {
+    background: #0f241a;
+    color: var(--text-primary);
+}
+
+/* pH Slider */
+.ph-slider-container {
+    position: relative;
+    padding-top: 4px;
+}
+
+.ph-slider-value {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-orange), #e67e22);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.ph-slider-container input[type="range"] {
+    width: 100%;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(90deg, #ea5455 0%, #ff9f43 25%, #28c76f 45%, #28c76f 55%, #00adb5 75%, #5b3cc4 100%);
+    border-radius: 4px;
+    outline: none;
+    margin-top: 8px;
+}
+
+.ph-slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 3px solid var(--accent-green);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.ph-slider-container input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.ph-slider-container input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 3px solid var(--accent-green);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ph-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Organic Matter Checkboxes */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    padding: 6px 8px;
+    border-radius: var(--border-radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+}
+
+.checkbox-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--card-border-hover);
+}
+
+.checkbox-item input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-item .check-indicator {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--text-muted);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.checkbox-item .check-indicator i {
+    font-size: 0.6rem;
+    color: transparent;
+    transition: color 0.2s ease;
+}
+
+.checkbox-item input[type="checkbox"]:checked + .check-indicator {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+    box-shadow: 0 0 8px rgba(40, 199, 111, 0.35);
+}
+
+.checkbox-item input[type="checkbox"]:checked + .check-indicator i {
+    color: #fff;
+}
+
+/* Analyze Button */
+.btn-analyze {
+    background: linear-gradient(135deg, #00adb5 0%, #0077b6 100%);
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(0, 173, 181, 0.35);
+    width: 100%;
+    padding: 14px 24px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-analyze:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 22px rgba(0, 173, 181, 0.5);
+}
+
+.btn-analyze:active {
+    transform: translateY(0);
+}
+
+/* ---- Report Section ---- */
+.soillab-report {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: soilLabFadeIn 0.6s ease-out;
+}
+
+@keyframes soilLabFadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.soillab-report-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    background: var(--card-bg);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--border-radius-lg);
+}
+
+.soillab-report-placeholder .placeholder-icon {
+    font-size: 3.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 1.25rem;
+    opacity: 0.5;
+}
+
+.soillab-report-placeholder h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.soillab-report-placeholder p {
+    font-size: 0.85rem;
+    max-width: 360px;
+}
+
+/* Report Hero Card */
+.soillab-hero-card {
+    background: linear-gradient(135deg, rgba(0, 173, 181, 0.15) 0%, rgba(0, 119, 182, 0.08) 100%);
+    border: 1px solid rgba(0, 173, 181, 0.25);
+    border-radius: var(--border-radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.soillab-hero-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.soillab-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00adb5, #0077b6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 173, 181, 0.35);
+    flex-shrink: 0;
+}
+
+.soillab-hero-text h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+}
+
+.soillab-hero-text p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.soillab-health-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 16px 24px;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.soillab-health-badge .health-val {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #28c76f, #00adb5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.soillab-health-badge .health-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Report Detail Cards */
+.soillab-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.soillab-detail-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.3s ease;
+}
+
+.soillab-detail-card:hover {
+    border-color: var(--card-border-hover);
+}
+
+.soillab-detail-card .detail-card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.soillab-detail-card .detail-card-title i {
+    color: var(--accent-blue);
+    font-size: 0.9rem;
+}
+
+/* Nutrient Profile Bars */
+.nutrient-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.nutrient-row:last-child {
+    margin-bottom: 0;
+}
+
+.nutrient-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    width: 110px;
+    flex-shrink: 0;
+    font-weight: 500;
+}
+
+.nutrient-bar-track {
+    flex: 1;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.nutrient-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.nutrient-bar-fill.nitrogen {
+    background: linear-gradient(90deg, #28c76f, #7bed9f);
+}
+
+.nutrient-bar-fill.phosphorus {
+    background: linear-gradient(90deg, #ff9f43, #feca57);
+}
+
+.nutrient-bar-fill.potassium {
+    background: linear-gradient(90deg, #00adb5, #48dbfb);
+}
+
+.nutrient-bar-fill.iron {
+    background: linear-gradient(90deg, #ea5455, #ff6b6b);
+}
+
+.nutrient-bar-fill.zinc {
+    background: linear-gradient(90deg, #a29bfe, #6c5ce7);
+}
+
+.nutrient-bar-fill.organic {
+    background: linear-gradient(90deg, #2d3436, #636e72);
+}
+
+.nutrient-value {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    width: 60px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.nutrient-status {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    flex-shrink: 0;
+    width: 55px;
+    text-align: center;
+}
+
+.nutrient-status.low {
+    background: rgba(234, 84, 85, 0.15);
+    color: #ea5455;
+}
+
+.nutrient-status.medium {
+    background: rgba(255, 159, 67, 0.15);
+    color: #ff9f43;
+}
+
+.nutrient-status.high {
+    background: rgba(40, 199, 111, 0.15);
+    color: #28c76f;
+}
+
+/* pH Scale Visualization */
+.ph-scale-viz {
+    margin-top: 0.5rem;
+}
+
+.ph-scale-bar {
+    height: 22px;
+    border-radius: 11px;
+    background: linear-gradient(90deg,
+        #ea5455 0%,
+        #ff6348 14%,
+        #ff9f43 28%,
+        #feca57 42%,
+        #28c76f 50%,
+        #7bed9f 58%,
+        #00adb5 72%,
+        #5b3cc4 86%,
+        #6c5ce7 100%);
+    position: relative;
+    margin-bottom: 6px;
+}
+
+.ph-marker {
+    position: absolute;
+    top: -6px;
+    width: 4px;
+    height: 34px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ph-scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.ph-reading-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.ph-reading-val {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.ph-reading-val.acidic { color: #ff9f43; }
+.ph-reading-val.neutral { color: #28c76f; }
+.ph-reading-val.alkaline { color: #00adb5; }
+
+.ph-reading-info h5 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.ph-reading-info p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Crop Recommendation Table */
+.crop-rec-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+}
+
+.crop-rec-table th {
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 10px 10px;
+}
+
+.crop-rec-table td {
+    padding: 10px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.crop-rec-table tr td:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.crop-rec-table tr td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.crop-match-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    min-width: 60px;
+}
+
+.crop-match-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.crop-match-fill.excellent { background: #28c76f; }
+.crop-match-fill.good { background: #ff9f43; }
+.crop-match-fill.poor { background: #ea5455; }
+
+/* Amendment List */
+.amendment-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.amendment-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--accent-blue);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.amendment-item i {
+    color: var(--accent-green);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+/* Full-width detail card variant */
+.soillab-detail-card.span-full {
+    grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   9. Footer
    ========================================================================== */
 .app-footer {
     background: rgba(13, 30, 21, 0.8);
@@ -1442,6 +2095,18 @@ input:checked + .slider:before {
     .weather-station-grid {
         grid-template-columns: 1fr;
     }
+    
+    .soillab-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .soillab-input-card {
+        position: static;
+    }
+    
+    .soillab-detail-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1467,6 +2132,19 @@ input:checked + .slider:before {
         grid-template-columns: 1fr;
     }
     
+    .soillab-hero-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .soillab-hero-left {
+        flex-direction: column;
+    }
+    
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+    
     .forecast-row-card {
         grid-template-columns: 70px 40px 80px 80px 1fr;
         padding: 10px 12px;
@@ -1478,3 +2156,695 @@ input:checked + .slider:before {
         overflow-x: auto;
     }
 }
+
+/* ==========================================================================
+   10. Fertilizer & Pesticide Advisory Component Styles
+   ========================================================================== */
+.border-accent-blue {
+    border-top: 3px solid #3b82f6 !important;
+}
+
+.border-accent-purple {
+    border-top: 3px solid #a855f7 !important;
+}
+
+.fert-dosage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.fert-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.fert-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.fert-card-icon {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+}
+
+.fert-card.urea .fert-card-icon { color: #60a5fa; }
+.fert-card.dap .fert-card-icon { color: #fbbf24; }
+.fert-card.mop .fert-card-icon { color: #34d399; }
+.fert-card.zinc .fert-card-icon { color: #c084fc; }
+
+.fert-card-val {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 2px 0;
+}
+
+.fert-card-lbl {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.fert-split-note {
+    margin-top: 1rem;
+    padding: 10px 14px;
+    background: rgba(59, 130, 246, 0.08);
+    border-left: 3px solid #3b82f6;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #93c5fd;
+    line-height: 1.4;
+}
+
+.pest-alert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.pest-alert-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pest-alert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pest-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f87171;
+}
+
+.pest-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.pest-solution {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.pest-solution strong {
+    color: #a7f3d0;
+}
+
+.pest-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+}
+
+.border-accent-teal {
+    border-top: 3px solid #14b8a6 !important;
+}
+
+.border-accent-rose {
+    border-top: 3px solid #f43f5e !important;
+}
+
+.seed-treatment-box, .flower-booster-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.seed-step-item {
+    background: rgba(20, 184, 166, 0.05);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.seed-step-item strong {
+    color: #2dd4bf;
+}
+
+.flower-booster-item {
+    background: rgba(244, 63, 94, 0.05);
+    border: 1px solid rgba(244, 63, 94, 0.2);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.flower-booster-item strong {
+    color: #fb7185;
+}
+
+/* ==========================================================================
+   11. Seasonal Crop Calendar & Rotation Planner Styles
+   ========================================================================== */
+.planner-header-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.season-filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.season-pill {
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.season-pill:hover, .season-pill.active {
+    background: var(--accent-green);
+    color: #042f2e;
+    border-color: var(--accent-green);
+    font-weight: 600;
+}
+
+.rotation-sequence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.rotation-step-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.rotation-year-badge {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.rotation-crop-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.rotation-benefit {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.crop-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.planner-calendar-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.planner-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.planner-crop-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.season-tag {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.season-tag.kharif { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+.season-tag.rabi { background: rgba(245, 158, 11, 0.2); color: #fde68a; }
+.season-tag.zaid { background: rgba(236, 72, 153, 0.2); color: #fbcfe8; }
+
+.month-timeline-bar {
+    display: flex;
+    gap: 3px;
+    margin-top: 6px;
+}
+
+.month-cell {
+    flex: 1;
+    height: 24px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.month-cell.sowing { background: #059669; color: #ffffff; }
+.month-cell.growth { background: #d97706; color: #ffffff; }
+.month-cell.harvest { background: #dc2626; color: #ffffff; }
+
+/* ==========================================================================
+   12. Gemini AI Modal Dialog & Live Chat Component Styles
+   ========================================================================== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1rem;
+}
+
+.modal-card {
+    background: #0f172a;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-title i { color: #60a5fa; }
+
+.btn-close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.btn-close-modal:hover { color: var(--text-primary); }
+
+.modal-body {
+    padding: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   13. Global Search, AI Prompt Chips & Profitability Styles
+   ========================================================================== */
+.border-accent-gold {
+    border-top: 3px solid #eab308 !important;
+}
+
+.global-search-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 420px;
+    margin: 0 1rem;
+}
+
+.global-search-input {
+    width: 100%;
+    padding: 8px 14px 8px 36px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.global-search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-green);
+    box-shadow: 0 0 12px rgba(45, 212, 191, 0.2);
+}
+
+.global-search-results {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    right: 0;
+    background: #111827;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 9999;
+    backdrop-filter: blur(12px);
+    padding: 6px 0;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: rgba(45, 212, 191, 0.15);
+}
+
+.search-result-icon {
+    font-size: 0.9rem;
+    color: var(--accent-green);
+    width: 20px;
+    text-align: center;
+}
+
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-result-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.search-result-sub {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+.search-result-ask-ai {
+    background: rgba(59, 130, 246, 0.15);
+    border-top: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.search-result-ask-ai .search-result-icon {
+    color: #60a5fa;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+
+.prompt-chip-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.chip-label {
+    font-size: 0.75rem;
+    color: #60a5fa;
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.prompt-chip {
+    padding: 4px 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.prompt-chip:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #60a5fa;
+    color: #93c5fd;
+    transform: translateY(-1px);
+}
+
+.profit-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.profit-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.profit-card.yield .profit-card-icon { color: #38bdf8; }
+.profit-card.price .profit-card-icon { color: #facc15; }
+.profit-card.revenue .profit-card-icon { color: #4ade80; }
+.profit-card.net .profit-card-icon { color: #a7f3d0; }
+
+.profit-card-val {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 4px 0 2px 0;
+}
+
+.profit-card-lbl {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   14. Government Schemes & Subsidies Card Styles
+   ========================================================================== */
+.scheme-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.scheme-card:hover {
+    border-color: var(--accent-green);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.scheme-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.scheme-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.scheme-badge-subsidy {
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.scheme-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+.scheme-meta-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    font-size: 0.78rem;
+}
+
+.scheme-meta-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.scheme-meta-row:last-child {
+    margin-bottom: 0;
+}
+
+.scheme-meta-lbl {
+    color: var(--text-muted);
+}
+
+.scheme-meta-val {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.scheme-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.scheme-ai-btn {
+    flex: 1;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.scheme-ai-btn:hover {
+    background: rgba(59, 130, 246, 0.3);
+    border-color: #60a5fa;
+    color: #ffffff;
+}
+
+.scheme-link-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scheme-link-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+
+
+

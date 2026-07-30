@@ -29,6 +29,13 @@
                 </div>
             </div>
 
+            <!-- Global AI Smart Search Bar -->
+            <div class="global-search-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="global-search-input" class="global-search-input" placeholder="Search crops, fertilizers, pests, or ask AI..." autocomplete="off">
+                <div id="global-search-results" class="global-search-results" style="display: none;"></div>
+            </div>
+
             <div class="header-actions">
                 <!-- Unit Switcher -->
                 <div class="unit-toggle-container">
@@ -55,6 +62,11 @@
                         <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
                     </select>
                 </div>
+
+                <!-- Gemini AI Key Settings Button -->
+                <button type="button" id="btn-ai-key" class="btn btn-outline-sm" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 20px; background: rgba(59, 130, 246, 0.1); color: #93c5fd; font-size: 0.8rem; cursor: pointer;">
+                    <i class="fa-solid fa-brain"></i> <span data-i18n="btn-ai-key">Gemini AI Key</span>
+                </button>
             </div>
         </header>
 
@@ -110,6 +122,27 @@
                         </datalist>
                     </div>
 
+                    <!-- Farm Area Input -->
+                    <div class="form-group">
+                        <label for="select-area" class="form-label">
+                            <i class="fa-solid fa-ruler-combined"></i> <span data-i18n="label-area">Farm Area (Acres)</span>
+                        </label>
+                        <input type="number" id="select-area" class="form-control" value="1.0" min="0.1" max="1000" step="0.5" placeholder="Enter farm area in acres...">
+                        <div class="form-helper" data-i18n="area-helper">Scales fertilizer and pesticide dosages accurately.</div>
+                    </div>
+
+                    <!-- Input Preference Selector -->
+                    <div class="form-group">
+                        <label for="select-preference" class="form-label">
+                            <i class="fa-solid fa-sliders"></i> <span data-i18n="label-preference">Input Practice Preference</span>
+                        </label>
+                        <select id="select-preference" class="form-control">
+                            <option value="balanced" data-i18n="pref-balanced">Balanced (Chemical + Bio)</option>
+                            <option value="organic" data-i18n="pref-organic">100% Organic & Bio-Inputs</option>
+                            <option value="synthetic" data-i18n="pref-synthetic">High-Yield Commercial</option>
+                        </select>
+                    </div>
+
                     <!-- Submit / Action Button -->
                     <button type="button" id="btn-generate" class="btn btn-primary btn-block">
                         <span data-i18n="btn-generate">Generate Irrigation Plan</span>
@@ -133,6 +166,15 @@
                     </button>
                     <button class="tab-link" data-tab="education">
                         <i class="fa-solid fa-book-open"></i> <span data-i18n="tab-education">Agri Guide</span>
+                    </button>
+                    <button class="tab-link" data-tab="soillab">
+                        <i class="fa-solid fa-flask"></i> <span data-i18n="tab-soillab">Soil Lab</span>
+                    </button>
+                    <button class="tab-link" data-tab="planner">
+                        <i class="fa-solid fa-calendar-days"></i> <span data-i18n="tab-planner">Crop Calendar & Rotation</span>
+                    </button>
+                    <button class="tab-link" data-tab="schemes">
+                        <i class="fa-solid fa-building-columns"></i> <span data-i18n="tab-schemes">Govt Schemes & Subsidies</span>
                     </button>
                 </nav>
 
@@ -270,6 +312,16 @@
                             <div class="console-body" id="console-output">
                                 <div class="console-line text-muted" data-i18n="console-ready-msg">> Ready for input parameter generation...</div>
                             </div>
+                            
+                            <!-- AI Quick Prompt Chips -->
+                            <div class="prompt-chip-bar" id="ai-prompt-chips">
+                                <span class="chip-label"><i class="fa-solid fa-bolt"></i> Quick Prompts:</span>
+                                <button type="button" class="prompt-chip" data-prompt="What organic fertilizer recipe is best for Paddy/Rice?">🧪 Organic Fertilizer</button>
+                                <button type="button" class="prompt-chip" data-prompt="Why are crop leaves turning yellow and curling? How to cure?">🍂 Yellow Leaves</button>
+                                <button type="button" class="prompt-chip" data-prompt="How to protect Wheat crop from Aphids and Rust disease?">🌾 Wheat Pests</button>
+                                <button type="button" class="prompt-chip" data-prompt="What flower boosters increase Rose and Marigold blooming?">🌸 Flower Boosters</button>
+                            </div>
+
                             <div class="console-input-row" id="console-input-row">
                                 <span class="console-prompt">></span>
                                 <input type="text" id="console-cmd-input" class="console-cmd-input" placeholder="Type /help or ask a question here..." autocomplete="off">
@@ -296,9 +348,9 @@
                                 </div>
                             </div>
 
-                            <!-- 5-Day Irrigation Schedule Table -->
+                            <!-- 7-Day Irrigation Schedule Table -->
                             <div class="schedule-section">
-                                <h4 class="section-title"><i class="fa-solid fa-calendar-days"></i> <span data-i18n="schedule-title">5-Day Recommended Irrigation Schedule</span></h4>
+                                <h4 class="section-title"><i class="fa-solid fa-calendar-days"></i> <span data-i18n="schedule-title">7-Day Recommended Irrigation Schedule</span></h4>
                                 <div class="table-responsive">
                                     <table class="schedule-table">
                                         <thead>
@@ -332,6 +384,63 @@
                                     <ul class="bullet-list" id="advisor-conservation-tips-list">
                                         <!-- Dynamically generated list -->
                                     </ul>
+                                </div>
+                            </div>
+
+                            <!-- Fertilizer & Crop Protection Section -->
+                            <div class="schedule-section" style="margin-top: 1.5rem;">
+                                <h4 class="section-title"><i class="fa-solid fa-flask-vial"></i> <span data-i18n="advisor-fert-pest-title">Crop Protection & Fertilizer Dosage</span></h4>
+                                <div class="report-details-grid">
+                                    <!-- Fertilizer Requirement Card -->
+                                    <div class="details-card border-accent-blue">
+                                        <h4 class="card-sub-title"><i class="fa-solid fa-seedling"></i> <span data-i18n="fert-card-title">Nutrient & Fertilizer Requirements</span></h4>
+                                        <div class="fert-dosage-grid" id="advisor-fert-grid">
+                                            <!-- Dynamically generated fertilizer dosage cards -->
+                                        </div>
+                                        <div class="fert-split-note" id="advisor-fert-split-note">
+                                            <!-- Stage split advice -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Pesticide & Defense Card -->
+                                    <div class="details-card border-accent-purple">
+                                        <h4 class="card-sub-title"><i class="fa-solid fa-bug"></i> <span data-i18n="pest-card-title">Pest Control & Plant Protection</span></h4>
+                                        <div class="pest-alert-list" id="advisor-pest-list">
+                                            <!-- Dynamically generated pesticide cards -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seed Treatment & Flower Care Advisory -->
+                            <div class="schedule-section" style="margin-top: 1.5rem;">
+                                <h4 class="section-title"><i class="fa-solid fa-seedling"></i> <span data-i18n="seed-flower-title">Seed Care, Nursery & Flower Specialization</span></h4>
+                                <div class="report-details-grid">
+                                    <div class="details-card border-accent-teal">
+                                        <h4 class="card-sub-title"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="seed-treatment-title">Seed Treatment & Germination Care</span></h4>
+                                        <div class="seed-treatment-box" id="advisor-seed-treatment">
+                                            <!-- Dynamically generated seed treatment guidelines -->
+                                        </div>
+                                    </div>
+                                    <div class="details-card border-accent-rose">
+                                        <h4 class="card-sub-title"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="flower-booster-title">Floriculture & Blooming Specialization</span></h4>
+                                        <div class="flower-booster-box" id="advisor-flower-booster">
+                                            <!-- Dynamically generated flower bloom guidance -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI Yield & Profitability Estimator Section -->
+                            <div class="schedule-section" style="margin-top: 1.5rem;">
+                                <h4 class="section-title"><i class="fa-solid fa-coins"></i> <span data-i18n="profit-section-title">AI Yield & Market Profitability Estimator</span></h4>
+                                <div class="report-details-grid">
+                                    <div class="details-card border-accent-gold" style="grid-column: span 2;">
+                                        <h4 class="card-sub-title"><i class="fa-solid fa-chart-line"></i> <span data-i18n="profit-card-title">Estimated Yield & Economic Revenue Breakdown</span></h4>
+                                        <div class="profit-metric-grid" id="advisor-profit-grid">
+                                            <!-- Dynamically generated profit metrics -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -373,9 +482,9 @@
                                 </div>
                             </div>
 
-                            <!-- Weather Card Right: 5-Day Visual Forecast -->
+                            <!-- Weather Card Right: 7-Day Visual Forecast -->
                             <div class="weather-station-card">
-                                <h3 class="weather-station-title" data-i18n="weather-station-forecast-title">5-Day Meteorological Forecast</h3>
+                                <h3 class="weather-station-title" data-i18n="weather-station-forecast-title">7-Day Meteorological Forecast</h3>
                                 <div class="forecast-cards-container" id="forecast-cards-wrapper">
                                     <!-- Dynamic weather cards will render here -->
                                 </div>
@@ -414,6 +523,160 @@
                         </div>
                     </div>
 
+                    <!-- TAB 5: SOIL LAB -->
+                    <div id="soillab" class="tab-panel">
+                        <div class="soillab-grid">
+                            <!-- Left: Input Card -->
+                            <div class="soillab-input-card">
+                                <h3 class="card-title"><i class="fa-solid fa-flask"></i> <span data-i18n="soillab-title">AI Soil Analysis Lab</span></h3>
+                                <p class="card-subtitle" data-i18n="soillab-subtitle">Describe your soil sample to get an AI-powered lab report.</p>
+
+                                <!-- Soil Color -->
+                                <div class="sample-input-group">
+                                    <label for="sl-color"><i class="fa-solid fa-palette"></i> <span data-i18n="soillab-color">Soil Color</span></label>
+                                    <select id="sl-color">
+                                        <option value="dark-black" data-i18n="sl-color-dark">Dark Black / Charcoal</option>
+                                        <option value="reddish-brown" data-i18n="sl-color-red">Reddish Brown</option>
+                                        <option value="light-brown" selected data-i18n="sl-color-light">Light Brown / Tan</option>
+                                        <option value="grey" data-i18n="sl-color-grey">Grey / Ashy</option>
+                                        <option value="yellowish" data-i18n="sl-color-yellow">Yellowish</option>
+                                    </select>
+                                </div>
+
+                                <!-- Texture Feel -->
+                                <div class="sample-input-group">
+                                    <label for="sl-texture"><i class="fa-solid fa-hand"></i> <span data-i18n="soillab-texture">Texture Feel</span></label>
+                                    <select id="sl-texture">
+                                        <option value="sticky" data-i18n="sl-tex-sticky">Sticky / Clay-like</option>
+                                        <option value="smooth" data-i18n="sl-tex-smooth">Smooth / Silky (Silt)</option>
+                                        <option value="gritty" data-i18n="sl-tex-gritty">Gritty / Sandy</option>
+                                        <option value="crumbly" selected data-i18n="sl-tex-crumbly">Crumbly / Loamy</option>
+                                    </select>
+                                </div>
+
+                                <!-- Moisture Level -->
+                                <div class="sample-input-group">
+                                    <label for="sl-moisture"><i class="fa-solid fa-droplet"></i> <span data-i18n="soillab-moisture">Moisture Level</span></label>
+                                    <select id="sl-moisture">
+                                        <option value="waterlogged" data-i18n="sl-moist-waterlogged">Waterlogged / Saturated</option>
+                                        <option value="moist" selected data-i18n="sl-moist-moist">Moist / Damp</option>
+                                        <option value="dry" data-i18n="sl-moist-dry">Dry</option>
+                                        <option value="very-dry" data-i18n="sl-moist-verydry">Very Dry / Cracked</option>
+                                    </select>
+                                </div>
+
+                                <!-- Organic Matter Signs -->
+                                <div class="sample-input-group">
+                                    <label><i class="fa-solid fa-leaf"></i> <span data-i18n="soillab-organic">Organic Matter Signs</span></label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" id="sl-earthworms" value="earthworms">
+                                            <span class="check-indicator"><i class="fa-solid fa-check"></i></span>
+                                            <span data-i18n="sl-org-worms">Earthworms</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" id="sl-decayed" value="decayed">
+                                            <span class="check-indicator"><i class="fa-solid fa-check"></i></span>
+                                            <span data-i18n="sl-org-decayed">Decayed Leaves</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" id="sl-roots" value="roots">
+                                            <span class="check-indicator"><i class="fa-solid fa-check"></i></span>
+                                            <span data-i18n="sl-org-roots">Root Fragments</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" id="sl-fungal" value="fungal">
+                                            <span class="check-indicator"><i class="fa-solid fa-check"></i></span>
+                                            <span data-i18n="sl-org-fungal">Fungal Growth</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- pH Slider -->
+                                <div class="sample-input-group">
+                                    <label for="sl-ph"><i class="fa-solid fa-vial"></i> <span data-i18n="soillab-ph">pH Strip Reading</span> <span class="ph-slider-value" id="sl-ph-display">7.0</span></label>
+                                    <div class="ph-slider-container">
+                                        <input type="range" id="sl-ph" min="3.0" max="10.0" step="0.1" value="7.0">
+                                        <div class="ph-slider-labels">
+                                            <span>3.0 (Acidic)</span>
+                                            <span>7.0 (Neutral)</span>
+                                            <span>10.0 (Alkaline)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Field Area -->
+                                <div class="sample-input-group">
+                                    <label for="sl-area"><i class="fa-solid fa-ruler-combined"></i> <span data-i18n="soillab-area">Field Area (acres)</span></label>
+                                    <input type="number" id="sl-area" min="0.1" max="1000" step="0.1" value="2.5" placeholder="e.g. 2.5">
+                                </div>
+
+                                <!-- Analyze Button -->
+                                <button type="button" id="btn-analyze-soil" class="btn-analyze">
+                                    <i class="fa-solid fa-microscope"></i>
+                                    <span data-i18n="btn-analyze-soil">Analyze Soil Sample</span>
+                                    <i class="fa-solid fa-circle-notch fa-spin" id="sl-btn-spinner" style="display: none;"></i>
+                                </button>
+                            </div>
+
+                            <!-- Right: Report Area -->
+                            <div id="soillab-report-area">
+                                <div class="soillab-report-placeholder" id="soillab-placeholder">
+                                    <div class="placeholder-icon"><i class="fa-solid fa-flask-vial"></i></div>
+                                    <h4 data-i18n="soillab-placeholder-title">Soil Analysis Report</h4>
+                                    <p data-i18n="soillab-placeholder-desc">Fill in your soil sample observations on the left and click "Analyze Soil Sample" to generate a detailed AI lab report.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 6: CROP CALENDAR & ROTATION PLANNER -->
+                    <div id="planner" class="tab-panel">
+                        <div class="planner-header-card">
+                            <h3 class="section-title"><i class="fa-solid fa-calendar-alt"></i> <span data-i18n="planner-calendar-title">Seasonal Sowing Calendar & Crop Rotation Engine</span></h3>
+                            <div class="season-filter-bar">
+                                <button class="btn season-pill active" data-season="all" data-i18n="season-all">All Seasons</button>
+                                <button class="btn season-pill kharif" data-season="kharif" data-i18n="season-kharif">Kharif (Monsoon)</button>
+                                <button class="btn season-pill rabi" data-season="rabi" data-i18n="season-rabi">Rabi (Winter)</button>
+                                <button class="btn season-pill zaid" data-season="zaid" data-i18n="season-zaid">Zaid (Summer)</button>
+                            </div>
+                        </div>
+
+                        <!-- Rotation Strategy Highlight -->
+                        <div class="schedule-section" style="margin-top: 1.5rem;">
+                            <h4 class="section-title"><i class="fa-solid fa-arrow-rotate-right"></i> <span data-i18n="planner-rotation-title">Soil Nitrogen & Pest Control Crop Rotation Sequence</span></h4>
+                            <div id="planner-rotation-box" class="rotation-sequence-grid">
+                                <!-- Populated dynamically via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Month-by-Month Calendar Grid -->
+                        <div class="schedule-section" style="margin-top: 1.5rem;">
+                            <h4 class="section-title"><i class="fa-solid fa-timeline"></i> <span data-i18n="planner-timeline-title">Annual Crop Growth & Sowing Timeline</span></h4>
+                            <div id="planner-calendar-grid" class="crop-calendar-grid">
+                                <!-- Populated dynamically via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 7: GOVERNMENT SCHEMES & SUBSIDIES -->
+                    <div id="schemes" class="tab-panel">
+                        <div class="schedule-section">
+                            <h4 class="section-title"><i class="fa-solid fa-building-columns"></i> <span data-i18n="schemes-title">Government Agricultural Schemes & AI Subsidy Checker</span></h4>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.25rem;" data-i18n="schemes-subtitle">Explore top government schemes, subsidies, insurance policies, and credit facilities. Click "Check My AI Eligibility" to get personalized application guidance for your farm location.</p>
+                            
+                            <!-- Search Controls -->
+                            <div class="schemes-filter-bar" style="display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                                <input type="text" id="scheme-search-input" class="form-control" placeholder="Search schemes (PM-KISAN, Drip Irrigation, Crop Insurance...)" style="max-width: 380px;" autocomplete="off">
+                            </div>
+
+                            <!-- Schemes Cards Grid -->
+                            <div id="schemes-cards-grid" class="schemes-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px;">
+                                <!-- Dynamically populated by JS renderGovernmentSchemes() -->
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </main>
         </div>
@@ -427,6 +690,28 @@
                 </div>
             </div>
         </footer>
+    </div>
+
+    <!-- GEMINI API KEY MODAL -->
+    <div id="modal-ai-key" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-brain"></i> <span data-i18n="modal-ai-title">Connect Live Gemini AI</span></h3>
+                <button type="button" id="btn-close-modal" class="btn-close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="modal-ai-desc">Connect Google's Gemini 1.5 Flash AI to enable live real-time conversational assistance, instant disease diagnosis, and customized agronomic advice.</p>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label for="input-gemini-key" class="form-label" data-i18n="label-gemini-key">Enter Google Gemini API Key:</label>
+                    <input type="password" id="input-gemini-key" class="form-control" placeholder="AIzaSy..." autocomplete="off">
+                    <div class="form-helper" style="margin-top: 6px;">Get a free API key from <a href="https://aistudio.google.com/" target="_blank" style="color: var(--accent-green);">Google AI Studio</a>.</div>
+                </div>
+                <div class="modal-actions" style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" id="btn-clear-key" class="btn btn-secondary" style="padding: 6px 14px;" data-i18n="btn-clear-key">Clear Key</button>
+                    <button type="button" id="btn-save-key" class="btn btn-primary" style="padding: 6px 14px;" data-i18n="btn-save-key">Save & Connect</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- MAIN APP SCRIPT -->
