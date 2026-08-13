@@ -12,7 +12,9 @@ export function Sidebar() {
     preference, setPreference,
     lang,
     loading,
-    handleGeneratePlan
+    handleGeneratePlan,
+    explicitProfile,
+    setShowOnboarding
   } = useApp();
 
   const [locationInput, setLocationInput] = useState(location?.nameEn || '');
@@ -578,8 +580,44 @@ export function Sidebar() {
           <i className={`fa-solid ${loading ? 'fa-spinner fa-spin' : 'fa-wand-magic-sparkles'}`}></i>
           <span>{loading ? getText('sidebar-btn-loading', lang) : getText('sidebar-btn', lang)}</span>
         </button>
-
       </form>
+
+      {/* Explicit Farmer Profile Summary */}
+      {explicitProfile && (
+        <>
+          <div style={{ height: '1px', background: 'var(--border-color)', margin: '16px 0' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ fontSize: '0.9rem', margin: 0, color: 'var(--primary)', fontWeight: 600, fontFamily: "'Fraunces', serif" }}>Farmer Profile</h3>
+              <button 
+                onClick={() => setShowOnboarding(true)}
+                style={{ 
+                  background: 'none', border: 'none', color: 'var(--highlight)', 
+                  cursor: 'pointer', fontSize: '0.8rem', textDecoration: 'underline',
+                  fontWeight: 600
+                }}
+              >
+                Retake Profiling
+              </button>
+            </div>
+            <div style={{ 
+              background: 'var(--card-bg)', border: '1px solid var(--border-color)', 
+              borderLeft: '3px solid var(--secondary)',
+              borderRadius: 'var(--border-radius-sm)', padding: '12px', fontSize: '0.85rem', color: 'var(--text-primary)',
+              lineHeight: '1.5'
+            }}>
+              <div style={{ fontWeight: 'bold', textTransform: 'capitalize', color: '#fff', marginBottom: '4px' }}>
+                {explicitProfile.farmScale} Farmer
+              </div>
+              <div style={{ color: 'var(--text-secondary)' }}>
+                📍 {explicitProfile.state}<br/>
+                💼 {explicitProfile.experienceLevel} (Exp)<br/>
+                🎯 {explicitProfile.goals?.length || 0} Goals Focus
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </aside>
   );
 }

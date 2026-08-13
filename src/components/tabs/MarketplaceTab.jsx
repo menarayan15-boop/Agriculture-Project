@@ -341,7 +341,7 @@ export function MarketplaceTab() {
                     <span><strong>Quantity:</strong> {item.quantity_qtl} Quintals ({item.quantity_qtl * 100} kg)</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <i className="fa-solid fa-user-check" style={{ color: '#4ade80', width: '18px' }}></i>
+                    <i className="fa-solid fa-user-check" style={{ color: 'var(--primary-light)', width: '18px' }}></i>
                     <span><strong>Farmer:</strong> {item.farmer_name}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

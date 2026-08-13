@@ -905,7 +905,7 @@ export function RentalsTab({ onOpenBookingModal }) {
                   width: '44px', height: '44px', minWidth: '44px',
                   background: 'rgba(16,185,129,0.18)', border: '1px solid rgba(16,185,129,0.35)',
                   borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1.3rem', color: '#4ade80',
+                  fontSize: '1.3rem', color: 'var(--primary-light)',
                 }}>
                   <i className={`fa-solid ${icon}`}></i>
                 </div>
@@ -915,7 +915,7 @@ export function RentalsTab({ onOpenBookingModal }) {
                     <span style={{ background: 'rgba(59,130,246,0.2)', color: '#60a5fa', border: '1px solid rgba(59,130,246,0.4)', borderRadius: '20px', fontSize: '0.72rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
                       <i className="fa-solid fa-location-dot"></i> {item.distance_km || item.distanceKm || 1.5} km away
                     </span>
-                    <span style={{ background: 'rgba(16,185,129,0.2)', color: '#4ade80', border: '1px solid rgba(16,185,129,0.4)', borderRadius: '20px', fontSize: '0.72rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
+                    <span style={{ background: 'rgba(16,185,129,0.2)', color: 'var(--primary-light)', border: '1px solid rgba(16,185,129,0.4)', borderRadius: '20px', fontSize: '0.72rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
                       <i className="fa-solid fa-circle-check"></i> Verified
                     </span>
                   </div>
@@ -925,7 +925,7 @@ export function RentalsTab({ onOpenBookingModal }) {
               {/* Owner Info */}
               <div>
                 <div style={{ fontSize: '0.84rem', color: '#cbd5e1', fontWeight: 600 }}>
-                  <i className="fa-solid fa-store" style={{ color: '#4ade80', marginRight: '6px' }}></i> {item.owner}
+                  <i className="fa-solid fa-store" style={{ color: 'var(--primary-light)', marginRight: '6px' }}></i> {item.owner}
                 </div>
                 <div style={{ fontSize: '0.78rem', color: '#38bdf8', fontWeight: 700, marginTop: '2px' }}>
                   <i className="fa-solid fa-phone" style={{ marginRight: '4px' }}></i> {phoneStr}
@@ -938,7 +938,7 @@ export function RentalsTab({ onOpenBookingModal }) {
               {/* Price Row */}
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '10px', marginTop: 'auto' }}>
                 <div style={{ marginBottom: '10px' }}>
-                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#4ade80' }}>₹{rateHr}</span>
+                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-light)' }}>₹{rateHr}</span>
                   <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginLeft: '4px' }}>/ hr</span>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>

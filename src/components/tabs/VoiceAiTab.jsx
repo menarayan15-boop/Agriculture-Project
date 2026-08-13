@@ -215,7 +215,7 @@ export function VoiceAiTab() {
     marginTop: '14px',
     fontSize: '18px',
     fontWeight: 700,
-    color: isRecording ? '#f87171' : isThinking ? '#38bdf8' : '#4ade80',
+    color: isRecording ? '#f87171' : isThinking ? '#38bdf8' : 'var(--primary-light)',
     textAlign: 'center',
   };
 
@@ -363,7 +363,7 @@ export function VoiceAiTab() {
     borderRadius: '50%',
     border: 'none',
     background: 'rgba(16,185,129,0.2)',
-    color: '#4ade80',
+    color: 'var(--primary-light)',
     fontSize: '16px',
     cursor: 'pointer',
     display: 'flex',

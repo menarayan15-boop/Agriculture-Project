@@ -371,7 +371,7 @@ export function SoilLabTab() {
                 onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(10, 25, 16, 0.95)'}
               >
                 <div style={{ fontSize: '56px', marginBottom: '14px' }}>📸</div>
-                <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: '#4ade80', fontWeight: 700 }}>
+                <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: 'var(--primary-light)', fontWeight: 700 }}>
                   मिट्टी की फोटो खींचें या चुनें
                 </h3>
                 <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#cbd5e1' }}>
@@ -441,7 +441,7 @@ export function SoilLabTab() {
             {/* Analysis Progress Overlay */}
             {analyzing && (
               <div style={{ ...cardStyle, background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-                <h4 style={{ margin: '0 0 12px', color: '#4ade80', fontSize: '16px', fontWeight: 700 }}>
+                <h4 style={{ margin: '0 0 12px', color: 'var(--primary-light)', fontSize: '16px', fontWeight: 700 }}>
                   ⚡ AI मिट्टी परीक्षण प्रोग्रेस / AI Soil Test Progress:
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', color: '#cbd5e1' }}>
@@ -453,7 +453,7 @@ export function SoilLabTab() {
                   ))}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
                     <i className="fa-solid fa-spinner fa-spin" style={{ color: '#10b981' }}></i>
-                    <span style={{ fontWeight: 600, color: '#4ade80' }}>कुछ ही सेकंड शेष हैं... Just a moment...</span>
+                    <span style={{ fontWeight: 600, color: 'var(--primary-light)' }}>कुछ ही सेकंड शेष हैं... Just a moment...</span>
                   </div>
                 </div>
               </div>
@@ -465,7 +465,7 @@ export function SoilLabTab() {
                 background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '14px',
                 padding: '14px 18px', fontSize: '13px', color: '#cbd5e1', lineHeight: 1.6
               }}>
-                <strong style={{ color: '#4ade80' }}>📸 अच्छी फोटो लेने के नियम (Tips for best results):</strong><br />
+                <strong style={{ color: 'var(--primary-light)' }}>📸 अच्छी फोटो लेने के नियम (Tips for best results):</strong><br />
                 • दिन के उजाले में फोटो लें / Take photo in good daylight<br />
                 • मिट्टी को हाथ में लेकर साफ़ फोटो खींचे / Hold a handful of dry/moist soil clearly<br />
                 • धुंधली या अँधेरे में खींची फोटो न डालें / Avoid blurry or dark photos
@@ -477,8 +477,8 @@ export function SoilLabTab() {
               <div style={{ marginTop: '16px' }}>
 
                 {/* Score Gauge card */}
-                <div style={{ ...cardStyle, background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)', textAlign: 'center' }}>
-                  <h3 style={{ margin: '0 0 12px', fontSize: '18px', color: '#4ade80', fontWeight: 700 }}>
+                <div style={{ ...cardStyle, background: 'linear-gradient(135deg, rgba(21, 128, 61, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)', textAlign: 'center' }}>
+                  <h3 style={{ margin: '0 0 12px', fontSize: '18px', color: 'var(--primary-light)', fontWeight: 700 }}>
                     🌱 मिट्टी स्वास्थ्य रिपोर्ट / Soil Health Report
                   </h3>
                   <div style={{ display: 'flex', justifyContent: 'center', margin: '14px 0' }}>
@@ -597,7 +597,7 @@ export function SoilLabTab() {
 
             {/* Health Score Output */}
             <div style={{ marginTop: '20px', padding: '16px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.2)', textAlign: 'center' }}>
-              <h3 style={{ margin: '0 0 10px', fontSize: '16px', color: '#4ade80', fontWeight: 700 }}>
+              <h3 style={{ margin: '0 0 10px', fontSize: '16px', color: 'var(--primary-light)', fontWeight: 700 }}>
                 Calculated Soil Health Index
               </h3>
               <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
@@ -624,7 +624,7 @@ export function SoilLabTab() {
                 {saving ? 'सहेज रहे हैं...' : 'सुरक्षित करें / Save Report'}
               </button>
               {saveMsg && (
-                <div style={{ marginTop: '10px', color: '#4ade80', fontSize: '14px', fontWeight: 700 }}>
+                <div style={{ marginTop: '10px', color: 'var(--primary-light)', fontSize: '14px', fontWeight: 700 }}>
                   ✅ {saveMsg}
                 </div>
               )}

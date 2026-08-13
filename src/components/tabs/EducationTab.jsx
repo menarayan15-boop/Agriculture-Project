@@ -53,13 +53,13 @@ export function EducationTab() {
 
   return (
     <div className="tab-panel active">
-      <div className="card" style={{ padding: '1.5rem', background: 'rgba(15, 23, 42, 0.85)', borderRadius: '20px', border: '1px solid var(--border-color)' }}>
+      <div className="card" style={{ padding: '1.5rem', background: 'rgba(22, 21, 20, 0.85)', borderRadius: '20px', border: '1px solid var(--border-color)' }}>
         
         {/* Header Bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', marginBottom: '1.5rem' }}>
           <div>
             <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff', margin: 0 }}>
-              <i className="fa-solid fa-book-open-reader" style={{ color: '#4ade80', marginRight: '10px' }}></i>
+              <i className="fa-solid fa-book-open-reader" style={{ color: 'var(--primary-light)', marginRight: '10px' }}></i>
               Agri Guide: Crop Agricultural Profiles
             </h2>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '4px 0 0 0' }}>
@@ -106,7 +106,7 @@ export function EducationTab() {
           {/* Left: Detailed Selected Crop Profile */}
           <div className="card" style={{ background: 'rgba(20, 35, 25, 0.85)', border: '1.5px solid rgba(74, 222, 128, 0.3)', borderRadius: '16px', padding: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '10px' }}>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#4ade80', margin: 0 }}>
+              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary-light)', margin: 0 }}>
                 {meta.icon} {getText(selectedCrop.nameKey, lang)}
               </h3>
               <span style={{ fontSize: '0.8rem', background: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.4)', padding: '4px 12px', borderRadius: '14px', fontWeight: 700 }}>
@@ -133,7 +133,7 @@ export function EducationTab() {
               </div>
               <div style={{ background: 'rgba(255,255,255,0.04)', padding: '10px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
                 <span style={{ fontSize: '0.72rem', color: '#94a3b8', display: 'block' }}>Mandi Rate</span>
-                <strong style={{ color: '#4ade80', fontSize: '0.92rem' }}>₹{(selectedCrop.mandiPricePerQuintal || 2200).toLocaleString('en-IN')}/Qtl</strong>
+                <strong style={{ color: 'var(--primary-light)', fontSize: '0.92rem' }}>₹{(selectedCrop.mandiPricePerQuintal || 2200).toLocaleString('en-IN')}/Qtl</strong>
               </div>
             </div>
 
@@ -162,7 +162,7 @@ export function EducationTab() {
           </div>
 
           {/* Right: Soil Characteristics Guide */}
-          <div className="card" style={{ background: 'rgba(15, 23, 42, 0.75)', border: '1.5px solid rgba(56, 189, 248, 0.3)', borderRadius: '16px', padding: '1.5rem' }}>
+          <div className="card" style={{ background: 'rgba(22, 21, 20, 0.75)', border: '1.5px solid rgba(56, 189, 248, 0.3)', borderRadius: '16px', padding: '1.5rem' }}>
             <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#38bdf8', margin: '0 0 12px 0' }}>
               <i className="fa-solid fa-mountain"></i> Soil Drainage &amp; Retention Catalog
             </h3>
@@ -192,7 +192,7 @@ export function EducationTab() {
                 </div>
                 <div style={{ background: 'rgba(74, 222, 128, 0.1)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.25)' }}>
                   <span style={{ fontSize: '0.74rem', color: '#94a3b8', display: 'block' }}>Drainage Rate</span>
-                  <strong style={{ color: '#4ade80', fontSize: '1.1rem' }}>{selectedSoil.drainage}%</strong>
+                  <strong style={{ color: 'var(--primary-light)', fontSize: '1.1rem' }}>{selectedSoil.drainage}%</strong>
                 </div>
               </div>
 

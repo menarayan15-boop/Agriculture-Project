@@ -58,7 +58,7 @@ const CALC_LANG = {
 };
 
 const C = {
-  green: '#22c55e', blue: '#60a5fa', amber: '#f59e0b',
+  green: 'var(--primary-light)', blue: '#60a5fa', amber: '#f59e0b',
   red: '#ef4444', purple: '#a855f7', cyan: '#06b6d4', rose: '#f43f5e'
 };
 

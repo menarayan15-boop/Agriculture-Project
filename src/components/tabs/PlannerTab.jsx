@@ -111,7 +111,7 @@ function MonthBar({ season }) {
         let textColor = 'var(--text-secondary)';
         if (isSow) { bg = season.color; textColor = '#000'; label = 'Sow'; }
         else if (isHarvest) { bg = '#f97316'; textColor = '#000'; label = 'Harv'; }
-        else if (isGrow) { bg = 'rgba(74, 222, 128, 0.3)'; textColor = '#4ade80'; label = 'Grow'; }
+        else if (isGrow) { bg = 'rgba(74, 222, 128, 0.3)'; textColor = 'var(--primary-light)'; label = 'Grow'; }
 
         return (
           <div key={m} style={{
@@ -210,7 +210,7 @@ export function PlannerTab() {
             </h4>
             <p style={{ margin: '0 0 8px 0', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
               <span style={{ background: season.color, color: '#000', padding: '2px 8px', borderRadius: '6px', marginRight: '6px', fontSize: '0.7rem', fontWeight: 'bold' }}>Sowing</span>
-              <span style={{ background: 'rgba(74,222,128,0.3)', color: '#4ade80', padding: '2px 8px', borderRadius: '6px', marginRight: '6px', fontSize: '0.7rem', fontWeight: 'bold' }}>Growing</span>
+              <span style={{ background: 'rgba(74,222,128,0.3)', color: 'var(--primary-light)', padding: '2px 8px', borderRadius: '6px', marginRight: '6px', fontSize: '0.7rem', fontWeight: 'bold' }}>Growing</span>
               <span style={{ background: '#f97316', color: '#000', padding: '2px 8px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 'bold' }}>Harvest</span>
             </p>
             <MonthBar season={season} />
@@ -265,7 +265,7 @@ export function PlannerTab() {
                       </div>
                       <div style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
                         <div style={{ flex: 1, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: '8px', padding: '10px', textAlign: 'center', fontSize: '0.8rem' }}>
-                          <div style={{ color: '#4ade80', fontWeight: 'bold', marginBottom: '2px' }}>{season.sowing}</div>
+                          <div style={{ color: 'var(--primary-light)', fontWeight: 'bold', marginBottom: '2px' }}>{season.sowing}</div>
                           <div style={{ color: 'var(--text-secondary)' }}>Sowing Window</div>
                         </div>
                         <div style={{ flex: 1, background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.3)', borderRadius: '8px', padding: '10px', textAlign: 'center', fontSize: '0.8rem' }}>

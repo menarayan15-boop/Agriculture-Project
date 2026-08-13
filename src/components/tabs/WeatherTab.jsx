@@ -94,7 +94,7 @@ export function WeatherTab() {
   };
 
   const currentCardStyle = {
-    background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)',
+    background: 'linear-gradient(135deg, rgba(21, 128, 61, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)',
     border: '1px solid rgba(16, 185, 129, 0.3)',
     borderRadius: '18px',
     padding: '24px',
@@ -260,7 +260,7 @@ export function WeatherTab() {
             border: '1px solid rgba(255, 255, 255, 0.08)',
             borderRadius: '14px',
           }}>
-            <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px', color: '#4ade80', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px', color: 'var(--primary-light)', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <i className="fa-solid fa-seedling"></i>
               <span>🌾 खेती सुझाव / Farming Tip</span>
             </div>

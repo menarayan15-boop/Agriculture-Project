@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { LOCATIONS, SOILS, CROPS } from '../data/constants';
 import { fetchServerStatus, fetchFarmerProfile, saveFarmerProfile } from '../services/api';
+import { generateFarmerInsights } from '../services/farmerProfileEngine';
+import { applyPersonalizationRules } from '../services/personalizationRules';
 
 const AppContext = createContext();
 
@@ -24,6 +26,32 @@ export function AppProvider({ children }) {
       return { completed: 0 };
     }
   });
+
+  // --- Explicit Farmer Profile (Onboarding) ---
+  const [explicitProfile, setExplicitProfile] = useState(() => {
+    try {
+      const saved = localStorage.getItem('krishi_explicit_profile');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    const skipped = localStorage.getItem('krishi_skip_onboarding');
+    return !explicitProfile && !skipped;
+  });
+
+  const saveExplicitProfile = (profileData) => {
+    setExplicitProfile(profileData);
+    localStorage.setItem('krishi_explicit_profile', JSON.stringify(profileData));
+    setShowOnboarding(false);
+  };
+
+  const skipOnboarding = () => {
+    localStorage.setItem('krishi_skip_onboarding', 'true');
+    setShowOnboarding(false);
+  };
 
   // Apply language change handler
   const changeLanguage = (newLang) => {
@@ -146,6 +174,15 @@ export function AppProvider({ children }) {
     }, 600);
   };
 
+  // --- Farmer Profiling Engine ---
+  const farmerInsights = useMemo(() => {
+    const baseInsights = generateFarmerInsights(
+      { location, soil, crop, area, stage, preference },
+      lang
+    );
+    return applyPersonalizationRules(explicitProfile, baseInsights, lang);
+  }, [location, soil, crop, area, stage, preference, lang, explicitProfile]);
+
   const value = {
     lang, setLang: changeLanguage,
     activeTab, setActiveTab,
@@ -159,6 +196,12 @@ export function AppProvider({ children }) {
     serverOnline,
     farmerProfile,
     updateProfile,
+    explicitProfile,
+    saveExplicitProfile,
+    showOnboarding,
+    setShowOnboarding,
+    skipOnboarding,
+    farmerInsights,
     report, setReport,
     loading, setLoading,
     handleGeneratePlan

@@ -72,12 +72,12 @@ export function AdvisorTab() {
           <div className="console-controls" style={{ display: 'flex', gap: '6px' }}>
             <span className="dot red" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }}></span>
             <span className="dot yellow" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }}></span>
-            <span className="dot green" style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e' }}></span>
+            <span className="dot green" style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--primary-light)' }}></span>
           </div>
-          <div className="console-title" style={{ fontFamily: 'monospace', fontWeight: 'bold', color: '#4ade80', fontSize: '0.9rem' }}>
+          <div className="console-title" style={{ fontFamily: 'monospace', fontWeight: 'bold', color: 'var(--primary-light)', fontSize: '0.9rem' }}>
             Gemini 3.5 Flash Agricultural Advisor
           </div>
-          <div className="console-badge" style={{ background: 'rgba(34,197,94,0.2)', color: '#4ade80', fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>
+          <div className="console-badge" style={{ background: 'rgba(34,197,94,0.2)', color: 'var(--primary-light)', fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>
             ONLINE
           </div>
         </div>
@@ -118,7 +118,7 @@ export function AdvisorTab() {
 
         {/* Input Row */}
         <div className="console-input-row" style={{ display: 'flex', alignItems: 'center', padding: '10px 16px', background: 'rgba(0,0,0,0.5)', gap: '10px' }}>
-          <span className="console-prompt" style={{ color: '#4ade80', fontWeight: 'bold' }}>&gt;</span>
+          <span className="console-prompt" style={{ color: 'var(--primary-light)', fontWeight: 'bold' }}>&gt;</span>
           <input
             type="text"
             className="console-cmd-input"
@@ -140,7 +140,7 @@ export function AdvisorTab() {
         {/* Hero Card */}
         <div className="advisor-hero-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px', background: 'linear-gradient(135deg, rgba(22, 101, 52, 0.4) 0%, rgba(10, 24, 17, 0.9) 100%)', borderRadius: '14px', border: '1px solid rgba(74, 222, 128, 0.3)', marginBottom: '1.5rem' }}>
           <div className="hero-left" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div className="ai-avatar" style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(74, 222, 128, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4ade80', fontSize: '1.5rem' }}>
+            <div className="ai-avatar" style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(74, 222, 128, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-light)', fontSize: '1.5rem' }}>
               <i className="fa-solid fa-robot"></i>
             </div>
             <div>
@@ -151,7 +151,7 @@ export function AdvisorTab() {
             </div>
           </div>
           <div className="hero-value-badge" style={{ textAlign: 'right', background: 'rgba(0,0,0,0.3)', padding: '10px 18px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
-            <span className="hero-val-num" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#4ade80', display: 'block' }}>4.8</span>
+            <span className="hero-val-num" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-light)', display: 'block' }}>4.8</span>
             <span className="hero-val-unit" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>mm / day</span>
           </div>
         </div>
@@ -181,7 +181,7 @@ export function AdvisorTab() {
                     <td style={{ padding: '10px' }}>{row.temp}</td>
                     <td style={{ padding: '10px', color: 'var(--accent-blue)' }}>{row.rain}</td>
                     <td style={{ padding: '10px' }}>{row.deficit}</td>
-                    <td style={{ padding: '10px', fontWeight: 'bold', color: '#4ade80' }}>{row.water}</td>
+                    <td style={{ padding: '10px', fontWeight: 'bold', color: 'var(--primary-light)' }}>{row.water}</td>
                     <td style={{ padding: '10px' }}>{row.action}</td>
                   </tr>
                 ))}
@@ -192,8 +192,8 @@ export function AdvisorTab() {
 
         {/* Expert Care Tips */}
         <div className="report-details-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '18px' }}>
-          <div className="details-card border-accent-green" style={{ background: 'var(--panel-bg)', border: '1px solid rgba(34, 197, 94, 0.3)', borderRadius: '14px', padding: '18px' }}>
-            <h4 className="card-sub-title" style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '12px', color: '#4ade80', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className="details-card border-accent-green" style={{ background: 'var(--panel-bg)', border: '1px solid rgba(21, 128, 61, 0.3)', borderRadius: '14px', padding: '18px' }}>
+            <h4 className="card-sub-title" style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '12px', color: 'var(--primary-light)', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <i className="fa-solid fa-circle-exclamation"></i> Critical Crop Care Tips
             </h4>
             <ul style={{ paddingLeft: '20px', margin: '0', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.88rem', color: 'var(--text-secondary)' }}>

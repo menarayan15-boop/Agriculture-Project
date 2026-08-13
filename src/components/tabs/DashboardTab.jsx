@@ -41,7 +41,8 @@ export function DashboardTab() {
     soil,
     crop,
     lang,
-    report
+    report,
+    farmerInsights
   } = useApp();
 
   const [weather, setWeather] = useState(null);
@@ -85,6 +86,150 @@ export function DashboardTab() {
     <div className="tab-panel active">
       <div className="dashboard-grid">
         
+        {/* AI Farmer Profile Card */}
+        {farmerInsights && farmerInsights.profile && (
+          <div className="dash-card span-all" style={{
+            background: 'var(--bg-gradient)',
+            borderTop: '4px solid var(--secondary)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>
+              {/* Left: Profile Info */}
+              <div style={{ flex: '1', minWidth: '250px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                  <span style={{ fontSize: '2rem' }}>{farmerInsights.profile.icon}</span>
+                  <div>
+                    <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700, color: '#ffffff' }}>
+                      {lang === 'hi' ? farmerInsights.profile.labelHi : farmerInsights.profile.label}
+                    </h3>
+                    <span style={{
+                      display: 'inline-block',
+                      marginTop: '4px',
+                      padding: '2px 10px',
+                      borderRadius: '20px',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      background: `${farmerInsights.profile.color}22`,
+                      color: farmerInsights.profile.color,
+                      border: `1px solid ${farmerInsights.profile.color}44`
+                    }}>
+                      {farmerInsights.profile.confidence}% {lang === 'hi' ? 'सटीकता' : 'Confidence'}
+                    </span>
+                  </div>
+                </div>
+                <p style={{ margin: '0 0 16px 0', fontSize: '0.88rem', color: '#94a3b8', lineHeight: '1.5' }}>
+                  {lang === 'hi' ? farmerInsights.profile.descHi : farmerInsights.profile.description}
+                </p>
+
+                {/* Health Score */}
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: '12px',
+                  padding: '12px 16px', borderRadius: '12px',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                }}>
+                  <div style={{
+                    width: '48px', height: '48px', borderRadius: '50%',
+                    background: `conic-gradient(${farmerInsights.healthScore > 70 ? 'var(--primary-light)' : farmerInsights.healthScore > 40 ? 'var(--highlight)' : 'var(--error)'} ${farmerInsights.healthScore * 3.6}deg, rgba(255,255,255,0.1) 0deg)`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    <div style={{
+                      width: '38px', height: '38px', borderRadius: '50%',
+                      background: 'var(--card-bg)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '0.85rem', fontWeight: 700, color: '#fff'
+                    }}>
+                      {farmerInsights.healthScore}
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#e2e8f0' }}>
+                      {lang === 'hi' ? 'खेत स्वास्थ्य स्कोर' : 'Farm Health Score'}
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                      {lang === 'hi' ? 'जोखिम विश्लेषण पर आधारित' : 'Based on risk analysis'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Middle: Risks */}
+              <div style={{ flex: '1', minWidth: '220px' }}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 600, color: '#94a3b8' }}>
+                  <i className="fa-solid fa-triangle-exclamation" style={{ marginRight: '6px', color: '#f59e0b' }}></i>
+                  {lang === 'hi' ? 'जोखिम मूल्यांकन' : 'Risk Assessment'}
+                </h4>
+                {farmerInsights.risks.length === 0 ? (
+                  <div style={{ padding: '12px', borderRadius: 'var(--border-radius-sm)', background: 'rgba(21, 128, 61, 0.15)', border: '1px solid var(--primary)', color: 'var(--primary-light)', fontSize: '0.85rem' }}>
+                    <i className="fa-solid fa-shield-check" style={{ marginRight: '6px' }}></i>
+                    {lang === 'hi' ? 'कोई बड़ा खतरा नहीं' : 'No significant risks detected'}
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {farmerInsights.risks.map((risk, i) => (
+                      <div key={i} style={{
+                        padding: '10px 14px', borderRadius: '10px',
+                        background: risk.severity === 'high' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
+                        border: `1px solid ${risk.severity === 'high' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.2)'}`,
+                        fontSize: '0.82rem'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                          <span>{risk.icon}</span>
+                          <span style={{ fontWeight: 600, color: '#e2e8f0' }}>
+                            {lang === 'hi' ? risk.labelHi : risk.label}
+                          </span>
+                          <span style={{
+                            marginLeft: 'auto',
+                            padding: '1px 8px', borderRadius: '10px',
+                            fontSize: '0.7rem', fontWeight: 700,
+                            background: risk.severity === 'high' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(245, 158, 11, 0.3)',
+                            color: risk.severity === 'high' ? '#fca5a5' : '#fcd34d'
+                          }}>
+                            {risk.score}%
+                          </span>
+                        </div>
+                        <div style={{ color: '#94a3b8', fontSize: '0.78rem' }}>
+                          {lang === 'hi' ? risk.tipHi : risk.tip}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Right: Tips */}
+              <div style={{ flex: '1', minWidth: '220px' }}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <i className="fa-solid fa-lightbulb" style={{ color: 'var(--primary-light)' }}></i>
+                  {lang === 'hi' ? 'व्यक्तिगत सुझाव' : 'Personalized Tips'}
+                  {farmerInsights.isExplicitlyPersonalized && (
+                    <span style={{
+                      background: 'var(--primary)', color: '#fff', 
+                      fontSize: '0.65rem', padding: '2px 8px', borderRadius: '12px', marginLeft: 'auto',
+                      fontWeight: 600
+                    }}>
+                      <i className="fa-solid fa-wand-magic-sparkles" style={{marginRight: '4px'}}></i>
+                      {lang === 'hi' ? 'आपके लिए' : 'For You'}
+                    </span>
+                  )}
+                </h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {farmerInsights.tips.map((tip, i) => (
+                    <div key={i} style={{
+                      padding: '10px 14px', borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      fontSize: '0.82rem', color: '#cbd5e1',
+                      display: 'flex', alignItems: 'flex-start', gap: '8px'
+                    }}>
+                      <span style={{ flexShrink: 0 }}>{tip.icon}</span>
+                      <span>{tip.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Growth Suitability Score Card */}
         <div className="dash-card card-highlight">
           <h3 className="card-title">Growth Suitability Score</h3>
@@ -223,7 +368,7 @@ export function DashboardTab() {
               </li>
             ) : (
               <>
-                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: 'rgba(34, 197, 94, 0.05)', border: '1px solid rgba(34, 197, 94, 0.2)', padding: '15px', borderRadius: '12px' }}>
+                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: 'rgba(21, 128, 61, 0.05)', border: '1px solid rgba(21, 128, 61, 0.2)', padding: '15px', borderRadius: '12px' }}>
                   <span className="diag-icon" style={{ color: 'var(--accent-green)', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
                   <div className="diag-body">
                     <h4 className="diag-title" style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Soil Moisture Levels</h4>
@@ -232,7 +377,7 @@ export function DashboardTab() {
                     </p>
                   </div>
                 </li>
-                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: 'rgba(34, 197, 94, 0.05)', border: '1px solid rgba(34, 197, 94, 0.2)', padding: '15px', borderRadius: '12px' }}>
+                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: 'rgba(21, 128, 61, 0.05)', border: '1px solid rgba(21, 128, 61, 0.2)', padding: '15px', borderRadius: '12px' }}>
                   <span className="diag-icon" style={{ color: 'var(--accent-green)', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
                   <div className="diag-body">
                     <h4 className="diag-title" style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Thermal Suitability</h4>

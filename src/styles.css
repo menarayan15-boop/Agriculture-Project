@@ -15,45 +15,46 @@
     --z-modal-dialog: 10001;
     --z-toast: 100000;
 
-    /* Color Palette */
-    --primary-hsl: 142, 60%, 40%;
-    --primary: hsl(var(--primary-hsl));
-    --primary-light: hsl(142, 60%, 94%);
-    --primary-dark: hsl(142, 60%, 25%);
-    --secondary-hsl: 24, 60%, 40%;
-    --secondary: hsl(var(--secondary-hsl));
-    /* Clay Brown */
+    /* Color Palette - Monsoon & Soil */
+    --primary: #15803d; /* Deep Leaf Green */
+    --primary-light: #22c55e;
+    --primary-dark: #166534;
+    --secondary: #b45309; /* Terracotta / Soil */
+    --highlight: #eab308; /* Harvest Gold */
+    --monsoon-dark: #111827; 
+    --monsoon-green: #1a2e22;
 
-    /* Dark Theme Core (Glassmorphism Base) */
-    --bg-gradient: linear-gradient(135deg, #0d1e15 0%, #060d09 100%);
-    --panel-bg: rgba(18, 38, 28, 0.75);
-    --card-bg: rgba(26, 54, 40, 0.7);
-    --card-border: rgba(255, 255, 255, 0.12);
-    --card-border-hover: rgba(142, 250, 185, 0.35);
-    --text-primary: #e6f3ec;
-    --text-secondary: #a3c2b2;
-    --text-muted: #6e9481;
-    --border-color: rgba(255, 255, 255, 0.12);
+    /* Dark Theme Core */
+    --bg-gradient: linear-gradient(135deg, var(--monsoon-dark) 0%, var(--monsoon-green) 100%);
+    --panel-bg: rgba(17, 24, 39, 0.85);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-hover: rgba(21, 128, 61, 0.4);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border-color: rgba(255, 255, 255, 0.08);
 
     /* Accents & Statuses */
-    --accent-blue: #00adb5;
-    --accent-orange: #ff9f43;
-    --accent-red: #ea5455;
-    --accent-green: #28c76f;
+    --accent-blue: #0ea5e9;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-green: #22c55e;
 
-    /* Layout Sizes */
+    /* Layout Sizes & Spacing Scale (4/8/12/16/24/32/48px) */
     --header-height: 80px;
     --sidebar-width: 320px;
-    --border-radius-lg: 20px;
+    --border-radius-lg: 16px;
     --border-radius-md: 12px;
     --border-radius-sm: 8px;
+    --card-padding: 24px;
 
     /* Shadows */
     --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
-    --glow-primary: 0 0 15px rgba(40, 199, 111, 0.35);
-    --glow-orange: 0 0 15px rgba(255, 159, 67, 0.35);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    --glow-primary: 0 0 15px rgba(21, 128, 61, 0.35);
+    --glow-highlight: 0 0 15px rgba(234, 179, 8, 0.25);
 }
 
 /* Base Resets & Layout */
@@ -64,17 +65,11 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-image: linear-gradient(rgba(10, 25, 16, 0.55), rgba(4, 12, 8, 0.75)), url('bg-farmer.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: cover;
+    background: var(--bg-gradient);
     color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     min-height: 100vh;
-    min-height: 100dvh;
     overflow-x: hidden;
-    line-height: 1.6;
 }
 
 h1,
@@ -83,8 +78,9 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Fraunces', serif;
     font-weight: 600;
+    margin: 0;
 }
 
 /* App Container */
@@ -501,11 +497,10 @@ input:checked+.slider:before {
 
 .dash-card {
     background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
+    border: 1px solid var(--border-color);
+    border-top: 4px solid var(--secondary); /* Soil Horizon Motif */
     border-radius: var(--border-radius-lg);
-    padding: 1.5rem;
+    padding: 24px;
     box-shadow: var(--shadow-md);
     transition: all 0.3s ease;
     display: flex;
@@ -515,14 +510,14 @@ input:checked+.slider:before {
 }
 
 .dash-card:hover {
-    border-color: var(--card-border-hover);
+    border-color: var(--primary-light);
     box-shadow: var(--shadow-lg);
     transform: translateY(-2px);
 }
 
 .card-highlight {
-    background: linear-gradient(135deg, rgba(20, 50, 35, 0.6) 0%, rgba(13, 30, 21, 0.6) 100%);
-    border: 1px solid rgba(40, 199, 111, 0.2);
+    background: linear-gradient(135deg, rgba(21, 128, 61, 0.1) 0%, rgba(20, 83, 45, 0.2) 100%);
+    border-top: 4px solid var(--highlight);
 }
 
 .span-all {

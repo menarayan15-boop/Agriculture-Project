@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { getText } from '../data/constants';
 
 export function Header({ onOpenAiModal }) {
-  const { lang, setLang, geminiKey } = useApp();
+  const { lang, setLang, geminiKey, setShowOnboarding } = useApp();
+  const [profileOpen, setProfileOpen] = useState(false);
 
   return (
     <header className="app-header">
@@ -62,6 +63,46 @@ export function Header({ onOpenAiModal }) {
             <option value="ml">മലയാളം (Malayalam)</option>
             <option value="or">ଓଡ଼िਆ (Odia)</option>
           </select>
+        </div>
+
+        {/* Profile Dropdown */}
+        <div style={{ position: 'relative' }}>
+          <button 
+            onClick={() => setProfileOpen(!profileOpen)}
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--border-color)',
+              color: 'var(--text-primary)', padding: '8px 12px', borderRadius: 'var(--border-radius-sm)',
+              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem'
+            }}
+          >
+            <i className="fa-solid fa-user-circle" style={{color: 'var(--highlight)', fontSize: '1.2rem'}}></i>
+            <i className="fa-solid fa-chevron-down" style={{fontSize: '0.7rem', color: 'var(--text-secondary)'}}></i>
+          </button>
+          
+          {profileOpen && (
+            <div style={{
+              position: 'absolute', top: 'calc(100% + 8px)', right: 0,
+              background: 'var(--monsoon-green)', border: '1px solid var(--border-color)',
+              borderRadius: 'var(--border-radius-sm)', padding: '8px', minWidth: '180px',
+              boxShadow: 'var(--shadow-md)', zIndex: 100
+            }}>
+              <button 
+                onClick={() => {
+                  setProfileOpen(false);
+                  setShowOnboarding(true);
+                }}
+                style={{
+                  width: '100%', background: 'transparent', border: 'none', textAlign: 'left',
+                  color: 'var(--text-primary)', padding: '8px 12px', cursor: 'pointer',
+                  borderRadius: '4px', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+              >
+                <i className="fa-solid fa-pen-to-square"></i> Edit Farm Profile
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Gemini AI Key Settings Button */}

@@ -7,7 +7,7 @@ const STATES = ['All States', 'Punjab', 'Haryana', 'Uttar Pradesh', 'Madhya Prad
   'Tamil Nadu', 'Bihar', 'Himachal Pradesh'];
 
 const CAT_COLORS = {
-  'Cereal': '#f59e0b', 'Pulses': '#22c55e', 'Oilseeds': '#f97316',
+  'Cereal': '#f59e0b', 'Pulses': 'var(--primary-light)', 'Oilseeds': '#f97316',
   'Cash Crop': '#3b82f6', 'Vegetable': '#a855f7', 'Fruit': '#ec4899'
 };
 
@@ -22,7 +22,7 @@ function ChangeBadge({ pct }) {
       display: 'inline-flex', alignItems: 'center', gap: '3px',
       padding: '2px 7px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 700,
       background: up ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)',
-      color: up ? '#4ade80' : '#f87171'
+      color: up ? 'var(--primary-light)' : '#f87171'
     }}>
       <i className={`fa-solid fa-arrow-${up ? 'up' : 'down'}`} style={{ fontSize: '0.65rem' }} />
       {Math.abs(pct).toFixed(2)}%
@@ -39,14 +39,14 @@ function MspBar({ modal, msp }) {
     <div style={{ marginTop: '6px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', marginBottom: '3px', color: 'rgba(255,255,255,0.45)' }}>
         <span>vs MSP ₹{msp.toLocaleString()}</span>
-        <span style={{ color: above ? '#4ade80' : '#f87171', fontWeight: 700 }}>
+        <span style={{ color: above ? 'var(--primary-light)' : '#f87171', fontWeight: 700 }}>
           {above ? '+' : ''}{pct}%
         </span>
       </div>
       <div style={{ height: '4px', borderRadius: '4px', background: 'rgba(255,255,255,0.1)', overflow: 'hidden' }}>
         <div style={{
           height: '100%', width: `${Math.min(100, Math.max(5, (modal / msp) * 50))}%`,
-          background: above ? 'linear-gradient(90deg,#22c55e,#4ade80)' : 'linear-gradient(90deg,#ef4444,#f87171)',
+          background: above ? 'linear-gradient(90deg,var(--primary-light),var(--primary-light))' : 'linear-gradient(90deg,#ef4444,#f87171)',
           borderRadius: '4px', transition: 'width 0.8s ease'
         }} />
       </div>
@@ -149,7 +149,7 @@ function SellModal({ rate, onClose }) {
         {submitted ? (
           <div style={{ textAlign: 'center', padding: '1rem 0' }}>
             <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>✅</div>
-            <h3 style={{ color: '#4ade80', marginBottom: '8px' }}>Request Submitted!</h3>
+            <h3 style={{ color: 'var(--primary-light)', marginBottom: '8px' }}>Request Submitted!</h3>
             <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.88rem', lineHeight: 1.6 }}>
               Your produce enquiry for <strong style={{ color }}>{rate.crop}</strong> at <strong>{rate.mandi}</strong> has been logged.<br />
               The mandi officer / trader will contact you on your registered number.
@@ -316,7 +316,7 @@ export function MandiTab() {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
           <div>
             <h2 style={{ margin: '0 0 4px' }}>
-              <i className="fa-solid fa-chart-line" style={{ color: '#22c55e', marginRight: '10px' }} />
+              <i className="fa-solid fa-chart-line" style={{ color: 'var(--primary-light)', marginRight: '10px' }} />
               Live Mandi Rates — भाव देखें
             </h2>
             <p style={{ margin: 0, color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
@@ -326,7 +326,7 @@ export function MandiTab() {
           <button onClick={fetchRates} style={{
             display: 'flex', alignItems: 'center', gap: '6px',
             background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)',
-            color: '#4ade80', borderRadius: '10px', padding: '8px 14px', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600
+            color: 'var(--primary-light)', borderRadius: '10px', padding: '8px 14px', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600
           }}>
             <i className={`fa-solid fa-rotate${loading ? ' fa-spin' : ''}`} />
             {loading ? 'Refreshing...' : 'Refresh Rates'}
@@ -338,7 +338,7 @@ export function MandiTab() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '1rem' }}>
             {[
               { icon: '📊', label: 'Mandis Listed', val: rates.length, c: '#60a5fa' },
-              { icon: '📈', label: 'Gainers Today', val: gainers, c: '#4ade80' },
+              { icon: '📈', label: 'Gainers Today', val: gainers, c: 'var(--primary-light)' },
               { icon: '📉', label: 'Losers Today', val: losers, c: '#f87171' },
               { icon: '✅', label: 'Above MSP', val: aboveMsp, c: '#fbbf24' },
             ].map(s => (
@@ -413,7 +413,7 @@ export function MandiTab() {
         </div>
       ) : loading ? (
         <div style={{ textAlign: 'center', padding: '4rem', color: 'rgba(255,255,255,0.4)' }}>
-          <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: '2rem', color: '#22c55e', marginBottom: '12px' }} />
+          <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: '2rem', color: 'var(--primary-light)', marginBottom: '12px' }} />
           <p>Loading live mandi rates...</p>
         </div>
       ) : sortedRates.length === 0 ? (
@@ -421,7 +421,7 @@ export function MandiTab() {
           <div style={{ fontSize: '3rem', marginBottom: '12px' }}>🔍</div>
           <p>No mandi rates found for your filters.</p>
           <button onClick={() => { setSearch(''); setCategory('All'); setState('All States'); }}
-            style={{ marginTop: '10px', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: '#4ade80', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem' }}>
+            style={{ marginTop: '10px', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: 'var(--primary-light)', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem' }}>
             Clear All Filters
           </button>
         </div>

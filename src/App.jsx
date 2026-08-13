@@ -17,26 +17,26 @@ import { CalculatorTab } from './components/tabs/CalculatorTab';
 import { PlannerTab } from './components/tabs/PlannerTab';
 import { GeminiKeyModal } from './components/modals/GeminiKeyModal';
 import { RentalBookingModal } from './components/modals/RentalBookingModal';
-import { OnboardingOverlay } from './components/OnboardingOverlay';
+import { OnboardingWizard } from './components/modals/OnboardingWizard';
 import { LandingPage } from './components/LandingPage';
 import FloatingAssistant from './components/FloatingAssistant';
 
 export function App() {
-  const { activeTab, setActiveTab } = useApp();
+  const { activeTab, setActiveTab, setShowOnboarding } = useApp();
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [bookingItem, setBookingItem] = useState(null);
   const [appStarted, setAppStarted] = useState(false);
 
-  if (!appStarted) {
-    return <LandingPage onStart={() => setAppStarted(true)} />;
-  }
-
   return (
-    <div className="app-container">
-      <OnboardingOverlay />
+    <>
+      <OnboardingWizard onComplete={() => setAppStarted(true)} />
       
-      {/* Top Navbar */}
-      <Header onOpenAiModal={() => setAiModalOpen(true)} />
+      {!appStarted ? (
+        <LandingPage onStart={() => setShowOnboarding(true)} />
+      ) : (
+        <div className="app-container">
+          {/* Top Navbar */}
+          <Header onOpenAiModal={() => setAiModalOpen(true)} />
 
       {/* Main Page Layout */}
       <div className="main-layout">
@@ -76,5 +76,7 @@ export function App() {
       {aiModalOpen && <GeminiKeyModal onClose={() => setAiModalOpen(false)} />}
       {bookingItem && <RentalBookingModal equipment={bookingItem} onClose={() => setBookingItem(null)} />}
     </div>
+    )}
+    </>
   );
 }

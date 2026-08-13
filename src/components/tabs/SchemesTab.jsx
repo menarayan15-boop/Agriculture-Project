@@ -4,7 +4,7 @@ import { CENTRAL_SCHEMES, STATE_SCHEMES, MSP_TABLE_2025_26 } from '../../data/co
 
 // ── Category pill colours ──────────────────────────────────────────────────────
 const CATEGORY_COLORS = {
-  'Direct Income Support': '#22c55e',
+  'Direct Income Support': 'var(--primary-light)',
   'Crop Insurance': '#3b82f6',
   'Life Insurance': '#3b82f6',
   'Renewable Energy & Solar': '#f59e0b',
@@ -27,8 +27,8 @@ const CATEGORY_COLORS = {
   'Digital Market Linkage': '#a855f7',
   'Direct Marketing': '#a855f7',
   'Storage & Warehousing': '#64748b',
-  'Crop Production Boost': '#22c55e',
-  'Agriculture Development': '#22c55e',
+  'Crop Production Boost': 'var(--primary-light)',
+  'Agriculture Development': 'var(--primary-light)',
   'Tribal Horticulture': '#84cc16',
   'Farmer Producer Organisations': '#06b6d4',
   'Sugarcane Development': '#84cc16',
@@ -204,7 +204,7 @@ export function SchemesTab() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '1rem' }}>
           <StatPill icon="🏛️" label="Central Schemes" value={CENTRAL_SCHEMES.length} color="#60a5fa" />
           <StatPill icon="📍" label="State Schemes" value={STATE_SCHEMES.length} color="#a855f7" />
-          <StatPill icon="🌾" label="MSP Crops Covered" value={MSP_TABLE_2025_26.length} color="#22c55e" />
+          <StatPill icon="🌾" label="MSP Crops Covered" value={MSP_TABLE_2025_26.length} color="var(--primary-light)" />
           <StatPill icon="💰" label="Max MSP (₹/qtl)" value={`₹${maxMSP.toLocaleString()}`} color="#f59e0b" />
         </div>
       </div>
@@ -276,7 +276,7 @@ export function SchemesTab() {
       {subTab === 'msp' && (
         <div>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '1rem' }}>
-            <span style={{ background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.25)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.8rem', color: '#4ade80' }}>
+            <span style={{ background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.25)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.8rem', color: 'var(--primary-light)' }}>
               🌱 Kharif: {kharifCount} crops
             </span>
             <span style={{ background: 'rgba(96,165,250,0.12)', border: '1px solid rgba(96,165,250,0.25)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.8rem', color: '#93c5fd' }}>
@@ -306,13 +306,13 @@ export function SchemesTab() {
                       <span style={{
                         padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 600,
                         background: item.season === 'Kharif' ? 'rgba(34,197,94,0.15)' : item.season === 'Rabi' ? 'rgba(96,165,250,0.15)' : 'rgba(251,191,36,0.15)',
-                        color: item.season === 'Kharif' ? '#4ade80' : item.season === 'Rabi' ? '#93c5fd' : '#fbbf24'
+                        color: item.season === 'Kharif' ? 'var(--primary-light)' : item.season === 'Rabi' ? '#93c5fd' : '#fbbf24'
                       }}>{item.season}</span>
                     </td>
-                    <td style={{ padding: '11px 16px', color: '#4ade80', fontWeight: 700, fontSize: '0.95rem' }}>₹{item.msp.toLocaleString()}</td>
+                    <td style={{ padding: '11px 16px', color: 'var(--primary-light)', fontWeight: 700, fontSize: '0.95rem' }}>₹{item.msp.toLocaleString()}</td>
                     <td style={{ padding: '11px 16px', color: '#facc15', fontWeight: 600 }}>{item.change}</td>
                     <td style={{ padding: '11px 16px' }}>
-                      <span style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: '#4ade80', borderRadius: '6px', padding: '3px 8px', fontSize: '0.73rem', fontWeight: 600 }}>GoI Floor Price</span>
+                      <span style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: 'var(--primary-light)', borderRadius: '6px', padding: '3px 8px', fontSize: '0.73rem', fontWeight: 600 }}>GoI Floor Price</span>
                     </td>
                   </tr>
                 ))}
