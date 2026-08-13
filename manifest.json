@@ -1,0 +1,38 @@
+{
+  "name": "Krishi Jal - AI Smart Irrigation & Farmer Portal",
+  "short_name": "Krishi Jal",
+  "description": "AI-powered smart irrigation advisor, daily Mandi prices, weather station, and direct farmer-buyer marketplace.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0f172a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["agriculture", "productivity", "utilities"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Mandi Rates & Market",
+      "url": "./index.html?tab=direct-market",
+      "description": "View live daily Mandi commodity rates"
+    },
+    {
+      "name": "Weather & Risk Alerts",
+      "url": "./index.html?tab=weather",
+      "description": "Check live local weather station"
+    }
+  ]
+}
