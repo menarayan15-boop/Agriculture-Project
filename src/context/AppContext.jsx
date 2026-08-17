@@ -161,18 +161,98 @@ export function AppProvider({ children }) {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setReport({
-        suitabilityScore: 92,
-        verdict: "Optimal Soil-Crop Match",
-        waterAvg: (crop.baseWater * area * 1.1).toFixed(1),
-        tips: [
+
+      // --- Dynamic Suitability Score Calculation ---
+
+      // 1. Soil-Crop compatibility (40% weight)
+      // High-retention soils suit water-heavy crops; well-drained soils suit low-water crops
+      const cropWaterNeed = crop.baseWater; // 3.5 (mustard) to 9.5 (sugarcane)
+      const soilRetention = soil.retention;  // 30 (sandy) to 95 (black-soil)
+      const soilDrainage = soil.drainage;    // 10 (black-soil) to 90 (sandy)
+
+      // Ideal: high-water crops on high-retention soil, low-water crops on well-drained soil
+      const waterNeedNorm = cropWaterNeed / 9.5; // 0..1
+      const retentionNorm = soilRetention / 100;  // 0..1
+      // Measure how well retention matches the crop's water demand
+      const soilCropFit = 1 - Math.abs(waterNeedNorm - retentionNorm);
+      const soilCropScore = Math.round(soilCropFit * 100); // 0-100
+
+      // 2. Growth stage match (20% weight)
+      const stageMatchBonus = (stage === crop.idealStage) ? 95 : 65;
+
+      // 3. Area efficiency factor (15% weight)
+      // Moderate areas (1-5 acres) are most manageable
+      let areaScore;
+      if (area >= 1 && area <= 5) areaScore = 92;
+      else if (area > 5 && area <= 10) areaScore = 80;
+      else if (area > 10) areaScore = 68;
+      else areaScore = 75; // < 1 acre, small plot
+
+      // 4. Drainage factor (10% weight)
+      // Moderate drainage (35-55) is ideal for most crops
+      const drainageDiff = Math.abs(soilDrainage - 45);
+      const drainageScore = Math.round(100 - drainageDiff * 1.2);
+
+      // 5. Random variation (15% weight) — simulates micro-climate & seasonal factors
+      const randomFactor = Math.round(70 + Math.random() * 30); // 70-100
+
+      // Weighted composite
+      const rawScore = (
+        soilCropScore * 0.40 +
+        stageMatchBonus * 0.20 +
+        areaScore * 0.15 +
+        drainageScore * 0.10 +
+        randomFactor * 0.15
+      );
+      const finalScore = Math.round(Math.max(35, Math.min(98, rawScore)));
+
+      // Dynamic verdict
+      let verdict, tips;
+      if (finalScore >= 85) {
+        verdict = "Optimal Soil-Crop Match ✅";
+        tips = [
           "Maintain drip irrigation between 6:00 AM and 8:00 AM to minimize evaporation.",
           "Apply organic neem oil spray to mitigate early pest vectors.",
           "Ensure adequate sub-soil moisture drainage before peak flowering stage."
-        ]
+        ];
+      } else if (finalScore >= 70) {
+        verdict = "Good Match — Minor Adjustments Needed";
+        tips = [
+          "Consider adding organic compost to improve soil nutrient balance for this crop.",
+          `This crop prefers ${cropWaterNeed > 6 ? 'high-retention' : 'well-drained'} soil — adjust irrigation frequency.`,
+          stage !== crop.idealStage
+            ? `Switch to the ${crop.idealStage} growth stage for better yield potential.`
+            : "Growth stage is well-matched. Focus on pest management and nutrient timing."
+        ];
+      } else if (finalScore >= 50) {
+        verdict = "Moderate Match — Improvements Recommended ⚠️";
+        tips = [
+          `Soil ${soil.id} has ${soil.retention > 70 ? 'high retention — improve drainage' : 'low retention — increase mulching'} for better results.`,
+          "Add balanced NPK fertilizer and consider soil amendments before next sowing.",
+          "Consult local KVK (Krishi Vigyan Kendra) for region-specific variety recommendations.",
+          stage !== crop.idealStage
+            ? `Current stage '${stage}' is not ideal for this crop. Best stage: '${crop.idealStage}'.`
+            : "Monitor closely for nutrient deficiency signs during this growth phase."
+        ];
+      } else {
+        verdict = "Poor Match — Consider Alternatives ❌";
+        tips = [
+          `Soil type '${soil.id}' is not well suited for ${crop.id}. Consider a different crop or soil amendment.`,
+          `Try crops better suited for ${soil.drainage > 60 ? 'sandy/well-drained' : 'clayey/high-retention'} soils.`,
+          "Heavy soil treatment (lime, gypsum, organic matter) may be required before planting.",
+          "Seek guidance from your nearest agricultural extension center."
+        ];
+      }
+
+      setReport({
+        suitabilityScore: finalScore,
+        verdict,
+        waterAvg: (crop.baseWater * area * (0.9 + Math.random() * 0.3)).toFixed(1),
+        tips
       });
     }, 600);
   };
+
 
   // --- Farmer Profiling Engine ---
   const farmerInsights = useMemo(() => {

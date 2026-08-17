@@ -197,7 +197,13 @@ export function SoilLabTab() {
 
   const runSimulation = () => {
     setAnalyzing(false);
-    // Highly realistic, custom generated report for the farmer
+
+    // Helper: pick random item from array
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    // Helper: random int in range (inclusive)
+    const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // 8 diverse Indian soil profiles
     const mockReports = [
       {
         soil_type: "काली मिट्टी / Black Cotton Soil",
@@ -220,7 +226,7 @@ export function SoilLabTab() {
         ],
         fertilizer_advice: "प्रति एकड़: 40 kg Urea, 20 kg DAP, 10 kg Zinc Sulphate डालें।",
         irrigation_advice: "हल्की सिंचाई 15 से 20 दिनों के अंतराल पर करें। Light irrigation every 15-20 days.",
-        overall_health_score: 82,
+        _scoreRange: [78, 88],
         health_label: "Excellent",
         summary: "आपकी मिट्टी कपास और गेहूं के लिए बहुत उत्तम है। केवल नाइट्रोजन की मात्रा बढ़ाने के लिए यूरिया का सही समय पर प्रयोग करें।"
       },
@@ -245,14 +251,182 @@ export function SoilLabTab() {
         ],
         fertilizer_advice: "प्रति एकड़: 50 kg SSP, 35 kg Urea, और 15 kg MOP डालें।",
         irrigation_advice: "कम पानी लेकिन बार-बार सिंचाई करें (ड्रिप विधि उत्तम है)। Frequent light watering (Drip is best).",
-        overall_health_score: 64,
+        _scoreRange: [58, 68],
         health_label: "Good",
         summary: "यह मिट्टी बाजरा और मूंगफली के लिए अच्छी है। जैविक तत्वों को बढ़ाने के लिए हरी खाद का प्रयोग अवश्य करें।"
+      },
+      {
+        soil_type: "लाल मिट्टी / Red Laterite Soil",
+        color_analysis: "लाल-नारंगी रंग, लौह ऑक्साइड की अधिक मात्रा दर्शाता है। Reddish-orange due to high iron oxide content.",
+        texture: "दानेदार दोमट / Gravelly Loam",
+        estimated_ph: "5.8 (अम्लीय / Acidic)",
+        organic_matter: "कम / Low",
+        moisture_content: "सूखी / Dry",
+        nitrogen_status: "कम / Low",
+        phosphorus_status: "बहुत कम / Deficient (fixed by iron oxides)",
+        potassium_status: "कम / Low",
+        drainage: "बहुत तेज़ / Excessively drained",
+        compaction: "कम / Low",
+        visible_deficiencies: ["फास्फोरस की गंभीर कमी / Severe Phosphorus deficiency", "जैविक कार्बन बहुत कम / Very low organic carbon"],
+        suitable_crops: ["रागी (Finger Millet)", "मूंगफली (Groundnut)", "अरहर (Pigeon Pea)", "काजू (Cashew)", "अनानास (Pineapple)"],
+        improvements_needed: [
+          "चूने का प्रयोग करें (200 kg/एकड़) pH सुधारने के लिए। Apply lime (200 kg/acre) to correct acidity.",
+          "रॉक फॉस्फेट या DAP का अधिक प्रयोग करें। Increase Rock Phosphate or DAP application.",
+          "मल्चिंग करें नमी बचाने के लिए। Use mulching to conserve moisture.",
+          "वर्मी-कम्पोस्ट मिलाएं। Add vermicompost to improve organic matter."
+        ],
+        fertilizer_advice: "प्रति एकड़: 50 kg DAP, 30 kg Urea, 200 kg Lime, 10 kg Borax डालें।",
+        irrigation_advice: "ड्रिप सिंचाई सर्वोत्तम है। हर 7-10 दिन सिंचाई करें। Drip irrigation best; irrigate every 7-10 days.",
+        _scoreRange: [45, 58],
+        health_label: "Fair",
+        summary: "लाल मिट्टी में फास्फोरस की कमी मुख्य समस्या है। चूना और DAP से pH व पोषक तत्व दोनों सुधरेंगे।"
+      },
+      {
+        soil_type: "जलोढ़ मिट्टी / Alluvial Soil",
+        color_analysis: "हल्का भूरा-ग्रे रंग, नदियों द्वारा जमा उपजाऊ तलछट। Light brown-grey, fertile river-deposited sediment.",
+        texture: "दोमट / Loam",
+        estimated_ph: "6.8 (सामान्य / Near Neutral)",
+        organic_matter: "अच्छा / Good",
+        moisture_content: "नम / Moist",
+        nitrogen_status: "पर्याप्त / Adequate",
+        phosphorus_status: "पर्याप्त / Adequate",
+        potassium_status: "पर्याप्त / Adequate",
+        drainage: "अच्छा / Well-drained",
+        compaction: "कम / Low",
+        visible_deficiencies: ["कोई बड़ी कमी नहीं / No major deficiency observed"],
+        suitable_crops: ["धान (Rice)", "गेहूं (Wheat)", "गन्ना (Sugarcane)", "आलू (Potato)", "सब्जियां (Vegetables)", "दलहन (Pulses)"],
+        improvements_needed: [
+          "मिट्टी की उर्वरता बनाए रखने के लिए फसल चक्र अपनाएं। Practice crop rotation to maintain fertility.",
+          "हर 2-3 साल में मिट्टी परीक्षण कराएं। Get soil tested every 2-3 years.",
+          "जैविक खेती अपनाने से और बेहतर परिणाम मिलेंगे। Organic farming will further improve results."
+        ],
+        fertilizer_advice: "प्रति एकड़: 25 kg Urea, 15 kg DAP, 10 kg MOP — संतुलित मात्रा पर्याप्त है।",
+        irrigation_advice: "फसल के अनुसार 10-15 दिन के अंतराल पर सिंचाई। Irrigate every 10-15 days as per crop need.",
+        _scoreRange: [82, 95],
+        health_label: "Excellent",
+        summary: "बहुत उपजाऊ जलोढ़ मिट्टी — गेहूं, धान, और गन्ने के लिए आदर्श। फसल चक्र से उर्वरता बनाए रखें।"
+      },
+      {
+        soil_type: "चिकनी मिट्टी / Heavy Clay Soil",
+        color_analysis: "गहरा भूरा-ग्रे रंग, बहुत चिपचिपी और भारी। Dark grey-brown, very sticky and heavy when wet.",
+        texture: "भारी चिकनी / Heavy Clay",
+        estimated_ph: "7.8 (हल्की क्षारीय / Slightly Alkaline)",
+        organic_matter: "मध्यम / Moderate",
+        moisture_content: "बहुत गीली / Very Wet",
+        nitrogen_status: "मध्यम / Moderate",
+        phosphorus_status: "कम / Low (locked in alkaline pH)",
+        potassium_status: "अच्छा / High",
+        drainage: "बहुत खराब / Poor drainage",
+        compaction: "अधिक / High",
+        visible_deficiencies: ["जल-भराव से जड़ सड़न / Root rot due to waterlogging", "जिंक की कमी / Zinc deficiency"],
+        suitable_crops: ["धान (Rice)", "कपास (Cotton)", "अरहर (Pigeon Pea)", "सूरजमुखी (Sunflower)", "जूट (Jute)"],
+        improvements_needed: [
+          "जिप्सम (100 kg/एकड़) मिलाकर मिट्टी को भुरभुरा करें। Add Gypsum (100 kg/acre) to improve structure.",
+          "जल निकास नालियां बनाएं। Create proper drainage channels.",
+          "रेत और जैविक खाद मिलाएं। Mix sand and organic compost to improve porosity.",
+          "जिंक सल्फेट 10 kg/एकड़ डालें। Apply Zinc Sulphate 10 kg/acre."
+        ],
+        fertilizer_advice: "प्रति एकड़: 30 kg Urea, 25 kg SSP, 10 kg Zinc Sulphate, 100 kg Gypsum।",
+        irrigation_advice: "अत्यधिक सिंचाई से बचें। केवल आवश्यकता पर सिंचाई करें। Avoid over-irrigation; irrigate only when needed.",
+        _scoreRange: [48, 62],
+        health_label: "Fair",
+        summary: "भारी चिकनी मिट्टी में जल-भराव मुख्य समस्या है। जिप्सम और जल निकास से बड़ा सुधार होगा।"
+      },
+      {
+        soil_type: "पर्वतीय मिट्टी / Mountain (Forest) Soil",
+        color_analysis: "गहरा भूरा-काला, जैविक पत्ती कचरे से भरपूर। Dark brown-black, rich in decomposed leaf litter.",
+        texture: "दोमट-बलुई / Loamy-Sandy",
+        estimated_ph: "5.5 (अम्लीय / Acidic)",
+        organic_matter: "बहुत अच्छा / Very High",
+        moisture_content: "नम / Moist",
+        nitrogen_status: "अच्छा / High (from organic matter)",
+        phosphorus_status: "कम / Low",
+        potassium_status: "मध्यम / Moderate",
+        drainage: "तेज़ / Well-drained (sloped terrain)",
+        compaction: "कम / Low",
+        visible_deficiencies: ["फास्फोरस की कमी / Phosphorus deficit", "अम्लता अधिक / High acidity"],
+        suitable_crops: ["चाय (Tea)", "अदरक (Ginger)", "हल्दी (Turmeric)", "सेब (Apple)", "आलू (Potato)", "बड़ी इलायची (Large Cardamom)"],
+        improvements_needed: [
+          "चूना (Lime) 150 kg/एकड़ डालकर pH सुधारें। Apply Lime 150 kg/acre to correct acidity.",
+          "फास्फोरस के लिए रॉक फॉस्फेट का प्रयोग। Use Rock Phosphate for P supplementation.",
+          "ढलान पर सीढ़ीदार खेती करें मिट्टी कटाव रोकने के लिए। Use terrace farming to prevent erosion."
+        ],
+        fertilizer_advice: "प्रति एकड़: 20 kg Urea, 40 kg Rock Phosphate, 150 kg Lime डालें।",
+        irrigation_advice: "वर्षा आधारित खेती पर्याप्त है; सूखे में स्प्रिंकलर का प्रयोग करें। Rain-fed is sufficient; use sprinkler in dry spells.",
+        _scoreRange: [65, 78],
+        health_label: "Good",
+        summary: "पर्वतीय मिट्टी जैविक तत्वों से भरपूर है पर अम्लीय है। चाय, अदरक और सेब के लिए उत्तम। चूने से pH सुधारें।"
+      },
+      {
+        soil_type: "लवणीय-क्षारीय मिट्टी / Saline-Alkaline (Usar) Soil",
+        color_analysis: "सफेद-ग्रे परत ऊपर से दिखाई देती है — नमक की अधिकता। Whitish-grey surface crust due to high salt deposits.",
+        texture: "कठोर चिकनी / Hard Crusty Clay",
+        estimated_ph: "8.5 (अत्यधिक क्षारीय / Highly Alkaline)",
+        organic_matter: "बहुत कम / Very Low",
+        moisture_content: "सूखी / Dry (surface)",
+        nitrogen_status: "बहुत कम / Deficient",
+        phosphorus_status: "बहुत कम / Deficient (locked)",
+        potassium_status: "कम / Low",
+        drainage: "बहुत खराब / Very Poor",
+        compaction: "बहुत अधिक / Very High",
+        visible_deficiencies: ["नमक जमाव / Salt accumulation", "सभी पोषक तत्वों की कमी / All nutrients deficient", "पौधों की वृद्धि रुकी हुई / Stunted plant growth"],
+        suitable_crops: ["जौ (Barley)", "सरसों (Mustard)", "बरसीम (Berseem)", "धान (Rice — salt tolerant variety)", "सहजन (Moringa)"],
+        improvements_needed: [
+          "जिप्सम 250-300 kg/एकड़ डालें और अच्छी तरह मिलाएं। Apply Gypsum 250-300 kg/acre and mix well.",
+          "ढैंचा (Green manure) की खेती करें और मिट्टी में मिलाएं। Grow Dhaincha and plough it back.",
+          "नमक सहनशील किस्मों का चयन करें। Choose salt-tolerant crop varieties.",
+          "लेज़र लैंड लेवलिंग करवाएं। Get laser land leveling done.",
+          "भारी सिंचाई से नमक नीचे धोएं। Leach salts with heavy irrigation."
+        ],
+        fertilizer_advice: "प्रति एकड़: 300 kg Gypsum, 30 kg Urea, 25 kg DAP, 15 kg MOP डालें। ज़िंक और बोरॉन ज़रूरी।",
+        irrigation_advice: "पहले भारी सिंचाई से नमक धोएं, फिर हल्की सिंचाई। Heavy initial leaching, then light frequent irrigation.",
+        _scoreRange: [28, 42],
+        health_label: "Poor",
+        summary: "ऊसर/लवणीय मिट्टी — तुरंत जिप्सम उपचार ज़रूरी है। 1-2 सीज़न में सुधार हो सकता है। नमक सहनशील फसलें लगाएं।"
+      },
+      {
+        soil_type: "पीट / दलदली मिट्टी / Peaty Marshy Soil",
+        color_analysis: "बहुत गहरा काला रंग, गीली और भारी — जैविक पदार्थ अत्यधिक। Very dark black, wet and heavy — extremely high organic content.",
+        texture: "स्पंजी / Spongy-Peaty",
+        estimated_ph: "5.2 (बहुत अम्लीय / Very Acidic)",
+        organic_matter: "अत्यधिक / Very High",
+        moisture_content: "बहुत गीली / Saturated",
+        nitrogen_status: "अच्छा / High",
+        phosphorus_status: "कम / Low (acid-locked)",
+        potassium_status: "कम / Low",
+        drainage: "बहुत खराब / Very Poor (waterlogged)",
+        compaction: "कम / None (spongy)",
+        visible_deficiencies: ["जलभराव / Waterlogging", "फास्फोरस व पोटाश की कमी / P & K deficiency", "कवक रोगों का खतरा / Fungal disease risk"],
+        suitable_crops: ["धान (Paddy Rice)", "जूट (Jute)", "नारियल (Coconut)", "सुपारी (Arecanut)", "केला (Banana)", "मछली पालन (Fish farming)"],
+        improvements_needed: [
+          "जल निकास प्रणाली बनाएं। Build drainage system to remove excess water.",
+          "चूना 200 kg/एकड़ डालकर pH सुधारें। Apply Lime 200 kg/acre to reduce acidity.",
+          "रेत मिलाकर मिट्टी की बनावट सुधारें। Mix sand to improve soil structure.",
+          "ऊंची क्यारी (Raised bed) विधि अपनाएं। Use raised bed cultivation."
+        ],
+        fertilizer_advice: "प्रति एकड़: 200 kg Lime, 20 kg MOP, 30 kg SSP डालें। नाइट्रोजन पहले से पर्याप्त है।",
+        irrigation_advice: "अतिरिक्त सिंचाई की ज़रूरत नहीं — पानी निकालना ज़्यादा ज़रूरी। No extra irrigation needed — focus on drainage instead.",
+        _scoreRange: [40, 55],
+        health_label: "Fair",
+        summary: "दलदली मिट्टी जैविक पदार्थ से भरपूर है लेकिन जलभराव व अम्लता मुख्य समस्या है। धान और नारियल के लिए उपयुक्त।"
       }
     ];
 
-    // Pick one randomly
-    const selected = mockReports[Math.floor(Math.random() * mockReports.length)];
+    // Pick a random report
+    const selected = { ...mockReports[Math.floor(Math.random() * mockReports.length)] };
+
+    // Randomize health score within the report's realistic range
+    const [minScore, maxScore] = selected._scoreRange || [60, 80];
+    selected.overall_health_score = randInt(minScore, maxScore);
+    delete selected._scoreRange;
+
+    // Shuffle suitable_crops order and optionally drop 1-2 for variation
+    if (selected.suitable_crops && selected.suitable_crops.length > 3) {
+      const shuffled = [...selected.suitable_crops].sort(() => Math.random() - 0.5);
+      const dropCount = Math.random() > 0.5 ? randInt(0, 1) : 0;
+      selected.suitable_crops = shuffled.slice(0, shuffled.length - dropCount);
+    }
+
     setAnalysisResult(selected);
   };
 
