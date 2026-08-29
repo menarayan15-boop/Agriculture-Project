@@ -256,6 +256,50 @@ input:checked+.slider:before {
     color: var(--text-primary);
 }
 
+/* Google Translate Widget Theming */
+#google_translate_element {
+    display: inline-flex;
+    align-items: center;
+}
+
+#google_translate_element .goog-te-gadget {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    color: var(--text-primary) !important;
+    margin: 0;
+}
+
+/* Hide the "Powered by" text, keep only the dropdown */
+#google_translate_element .goog-te-gadget > span {
+    display: none !important;
+}
+
+#google_translate_element .goog-te-gadget .goog-te-combo {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    padding: 2px 4px;
+}
+
+#google_translate_element .goog-te-gadget .goog-te-combo option {
+    background: #0f241a;
+    color: #e2e8f0;
+}
+
+/* Hide ONLY the Google Translate top banner bar (not the widget) */
+.goog-te-banner-frame {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+}
+
 /* ==========================================================================
    2. Main Layout
    ========================================================================== */

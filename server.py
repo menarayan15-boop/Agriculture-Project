@@ -1816,7 +1816,7 @@ class KrishiJalHandler(SimpleHTTPRequestHandler):
                     return
 
                 # Build Gemini 1.5 Flash Vision API request
-                gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+                gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={api_key}"
 
                 prompt = """You are an expert soil scientist and agronomist specializing in Indian agriculture. Carefully analyze this soil image and provide a comprehensive soil health report.
 

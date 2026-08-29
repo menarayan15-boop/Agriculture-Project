@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useApp } from '../../context/AppContext';
 import { getText } from '../../data/constants';
 
 export function AdvisorTab() {
-  const { location, crop, soil, stage, area, preference, lang } = useApp();
+  const { location, crop, soil, stage, area, preference, lang, geminiKey } = useApp();
 
   const cropName = crop ? getText(crop.nameKey, lang) : 'Wheat';
   const soilName = soil ? getText(soil.nameKey, lang) : 'Clayey Loam';
@@ -12,13 +12,14 @@ export function AdvisorTab() {
   const [inputQuery, setInputQuery] = useState('');
   const [consoleLogs, setConsoleLogs] = useState([
     { type: 'muted', text: '> Ready for input parameter generation...' },
-    { type: 'info', text: `> Connected to Gemini 3.5 Flash Advisor node for ${locationName}.` },
+    { type: 'info', text: `> Connected to Gemini AI Advisor node for ${locationName}.` },
     { type: 'success', text: `> Target crop: ${cropName} (${area} acres) on ${soilName} soil.` }
   ]);
 
   const [isThinking, setIsThinking] = useState(false);
+  const chatHistoryRef = useRef([]);
 
-  const handleSendQuery = (queryText) => {
+  const handleSendQuery = async (queryText) => {
     const text = queryText || inputQuery;
     if (!text.trim()) return;
 
@@ -30,28 +31,98 @@ export function AdvisorTab() {
     setInputQuery('');
     setIsThinking(true);
 
-    // Simulate AI Advisor inference response
-    setTimeout(() => {
+    try {
+      const systemPrompt = `You are "Krishi Jal Gemini Advisor" — an expert Indian agronomist AI running inside a farming terminal console.
+
+FARMER'S FIELD DATA:
+- Crop: ${cropName}
+- Soil: ${soilName}
+- Location: ${locationName}
+- Farm size: ${area} acres
+- Growth stage: ${stage || 'vegetative'}
+- Farming preference: ${preference || 'balanced'}
+
+RESPONSE RULES:
+1. Start every response with [Gemini AI] prefix.
+2. Give specific, actionable agricultural advice with exact dosages, timings, and Indian product names.
+3. Keep responses concise (2-4 sentences) — this is a terminal console, not a chat.
+4. Use Indian units (₹, quintal, acre, bigha) and mention Indian brands when relevant.
+5. Be scientifically accurate with practical field-level advice.
+6. Respond in English only (this is a technical console).
+7. Do NOT use markdown formatting (no **, ##, bullet points, etc.) — plain text only.`;
+
+      const historyContents = chatHistoryRef.current.slice(-6).map(msg => ({
+        role: msg.role,
+        parts: [{ text: msg.text }]
+      }));
+
+      const requestBody = {
+        system_instruction: { parts: [{ text: systemPrompt }] },
+        contents: [
+          ...historyContents,
+          { role: 'user', parts: [{ text }] }
+        ],
+        generationConfig: {
+          temperature: 0.5,
+          maxOutputTokens: 300,
+          topP: 0.85,
+        }
+      };
+
+      const activeKey = geminiKey || '';
+      const apiUrl = activeKey 
+        ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(activeKey)}`
+        : '';
+
+      let response;
+      if (activeKey) {
+        response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody)
+        });
+      } else {
+        response = { ok: false };
+      }
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData?.error?.message || `API Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[Gemini AI] Unable to generate response.';
+
+      chatHistoryRef.current = [
+        ...chatHistoryRef.current.slice(-8),
+        { role: 'user', text },
+        { role: 'model', text: aiText }
+      ];
+
+      setConsoleLogs(prev => [...prev, { type: 'ai', text: aiText }]);
+      setIsThinking(false);
+    } catch (error) {
+      console.warn('Gemini Advisor API failed, using fallback:', error.message);
+
+      // Offline fallback
       let aiText = '';
       const q = text.toLowerCase();
 
       if (q.includes('fertilizer') || q.includes('recipe') || q.includes('organic')) {
-        aiText = `[Gemini 3.5] For ${cropName} on ${soilName}, apply 40 kg Vermicompost and 10 kg Neem Cake per acre during early ${stage} stage to enhance bio-N fixation.`;
+        aiText = `[Gemini AI] For ${cropName} on ${soilName}, apply 40 kg Vermicompost and 10 kg Neem Cake per acre during early ${stage} stage to enhance bio-N fixation.`;
       } else if (q.includes('yellow') || q.includes('cure') || q.includes('leaf')) {
-        aiText = `[Gemini 3.5] Leaf yellowing in ${cropName} usually indicates Nitrogen deficiency or iron chlorosis. Apply 1% Zinc Sulphate + 2% Urea spray during early morning.`;
+        aiText = `[Gemini AI] Leaf yellowing in ${cropName} usually indicates Nitrogen deficiency or iron chlorosis. Apply 1% Zinc Sulphate + 2% Urea spray during early morning.`;
       } else if (q.includes('pest') || q.includes('aphid') || q.includes('rust')) {
-        aiText = `[Gemini 3.5] Protect ${cropName} by spraying bio-pesticide Azadirachtin (1500 ppm) at 3 ml/liter of water. Ensure uniform canopy coverage.`;
+        aiText = `[Gemini AI] Protect ${cropName} by spraying bio-pesticide Azadirachtin (1500 ppm) at 3 ml/liter of water. Ensure uniform canopy coverage.`;
       } else {
-        aiText = `[Gemini 3.5] For your ${area} acre ${cropName} field in ${locationName}, current ambient temperature and humidity favor steady growth. Maintain light drip irrigation every 2 days.`;
+        aiText = `[Gemini AI] For your ${area} acre ${cropName} field in ${locationName}, current ambient temperature and humidity favor steady growth. Maintain light drip irrigation every 2 days.`;
       }
 
-      setConsoleLogs(prev => [
-        ...prev,
-        { type: 'ai', text: aiText }
-      ]);
+      setConsoleLogs(prev => [...prev, { type: 'ai', text: aiText }]);
       setIsThinking(false);
-    }, 800);
+    }
   };
+
 
   // Generate 7-day schedule rows
   const scheduleData = [
@@ -75,7 +146,7 @@ export function AdvisorTab() {
             <span className="dot green" style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--primary-light)' }}></span>
           </div>
           <div className="console-title" style={{ fontFamily: 'monospace', fontWeight: 'bold', color: 'var(--primary-light)', fontSize: '0.9rem' }}>
-            Gemini 3.5 Flash Agricultural Advisor
+            Gemini AI Agricultural Advisor
           </div>
           <div className="console-badge" style={{ background: 'rgba(34,197,94,0.2)', color: 'var(--primary-light)', fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold' }}>
             ONLINE

@@ -33,275 +33,275 @@ const SOILS = [
         drainage: 15,
         color: "#543d2b",
         particles: {
-        "schemes-subtitle": "Explore los principales programas gubernamentales, subsidios, seguros de cultivos y facilidades de crédito.",
+            "schemes-subtitle": "Explore los principales programas gubernamentales, subsidios, seguros de cultivos y facilidades de crédito.",
 
-        "schemes-title": "Programas Agrícolas Gubernamentales y Comprobador de Subsidios IA",
+            "schemes-title": "Programas Agrícolas Gubernamentales y Comprobador de Subsidios IA",
 
-        "tab-schemes": "Programas y Subsidios Gub.",
+            "tab-schemes": "Programas y Subsidios Gub.",
 
-        "advisor-conservation-tips": "Water Conservation Actions",
-        "advisor-critical-tips": "Critical Crop Care Tips",
-        "advisor-report-summary": "AI Irrigation Prescription",
-        "btn-analyze-soil": "Analyze Soil Sample",
-        "btn-generate": "Generate Irrigation Plan",
-        "config-desc": "Define your field parameters to get custom AI advice.",
-        "config-title": "Farm Settings",
-        "console-ready-msg": "> Ready for input parameter generation...",
-        "console-title": "Gemini 3.5 Flash Agricultural Advisor",
-        "crop-barley": "Barley",
-        "crop-barley-cons": "Leverage laser land leveling to ensure water distributes perfectly with zero runoff waste.",
-        "crop-barley-desc": "Barley is a drought-resistant cool-season cereal. More salt-tolerant than wheat, performs well in light sandy-loam soils with moderate water needs.",
-        "crop-barley-tips": "Do not over-water during vegetative stages. Maintain aerated roots. Avoid nitrogen leaching.",
-        "crop-chickpea": "Chickpea / Gram",
-        "crop-chickpea-cons": "Rely on furrow irrigation in broad bed systems to conserve water and prevent fungal collar rot.",
-        "crop-chickpea-desc": "Chickpea is a winter pulse crop. Highly sensitive to waterlogging. Extremely efficient in using residual soil moisture; requires very low irrigation.",
-        "crop-chickpea-tips": "Water stress at flowering is dangerous, but excess water causes vegetative overgrowth and zero pod yield.",
-        "crop-cotton": "Cotton",
-        "crop-cotton-cons": "Employ drip irrigation beneath black soil mulch to limit evaporation and maximize water efficiency.",
-        "crop-cotton-desc": "Cotton is a warm-season cash crop. Thrives in deep black cotton soils. Highly vulnerable to waterlogging during early stages but drought-tolerant later.",
-        "crop-cotton-tips": "Ensure soil moisture is optimal during flowering and boll formation. Avoid flood irrigation to prevent root hypoxia.",
-        "crop-groundnut": "Groundnut",
-        "crop-groundnut-cons": "Avoid sprinkler irrigation during pod formation to prevent soil crusting. Use drip tapes instead.",
-        "crop-groundnut-desc": "Groundnut is a legume that matures underground. Requires sandy loams to allow the peg to penetrate the soil and develop pods easily. High drainage is critical.",
-        "crop-groundnut-tips": "Provide irrigation during flowering and pegging stages. Avoid clayey soils which restrict peg penetration.",
-        "crop-jasmine": "Jasmine Flower (Mogra)",
-        "crop-jasmine-cons": "Practice basin method watering and thick organic composting around the shrub to preserve moisture.",
-        "crop-jasmine-desc": "Jasmine is an aromatic commercial flowering crop widely used for perfumes and traditional garlands. Thrives in warm, sunny weather and well-drained soils.",
-        "crop-jasmine-tips": "Irrigate regularly during the main flowering season (summer/monsoon). Prune after flowering to encourage new wood and blooms.",
-        "crop-maize": "Maize / Corn",
-        "crop-maize-cons": "Practice ridge-and-furrow planting. Apply water in furrows only to concentrate moisture near roots.",
-        "crop-maize-desc": "Maize is a versatile cereal. Highly sensitive to standing water (waterlogging) and requires moderate, evenly spaced watering throughout its vegetative and flowering phases.",
-        "crop-maize-tips": "Avoid water stress during the tasseling and silking stages as it can lead to massive yield reduction.",
-        "crop-marigold": "Marigold Flower",
-        "crop-marigold-cons": "Apply light straw mulching around beds to prevent moisture evaporation and keep roots cool.",
-        "crop-marigold-desc": "Marigold is a robust, popular flowering plant grown for pest management, ritual use, and garlands. Extremely adaptive and easy to grow.",
-        "crop-marigold-tips": "Avoid overwatering which causes root rot and reduces flower count. Pinch growing tips early to encourage bushy growth and more buds.",
-        "crop-mustard": "Mustard",
-        "crop-mustard-cons": "A single micro-sprinkler session during flowering is highly water-efficient compared to flooding.",
-        "crop-mustard-desc": "Mustard is a hardy winter oilseed crop. Low-to-moderate water requirement, thrives in sandy loams and alluvial soils with minimal watering.",
-        "crop-mustard-tips": "Needs just 2 to 3 light irrigations: first at pre-flowering stage, second at pod-development stage.",
-        "crop-potato": "Potato",
-        "crop-potato-cons": "Use drip tubes laid under plastic mulch to achieve up to 90% water application efficiency.",
-        "crop-potato-desc": "Potato is a tuber crop requiring cool temperatures and loose, aerated soils like sandy loams. Heavy clay soil causes root rot and poor tuber size.",
-        "crop-potato-tips": "Irrigate frequently but lightly. Keep the soil hilled to protect tubers from sunlight and keep them cool.",
-        "crop-rice": "Rice / Paddy",
-        "crop-rice-cons": "Implement Alternate Wetting and Drying (AWD) rather than continuous flooding to save up to 30% water.",
-        "crop-rice-desc": "Rice is a water-intensive tropical cereal. It thrives in standing water and warm, humid climates, requiring clayey soils that resist water drainage.",
-        "crop-rice-tips": "Maintain a standing water level of 5-8 cm during early growth. Avoid letting soil dry out completely until ripening stage.",
-        "crop-rose": "Rose Flower",
-        "crop-rose-cons": "Utilize automated drip systems with timers to water only in early mornings to minimize evaporation loss.",
-        "crop-rose-desc": "Rose is a premium commercial floriculture crop. Demands rich organic soil, consistent moderate moisture, and careful pruning.",
-        "crop-rose-tips": "Water the root zone directly, avoid wetting leaves to prevent black spots. Fertilize monthly with nitrogen and potash.",
-        "crop-sorghum": "Sorghum (Jowar)",
-        "crop-sorghum-cons": "Use soil moisture sensors to avoid irrigation if deep root zone has residual humidity.",
-        "crop-sorghum-desc": "Sorghum is a highly climate-resilient dryland crop. Requires minimal water and survives high temperatures, performing well in heavy soils.",
-        "crop-sorghum-tips": "Provide irrigation during critical boot and grain-filling stages if rainfall is insufficient.",
-        "crop-soybean": "Soybean",
-        "crop-soybean-cons": "No-till farming keeps previous crop residue on the field, preserving vital soil water reserves.",
-        "crop-soybean-desc": "Soybean is a protein-rich oilseed. Highly sensitive to drought during pod-filling and sensitive to waterlogging. Prefers loamy soils.",
-        "crop-soybean-tips": "Ensure adequate moisture during pod-set and pod-filling. Do not let soil crust over after sowing.",
-        "crop-sugarcane": "Sugarcane",
-        "crop-sugarcane-cons": "Use trash-mulching between crop rows to dramatically reduce evaporation and prevent weed growth.",
-        "crop-sugarcane-desc": "Sugarcane is a long-duration, highly water-intensive crop. Requires robust moisture availability, thriving on alluvial and clayey soils with high water holding capacities.",
-        "crop-sugarcane-tips": "Critical watering required during the formative phase (first 4 months). Mulch with dry leaves to retain moisture.",
-        "crop-sunflower": "Sunflower",
-        "crop-sunflower-cons": "Employ drip irrigation lines directly along rows to conserve up to 45% water compared to furrow flooding.",
-        "crop-sunflower-desc": "Sunflower is a highly versatile oilseed flower crop. Highly drought-tolerant with deep taproots, requiring good drainage and sunlight.",
-        "crop-sunflower-tips": "Water deeply but infrequently to encourage deep rooting. Avoid overhead watering to prevent flower bud rot.",
-        "crop-tomato": "Tomato",
-        "crop-tomato-cons": "Apply organic mulch (straw/coconut husk) around plant bases to retain 40% more soil moisture.",
-        "crop-tomato-desc": "Tomato is a sensitive warm-season nightshade crop. Requires constant, moderate moisture. Overwatering causes fruit splitting and blossom end rot.",
-        "crop-tomato-tips": "Water the soil directly, not the leaves, to prevent fungal blights. Maintain consistent moisture to prevent fruit cracking.",
-        "crop-wheat": "Wheat",
-        "crop-wheat-cons": "Use sprinkler irrigation systems to distribute water evenly and reduce evaporation loss.",
-        "crop-wheat-desc": "Wheat is a winter cereal crop. It requires a cool growing season and warm weather at maturity. Prefers well-drained loams and alluvial silt.",
-        "crop-wheat-tips": "Provide critical irrigation during the Crown Root Initiation (CRI) stage (21-25 days after sowing) and during the flowering stage.",
-        "dash-diagnostic-title": "Growth Suitability Diagnostics",
-        "dash-soil-title": "Soil Retention & Properties",
-        "dash-suitability-title": "Growth Suitability Score",
-        "dash-weather-title": "Current Weather Conditions",
-        "diag-init-desc": "Please choose your Region, Soil Type, and Crop in the Farm Settings panel and click Generate Plan.",
-        "diag-init-title": "Awaiting Input Data",
-        "edu-crop-catalog": "Crop Agricultural Profiles",
-        "edu-soil-catalog": "Soil Characteristics Guide",
-        "footer-interview-notes": "Built for Agricultural AI Interview Demonstrations. Powered by Open-Meteo & Gemini-Core.",
-        "footer-tagline": "Empowering farmers with smart agronomic intelligence.",
-        "label-crop": "Crop Type",
-        "label-location": "Location / Region",
-        "label-soil": "Soil Texture / Type",
-        "label-stage": "Growth Stage",
-        "logo-tagline": "AI Smart Irrigation Advisor",
-        "schedule-title": "7-Day Recommended Irrigation Schedule",
-        "sl-color-dark": "Dark Black / Charcoal",
-        "sl-color-grey": "Grey / Ashy",
-        "sl-color-light": "Light Brown / Tan",
-        "sl-color-red": "Reddish Brown",
-        "sl-color-yellow": "Yellowish",
-        "sl-moist-dry": "Dry",
-        "sl-moist-moist": "Moist / Damp",
-        "sl-moist-verydry": "Very Dry / Cracked",
-        "sl-moist-waterlogged": "Waterlogged / Saturated",
-        "sl-org-decayed": "Decayed Leaves",
-        "sl-org-fungal": "Fungal Growth",
-        "sl-org-roots": "Root Fragments",
-        "sl-org-worms": "Earthworms",
-        "sl-tex-crumbly": "Crumbly / Loamy",
-        "sl-tex-gritty": "Gritty / Sandy",
-        "sl-tex-smooth": "Smooth / Silky (Silt)",
-        "sl-tex-sticky": "Sticky / Clay-like",
-        "soil-alluvial": "Alluvial Silt Loam",
-        "soil-alluvial-desc": "Highly fertile soil deposited by river channels. Rich in potash, phosphoric acid, and organic silt. Excellent moisture properties, suitable for wheat, sugarcane, and pulses.",
-        "soil-black": "Black Cotton Soil",
-        "soil-black-desc": "Deep black vertisol rich in clay. High swelling and cracking traits, high moisture retention. Famous for cotton cultivation.",
-        "soil-chalky": "Chalky/Lime Soil",
-        "soil-chalky-desc": "Very alkaline, shallow soil containing a high proportion of calcium carbonate (lime) and stones. Drains extremely fast and dries out easily. Requires organic matter and iron amendments.",
-        "soil-clay": "Heavy Clay Soil",
-        "soil-clay-desc": "Heavy clay soil with exceptionally high water retention, but very low drainage speed. Extremely susceptible to waterlogging. Ideal for flood-crops like Rice, but requires careful drainage for root-crops.",
-        "soil-clay-loam": "Clayey Loam",
-        "soil-clay-loam-desc": "Balanced mixture of clay, silt, and sand. Rich nutrient levels, high water holding capability, and fair drainage characteristics. Highly versatile for general agriculture.",
-        "soil-drainage": "Drainage Speed",
-        "soil-helper": "Soil type auto-fills from region but can be modified.",
-        "soil-laterite": "Laterite Soil",
-        "soil-laterite-desc": "Iron and aluminum-rich soil formed in hot, wet tropical areas. Highly weathered, acidic, and drains quickly. Requires phosphorus fertilization and regular organic manure addition.",
-        "soil-loamy": "Medium Loam",
-        "soil-loamy-desc": "The ideal agricultural soil. Excellent balance of drainage and moisture retention, allowing air pockets for root respiration. Nutrient-dense and easy to work.",
-        "soil-peaty": "Peaty/Marshy Soil",
-        "soil-peaty-desc": "Organic-rich soil formed in waterlogged marshy areas. Very high water retention but naturally poorly drained. High acidity, rich in organic matter. Best for specialized moisture-loving plants.",
-        "soil-red": "Red Sandy Loam",
-        "soil-red-desc": "Formed from crystalline metamorphic rocks. High iron content, porous structure, excellent drainage. Naturally low in water retention, requires organic fertilizers and regulated watering.",
-        "soil-saline": "Saline-Alkaline Soil",
-        "soil-saline-desc": "Salt-affected soil common in arid and semi-arid regions with poor drainage. Restricts water absorption by crops. Requires gypsum washing and salt-tolerant cropping patterns.",
-        "soil-sandy": "Sandy/Desert Soil",
-        "soil-sandy-desc": "Coarse sand particles. High water percolation rate with minimal moisture holding capability. Nutrients leach out quickly. Requires frequent, light drip-irrigation and heavy organic mulching.",
-        "soil-silt": "Silty Soil",
-        "soil-silt-desc": "Fine, smooth particles that retain moisture well but can become compact. Holds nutrients effectively. Good for a wide range of cereals and tuber crops.",
-        "soil-water-retention": "Water Retention",
-        "soillab-amend-title": "Soil Improvement Recommendations",
-        "soillab-area": "Field Area (acres)",
-        "soillab-color": "Soil Color",
-        "soillab-crop-fert": "Fertilizer Suggestion",
-        "soillab-crop-match": "Match",
-        "soillab-crop-name": "Crop",
-        "soillab-crop-rating": "Rating",
-        "soillab-crop-title": "Crop Compatibility Rankings",
-        "soillab-fe": "Iron (Fe)",
-        "soillab-health-label": "SOIL HEALTH",
-        "soillab-hero-subtitle": "Generated from visual & tactile soil observations",
-        "soillab-hero-title": "AI Soil Health Report",
-        "soillab-high": "High",
-        "soillab-k": "Potassium (K)",
-        "soillab-low": "Low",
-        "soillab-medium": "Med",
-        "soillab-moisture": "Moisture Level",
-        "soillab-n": "Nitrogen (N)",
-        "soillab-nutrient-title": "Estimated Nutrient Profile",
-        "soillab-om": "Organic Matter",
-        "soillab-organic": "Organic Matter Signs",
-        "soillab-p": "Phosphorus (P)",
-        "soillab-ph": "pH Strip Reading",
-        "soillab-ph-title": "pH Analysis & Acidity Profile",
-        "soillab-placeholder-desc": "Fill in your soil sample observations on the left and click Analyze Soil.",
-        "soillab-placeholder-title": "Soil Analysis Report",
-        "soillab-subtitle": "Describe your soil sample to get an AI-powered lab report.",
-        "soillab-texture": "Texture Feel",
-        "soillab-title": "AI Soil Analysis Lab",
-        "soillab-zn": "Zinc (Zn)",
-        "stage-flowering": "Mid-Season / Flowering",
-        "stage-germination": "Initial / Germination",
-        "stage-ripening": "Ripening / Harvesting",
-        "stage-vegetative": "Crop Development / Vegetative",
-        "stage-yield": "Late-Season / Yield Formation",
-        "suitability-alert-txt": "Submit configuration to analyze",
-        "suitability-pending": "Suitability",
-        "tab-advisor": "AI Advisor",
-        "tab-dashboard": "Dashboard",
-        "tab-education": "Agri Guide",
-        "tab-soillab": "Soil Lab",
-        "tab-weather": "Weather Station",
-        "table-action": "Action & Best Time",
-        "table-day": "Day / Date",
-        "table-rain": "Forecast Rain",
-        "table-soil-moisture": "Soil Moisture Deficit",
-        "table-temp": "Temp (Min/Max)",
-        "table-water-needed": "Irrigation Depth",
-        "units-celsius": "°C / mm",
-        "units-fahrenheit": "°F / inches",
-        "weather-feels-like": "Feels Like",
-        "weather-humidity": "Humidity",
-        "weather-precipitation": "Rain Probability",
-        "weather-pressure": "Pressure",
-        "weather-radiation": "UV Index",
-        "weather-station-forecast-title": "7-Day Meteorological Forecast",
-        "weather-station-live-title": "Dynamic Weather Monitor",
-        "weather-wind": "Wind Speed",
-        "profit-card-title": "Desglose Estimado de Rendimiento e Ingresos",
+            "advisor-conservation-tips": "Water Conservation Actions",
+            "advisor-critical-tips": "Critical Crop Care Tips",
+            "advisor-report-summary": "AI Irrigation Prescription",
+            "btn-analyze-soil": "Analyze Soil Sample",
+            "btn-generate": "Generate Irrigation Plan",
+            "config-desc": "Define your field parameters to get custom AI advice.",
+            "config-title": "Farm Settings",
+            "console-ready-msg": "> Ready for input parameter generation...",
+            "crop-barley": "Barley",
+            "crop-barley-cons": "Leverage laser land leveling to ensure water distributes perfectly with zero runoff waste.",
+            "crop-barley-desc": "Barley is a drought-resistant cool-season cereal. More salt-tolerant than wheat, performs well in light sandy-loam soils with moderate water needs.",
+            "crop-barley-tips": "Do not over-water during vegetative stages. Maintain aerated roots. Avoid nitrogen leaching.",
+            "crop-chickpea": "Chickpea / Gram",
+            "crop-chickpea-cons": "Rely on furrow irrigation in broad bed systems to conserve water and prevent fungal collar rot.",
+            "crop-chickpea-desc": "Chickpea is a winter pulse crop. Highly sensitive to waterlogging. Extremely efficient in using residual soil moisture; requires very low irrigation.",
+            "crop-chickpea-tips": "Water stress at flowering is dangerous, but excess water causes vegetative overgrowth and zero pod yield.",
+            "crop-cotton": "Cotton",
+            "crop-cotton-cons": "Employ drip irrigation beneath black soil mulch to limit evaporation and maximize water efficiency.",
+            "crop-cotton-desc": "Cotton is a warm-season cash crop. Thrives in deep black cotton soils. Highly vulnerable to waterlogging during early stages but drought-tolerant later.",
+            "crop-cotton-tips": "Ensure soil moisture is optimal during flowering and boll formation. Avoid flood irrigation to prevent root hypoxia.",
+            "crop-groundnut": "Groundnut",
+            "crop-groundnut-cons": "Avoid sprinkler irrigation during pod formation to prevent soil crusting. Use drip tapes instead.",
+            "crop-groundnut-desc": "Groundnut is a legume that matures underground. Requires sandy loams to allow the peg to penetrate the soil and develop pods easily. High drainage is critical.",
+            "crop-groundnut-tips": "Provide irrigation during flowering and pegging stages. Avoid clayey soils which restrict peg penetration.",
+            "crop-jasmine": "Jasmine Flower (Mogra)",
+            "crop-jasmine-cons": "Practice basin method watering and thick organic composting around the shrub to preserve moisture.",
+            "crop-jasmine-desc": "Jasmine is an aromatic commercial flowering crop widely used for perfumes and traditional garlands. Thrives in warm, sunny weather and well-drained soils.",
+            "crop-jasmine-tips": "Irrigate regularly during the main flowering season (summer/monsoon). Prune after flowering to encourage new wood and blooms.",
+            "crop-maize": "Maize / Corn",
+            "crop-maize-cons": "Practice ridge-and-furrow planting. Apply water in furrows only to concentrate moisture near roots.",
+            "crop-maize-desc": "Maize is a versatile cereal. Highly sensitive to standing water (waterlogging) and requires moderate, evenly spaced watering throughout its vegetative and flowering phases.",
+            "crop-maize-tips": "Avoid water stress during the tasseling and silking stages as it can lead to massive yield reduction.",
+            "crop-marigold": "Marigold Flower",
+            "crop-marigold-cons": "Apply light straw mulching around beds to prevent moisture evaporation and keep roots cool.",
+            "crop-marigold-desc": "Marigold is a robust, popular flowering plant grown for pest management, ritual use, and garlands. Extremely adaptive and easy to grow.",
+            "crop-marigold-tips": "Avoid overwatering which causes root rot and reduces flower count. Pinch growing tips early to encourage bushy growth and more buds.",
+            "crop-mustard": "Mustard",
+            "crop-mustard-cons": "A single micro-sprinkler session during flowering is highly water-efficient compared to flooding.",
+            "crop-mustard-desc": "Mustard is a hardy winter oilseed crop. Low-to-moderate water requirement, thrives in sandy loams and alluvial soils with minimal watering.",
+            "crop-mustard-tips": "Needs just 2 to 3 light irrigations: first at pre-flowering stage, second at pod-development stage.",
+            "crop-potato": "Potato",
+            "crop-potato-cons": "Use drip tubes laid under plastic mulch to achieve up to 90% water application efficiency.",
+            "crop-potato-desc": "Potato is a tuber crop requiring cool temperatures and loose, aerated soils like sandy loams. Heavy clay soil causes root rot and poor tuber size.",
+            "crop-potato-tips": "Irrigate frequently but lightly. Keep the soil hilled to protect tubers from sunlight and keep them cool.",
+            "crop-rice": "Rice / Paddy",
+            "crop-rice-cons": "Implement Alternate Wetting and Drying (AWD) rather than continuous flooding to save up to 30% water.",
+            "crop-rice-desc": "Rice is a water-intensive tropical cereal. It thrives in standing water and warm, humid climates, requiring clayey soils that resist water drainage.",
+            "crop-rice-tips": "Maintain a standing water level of 5-8 cm during early growth. Avoid letting soil dry out completely until ripening stage.",
+            "crop-rose": "Rose Flower",
+            "crop-rose-cons": "Utilize automated drip systems with timers to water only in early mornings to minimize evaporation loss.",
+            "crop-rose-desc": "Rose is a premium commercial floriculture crop. Demands rich organic soil, consistent moderate moisture, and careful pruning.",
+            "crop-rose-tips": "Water the root zone directly, avoid wetting leaves to prevent black spots. Fertilize monthly with nitrogen and potash.",
+            "crop-sorghum": "Sorghum (Jowar)",
+            "crop-sorghum-cons": "Use soil moisture sensors to avoid irrigation if deep root zone has residual humidity.",
+            "crop-sorghum-desc": "Sorghum is a highly climate-resilient dryland crop. Requires minimal water and survives high temperatures, performing well in heavy soils.",
+            "crop-sorghum-tips": "Provide irrigation during critical boot and grain-filling stages if rainfall is insufficient.",
+            "crop-soybean": "Soybean",
+            "crop-soybean-cons": "No-till farming keeps previous crop residue on the field, preserving vital soil water reserves.",
+            "crop-soybean-desc": "Soybean is a protein-rich oilseed. Highly sensitive to drought during pod-filling and sensitive to waterlogging. Prefers loamy soils.",
+            "crop-soybean-tips": "Ensure adequate moisture during pod-set and pod-filling. Do not let soil crust over after sowing.",
+            "crop-sugarcane": "Sugarcane",
+            "crop-sugarcane-cons": "Use trash-mulching between crop rows to dramatically reduce evaporation and prevent weed growth.",
+            "crop-sugarcane-desc": "Sugarcane is a long-duration, highly water-intensive crop. Requires robust moisture availability, thriving on alluvial and clayey soils with high water holding capacities.",
+            "crop-sugarcane-tips": "Critical watering required during the formative phase (first 4 months). Mulch with dry leaves to retain moisture.",
+            "crop-sunflower": "Sunflower",
+            "crop-sunflower-cons": "Employ drip irrigation lines directly along rows to conserve up to 45% water compared to furrow flooding.",
+            "crop-sunflower-desc": "Sunflower is a highly versatile oilseed flower crop. Highly drought-tolerant with deep taproots, requiring good drainage and sunlight.",
+            "crop-sunflower-tips": "Water deeply but infrequently to encourage deep rooting. Avoid overhead watering to prevent flower bud rot.",
+            "crop-tomato": "Tomato",
+            "crop-tomato-cons": "Apply organic mulch (straw/coconut husk) around plant bases to retain 40% more soil moisture.",
+            "crop-tomato-desc": "Tomato is a sensitive warm-season nightshade crop. Requires constant, moderate moisture. Overwatering causes fruit splitting and blossom end rot.",
+            "crop-tomato-tips": "Water the soil directly, not the leaves, to prevent fungal blights. Maintain consistent moisture to prevent fruit cracking.",
+            "crop-wheat": "Wheat",
+            "crop-wheat-cons": "Use sprinkler irrigation systems to distribute water evenly and reduce evaporation loss.",
+            "crop-wheat-desc": "Wheat is a winter cereal crop. It requires a cool growing season and warm weather at maturity. Prefers well-drained loams and alluvial silt.",
+            "crop-wheat-tips": "Provide critical irrigation during the Crown Root Initiation (CRI) stage (21-25 days after sowing) and during the flowering stage.",
+            "dash-diagnostic-title": "Growth Suitability Diagnostics",
+            "dash-soil-title": "Soil Retention & Properties",
+            "dash-suitability-title": "Growth Suitability Score",
+            "dash-weather-title": "Current Weather Conditions",
+            "diag-init-desc": "Please choose your Region, Soil Type, and Crop in the Farm Settings panel and click Generate Plan.",
+            "diag-init-title": "Awaiting Input Data",
+            "edu-crop-catalog": "Crop Agricultural Profiles",
+            "edu-soil-catalog": "Soil Characteristics Guide",
+            "footer-interview-notes": "Built for Agricultural AI Interview Demonstrations. Powered by Open-Meteo & Gemini-Core.",
+            "footer-tagline": "Empowering farmers with smart agronomic intelligence.",
+            "label-crop": "Crop Type",
+            "label-location": "Location / Region",
+            "label-soil": "Soil Texture / Type",
+            "label-stage": "Growth Stage",
+            "logo-tagline": "AI Smart Irrigation Advisor",
+            "schedule-title": "7-Day Recommended Irrigation Schedule",
+            "sl-color-dark": "Dark Black / Charcoal",
+            "sl-color-grey": "Grey / Ashy",
+            "sl-color-light": "Light Brown / Tan",
+            "sl-color-red": "Reddish Brown",
+            "sl-color-yellow": "Yellowish",
+            "sl-moist-dry": "Dry",
+            "sl-moist-moist": "Moist / Damp",
+            "sl-moist-verydry": "Very Dry / Cracked",
+            "sl-moist-waterlogged": "Waterlogged / Saturated",
+            "sl-org-decayed": "Decayed Leaves",
+            "sl-org-fungal": "Fungal Growth",
+            "sl-org-roots": "Root Fragments",
+            "sl-org-worms": "Earthworms",
+            "sl-tex-crumbly": "Crumbly / Loamy",
+            "sl-tex-gritty": "Gritty / Sandy",
+            "sl-tex-smooth": "Smooth / Silky (Silt)",
+            "sl-tex-sticky": "Sticky / Clay-like",
+            "soil-alluvial": "Alluvial Silt Loam",
+            "soil-alluvial-desc": "Highly fertile soil deposited by river channels. Rich in potash, phosphoric acid, and organic silt. Excellent moisture properties, suitable for wheat, sugarcane, and pulses.",
+            "soil-black": "Black Cotton Soil",
+            "soil-black-desc": "Deep black vertisol rich in clay. High swelling and cracking traits, high moisture retention. Famous for cotton cultivation.",
+            "soil-chalky": "Chalky/Lime Soil",
+            "soil-chalky-desc": "Very alkaline, shallow soil containing a high proportion of calcium carbonate (lime) and stones. Drains extremely fast and dries out easily. Requires organic matter and iron amendments.",
+            "soil-clay": "Heavy Clay Soil",
+            "soil-clay-desc": "Heavy clay soil with exceptionally high water retention, but very low drainage speed. Extremely susceptible to waterlogging. Ideal for flood-crops like Rice, but requires careful drainage for root-crops.",
+            "soil-clay-loam": "Clayey Loam",
+            "soil-clay-loam-desc": "Balanced mixture of clay, silt, and sand. Rich nutrient levels, high water holding capability, and fair drainage characteristics. Highly versatile for general agriculture.",
+            "soil-drainage": "Drainage Speed",
+            "soil-helper": "Soil type auto-fills from region but can be modified.",
+            "soil-laterite": "Laterite Soil",
+            "soil-laterite-desc": "Iron and aluminum-rich soil formed in hot, wet tropical areas. Highly weathered, acidic, and drains quickly. Requires phosphorus fertilization and regular organic manure addition.",
+            "soil-loamy": "Medium Loam",
+            "soil-loamy-desc": "The ideal agricultural soil. Excellent balance of drainage and moisture retention, allowing air pockets for root respiration. Nutrient-dense and easy to work.",
+            "soil-peaty": "Peaty/Marshy Soil",
+            "soil-peaty-desc": "Organic-rich soil formed in waterlogged marshy areas. Very high water retention but naturally poorly drained. High acidity, rich in organic matter. Best for specialized moisture-loving plants.",
+            "soil-red": "Red Sandy Loam",
+            "soil-red-desc": "Formed from crystalline metamorphic rocks. High iron content, porous structure, excellent drainage. Naturally low in water retention, requires organic fertilizers and regulated watering.",
+            "soil-saline": "Saline-Alkaline Soil",
+            "soil-saline-desc": "Salt-affected soil common in arid and semi-arid regions with poor drainage. Restricts water absorption by crops. Requires gypsum washing and salt-tolerant cropping patterns.",
+            "soil-sandy": "Sandy/Desert Soil",
+            "soil-sandy-desc": "Coarse sand particles. High water percolation rate with minimal moisture holding capability. Nutrients leach out quickly. Requires frequent, light drip-irrigation and heavy organic mulching.",
+            "soil-silt": "Silty Soil",
+            "soil-silt-desc": "Fine, smooth particles that retain moisture well but can become compact. Holds nutrients effectively. Good for a wide range of cereals and tuber crops.",
+            "soil-water-retention": "Water Retention",
+            "soillab-amend-title": "Soil Improvement Recommendations",
+            "soillab-area": "Field Area (acres)",
+            "soillab-color": "Soil Color",
+            "soillab-crop-fert": "Fertilizer Suggestion",
+            "soillab-crop-match": "Match",
+            "soillab-crop-name": "Crop",
+            "soillab-crop-rating": "Rating",
+            "soillab-crop-title": "Crop Compatibility Rankings",
+            "soillab-fe": "Iron (Fe)",
+            "soillab-health-label": "SOIL HEALTH",
+            "soillab-hero-subtitle": "Generated from visual & tactile soil observations",
+            "soillab-hero-title": "AI Soil Health Report",
+            "soillab-high": "High",
+            "soillab-k": "Potassium (K)",
+            "soillab-low": "Low",
+            "soillab-medium": "Med",
+            "soillab-moisture": "Moisture Level",
+            "soillab-n": "Nitrogen (N)",
+            "soillab-nutrient-title": "Estimated Nutrient Profile",
+            "soillab-om": "Organic Matter",
+            "soillab-organic": "Organic Matter Signs",
+            "soillab-p": "Phosphorus (P)",
+            "soillab-ph": "pH Strip Reading",
+            "soillab-ph-title": "pH Analysis & Acidity Profile",
+            "soillab-placeholder-desc": "Fill in your soil sample observations on the left and click Analyze Soil.",
+            "soillab-placeholder-title": "Soil Analysis Report",
+            "soillab-subtitle": "Describe your soil sample to get an AI-powered lab report.",
+            "soillab-texture": "Texture Feel",
+            "soillab-title": "AI Soil Analysis Lab",
+            "soillab-zn": "Zinc (Zn)",
+            "stage-flowering": "Mid-Season / Flowering",
+            "stage-germination": "Initial / Germination",
+            "stage-ripening": "Ripening / Harvesting",
+            "stage-vegetative": "Crop Development / Vegetative",
+            "stage-yield": "Late-Season / Yield Formation",
+            "suitability-alert-txt": "Submit configuration to analyze",
+            "suitability-pending": "Suitability",
+            "tab-advisor": "AI Advisor",
+            "tab-dashboard": "Dashboard",
+            "tab-education": "Agri Guide",
+            "tab-soillab": "Soil Lab",
+            "tab-weather": "Weather Station",
+            "table-action": "Action & Best Time",
+            "table-day": "Day / Date",
+            "table-rain": "Forecast Rain",
+            "table-soil-moisture": "Soil Moisture Deficit",
+            "table-temp": "Temp (Min/Max)",
+            "table-water-needed": "Irrigation Depth",
+            "units-celsius": "°C / mm",
+            "units-fahrenheit": "°F / inches",
+            "weather-feels-like": "Feels Like",
+            "weather-humidity": "Humidity",
+            "weather-precipitation": "Rain Probability",
+            "weather-pressure": "Pressure",
+            "weather-radiation": "UV Index",
+            "weather-station-forecast-title": "7-Day Meteorological Forecast",
+            "weather-station-live-title": "Dynamic Weather Monitor",
+            "weather-wind": "Wind Speed",
+            "profit-card-title": "Desglose Estimado de Rendimiento e Ingresos",
 
-        "profit-section-title": "Estimador de Rendimiento y Rentabilidad",
+            "profit-section-title": "Estimador de Rendimiento y Rentabilidad",
 
-        "btn-clear-key": "Borrar Clave",
+            "btn-clear-key": "Borrar Clave",
 
-        "btn-save-key": "Guardar y Conectar",
+            "btn-save-key": "Guardar y Conectar",
 
-        "label-gemini-key": "Ingrese la Clave API de Gemini:",
+            "label-gemini-key": "Ingrese la Clave API de Gemini:",
 
-        "modal-ai-desc": "Conecte Gemini 1.5 Flash AI para asistencia conversacional en tiempo real, diagnóstico de enfermedades y asesoramiento agronómico.",
+            "modal-ai-desc": "Conecte Gemini 1.5 Flash AI para asistencia conversacional en tiempo real, diagnóstico de enfermedades y asesoramiento agronómico.",
 
-        "modal-ai-title": "Conectar Gemini AI en Vivo",
+            "modal-ai-title": "Conectar Gemini AI en Vivo",
 
-        "btn-ai-key": "Clave Gemini AI",
+            "btn-ai-key": "Clave Gemini AI",
 
-        "planner-timeline-title": "Cronograma Anual de Crecimiento y Siembra",
+            "planner-timeline-title": "Cronograma Anual de Crecimiento y Siembra",
 
-        "planner-rotation-title": "Secuencia de Rotación para Nitrógeno y Control de Plagas",
+            "planner-rotation-title": "Secuencia de Rotación para Nitrógeno y Control de Plagas",
 
-        "planner-calendar-title": "Calendario Agrícola y Motor de Rotación de Cultivos",
+            "planner-calendar-title": "Calendario Agrícola y Motor de Rotación de Cultivos",
 
-        "season-zaid": "Zaid (Verano)",
+            "season-zaid": "Zaid (Verano)",
 
-        "season-rabi": "Rabi (Invierno)",
+            "season-rabi": "Rabi (Invierno)",
 
-        "season-kharif": "Kharif (Monzón)",
+            "season-kharif": "Kharif (Monzón)",
 
-        "season-all": "Todas las Estaciones",
+            "season-all": "Todas las Estaciones",
 
-        "tab-planner": "Calendario y Rotación",
+            "tab-planner": "Calendario y Rotación",
 
-        "flower-booster-title": "Floricultura y Estimulación de Floración",
+            "flower-booster-title": "Floricultura y Estimulación de Floración",
 
-        "seed-treatment-title": "Tratamiento de Semillas y Germinación",
+            "seed-treatment-title": "Tratamiento de Semillas y Germinación",
 
-        "seed-flower-title": "Cuidado de Semillas, Viveros y Flores",
+            "seed-flower-title": "Cuidado de Semillas, Viveros y Flores",
 
-        "pref-synthetic": "Comercial de Alto Rendimiento",
+            "pref-synthetic": "Comercial de Alto Rendimiento",
 
-        "pref-organic": "100% Orgánico y Bio-Insumos",
+            "pref-organic": "100% Orgánico y Bio-Insumos",
 
-        "pref-balanced": "Equilibrado (Químico + Bio)",
+            "pref-balanced": "Equilibrado (Químico + Bio)",
 
-        "label-preference": "Preferencia de Práctica Agrícola",
+            "label-preference": "Preferencia de Práctica Agrícola",
 
-        "pest-safety-period": "Seguridad de Pre-cosecha",
+            "pest-safety-period": "Seguridad de Pre-cosecha",
 
-        "pest-water-vol": "Agua de Dilución",
+            "pest-water-vol": "Agua de Dilución",
 
-        "fert-zinc": "Sulfato de Zinc",
+            "fert-zinc": "Sulfato de Zinc",
 
-        "fert-mop": "MOP (60% K₂O)",
+            "fert-mop": "MOP (60% K₂O)",
 
-        "fert-dap": "DAP (18-46-0)",
+            "fert-dap": "DAP (18-46-0)",
 
-        "fert-urea": "Urea (46% N)",
+            "fert-urea": "Urea (46% N)",
 
-        "pest-card-title": "Control de Plagas y Protección Vegetal",
+            "pest-card-title": "Control de Plagas y Protección Vegetal",
 
-        "fert-card-title": "Requerimientos de Nutrientes y Fertilizantes",
+            "fert-card-title": "Requerimientos de Nutrientes y Fertilizantes",
 
-        "advisor-fert-pest-title": "Protección de Cultivos y Dosis de Fertilizantes",
+            "advisor-fert-pest-title": "Protección de Cultivos y Dosis de Fertilizantes",
 
-        "area-helper": "Calcula con precisión las dosis de fertilizantes y pesticidas.",
+            "area-helper": "Calcula con precisión las dosis de fertilizantes y pesticidas.",
 
-        "label-area": "Área de la Granja (Acres)",
- sand: 10, clay: 90 },
+            "label-area": "Área de la Granja (Acres)",
+            sand: 10, clay: 90
+        },
         descKey: "soil-clay-desc"
     },
     {
@@ -420,9 +420,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 24, mandiPricePerQuintal: 2300,
         season: "kharif", sowingMonths: [5, 6], growthMonths: [7, 8], harvestMonths: [9, 10], rotationSequence: ['Chickpea / Pulse (Rabi)', 'Sunflower (Zaid)', 'Rice (Next Kharif)'],
         seedTreatment: "Soak seeds in 1% salt solution to filter lightweight seeds. Treat selected seed with Carbendazim 50% WP (2 g/kg) or Trichoderma viride (10 g/kg) + Pseudomonas fluorescens to prevent Seedling Blast & Bakanae disease.",
-        organic: {'fertNote': 'Apply Vermicompost @ 2.5 Tons/acre + FYM @ 5 Tons/acre + Azospirillum & Phosphobacteria bio-fertilizers @ 2 kg/acre.', 'pestNote': 'Spray Neem Oil 1500 ppm @ 1 L/acre or Beauveria bassiana @ 1 kg/acre for Stem Borer & Leaf Folder control.'},
-        fertilizers: {ureaKgPerAcre: 90, dapKgPerAcre: 45, mopKgPerAcre: 30, zincKgPerAcre: 10, fymTonsPerAcre: 4, splitNote: 'Apply 50% Urea + full DAP & MOP at basal transplanting. Apply remaining 50% Urea in two split doses at tillering and panicle initiation stages.'},
-        pesticides: [{pest: 'Stem Borer & Leaf Folder', chemical: 'Chlorantraniliprole 18.5% SC', dosagePerAcre: '60 ml', waterLiters: 200, safetyDays: 14}, {pest: 'Rice Blast & Brown Spot', chemical: 'Tebuconazole 50% + Trifloxystrobin 25% WG', dosagePerAcre: '80 g', waterLiters: 200, safetyDays: 21}]
+        organic: { 'fertNote': 'Apply Vermicompost @ 2.5 Tons/acre + FYM @ 5 Tons/acre + Azospirillum & Phosphobacteria bio-fertilizers @ 2 kg/acre.', 'pestNote': 'Spray Neem Oil 1500 ppm @ 1 L/acre or Beauveria bassiana @ 1 kg/acre for Stem Borer & Leaf Folder control.' },
+        fertilizers: { ureaKgPerAcre: 90, dapKgPerAcre: 45, mopKgPerAcre: 30, zincKgPerAcre: 10, fymTonsPerAcre: 4, splitNote: 'Apply 50% Urea + full DAP & MOP at basal transplanting. Apply remaining 50% Urea in two split doses at tillering and panicle initiation stages.' },
+        pesticides: [{ pest: 'Stem Borer & Leaf Folder', chemical: 'Chlorantraniliprole 18.5% SC', dosagePerAcre: '60 ml', waterLiters: 200, safetyDays: 14 }, { pest: 'Rice Blast & Brown Spot', chemical: 'Tebuconazole 50% + Trifloxystrobin 25% WG', dosagePerAcre: '80 g', waterLiters: 200, safetyDays: 21 }]
     },
     {
         id: "wheat",
@@ -438,9 +438,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 20, mandiPricePerQuintal: 2275,
         season: "rabi", sowingMonths: [9, 10], growthMonths: [11, 0, 1], harvestMonths: [2, 3], rotationSequence: ['Green Gram / Moong (Zaid)', 'Cotton or Rice (Kharif)', 'Wheat (Next Rabi)'],
         seedTreatment: "Treat seed with Carboxin 37.5% + Thiram 37.5% DS @ 3 g/kg seed or Trichoderma harzianum @ 10 g/kg. Inoculate with Azotobacter & PSB for nitrogen and phosphorus uptake.",
-        organic: {'fertNote': 'Apply FYM @ 4 Tons/acre + Poultry Manure @ 1.5 Tons/acre + Azotobacter culture at sowing.', 'pestNote': 'Spray Neem Seed Kernel Extract (NSKE 5%) @ 2 L/acre for Aphid control.'},
-        fertilizers: {ureaKgPerAcre: 100, dapKgPerAcre: 50, mopKgPerAcre: 25, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply full DAP, MOP & 50% Urea at sowing (CRI stage). Apply remaining 50% Urea after 1st irrigation (21-25 days).'},
-        pesticides: [{pest: 'Wheat Aphids & Termites', chemical: 'Imidacloprid 17.8% SL', dosagePerAcre: '50 ml', waterLiters: 150, safetyDays: 15}, {pest: 'Yellow & Brown Rust', chemical: 'Propiconazole 25% EC', dosagePerAcre: '200 ml', waterLiters: 200, safetyDays: 30}]
+        organic: { 'fertNote': 'Apply FYM @ 4 Tons/acre + Poultry Manure @ 1.5 Tons/acre + Azotobacter culture at sowing.', 'pestNote': 'Spray Neem Seed Kernel Extract (NSKE 5%) @ 2 L/acre for Aphid control.' },
+        fertilizers: { ureaKgPerAcre: 100, dapKgPerAcre: 50, mopKgPerAcre: 25, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply full DAP, MOP & 50% Urea at sowing (CRI stage). Apply remaining 50% Urea after 1st irrigation (21-25 days).' },
+        pesticides: [{ pest: 'Wheat Aphids & Termites', chemical: 'Imidacloprid 17.8% SL', dosagePerAcre: '50 ml', waterLiters: 150, safetyDays: 15 }, { pest: 'Yellow & Brown Rust', chemical: 'Propiconazole 25% EC', dosagePerAcre: '200 ml', waterLiters: 200, safetyDays: 30 }]
     },
     {
         id: "cotton",
@@ -456,9 +456,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 12, mandiPricePerQuintal: 6800,
         season: "kharif", sowingMonths: [4, 5], growthMonths: [6, 7, 8, 9], harvestMonths: [10, 11], rotationSequence: ['Wheat or Chickpea (Rabi)', 'Fallow / Cover Crop (Zaid)', 'Cotton (Next Kharif)'],
         seedTreatment: "Delint cotton seed with sulfuric acid (if fuzzy). Treat with Imidacloprid 70% WS @ 7 g/kg seed to protect young seedlings from Jassids & Thrips for 45 days.",
-        organic: {'fertNote': 'Apply Neem Cake @ 250 kg/acre + FYM @ 5 Tons/acre + Vermicompost @ 2 Tons/acre.', 'pestNote': 'Install 8 Pheromone traps/acre for Pink Bollworm. Spray Neem Oil 1500ppm @ 1 L/acre.'},
-        fertilizers: {ureaKgPerAcre: 110, dapKgPerAcre: 60, mopKgPerAcre: 35, zincKgPerAcre: 12, fymTonsPerAcre: 5, splitNote: 'Apply 25% Urea + full DAP at planting. Top-dress remaining Urea in 3 equal splits at squaring, flowering, and boll formation.'},
-        pesticides: [{pest: 'Pink Bollworm & Whitefly', chemical: 'Emamectin Benzoate 5% SG + Neem Oil 1500ppm', dosagePerAcre: '100 g + 500 ml', waterLiters: 200, safetyDays: 14}, {pest: 'Cotton Leaf Curl Virus / Jassids', chemical: 'Flonicamid 50% WG', dosagePerAcre: '60 g', waterLiters: 200, safetyDays: 20}]
+        organic: { 'fertNote': 'Apply Neem Cake @ 250 kg/acre + FYM @ 5 Tons/acre + Vermicompost @ 2 Tons/acre.', 'pestNote': 'Install 8 Pheromone traps/acre for Pink Bollworm. Spray Neem Oil 1500ppm @ 1 L/acre.' },
+        fertilizers: { ureaKgPerAcre: 110, dapKgPerAcre: 60, mopKgPerAcre: 35, zincKgPerAcre: 12, fymTonsPerAcre: 5, splitNote: 'Apply 25% Urea + full DAP at planting. Top-dress remaining Urea in 3 equal splits at squaring, flowering, and boll formation.' },
+        pesticides: [{ pest: 'Pink Bollworm & Whitefly', chemical: 'Emamectin Benzoate 5% SG + Neem Oil 1500ppm', dosagePerAcre: '100 g + 500 ml', waterLiters: 200, safetyDays: 14 }, { pest: 'Cotton Leaf Curl Virus / Jassids', chemical: 'Flonicamid 50% WG', dosagePerAcre: '60 g', waterLiters: 200, safetyDays: 20 }]
     },
     {
         id: "maize",
@@ -474,9 +474,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 26, mandiPricePerQuintal: 2090,
         season: "kharif", sowingMonths: [5, 6], growthMonths: [7, 8], harvestMonths: [9, 10], rotationSequence: ['Mustard or Potato (Rabi)', 'Sunflower (Zaid)', 'Pulse (Next Kharif)'],
         seedTreatment: "Treat seed with Thiamethoxam 30% FS @ 6 ml/kg + Metalaxyl 35% WS @ 3 g/kg for Shoot Fly & Downy Mildew protection.",
-        organic: {'fertNote': 'Apply Vermicompost @ 2 Tons/acre + Compost @ 4 Tons/acre + PSB bio-fertilizer.', 'pestNote': 'Release Trichogramma chilonis egg parasitoids @ 50,000/acre for Fall Armyworm control.'},
-        fertilizers: {ureaKgPerAcre: 95, dapKgPerAcre: 45, mopKgPerAcre: 30, zincKgPerAcre: 10, fymTonsPerAcre: 4, splitNote: 'Apply 33% Urea + full DAP/MOP at sowing. Apply 33% Urea at knee-high stage and final 34% Urea at tasseling stage.'},
-        pesticides: [{pest: 'Fall Armyworm (FAW)', chemical: 'Spinetoram 11.7% SC', dosagePerAcre: '100 ml', waterLiters: 200, safetyDays: 14}, {pest: 'Turcicum Leaf Blight', chemical: 'Mancozeb 75% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 15}]
+        organic: { 'fertNote': 'Apply Vermicompost @ 2 Tons/acre + Compost @ 4 Tons/acre + PSB bio-fertilizer.', 'pestNote': 'Release Trichogramma chilonis egg parasitoids @ 50,000/acre for Fall Armyworm control.' },
+        fertilizers: { ureaKgPerAcre: 95, dapKgPerAcre: 45, mopKgPerAcre: 30, zincKgPerAcre: 10, fymTonsPerAcre: 4, splitNote: 'Apply 33% Urea + full DAP/MOP at sowing. Apply 33% Urea at knee-high stage and final 34% Urea at tasseling stage.' },
+        pesticides: [{ pest: 'Fall Armyworm (FAW)', chemical: 'Spinetoram 11.7% SC', dosagePerAcre: '100 ml', waterLiters: 200, safetyDays: 14 }, { pest: 'Turcicum Leaf Blight', chemical: 'Mancozeb 75% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 15 }]
     },
     {
         id: "potato",
@@ -492,9 +492,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 120, mandiPricePerQuintal: 1200,
         season: "rabi", sowingMonths: [9, 10], growthMonths: [11, 0], harvestMonths: [1, 2], rotationSequence: ['Cucurbits / Sunflower (Zaid)', 'Maize or Rice (Kharif)', 'Potato (Next Rabi)'],
         seedTreatment: "Dip seed tubers in 0.5% Mancozeb or Em leaflets for 10 mins before planting. Treat tubers with Trichoderma viride to prevent Black Scurf & Wilt.",
-        organic: {'fertNote': 'Apply Well-rotted FYM @ 6 Tons/acre + Mustard Cake @ 200 kg/acre.', 'pestNote': 'Spray Panchagavya 3% + Neem Oil for Early & Late Blight prevention.'},
-        fertilizers: {ureaKgPerAcre: 105, dapKgPerAcre: 70, mopKgPerAcre: 50, zincKgPerAcre: 10, fymTonsPerAcre: 6, splitNote: 'Apply 50% Urea + full DAP & MOP during earthing up at planting. Top-dress remaining 50% Urea 30 days after planting.'},
-        pesticides: [{pest: 'Late Blight & Early Blight', chemical: 'Cymoxanil 8% + Mancozeb 64% WP', dosagePerAcre: '600 g', waterLiters: 200, safetyDays: 14}, {pest: 'Potato Aphids & White Grubs', chemical: 'Thiamethoxam 25% WG', dosagePerAcre: '80 g', waterLiters: 200, safetyDays: 21}]
+        organic: { 'fertNote': 'Apply Well-rotted FYM @ 6 Tons/acre + Mustard Cake @ 200 kg/acre.', 'pestNote': 'Spray Panchagavya 3% + Neem Oil for Early & Late Blight prevention.' },
+        fertilizers: { ureaKgPerAcre: 105, dapKgPerAcre: 70, mopKgPerAcre: 50, zincKgPerAcre: 10, fymTonsPerAcre: 6, splitNote: 'Apply 50% Urea + full DAP & MOP during earthing up at planting. Top-dress remaining 50% Urea 30 days after planting.' },
+        pesticides: [{ pest: 'Late Blight & Early Blight', chemical: 'Cymoxanil 8% + Mancozeb 64% WP', dosagePerAcre: '600 g', waterLiters: 200, safetyDays: 14 }, { pest: 'Potato Aphids & White Grubs', chemical: 'Thiamethoxam 25% WG', dosagePerAcre: '80 g', waterLiters: 200, safetyDays: 21 }]
     },
     {
         id: "tomato",
@@ -510,9 +510,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 150, mandiPricePerQuintal: 1500,
         season: "zaid", sowingMonths: [1, 2], growthMonths: [3, 4], harvestMonths: [5, 6], rotationSequence: ['Rice or Cotton (Kharif)', 'Mustard or Pulse (Rabi)', 'Tomato (Next Zaid)'],
         seedTreatment: "Treat seeds with Captan 75% WP @ 3 g/kg seed. Inoculate seedling roots with VAM (Vesicular Arbuscular Mycorrhiza) & Pseudomonas at transplanting.",
-        organic: {'fertNote': 'Apply Vermicompost @ 3 Tons/acre + Neem Cake @ 150 kg/acre + Liquid Jeevamrut via drip.', 'pestNote': 'Spray Bacillus thuringiensis (Bt) @ 400 g/acre or NSKE 5% for Tomato Fruit Borer.'},
-        fertilizers: {ureaKgPerAcre: 85, dapKgPerAcre: 55, mopKgPerAcre: 45, zincKgPerAcre: 8, fymTonsPerAcre: 5, splitNote: 'Apply basal FYM & DAP. Top dress Urea and MOP in 4 equal weekly splits starting 3 weeks after transplanting.'},
-        pesticides: [{pest: 'Tomato Fruit Borer & Leafminer', chemical: 'Cyantraniliprole 10.26% OD', dosagePerAcre: '180 ml', waterLiters: 200, safetyDays: 7}, {pest: 'Damping Off & Bacterial Wilt', chemical: 'Copper Oxychloride 50% WP', dosagePerAcre: '500 g', waterLiters: 200, safetyDays: 10}]
+        organic: { 'fertNote': 'Apply Vermicompost @ 3 Tons/acre + Neem Cake @ 150 kg/acre + Liquid Jeevamrut via drip.', 'pestNote': 'Spray Bacillus thuringiensis (Bt) @ 400 g/acre or NSKE 5% for Tomato Fruit Borer.' },
+        fertilizers: { ureaKgPerAcre: 85, dapKgPerAcre: 55, mopKgPerAcre: 45, zincKgPerAcre: 8, fymTonsPerAcre: 5, splitNote: 'Apply basal FYM & DAP. Top dress Urea and MOP in 4 equal weekly splits starting 3 weeks after transplanting.' },
+        pesticides: [{ pest: 'Tomato Fruit Borer & Leafminer', chemical: 'Cyantraniliprole 10.26% OD', dosagePerAcre: '180 ml', waterLiters: 200, safetyDays: 7 }, { pest: 'Damping Off & Bacterial Wilt', chemical: 'Copper Oxychloride 50% WP', dosagePerAcre: '500 g', waterLiters: 200, safetyDays: 10 }]
     },
     {
         id: "groundnut",
@@ -528,9 +528,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 10, mandiPricePerQuintal: 6375,
         season: "kharif", sowingMonths: [5, 6], growthMonths: [7, 8], harvestMonths: [9, 10], rotationSequence: ['Wheat or Sorghum (Rabi)', 'Watermelon (Zaid)', 'Groundnut (Next Kharif)'],
         seedTreatment: "Treat seed kernels with Mancozeb @ 3 g/kg or Trichoderma @ 10 g/kg + Rhizobium strain NC-92 inoculant to ensure nitrogen nodulation.",
-        organic: {'fertNote': 'Apply FYM @ 4 Tons/acre + Gypsum @ 200 kg/acre at pegging stage.', 'pestNote': 'Spray Fermented Butter Milk + Neem Oil for Tikka Leaf Spot control.'},
-        fertilizers: {ureaKgPerAcre: 40, dapKgPerAcre: 50, mopKgPerAcre: 25, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply full DAP, MOP & 50% Urea at sowing. Gypsum @ 200 kg/acre MUST be applied at pegging stage for pod development.'},
-        pesticides: [{pest: 'Tikka Leaf Spot & Rust', chemical: 'Hexaconazole 5% EC', dosagePerAcre: '250 ml', waterLiters: 200, safetyDays: 20}, {pest: 'Tobacco Caterpillar / Spodoptera', chemical: 'Indoxacarb 14.5% SC', dosagePerAcre: '150 ml', waterLiters: 200, safetyDays: 14}]
+        organic: { 'fertNote': 'Apply FYM @ 4 Tons/acre + Gypsum @ 200 kg/acre at pegging stage.', 'pestNote': 'Spray Fermented Butter Milk + Neem Oil for Tikka Leaf Spot control.' },
+        fertilizers: { ureaKgPerAcre: 40, dapKgPerAcre: 50, mopKgPerAcre: 25, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply full DAP, MOP & 50% Urea at sowing. Gypsum @ 200 kg/acre MUST be applied at pegging stage for pod development.' },
+        pesticides: [{ pest: 'Tikka Leaf Spot & Rust', chemical: 'Hexaconazole 5% EC', dosagePerAcre: '250 ml', waterLiters: 200, safetyDays: 20 }, { pest: 'Tobacco Caterpillar / Spodoptera', chemical: 'Indoxacarb 14.5% SC', dosagePerAcre: '150 ml', waterLiters: 200, safetyDays: 14 }]
     },
     {
         id: "sugarcane",
@@ -546,9 +546,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 380, mandiPricePerQuintal: 315,
         season: "kharif", sowingMonths: [1, 2, 9, 10], growthMonths: [3, 4, 5, 6, 7, 8], harvestMonths: [11, 0, 1], rotationSequence: ['Wheat / Pulse (Intercrop)', 'Ratoon Sugarcane', 'Green Manure / Sunnhemp'],
         seedTreatment: "Dip 3-budded setts in Carbendazim 0.1% + Chlorpyrifos solution for 15 mins. Treat setts with Acetobacter diazotrophicus for biological N-fixation.",
-        organic: {'fertNote': 'Apply Pressmud compost @ 5 Tons/acre + Vermicompost @ 3 Tons/acre.', 'pestNote': 'Release Sturmiopsis inferens parasitoids for Shoot Borer management.'},
-        fertilizers: {ureaKgPerAcre: 180, dapKgPerAcre: 90, mopKgPerAcre: 60, zincKgPerAcre: 15, fymTonsPerAcre: 8, splitNote: 'Apply DAP & 25% Urea at planting. Top-dress remaining Urea in 3 splits at 45, 90, and 120 days post-planting.'},
-        pesticides: [{pest: 'Early Shoot Borer & Top Borer', chemical: 'Fipronil 0.3% GR', dosagePerAcre: '10 kg (Soil application)', waterLiters: 0, safetyDays: 45}, {pest: 'Sugarcane Red Rot & Smut', chemical: 'Carbendazim 50% WP', dosagePerAcre: '300 g', waterLiters: 200, safetyDays: 30}]
+        organic: { 'fertNote': 'Apply Pressmud compost @ 5 Tons/acre + Vermicompost @ 3 Tons/acre.', 'pestNote': 'Release Sturmiopsis inferens parasitoids for Shoot Borer management.' },
+        fertilizers: { ureaKgPerAcre: 180, dapKgPerAcre: 90, mopKgPerAcre: 60, zincKgPerAcre: 15, fymTonsPerAcre: 8, splitNote: 'Apply DAP & 25% Urea at planting. Top-dress remaining Urea in 3 splits at 45, 90, and 120 days post-planting.' },
+        pesticides: [{ pest: 'Early Shoot Borer & Top Borer', chemical: 'Fipronil 0.3% GR', dosagePerAcre: '10 kg (Soil application)', waterLiters: 0, safetyDays: 45 }, { pest: 'Sugarcane Red Rot & Smut', chemical: 'Carbendazim 50% WP', dosagePerAcre: '300 g', waterLiters: 200, safetyDays: 30 }]
     },
     {
         id: "soybean",
@@ -564,9 +564,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 11, mandiPricePerQuintal: 4600,
         season: "kharif", sowingMonths: [5, 6], growthMonths: [7, 8], harvestMonths: [9, 10], rotationSequence: ['Wheat or Barley (Rabi)', 'Summer Moong (Zaid)', 'Soybean (Next Kharif)'],
         seedTreatment: "Treat seed with Thiram + Carbendazim (2:1) @ 3 g/kg followed by Bradyrhizobium japonicum + PSB culture @ 20 g/kg seed.",
-        organic: {'fertNote': 'Apply FYM @ 3 Tons/acre + Bio-fertilizer consortium.', 'pestNote': 'Spray Beauveria bassiana @ 1 kg/acre for Spodoptera Caterpillar control.'},
-        fertilizers: {ureaKgPerAcre: 35, dapKgPerAcre: 55, mopKgPerAcre: 25, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply full DAP, MOP, and 50% Urea basal at sowing. Rhizobium bio-fertilizer seed treatment is highly recommended.'},
-        pesticides: [{pest: 'Girdle Beetle & Stem Fly', chemical: 'Chlorantraniliprole 9.3% + Thiamethoxam 17.5% SC', dosagePerAcre: '80 ml', waterLiters: 200, safetyDays: 21}, {pest: 'Yellow Mosaic Virus / Whitefly', chemical: 'Acetamiprid 20% SP', dosagePerAcre: '50 g', waterLiters: 150, safetyDays: 15}]
+        organic: { 'fertNote': 'Apply FYM @ 3 Tons/acre + Bio-fertilizer consortium.', 'pestNote': 'Spray Beauveria bassiana @ 1 kg/acre for Spodoptera Caterpillar control.' },
+        fertilizers: { ureaKgPerAcre: 35, dapKgPerAcre: 55, mopKgPerAcre: 25, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply full DAP, MOP, and 50% Urea basal at sowing. Rhizobium bio-fertilizer seed treatment is highly recommended.' },
+        pesticides: [{ pest: 'Girdle Beetle & Stem Fly', chemical: 'Chlorantraniliprole 9.3% + Thiamethoxam 17.5% SC', dosagePerAcre: '80 ml', waterLiters: 200, safetyDays: 21 }, { pest: 'Yellow Mosaic Virus / Whitefly', chemical: 'Acetamiprid 20% SP', dosagePerAcre: '50 g', waterLiters: 150, safetyDays: 15 }]
     },
     {
         id: "mustard",
@@ -582,9 +582,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 8, mandiPricePerQuintal: 5650,
         season: "rabi", sowingMonths: [9, 10], growthMonths: [11, 0], harvestMonths: [1, 2], rotationSequence: ['Pearl Millet / Bajra (Kharif)', 'Fallow (Zaid)', 'Mustard (Next Rabi)'],
         seedTreatment: "Treat seed with Metalaxyl 35% SD @ 6 g/kg seed to prevent White Rust & Downy Mildew. Treat with Trichoderma for Sclerotinia Rot.",
-        organic: {'fertNote': 'Apply Vermicompost @ 2 Tons/acre + Elemental Sulfur / Bio-sulfur @ 10 kg/acre.', 'pestNote': 'Spray Yellow Sticky Traps @ 20/acre + Neem Oil for Mustard Aphids.'},
-        fertilizers: {ureaKgPerAcre: 70, dapKgPerAcre: 40, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 3, splitNote: 'Apply full DAP & 50% Urea at sowing. Top dress remaining 50% Urea after 1st irrigation (30 days).'},
-        pesticides: [{pest: 'Mustard Aphids (Chetpa)', chemical: 'Dimethoate 30% EC', dosagePerAcre: '250 ml', waterLiters: 200, safetyDays: 15}, {pest: 'White Rust & Alternaria Blight', chemical: 'Mancozeb 75% WP', dosagePerAcre: '500 g', waterLiters: 200, safetyDays: 20}]
+        organic: { 'fertNote': 'Apply Vermicompost @ 2 Tons/acre + Elemental Sulfur / Bio-sulfur @ 10 kg/acre.', 'pestNote': 'Spray Yellow Sticky Traps @ 20/acre + Neem Oil for Mustard Aphids.' },
+        fertilizers: { ureaKgPerAcre: 70, dapKgPerAcre: 40, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 3, splitNote: 'Apply full DAP & 50% Urea at sowing. Top dress remaining 50% Urea after 1st irrigation (30 days).' },
+        pesticides: [{ pest: 'Mustard Aphids (Chetpa)', chemical: 'Dimethoate 30% EC', dosagePerAcre: '250 ml', waterLiters: 200, safetyDays: 15 }, { pest: 'White Rust & Alternaria Blight', chemical: 'Mancozeb 75% WP', dosagePerAcre: '500 g', waterLiters: 200, safetyDays: 20 }]
     },
     {
         id: "barley",
@@ -600,9 +600,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 18, mandiPricePerQuintal: 1850,
         season: "rabi", sowingMonths: [9, 10], growthMonths: [11, 0, 1], harvestMonths: [2, 3], rotationSequence: ['Cluster Bean / Guar (Kharif)', 'Fallow (Zaid)', 'Barley (Next Rabi)'],
         seedTreatment: "Treat seed with Tebuconazole 2% DS @ 1.25 g/kg seed to eliminate Loose & Covered Smut inoculum.",
-        organic: {'fertNote': 'Apply FYM @ 3 Tons/acre + PSB inoculant at sowing.', 'pestNote': 'Spray Garlic-Chilli Extract @ 5% for Aphid control.'},
-        fertilizers: {ureaKgPerAcre: 65, dapKgPerAcre: 35, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 2.5, splitNote: 'Apply 50% Urea + full DAP at basal sowing. Top dress remaining Urea after 1st irrigation.'},
-        pesticides: [{pest: 'Barley Aphids & Covered Smut', chemical: 'Tebuconazole 2 DS (Seed treatment)', dosagePerAcre: '100 g', waterLiters: 0, safetyDays: 0}, {pest: 'Helminthosporium Leaf Stripe', chemical: 'Carbendazim 12% + Mancozeb 63% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 21}]
+        organic: { 'fertNote': 'Apply FYM @ 3 Tons/acre + PSB inoculant at sowing.', 'pestNote': 'Spray Garlic-Chilli Extract @ 5% for Aphid control.' },
+        fertilizers: { ureaKgPerAcre: 65, dapKgPerAcre: 35, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 2.5, splitNote: 'Apply 50% Urea + full DAP at basal sowing. Top dress remaining Urea after 1st irrigation.' },
+        pesticides: [{ pest: 'Barley Aphids & Covered Smut', chemical: 'Tebuconazole 2 DS (Seed treatment)', dosagePerAcre: '100 g', waterLiters: 0, safetyDays: 0 }, { pest: 'Helminthosporium Leaf Stripe', chemical: 'Carbendazim 12% + Mancozeb 63% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 21 }]
     },
     {
         id: "chickpea",
@@ -618,9 +618,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 9, mandiPricePerQuintal: 5440,
         season: "rabi", sowingMonths: [9, 10], growthMonths: [11, 0], harvestMonths: [1, 2], rotationSequence: ['Rice or Sorghum (Kharif)', 'Sesame (Zaid)', 'Chickpea (Next Rabi)'],
         seedTreatment: "Treat seeds with Carboxin @ 2 g/kg + Trichoderma viride @ 8 g/kg + Mesorhizobium ciceri bio-fertilizer for effective root wilt resistance.",
-        organic: {'fertNote': 'Apply Vermicompost @ 1.5 Tons/acre + Rock Phosphate @ 100 kg/acre.', 'pestNote': 'Install T-shaped bird perches @ 20/acre + HaNPV Virus spray @ 250 LE/acre for Pod Borer.'},
-        fertilizers: {ureaKgPerAcre: 25, dapKgPerAcre: 45, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 2, splitNote: 'Apply full DAP, MOP & Urea basal at sowing. Treat seed with Rhizobium + PSB bio-fertilizers.'},
-        pesticides: [{pest: 'Pod Borer (Helicoverpa)', chemical: 'Chlorantraniliprole 18.5% SC or HaNPV Virus', dosagePerAcre: '50 ml', waterLiters: 200, safetyDays: 14}, {pest: 'Wilt & Root Rot', chemical: 'Trichoderma viride (Bio-agent)', dosagePerAcre: '1 kg (Soil treatment)', waterLiters: 0, safetyDays: 0}]
+        organic: { 'fertNote': 'Apply Vermicompost @ 1.5 Tons/acre + Rock Phosphate @ 100 kg/acre.', 'pestNote': 'Install T-shaped bird perches @ 20/acre + HaNPV Virus spray @ 250 LE/acre for Pod Borer.' },
+        fertilizers: { ureaKgPerAcre: 25, dapKgPerAcre: 45, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 2, splitNote: 'Apply full DAP, MOP & Urea basal at sowing. Treat seed with Rhizobium + PSB bio-fertilizers.' },
+        pesticides: [{ pest: 'Pod Borer (Helicoverpa)', chemical: 'Chlorantraniliprole 18.5% SC or HaNPV Virus', dosagePerAcre: '50 ml', waterLiters: 200, safetyDays: 14 }, { pest: 'Wilt & Root Rot', chemical: 'Trichoderma viride (Bio-agent)', dosagePerAcre: '1 kg (Soil treatment)', waterLiters: 0, safetyDays: 0 }]
     },
     {
         id: "sunflower",
@@ -636,9 +636,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 8, mandiPricePerQuintal: 6400,
         season: "zaid", sowingMonths: [0, 1], growthMonths: [2, 3], harvestMonths: [4, 5], rotationSequence: ['Kharif Pulse / Soybean', 'Rabi Wheat / Mustard', 'Sunflower (Next Zaid)'],
         seedTreatment: "Treat seed with Imidacloprid 70% WS @ 5 g/kg + Thiram @ 3 g/kg seed for Downy Mildew & Necrosis Virus protection.",
-        organic: {'fertNote': 'Apply FYM @ 3.5 Tons/acre + Wood Ash @ 100 kg/acre for Potash.', 'pestNote': 'Spray Neem Oil 1500ppm + Handpicking of Hairy Caterpillars.'},
-        fertilizers: {ureaKgPerAcre: 75, dapKgPerAcre: 45, mopKgPerAcre: 30, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply 50% Urea + full DAP/MOP basal. Top dress remaining 50% Urea 30 days after sowing before flowering.'},
-        pesticides: [{pest: 'Head Borer & Hairy Caterpillar', chemical: 'Profofos 50% EC', dosagePerAcre: '350 ml', waterLiters: 200, safetyDays: 15}, {pest: 'Alternaria Leaf Spot', chemical: 'Zineb 75% WP', dosagePerAcre: '500 g', waterLiters: 200, safetyDays: 14}]
+        organic: { 'fertNote': 'Apply FYM @ 3.5 Tons/acre + Wood Ash @ 100 kg/acre for Potash.', 'pestNote': 'Spray Neem Oil 1500ppm + Handpicking of Hairy Caterpillars.' },
+        fertilizers: { ureaKgPerAcre: 75, dapKgPerAcre: 45, mopKgPerAcre: 30, zincKgPerAcre: 10, fymTonsPerAcre: 3, splitNote: 'Apply 50% Urea + full DAP/MOP basal. Top dress remaining 50% Urea 30 days after sowing before flowering.' },
+        pesticides: [{ pest: 'Head Borer & Hairy Caterpillar', chemical: 'Profofos 50% EC', dosagePerAcre: '350 ml', waterLiters: 200, safetyDays: 15 }, { pest: 'Alternaria Leaf Spot', chemical: 'Zineb 75% WP', dosagePerAcre: '500 g', waterLiters: 200, safetyDays: 14 }]
     },
     {
         id: "sorghum",
@@ -654,9 +654,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 12, mandiPricePerQuintal: 3180,
         season: "kharif", sowingMonths: [5, 6], growthMonths: [7, 8], harvestMonths: [9, 10], rotationSequence: ['Gram / Safflower (Rabi)', 'Fallow (Zaid)', 'Sorghum (Next Kharif)'],
         seedTreatment: "Treat seeds with Imidacloprid 70% WS @ 10 g/kg seed to prevent Shoot Fly attack during first 30 days after germination.",
-        organic: {'fertNote': 'Apply FYM @ 3 Tons/acre + Azospirillum culture.', 'pestNote': 'Intercrop with Cowpea to reduce Shoot Fly & Stem Borer incidence.'},
-        fertilizers: {ureaKgPerAcre: 70, dapKgPerAcre: 40, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 3, splitNote: 'Apply 50% Urea + full DAP at sowing. Top dress remaining Urea at 30-35 days stage.'},
-        pesticides: [{pest: 'Sorghum Shoot Fly & Stem Borer', chemical: 'Chlorpyrifos 20% EC', dosagePerAcre: '400 ml', waterLiters: 200, safetyDays: 20}, {pest: 'Grain Mold & Anthracnose', chemical: 'Mancozeb 75% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 15}]
+        organic: { 'fertNote': 'Apply FYM @ 3 Tons/acre + Azospirillum culture.', 'pestNote': 'Intercrop with Cowpea to reduce Shoot Fly & Stem Borer incidence.' },
+        fertilizers: { ureaKgPerAcre: 70, dapKgPerAcre: 40, mopKgPerAcre: 20, zincKgPerAcre: 8, fymTonsPerAcre: 3, splitNote: 'Apply 50% Urea + full DAP at sowing. Top dress remaining Urea at 30-35 days stage.' },
+        pesticides: [{ pest: 'Sorghum Shoot Fly & Stem Borer', chemical: 'Chlorpyrifos 20% EC', dosagePerAcre: '400 ml', waterLiters: 200, safetyDays: 20 }, { pest: 'Grain Mold & Anthracnose', chemical: 'Mancozeb 75% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 15 }]
     },
     {
         id: "marigold",
@@ -672,9 +672,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 60, mandiPricePerQuintal: 4000,
         season: "zaid", sowingMonths: [1, 2, 6, 7], growthMonths: [3, 4, 8, 9], harvestMonths: [5, 6, 10, 11], rotationSequence: ['Vegetables / Tomato', 'Legumes (Nitrogen fixation)', 'Marigold (Next Season)'],
         seedTreatment: "Treat nursery seeds with Thiram @ 2 g/kg or Trichoderma. Drench nursery beds with Copper Oxychloride 0.2% to prevent Damping Off.",
-        organic: {'fertNote': 'Apply Vermicompost @ 3 Tons/acre + Neem Cake @ 200 kg/acre + Panchagavya spray.', 'pestNote': 'Spray Verticillium lecanii @ 1 kg/acre for Thrips & Mites.'}, flowerBoosters: "Spray Potassium Nitrate 13-0-45 @ 5 g/L + Boron 20% @ 1 g/L at flower bud initiation to increase bloom diameter and vibrant orange/yellow petal coloration.",
-        fertilizers: {ureaKgPerAcre: 60, dapKgPerAcre: 40, mopKgPerAcre: 30, zincKgPerAcre: 6, fymTonsPerAcre: 4, splitNote: 'Apply basal FYM & DAP. Top dress Urea in 2 splits at 30 and 45 days after transplanting.'},
-        pesticides: [{pest: 'Red Spider Mites & Thrips', chemical: 'Abamectin 1.9% EC', dosagePerAcre: '150 ml', waterLiters: 150, safetyDays: 7}, {pest: 'Damping Off & Flower Blight', chemical: 'Captan 75% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 10}]
+        organic: { 'fertNote': 'Apply Vermicompost @ 3 Tons/acre + Neem Cake @ 200 kg/acre + Panchagavya spray.', 'pestNote': 'Spray Verticillium lecanii @ 1 kg/acre for Thrips & Mites.' }, flowerBoosters: "Spray Potassium Nitrate 13-0-45 @ 5 g/L + Boron 20% @ 1 g/L at flower bud initiation to increase bloom diameter and vibrant orange/yellow petal coloration.",
+        fertilizers: { ureaKgPerAcre: 60, dapKgPerAcre: 40, mopKgPerAcre: 30, zincKgPerAcre: 6, fymTonsPerAcre: 4, splitNote: 'Apply basal FYM & DAP. Top dress Urea in 2 splits at 30 and 45 days after transplanting.' },
+        pesticides: [{ pest: 'Red Spider Mites & Thrips', chemical: 'Abamectin 1.9% EC', dosagePerAcre: '150 ml', waterLiters: 150, safetyDays: 7 }, { pest: 'Damping Off & Flower Blight', chemical: 'Captan 75% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 10 }]
     },
     {
         id: "rose",
@@ -690,9 +690,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 40, mandiPricePerQuintal: 9000,
         season: "zaid", sowingMonths: [8, 9], growthMonths: [10, 11, 0, 1], harvestMonths: [2, 3, 4, 5], rotationSequence: ['Perennial Floriculture', 'Intercrop with Garlic / Onion', 'Pruning & Soil Amendment'],
         seedTreatment: "Dip root cuttings / saplings in IBA (Indole-3-butyric acid 1000 ppm) rooting hormone. Treat root ball with Trichoderma before field planting.",
-        organic: {'fertNote': 'Apply Well-rotted Cow Dung manure @ 6 Tons/acre + Bone Meal @ 150 kg/acre + Humic Acid spray.', 'pestNote': 'Spray Neem Oil 1500ppm + Garlic Extract for Powdery Mildew & Aphids.'}, flowerBoosters: "Apply Gibberellic Acid (GA3) @ 50 ppm (0.05 g/L) + Rose Special Micronutrient Mix @ 3 g/L post-pruning to induce heavy multi-bud flowering and long stem cut-flowers.",
-        fertilizers: {ureaKgPerAcre: 80, dapKgPerAcre: 50, mopKgPerAcre: 40, zincKgPerAcre: 8, fymTonsPerAcre: 6, splitNote: 'Apply well-rotted FYM post pruning. Feed NPK 15:15:15 monthly along with foliar micronutrients.'},
-        pesticides: [{pest: 'Black Spot & Powdery Mildew', chemical: 'Myclobutanil 10% WP', dosagePerAcre: '200 g', waterLiters: 150, safetyDays: 7}, {pest: 'Rose Aphids & Scale Insects', chemical: 'Malathion 50% EC', dosagePerAcre: '300 ml', waterLiters: 200, safetyDays: 10}]
+        organic: { 'fertNote': 'Apply Well-rotted Cow Dung manure @ 6 Tons/acre + Bone Meal @ 150 kg/acre + Humic Acid spray.', 'pestNote': 'Spray Neem Oil 1500ppm + Garlic Extract for Powdery Mildew & Aphids.' }, flowerBoosters: "Apply Gibberellic Acid (GA3) @ 50 ppm (0.05 g/L) + Rose Special Micronutrient Mix @ 3 g/L post-pruning to induce heavy multi-bud flowering and long stem cut-flowers.",
+        fertilizers: { ureaKgPerAcre: 80, dapKgPerAcre: 50, mopKgPerAcre: 40, zincKgPerAcre: 8, fymTonsPerAcre: 6, splitNote: 'Apply well-rotted FYM post pruning. Feed NPK 15:15:15 monthly along with foliar micronutrients.' },
+        pesticides: [{ pest: 'Black Spot & Powdery Mildew', chemical: 'Myclobutanil 10% WP', dosagePerAcre: '200 g', waterLiters: 150, safetyDays: 7 }, { pest: 'Rose Aphids & Scale Insects', chemical: 'Malathion 50% EC', dosagePerAcre: '300 ml', waterLiters: 200, safetyDays: 10 }]
     },
     {
         id: "jasmine",
@@ -708,9 +708,9 @@ const CROPS = [
         avgYieldQuintalsPerAcre: 30, mandiPricePerQuintal: 12000,
         season: "zaid", sowingMonths: [5, 6], growthMonths: [7, 8, 9, 10], harvestMonths: [2, 3, 4, 5], rotationSequence: ['Perennial Flower Bush', 'Intercrop with Cowpea', 'Annual Organic Mulching'],
         seedTreatment: "Treat rooted cuttings with Pseudomonas fluorescens @ 10 g/L root dip before field planting to prevent Root Rot.",
-        organic: {'fertNote': 'Apply Vermicompost @ 4 Tons/acre + Groundnut Cake @ 200 kg/acre + Jeevamrut.', 'pestNote': 'Spray Bacillus thuringiensis (Bt) @ 2 g/L for Bud Worm control.'}, flowerBoosters: "Spray Zinc Sulphate 0.5% + Boric Acid 0.2% + Nitrobenzene 20% @ 2 ml/L before flowering peak to double fragrant flower bud yield and stem retention.",
-        fertilizers: {ureaKgPerAcre: 70, dapKgPerAcre: 45, mopKgPerAcre: 35, zincKgPerAcre: 8, fymTonsPerAcre: 5, splitNote: 'Apply organic manure & full DAP after annual pruning. Apply Urea in 2 splits prior to summer flowering peak.'},
-        pesticides: [{pest: 'Jasmine Bud Worm & Gallery Borer', chemical: 'Novaluron 10% EC', dosagePerAcre: '200 ml', waterLiters: 200, safetyDays: 10}, {pest: 'Leaf Blight & Rust', chemical: 'Copper Hydroxide 77% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 12}]
+        organic: { 'fertNote': 'Apply Vermicompost @ 4 Tons/acre + Groundnut Cake @ 200 kg/acre + Jeevamrut.', 'pestNote': 'Spray Bacillus thuringiensis (Bt) @ 2 g/L for Bud Worm control.' }, flowerBoosters: "Spray Zinc Sulphate 0.5% + Boric Acid 0.2% + Nitrobenzene 20% @ 2 ml/L before flowering peak to double fragrant flower bud yield and stem retention.",
+        fertilizers: { ureaKgPerAcre: 70, dapKgPerAcre: 45, mopKgPerAcre: 35, zincKgPerAcre: 8, fymTonsPerAcre: 5, splitNote: 'Apply organic manure & full DAP after annual pruning. Apply Urea in 2 splits prior to summer flowering peak.' },
+        pesticides: [{ pest: 'Jasmine Bud Worm & Gallery Borer', chemical: 'Novaluron 10% EC', dosagePerAcre: '200 ml', waterLiters: 200, safetyDays: 10 }, { pest: 'Leaf Blight & Rust', chemical: 'Copper Hydroxide 77% WP', dosagePerAcre: '400 g', waterLiters: 200, safetyDays: 12 }]
     }
 ];
 
@@ -739,8 +739,6 @@ const TRANSLATIONS = {
         "modal-ai-desc": "Connect Google's Gemini 1.5 Flash AI to enable live real-time conversational assistance, instant disease diagnosis, and customized agronomic advice.",
 
         "modal-ai-title": "Connect Live Gemini AI",
-
-        "btn-ai-key": "Gemini AI Key",
 
         "planner-timeline-title": "Annual Crop Growth & Sowing Timeline",
 
@@ -848,7 +846,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "Soil Characteristics Guide",
         "footer-tagline": "Empowering farmers with smart agronomic intelligence.",
         "footer-interview-notes": "Built for Agricultural AI Interview Demonstrations. Powered by Open-Meteo & Gemini-Core.",
-        
+
         // Soil names
         "soil-clay": "Heavy Clay Soil",
         "soil-clay-loam": "Clayey Loam",
@@ -1004,7 +1002,7 @@ const TRANSLATIONS = {
         "soillab-crop-fert": "Fertilizer Suggestion",
         "soillab-crop-rating": "Rating"
     },
-        hi: {
+    hi: {
         "schemes-subtitle": "शीर्ष सरकारी योजनाओं, सब्सिडी, फसल बीमा और क्रेडिट सुविधाओं का अन्वेषण करें। अपने खेत के स्थान के लिए व्यक्तिगत आवेदन मार्गदर्शन प्राप्त करने के लिए 'मेरी एआई पात्रता जांचें' पर क्लिक करें।",
 
         "schemes-title": "सरकारी कृषि योजनाएं और एआई सब्सिडी चेकर",
@@ -1330,7 +1328,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "Guía de Características del Suelo",
         "footer-tagline": "Empoderando a los agricultores con inteligencia agronómica inteligente.",
         "footer-interview-notes": "Creado para demostraciones de IA agrícola en entrevistas. Desarrollado por Open-Meteo y Gemini-Core.",
-        
+
         "soil-clay": "Suelo Arcilloso Pesado",
         "soil-clay-loam": "Franco Arcilloso",
         "soil-loamy": "Franco Medio",
@@ -1609,7 +1607,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "Guide des Caractéristiques du Sol",
         "footer-tagline": "Autonomiser les agriculteurs grâce à une intelligence agronomique intelligente.",
         "footer-interview-notes": "Conçu pour les démonstrations d'IA agricole en entretien. Alimenté par Open-Meteo & Gemini-Core.",
-        
+
         "soil-clay": "Sol Argileux Lourd",
         "soil-clay-loam": "Loam Argileux",
         "soil-loamy": "Loam Moyen",
@@ -1885,7 +1883,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "నేలల లక్షణాల సమాచారం",
         "footer-tagline": "రైతులకు స్మార్ట్ వ్యవసాయ సాంకేతిక పరిజ్ఞానాన్ని అందించడం.",
         "footer-interview-notes": "వ్యవసాయ AI ప్రదర్శనల కోసం రూపొందించబడింది. Open-Meteo & Gemini సహాయంతో పనిచేస్తుంది.",
-        
+
         "soil-clay": "నల్ల రేగడి నేల (బరువైన జిగురు)",
         "soil-clay-loam": "నల్ల బంకమట్టి నేల",
         "soil-loamy": "దుబ్బ నేల / గరప నేల",
@@ -2161,7 +2159,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "மண் குணாதிசய வழிகாட்டி",
         "footer-tagline": "விவசாயிகளுக்கு ஸ்மார்ட் விவசாய தொழில்நுட்பத்தை வழங்குதல்.",
         "footer-interview-notes": "விவசாய AI விளக்கக்காட்சிகளுக்காக உருவாக்கப்பட்டது. Open-Meteo & Gemini-Core உதவியுடன் செயல்படுகிறது.",
-        
+
         "soil-clay": "களிமண் (கனமான களிமண்)",
         "soil-clay-loam": "களிமண் கலந்த வண்டல் மண்",
         "soil-loamy": "வண்டல் மண்",
@@ -2437,7 +2435,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "माती वैशिष्ट्ये मार्गदर्शक",
         "footer-tagline": "शेतकऱ्यांना स्मार्ट कृषी तंत्रज्ञानाने सक्षम करणे.",
         "footer-interview-notes": "कृषी एआय मुलाखत प्रात्यक्षिकांसाठी तयार केले गेले. Open-Meteo आणि Gemini-Core च्या मदतीने कार्यरत.",
-        
+
         "soil-clay": "चिकनमाती (भारी चिकण माती)",
         "soil-clay-loam": "चिकण दुमट माती",
         "soil-loamy": "मध्यम दुमट माती",
@@ -2725,7 +2723,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "মাটির বৈশিষ্ট্য নির্দেশিকা",
         "footer-tagline": "কৃষকদের স্মার্ট কৃষি প্রযুক্তির মাধ্যমে ক্ষমতায়ন করা।",
         "footer-interview-notes": "কৃষি এআই ডেমো প্রদর্শনের জন্য নির্মিত। Open-Meteo এবং Gemini-Core দ্বারা চালিত।",
-        
+
         "soil-clay": "ভারী কাদা মাটি (Clay)",
         "soil-clay-loam": "এঁটেল দোআঁশ মাটি",
         "soil-loamy": "দোআঁশ মাটি (Loam)",
@@ -3000,7 +2998,7 @@ const TRANSLATIONS = {
         "edu-soil-catalog": "ਮਿੱਟੀ ਦੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਗਾਈਡ",
         "footer-tagline": "ਕਿਸਾਨਾਂ ਨੂੰ ਸਮਾਰਟ ਖੇਤੀਬਾੜੀ ਤਕਨਾਲੋਜੀ ਨਾਲ ਸ਼ਕਤੀਸ਼ਾਲੀ ਬਣਾਉਣਾ।",
         "footer-interview-notes": "ਖੇਤੀਬਾੜੀ ਏਆਈ ਇੰਟਰਵਿਊ ਪ੍ਰਦਰਸ਼ਨਾਂ ਲਈ ਬਣਾਇਆ ਗਿਆ। ਓਪਨ-ਮੇਟੀਓ ਅਤੇ ਜੇਮਿਨੀ-ਕੋਰ ਦੁਆਰਾ ਸੰਚਾਲਿਤ।",
-        
+
         "soil-clay": "ਭਾਰੀ ਚੀਕਣੀ ਮਿੱਟੀ (Clay)",
         "soil-clay-loam": "ਚੀਕਣੀ ਡੋਮਟ ਮਿੱਟੀ (Clay Loam)",
         "soil-loamy": "ਦਰਮਿਆਨੀ ਡੋਮਟ ਮਿੱਟੀ (Loam)",
@@ -3150,17 +3148,17 @@ const dom = {
     advisorFertSplitNote: document.getElementById("advisor-fert-split-note"),
     advisorPestList: document.getElementById("advisor-pest-list"),
     coordsDisplay: document.getElementById("coords-display"),
-    
+
     // Tab links
     tabLinks: document.querySelectorAll(".tab-link"),
     tabPanels: document.querySelectorAll(".tab-panel"),
-    
+
     // Dashboard panel elements
     gaugeFill: document.getElementById("gauge-fill"),
     gaugeVal: document.getElementById("growth-score-val"),
     gaugeVerdict: document.getElementById("growth-verdict-lbl"),
     suitabilityBadge: document.getElementById("suitability-badge"),
-    
+
     weatherCurrentTemp: document.getElementById("weather-current-temp"),
     weatherCurrentDesc: document.getElementById("weather-current-desc"),
     weatherMainIcon: document.getElementById("weather-main-icon-element"),
@@ -3168,15 +3166,15 @@ const dom = {
     weatherPrecip: document.getElementById("weather-precip-val"),
     weatherWind: document.getElementById("weather-wind-val"),
     weatherUV: document.getElementById("weather-uv-val"),
-    
+
     soilNameTitle: document.getElementById("soil-name-title"),
     soilDescText: document.getElementById("soil-desc-text"),
     soilBarRetention: document.getElementById("soil-bar-retention"),
     soilBarDrainage: document.getElementById("soil-bar-drainage"),
     soilVisualAccent: document.getElementById("soil-visual-accent"),
-    
+
     diagnosticList: document.getElementById("diagnostic-list-container"),
-    
+
     // AI Advisor elements
     consoleOutput: document.getElementById("console-output"),
     consoleCmdInput: document.getElementById("console-cmd-input"),
@@ -3187,7 +3185,7 @@ const dom = {
     scheduleTbody: document.getElementById("schedule-tbody"),
     criticalTipsList: document.getElementById("advisor-critical-tips-list"),
     conservationTipsList: document.getElementById("advisor-conservation-tips-list"),
-    
+
     // Weather station elements
     weatherDetailsIcon: document.getElementById("weather-details-icon"),
     weatherDetailsTemp: document.getElementById("weather-details-temp"),
@@ -3198,13 +3196,13 @@ const dom = {
     weatherSensorWind: document.getElementById("weather-sensor-wind"),
     weatherSensorPressure: document.getElementById("weather-sensor-pressure"),
     forecastCardsWrapper: document.getElementById("forecast-cards-wrapper"),
-    
+
     // Education elements
     eduSelectCrop: document.getElementById("edu-select-crop"),
     eduSelectSoil: document.getElementById("edu-select-soil"),
     eduCropCard: document.getElementById("edu-crop-card"),
     eduSoilCard: document.getElementById("edu-soil-card"),
-    
+
     // Soil Lab elements
     slColor: document.getElementById("sl-color"),
     slTexture: document.getElementById("sl-texture"),
@@ -3228,7 +3226,7 @@ const dom = {
 
 function formatTemp(tempC) {
     if (state.unitImperial) {
-        const tempF = (tempC * 9/5) + 32;
+        const tempF = (tempC * 9 / 5) + 32;
         return `${tempF.toFixed(1)}°F`;
     }
     return `${tempC.toFixed(1)}°C`;
@@ -3255,7 +3253,7 @@ function interpretWeatherCode(code) {
     let icon = "fa-solid fa-sun";
     let descKey = "weather-clear";
     let defaultDesc = "Sunny/Clear";
-    
+
     if (code === 0) {
         icon = "fa-solid fa-sun";
         descKey = "weather-clear";
@@ -3289,7 +3287,7 @@ function interpretWeatherCode(code) {
         descKey = "weather-storm";
         defaultDesc = "Thunderstorm";
     }
-    
+
     return { icon, descKey, defaultDesc };
 }
 
@@ -3298,203 +3296,203 @@ function getWeatherDesc(descKey, defaultDesc) {
     // Add specific translations for weather conditions
     const weatherTranslations = {
         en: { "weather-clear": "Clear Sky", "weather-cloudy": "Partly Cloudy", "weather-fog": "Foggy", "weather-drizzle": "Light Drizzle", "weather-rain": "Rainy", "weather-snow": "Snowy", "weather-showers": "Heavy Showers", "weather-storm": "Thunderstorm" },
-            hi: {
-        "logo-tagline": "एआई स्मार्ट सिंचाई सलाहकार",
-        "units-celsius": "°C / मिमी",
-        "units-fahrenheit": "°F / इंच",
-        "config-title": "खेत सेटिंग्स",
-        "config-desc": "अनुकूलित एआई सलाह प्राप्त करने के लिए अपने खेत के मापदंडों को परिभाषित करें।",
-        "label-location": "स्थान / क्षेत्र",
-        "label-soil": "मिट्टी की बनावट / प्रकार",
-        "label-crop": "फसल का प्रकार",
-        "label-stage": "विकास की अवस्था",
-        "soil-helper": "मिट्टी का प्रकार क्षेत्र से स्वतः भर जाता है लेकिन इसे बदला जा सकता है।",
-        "stage-germination": "प्रारंभिक / अंकुरण",
-        "stage-vegetative": "फसल विकास / वानस्पतिक",
-        "stage-flowering": "मध्य-मौसम / फूल आना",
-        "stage-yield": "देर से मौसम / उपज गठन",
-        "stage-ripening": "पकना / कटाई",
-        "btn-generate": "सिंचाई योजना बनाएं",
-        "tab-dashboard": "डैशबोर्ड",
-        "tab-advisor": "एआई सलाहकार",
-        "tab-weather": "मौसम स्टेशन",
-        "tab-education": "कृषि गाइड",
-        "dash-suitability-title": "विकास उपयुक्तता स्कोर",
-        "suitability-pending": "उपयुक्तता",
-        "suitability-alert-txt": "विश्लेषण करने के लिए सेटिंग्स जमा करें",
-        "dash-weather-title": "वर्तमान मौसम की स्थिति",
-        "weather-humidity": "आर्द्रता",
-        "weather-precipitation": "बारिश की संभावना",
-        "weather-wind": "हवा की गति",
-        "weather-radiation": "सौर विकिरण",
-        "dash-soil-title": "मिट्टी की विशेषताएं",
-        "soil-water-retention": "जल धारण क्षमता",
-        "soil-drainage": "जल निकासी की गति",
-        "dash-diagnostic-title": "एआई फसल निदान",
-        "diag-init-title": "प्रणाली तैयार है",
-        "diag-init-desc": "अपनी अनुकूलित उपयुक्तता स्कोर और मौसम अंतर्दृष्टि उत्पन्न करने के लिए ऊपर \"सिंचाई योजना बनाएं\" पर क्लिक करें।",
-        "console-title": "कृषि जाल एआई टर्मिनल",
-        "console-ready-msg": "कृषि जाल एआई इंजन शुरू हो गया है। कमांड टाइप करें या जनरेट पर क्लिक करें...",
-        "advisor-report-summary": "सिंचाई सिफारिश सारांश",
-        "schedule-title": "5-दिवसीय सिंचाई कार्यक्रम",
-        "table-day": "दिन / दिनांक",
-        "table-temp": "तापमान",
-        "table-rain": "अनुमानित बारिश",
-        "table-soil-moisture": "मिट्टी की नमी",
-        "table-water-needed": "आवश्यक जल गहराई",
-        "table-action": "अनुशंसित कार्रवाई",
-        "advisor-critical-tips": "महत्वपूर्ण कृषि चेतावनियां",
-        "advisor-conservation-tips": "जल संरक्षण तकनीकें",
-        "weather-station-live-title": "लाइव मौसम स्टेशन",
-        "weather-feels-like": "महसूस होता है",
-        "weather-pressure": "वायुमंडलीय दबाव",
-        "weather-station-forecast-title": "5-दिवसीय मौसम पूर्वानुमान",
-        "edu-crop-catalog": "फसल निर्देशिका",
-        "edu-soil-catalog": "मिट्टी प्रोफाइल निर्देशिका",
-        "footer-tagline": "कृषि जाल — कृषि जल प्रबंधन के लिए स्मार्ट एआई समाधान।",
-        "footer-interview-notes": "स्मार्ट कृषि सिंचाई अनुसंधान एवं विकास prototype",
-        "soil-clay": "चिकनी मिट्टी (Clay)",
-        "soil-clay-loam": "चिकनी दोमट मिट्टी (Clay Loam)",
-        "soil-loamy": "दोमट मिट्टी (Loam)",
-        "soil-sandy": "रेतीली मिट्टी (Sandy)",
-        "soil-silt": "गाद दोमट मिट्टी (Silt Loam)",
-        "soil-black": "काली कपास मिट्टी (Black Soil)",
-        "soil-red": "लाल मिट्टी (Red Soil)",
-        "soil-alluvial": "जलोढ़ मिट्टी (Alluvial)",
-        "soil-laterite": "लैटेराइट मिट्टी (Laterite)",
-        "soil-peaty": "पीठयुक्त दलदली मिट्टी (Peaty)",
-        "soil-saline": "लवणीय / क्षारीय मिट्टी (Saline)",
-        "soil-chalky": "चूनेदार मिट्टी (Chalky)",
-        "soil-clay-desc": "अत्यधिक उच्च जल धारण क्षमता वाली भारी चिकनी मिट्टी, लेकिन बहुत कम जल निकासी की गति। जलभराव के प्रति अत्यंत संवेदनशील। चावल जैसी बाढ़-फसलों के लिए आदर्श, लेकिन कंद-फसलों के लिए सावधानीपूर्वक जल निकासी की आवश्यकता होती है।",
-        "soil-clay-loam-desc": "चिकनी मिट्टी, गाद और रेत का संतुलित मिश्रण। समृद्ध पोषक स्तर, उच्च जल धारण क्षमता और निष्पक्ष जल निकासी विशेषताएं। सामान्य कृषि के लिए अत्यधिक बहुमुखी।",
-        "soil-loamy-desc": "आदर्श कृषि मिट्टी। जल निकासी और नमी प्रतिधारण का उत्कृष्ट संतुलन, जो जड़ों के श्वसन के लिए वायु अंतराल की अनुमति देता है। पोषक तत्वों से भरपूर और काम करने में आसान।",
-        "soil-sandy-desc": "मोटे रेत के कण। न्यूनतम नमी धारण क्षमता के साथ उच्च जल रिसाव दर। पोषक तत्व जल्दी से बाहर निकल जाते हैं। लगातार, हल्की ड्रिप-सिंचाई और भारी जैविक मल्चिंग की आवश्यकता होती है।",
-        "soil-silt-desc": "बारीक, चिकने कण जो नमी को अच्छी तरह बनाए रखते हैं लेकिन संकुचित हो सकते हैं। पोषक तत्वों को प्रभावी ढंग से रखता है। अनाज और कंद फसलों की एक विस्तृत श्रृंखला के लिए अच्छा है।",
-        "soil-black-desc": "मिट्टी से भरपूर गहरी काली मिट्टी। उच्च सिकुड़न और दरार के लक्षण, उच्च नमी प्रतिधारण। कपास की खेती के लिए प्रसिद्ध ('काली कपास मिट्टी'), सतह के नीचे गहराई से नमी रखती है।",
-        "soil-red-desc": "क्रिस्टलीय कायांतरित चट्टानों से निर्मित। उच्च लौह तत्व, छिद्रपूर्ण संरचना, उत्कृष्ट जल निकासी। प्राकृतिक रूप से कम जल धारण क्षमता, जैविक खाद और विनियमित पानी की आवश्यकता होती है।",
-        "soil-alluvial-desc": "नदी नहरों द्वारा जमा की गई अत्यधिक उपजाऊ मिट्टी। पोटाश, फास्फोरिक एसिड और जैविक गाद से भरपूर। उत्कृष्ट नमी गुण, गेहूं, गन्ना और दालों के लिए उपयुक्त।",
-        "soil-laterite-desc": "गर्म और आर्द्र उष्णकटिबंधीय क्षेत्रों में बनने वाली लोहा और एल्युमिनियम से भरपूर मिट्टी। अत्यधिक अपक्षयित, अम्लीय और तेजी से जल निकासी वाली। फॉस्फोरस उर्वरक और नियमित जैविक खाद की आवश्यकता होती है।",
-        "soil-peaty-desc": "जलभराव वाले दलदली क्षेत्रों में बनने वाली जैविक तत्वों से भरपूर मिट्टी। बहुत उच्च जल धारण क्षमता लेकिन प्राकृतिक रूप से खराब जल निकासी वाली। उच्च अम्लता, जैविक पदार्थों से समृद्ध। नमी पसंद करने वाले विशेष पौधों के लिए सर्वोत्तम।",
-        "soil-saline-desc": "खराब जल निकासी वाले शुष्क और अर्ध-शुष्क क्षेत्रों में पाई जाने वाली नमक से प्रभावित मिट्टी। फसलों द्वारा पानी के अवशोषण को बाधित करती है। जिप्सम उपचार और नमक-सहित फसलों की आवश्यकता होती है।",
-        "soil-chalky-desc": "उच्च मात्रा में कैल्शियम कार्बोनेट (चूना) और पत्थरों वाली बहुत क्षारीय, उथली मिट्टी। अत्यधिक तेजी से जल निकासी होती है और जल्दी सूख जाती है। जैविक खाद और लौह सुधार की आवश्यकता होती है।",
-        "crop-rice": "चावल / धान",
-        "crop-wheat": "गेहूं",
-        "crop-cotton": "कपास",
-        "crop-maize": "मक्का",
-        "crop-potato": "आलू",
-        "crop-tomato": "टमाटर",
-        "crop-groundnut": "मूंगफली",
-        "crop-sugarcane": "गन्ना",
-        "crop-soybean": "सोयाबीन",
-        "crop-mustard": "सरसों",
-        "crop-barley": "जौ",
-        "crop-chickpea": "चना / छोले",
-        "crop-sunflower": "सूरजमुखी",
-        "crop-sorghum": "ज्वार (Sorghum)",
-        "crop-marigold": "गेंदा फूल (Marigold)",
-        "crop-rose": "गुलाब का फूल (Rose)",
-        "crop-jasmine": "मोगरा / चमेली (Jasmine)",
-        "crop-rice-desc": "धान एक जल-गहन उष्णकटिबंधीय अनाज है। यह ठहरे हुए पानी और गर्म, आर्द्र जलवायु में पनपता है, जिसके लिए चिकनी मिट्टी की आवश्यकता होती है जो पानी के निकास का विरोध करती है।",
-        "crop-wheat-desc": "गेहूं एक शीतकालीन अनाज की फसल है। इसके लिए ठंडे बढ़ते मौसम और परिपक्वता पर गर्म मौसम की आवश्यकता होती है। अच्छी जल निकासी वाले दोमट और जलोढ़ गाद को प्राथमिकता देता है।",
-        "crop-cotton-desc": "कपास एक गर्म मौसम की नकदी फसल है। गहरी काली कपास मिट्टी में पनपती है। प्रारंभिक चरणों में जलभराव के प्रति अत्यधिक संवेदनशील लेकिन बाद में सूखा-सहनशील।",
-        "crop-maize-desc": "मक्का एक बहुमुखी अनाज है। खड़े पानी (जलभराव) के प्रति अत्यधिक संवेदनशील और इसके वानस्पतिक और फूल आने के चरणों में मध्यम, समान रूप से दूरी पर पानी की आवश्यकता होती है।",
-        "crop-potato-desc": "आलू एक कंद की फसल है जिसके लिए ठंडे तापमान और रेतीली दोमट जैसी ढीली, हवादार मिट्टी की आवश्यकता होती है। भारी चिकनी मिट्टी के कारण जड़ें सड़ जाती हैं और कंद का आकार खराब हो जाता है।",
-        "crop-tomato-desc": "टमाटर एक संवेदनशील गर्म मौसम की फसल है। लगातार, मध्यम नमी की आवश्यकता होती है। अत्यधिक पानी देने से फल फट जाते हैं और सड़न हो जाती है।",
-        "crop-groundnut-desc": "मूंगफली एक फलीदार फसल है जो जमीन के नीचे पकती है। मूंगफली के अंकुर को मिट्टी में प्रवेश करने और आसानी से फली विकसित करने के लिए रेतीली दोमट की आवश्यकता होती है। उच्च जल निकासी महत्वपूर्ण है।",
-        "crop-sugarcane-desc": "गन्ना एक लंबी अवधि की, अत्यधिक जल-गहन फसल है। उच्च जल धारण क्षमता वाली जलोढ़ और चिकनी मिट्टी पर पनपने के लिए मजबूत नमी की उपलब्धता की आवश्यकता होती है।",
-        "crop-soybean-desc": "सोयाबीन एक प्रोटीन युक्त तिलहन है। फली भरने के दौरान सूखे के प्रति अत्यधिक संवेदनशील और जलभराव के प्रति संवेदनशील। दोमट मिट्टी पसंद करता है।",
-        "crop-mustard-desc": "सरसों एक कठोर शीतकालीन तिलहन फसल है। कम से मध्यम पानी की आवश्यकता होती है, न्यूनतम पानी के साथ रेतीली दोमट और जलोढ़ मिट्टी में पनपती है।",
-        "crop-barley-desc": "जौ एक सूखा-प्रतिरोधी ठंडे मौसम का अनाज है। गेहूं की तुलना में अधिक नमक-सहिष्णु, मध्यम पानी की जरूरतों के साथ हल्की रेतीली-दोमट मिट्टी में अच्छा प्रदर्शन करता है।",
-        "crop-chickpea-desc": "चना एक शीतकालीन दलहन की फसल है। जलभराव के प्रति अत्यधिक संवेदनशील। अवशिष्ट मिट्टी की नमी का उपयोग करने में अत्यंत कुशल; बहुत कम सिंचाई की आवश्यकता होती है।",
-        "crop-sunflower-desc": "सूरजमुखी एक अत्यधिक बहुमुखी तिलहन फूल की फसल है। गहरी मूसला जड़ों के साथ अत्यधिक सूखा-सहिष्णु, जिसके लिए अच्छी जल निकासी और धूप की आवश्यकता होती है।",
-        "crop-sorghum-desc": "ज्वार एक अत्यधिक जलवायु-अनुकूल शुष्क भूमि की फसल है। इसके लिए न्यूनतम पानी की आवश्यकता होती है और यह उच्च तापमान में जीवित रह सकती है, भारी मिट्टी में अच्छा प्रदर्शन करती है।",
-        "crop-marigold-desc": "गेंदा एक मजबूत, लोकप्रिय फूल वाला पौधा है जो कीट प्रबंधन, धार्मिक उपयोग और मालाओं के लिए उगाया जाता है। अत्यधिक अनुकूलनीय और उगाने में आसान।",
-        "crop-rose-desc": "गुलाब एक प्रीमियम व्यावसायिक पुष्पकृषि फसल है। इसके लिए समृद्ध जैविक मिट्टी, लगातार मध्यम नमी और सावधानीपूर्वक छंटाई की आवश्यकता होती है।",
-        "crop-jasmine-desc": "चमेली/मोगरा एक सुगंधित व्यावसायिक फूल वाली फसल है जिसका उपयोग इत्र और पारंपरिक मालाओं के लिए किया जाता है। गर्म, धूप वाले मौसम और अच्छी जल निकासी वाली मिट्टी में पनपती है।",
-        "crop-rice-tips": "प्रारंभिक विकास के दौरान 5-8 सेमी पानी का स्तर बनाए रखें। पकने की अवस्था तक मिट्टी को पूरी तरह सूखने न दें।",
-        "crop-wheat-tips": "क्राउन रूट इनिशिएशन (CRI) चरण (बुआई के 21-25 दिन बाद) और फूल आने के चरण के दौरान महत्वपूर्ण सिंचाई प्रदान करें।",
-        "crop-cotton-tips": "फूल आने और डोड बनने के दौरान मिट्टी की नमी इष्टतम सुनिश्चित करें। जड़ों में ऑक्सीजन की कमी को रोकने के लिए बाढ़ सिंचाई से बचें।",
-        "crop-maize-tips": "नरमंजर (Tasseling) और सिल्क निकलने के चरणों के दौरान पानी की कमी से बचें क्योंकि इससे उपज में भारी कमी आ सकती है।",
-        "crop-potato-tips": "बार-बार लेकिन हल्की सिंचाई करें। कंदों को धूप से बचाने और उन्हें ठंडा रखने के लिए मिट्टी चढ़ाकर रखें।",
-        "crop-tomato-tips": "फंगल रोगों से बचने के लिए पत्तियों के बजाय सीधे मिट्टी में पानी दें। फलों को फटने से बचाने के लिए लगातार नमी बनाए रखें।",
-        "crop-groundnut-tips": "फूल आने और सुइयां (Pegging) बनने के चरणों के दौरान सिंचाई प्रदान करें। चिकनी मिट्टी से बचें जो सुइयों के प्रवेश को रोकती हैं।",
-        "crop-sugarcane-tips": "गठन चरण (पहले 4 महीने) के दौरान महत्वपूर्ण सिंचाई की आवश्यकता होती है। नमी बनाए रखने के लिए सूखे पत्तों से मल्चिंग करें।",
-        "crop-soybean-tips": "फली बनने और फली भरने के दौरान पर्याप्त नमी सुनिश्चित करें। बुआई के बाद मिट्टी की पपड़ी न बनने दें।",
-        "crop-mustard-tips": "केवल 2 से 3 हल्की सिंचाइयों की आवश्यकता होती है: पहली फूल आने से पहले, दूसरी फली के विकास के चरण में।",
-        "crop-barley-tips": "वानस्पतिक अवस्था में अधिक पानी न दें। जड़ों में हवा का संचार बनाए रखें। नाइट्रोजन के बहने से बचें।",
-        "crop-chickpea-tips": "फूल आने पर पानी की कमी खतरनाक है, लेकिन अतिरिक्त पानी से वानस्पतिक वृद्धि अत्यधिक हो जाती है और फली की उपज शून्य होती है।",
-        "crop-sunflower-tips": "गहरी जड़ों को प्रोत्साहित करने के लिए गहरा लेकिन कम बार पानी दें। फूलों की कली के सड़ने को रोकने के लिए ऊपर से पानी देने से बचें।",
-        "crop-sorghum-tips": "यदि वर्षा अपर्याप्त हो, तो महत्वपूर्ण बूटिंग और अनाज भरने के चरणों के दौरान सिंचाई प्रदान करें।",
-        "crop-marigold-tips": "अत्यधिक पानी देने से बचें जिससे जड़ें सड़ जाती हैं और फूलों की संख्या कम हो जाती है। झाड़ीदार विकास और अधिक कलियों को प्रोत्साहित करने के लिए विकास युक्तियों को जल्दी पिंच करें।",
-        "crop-rose-tips": "सीधे जड़ों में पानी दें, काले धब्बों को रोकने के लिए पत्तियों को गीला करने से बचें। महीने में एक बार नाइट्रोजन और पोटाश से खाद दें।",
-        "crop-jasmine-tips": "मुख्य फूल आने के मौसम (गर्मी/मानसून) के दौरान नियमित रूप से सिंचाई करें। नई लकड़ी और फूलों को प्रोत्साहित करने के लिए फूल आने के बाद छंटाई करें।",
-        "crop-rice-cons": "पानी की 30% तक बचत करने के लिए लगातार बाढ़ के बजाय वैकल्पिक गीला और सूखा (AWD) तरीका लागू करें।",
-        "crop-wheat-cons": "पानी को समान रूप से वितरित करने और वाष्पीकरण के नुकसान को कम करने के लिए स्प्रिंकलर सिंचाई प्रणालियों का उपयोग करें।",
-        "crop-cotton-cons": "वाष्पीकरण को सीमित करने और पानी की दक्षता को अधिकतम करने के लिए काली मिट्टी के मल्च के नीचे ड्रिप सिंचाई का उपयोग करें।",
-        "crop-maize-cons": "मेड़-और-नाली (Ridge-and-furrow) रोपण का अभ्यास करें। जड़ों के पास नमी केंद्रित करने के लिए केवल नालियों में पानी दें।",
-        "crop-potato-cons": "90% तक जल अनुप्रयोग दक्षता प्राप्त करने के लिए प्लास्टिक मल्च के नीचे बिछाई गई ड्रिप नलियों का उपयोग करें।",
-        "crop-tomato-cons": "मिट्टी की नमी को 40% अधिक बनाए रखने के लिए पौधों के आधार के आसपास जैविक मल्च (पुआल/नारियल की भूसी) लगाएं।",
-        "crop-groundnut-cons": "मिट्टी को सख्त होने से बचाने के लिए फली बनने के दौरान स्प्रिंकलर सिंचाई से बचें। इसके बजाय ड्रिप टेप का उपयोग करें।",
-        "crop-sugarcane-cons": "वाष्पीकरण को नाटकीय रूप से कम करने और खरपतवार के विकास को रोकने के लिए फसल की पंक्तियों के बीच कचरा-मल्चिंग (Trash-mulching) का उपयोग करें।",
-        "crop-soybean-cons": "बिना जुताई वाली खेती खेत पर पिछली फसल के अवशेषों को रखती है, जिससे महत्वपूर्ण मिट्टी के पानी के भंडार सुरक्षित रहते हैं।",
-        "crop-mustard-cons": "बाढ़ सिंचाई की तुलना में फूल आने के दौरान एक एकल माइक्रो-स्प्रिंकलर सत्र अत्यधिक जल-कुशल है।",
-        "crop-barley-cons": "लेजर लैंड लेवलिंग का लाभ उठाएं ताकि पानी बिना किसी बर्बादी के पूरी तरह से वितरित हो सके।",
-        "crop-chickpea-cons": "पानी के संरक्षण और कवक जनित जड़ सड़न को रोकने के लिए चौड़ी क्यारी प्रणालियों में नाली सिंचाई पर भरोसा करें।",
-        "crop-sunflower-cons": "नालीदार बाढ़ सिंचाई की तुलना में पानी की 45% तक बचत करने के लिए सीधे पंक्तियों के साथ ड्रिप सिंचाई पाइपों का उपयोग करें।",
-        "crop-sorghum-cons": "यदि गहरी जड़ वाले क्षेत्र में अवशिष्ट नमी हो, तो सिंचाई से बचने के लिए मिट्टी की नमी सेंसर का उपयोग करें।",
-        "crop-marigold-cons": "नमी के वाष्पीकरण को रोकने और जड़ों को ठंडा रखने के लिए क्यारियों के आसपास हल्की सूखी घास (मल्चिंग) लगाएं।",
-        "crop-rose-cons": "वाष्पीकरण के नुकसान को कम करने के लिए केवल सुबह जल्दी पानी देने के लिए टाइमर के साथ स्वचालित ड्रिप प्रणालियों का उपयोग करें।",
-        "crop-jasmine-cons": "नमी को बनाए रखने के लिए झाड़ी के चारों ओर थाला (Basin) विधि से सिंचाई करें और घनी जैविक खाद का उपयोग करें।",
-        "tab-soillab": "मिट्टी प्रयोगशाला",
-        "soillab-title": "एआई मिट्टी विश्लेषण प्रयोगशाला",
-        "soillab-subtitle": "एआई-संचालित लैब रिपोर्ट प्राप्त करने के लिए अपने मिट्टी के नमूने का वर्णन करें।",
-        "soillab-color": "मिट्टी का रंग",
-        "soillab-texture": "बनावट का अहसास",
-        "soillab-moisture": "नमी का स्तर",
-        "soillab-organic": "जैविक पदार्थ के संकेत",
-        "soillab-ph": "पीएच स्ट्रिप रीडिंग",
-        "soillab-area": "खेत का क्षेत्रफल (एकड़)",
-        "btn-analyze-soil": "मिट्टी का नमूना विश्लेषण करें",
-        "soillab-placeholder-title": "मिट्टी विश्लेषण रिपोर्ट",
-        "soillab-placeholder-desc": "बाईं ओर अपने मिट्टी के नमूने की टिप्पणियां भरें और विस्तृत एआई लैब रिपोर्ट बनाने के लिए \"मिट्टी का नमूना विश्लेषण करें\" पर क्लिक करें।",
-        "sl-color-dark": "गहरा काला / चारकोल",
-        "sl-color-red": "लालिमा युक्त भूरा",
-        "sl-color-light": "हल्का भूरा / तन",
-        "sl-color-grey": "धूसर / राखी",
-        "sl-color-yellow": "पीलापन लिए",
-        "sl-tex-sticky": "चिपचिपी / चिकनी मिट्टी जैसी",
-        "sl-tex-smooth": "चिकनी / रेशमी (गाद)",
-        "sl-tex-gritty": "दानेदार / रेतीली",
-        "sl-tex-crumbly": "भुरभुरी / दोमट",
-        "sl-moist-waterlogged": "जलभराव / संतृप्त",
-        "sl-moist-moist": "नम / गीली",
-        "sl-moist-dry": "सूखी",
-        "sl-moist-verydry": "बहुत सूखी / दरारें",
-        "sl-org-worms": "केंचुए",
-        "sl-org-decayed": "सड़ी पत्तियां",
-        "sl-org-roots": "जड़ के टुकड़े",
-        "sl-org-fungal": "कवक वृद्धि",
-        "soillab-hero-title": "एआई मिट्टी स्वास्थ्य रिपोर्ट",
-        "soillab-hero-subtitle": "दृश्य और स्पर्श मिट्टी अवलोकनों से उत्पन्न",
-        "soillab-health-label": "मिट्टी का स्वास्थ्य",
-        "soillab-nutrient-title": "अनुमानित पोषक तत्व प्रोफ़ाइल",
-        "soillab-ph-title": "पीएच विश्लेषण और अम्लता प्रोफ़ाइल",
-        "soillab-crop-title": "फसल अनुकूलता रैंकिंग",
-        "soillab-amend-title": "मिट्टी सुधार सिफारिशें",
-        "soillab-n": "नाइट्रोजन (N)",
-        "soillab-p": "फॉस्फोरस (P)",
-        "soillab-k": "पोटेशियम (K)",
-        "soillab-fe": "लोहा (Fe)",
-        "soillab-zn": "जस्ता (Zn)",
-        "soillab-om": "जैविक पदार्थ",
-        "soillab-low": "कम",
-        "soillab-medium": "मध्यम",
-        "soillab-high": "उच्च",
-        "soillab-crop-name": "Crop",
-        "soillab-crop-match": "Match",
-        "soillab-crop-fert": "Fertilizer Suggestion",
-        "soillab-crop-rating": "Rating"
-    },
+        hi: {
+            "logo-tagline": "एआई स्मार्ट सिंचाई सलाहकार",
+            "units-celsius": "°C / मिमी",
+            "units-fahrenheit": "°F / इंच",
+            "config-title": "खेत सेटिंग्स",
+            "config-desc": "अनुकूलित एआई सलाह प्राप्त करने के लिए अपने खेत के मापदंडों को परिभाषित करें।",
+            "label-location": "स्थान / क्षेत्र",
+            "label-soil": "मिट्टी की बनावट / प्रकार",
+            "label-crop": "फसल का प्रकार",
+            "label-stage": "विकास की अवस्था",
+            "soil-helper": "मिट्टी का प्रकार क्षेत्र से स्वतः भर जाता है लेकिन इसे बदला जा सकता है।",
+            "stage-germination": "प्रारंभिक / अंकुरण",
+            "stage-vegetative": "फसल विकास / वानस्पतिक",
+            "stage-flowering": "मध्य-मौसम / फूल आना",
+            "stage-yield": "देर से मौसम / उपज गठन",
+            "stage-ripening": "पकना / कटाई",
+            "btn-generate": "सिंचाई योजना बनाएं",
+            "tab-dashboard": "डैशबोर्ड",
+            "tab-advisor": "एआई सलाहकार",
+            "tab-weather": "मौसम स्टेशन",
+            "tab-education": "कृषि गाइड",
+            "dash-suitability-title": "विकास उपयुक्तता स्कोर",
+            "suitability-pending": "उपयुक्तता",
+            "suitability-alert-txt": "विश्लेषण करने के लिए सेटिंग्स जमा करें",
+            "dash-weather-title": "वर्तमान मौसम की स्थिति",
+            "weather-humidity": "आर्द्रता",
+            "weather-precipitation": "बारिश की संभावना",
+            "weather-wind": "हवा की गति",
+            "weather-radiation": "सौर विकिरण",
+            "dash-soil-title": "मिट्टी की विशेषताएं",
+            "soil-water-retention": "जल धारण क्षमता",
+            "soil-drainage": "जल निकासी की गति",
+            "dash-diagnostic-title": "एआई फसल निदान",
+            "diag-init-title": "प्रणाली तैयार है",
+            "diag-init-desc": "अपनी अनुकूलित उपयुक्तता स्कोर और मौसम अंतर्दृष्टि उत्पन्न करने के लिए ऊपर \"सिंचाई योजना बनाएं\" पर क्लिक करें।",
+            "console-title": "कृषि जाल एआई टर्मिनल",
+            "console-ready-msg": "कृषि जाल एआई इंजन शुरू हो गया है। कमांड टाइप करें या जनरेट पर क्लिक करें...",
+            "advisor-report-summary": "सिंचाई सिफारिश सारांश",
+            "schedule-title": "5-दिवसीय सिंचाई कार्यक्रम",
+            "table-day": "दिन / दिनांक",
+            "table-temp": "तापमान",
+            "table-rain": "अनुमानित बारिश",
+            "table-soil-moisture": "मिट्टी की नमी",
+            "table-water-needed": "आवश्यक जल गहराई",
+            "table-action": "अनुशंसित कार्रवाई",
+            "advisor-critical-tips": "महत्वपूर्ण कृषि चेतावनियां",
+            "advisor-conservation-tips": "जल संरक्षण तकनीकें",
+            "weather-station-live-title": "लाइव मौसम स्टेशन",
+            "weather-feels-like": "महसूस होता है",
+            "weather-pressure": "वायुमंडलीय दबाव",
+            "weather-station-forecast-title": "5-दिवसीय मौसम पूर्वानुमान",
+            "edu-crop-catalog": "फसल निर्देशिका",
+            "edu-soil-catalog": "मिट्टी प्रोफाइल निर्देशिका",
+            "footer-tagline": "कृषि जाल — कृषि जल प्रबंधन के लिए स्मार्ट एआई समाधान।",
+            "footer-interview-notes": "स्मार्ट कृषि सिंचाई अनुसंधान एवं विकास prototype",
+            "soil-clay": "चिकनी मिट्टी (Clay)",
+            "soil-clay-loam": "चिकनी दोमट मिट्टी (Clay Loam)",
+            "soil-loamy": "दोमट मिट्टी (Loam)",
+            "soil-sandy": "रेतीली मिट्टी (Sandy)",
+            "soil-silt": "गाद दोमट मिट्टी (Silt Loam)",
+            "soil-black": "काली कपास मिट्टी (Black Soil)",
+            "soil-red": "लाल मिट्टी (Red Soil)",
+            "soil-alluvial": "जलोढ़ मिट्टी (Alluvial)",
+            "soil-laterite": "लैटेराइट मिट्टी (Laterite)",
+            "soil-peaty": "पीठयुक्त दलदली मिट्टी (Peaty)",
+            "soil-saline": "लवणीय / क्षारीय मिट्टी (Saline)",
+            "soil-chalky": "चूनेदार मिट्टी (Chalky)",
+            "soil-clay-desc": "अत्यधिक उच्च जल धारण क्षमता वाली भारी चिकनी मिट्टी, लेकिन बहुत कम जल निकासी की गति। जलभराव के प्रति अत्यंत संवेदनशील। चावल जैसी बाढ़-फसलों के लिए आदर्श, लेकिन कंद-फसलों के लिए सावधानीपूर्वक जल निकासी की आवश्यकता होती है।",
+            "soil-clay-loam-desc": "चिकनी मिट्टी, गाद और रेत का संतुलित मिश्रण। समृद्ध पोषक स्तर, उच्च जल धारण क्षमता और निष्पक्ष जल निकासी विशेषताएं। सामान्य कृषि के लिए अत्यधिक बहुमुखी।",
+            "soil-loamy-desc": "आदर्श कृषि मिट्टी। जल निकासी और नमी प्रतिधारण का उत्कृष्ट संतुलन, जो जड़ों के श्वसन के लिए वायु अंतराल की अनुमति देता है। पोषक तत्वों से भरपूर और काम करने में आसान।",
+            "soil-sandy-desc": "मोटे रेत के कण। न्यूनतम नमी धारण क्षमता के साथ उच्च जल रिसाव दर। पोषक तत्व जल्दी से बाहर निकल जाते हैं। लगातार, हल्की ड्रिप-सिंचाई और भारी जैविक मल्चिंग की आवश्यकता होती है।",
+            "soil-silt-desc": "बारीक, चिकने कण जो नमी को अच्छी तरह बनाए रखते हैं लेकिन संकुचित हो सकते हैं। पोषक तत्वों को प्रभावी ढंग से रखता है। अनाज और कंद फसलों की एक विस्तृत श्रृंखला के लिए अच्छा है।",
+            "soil-black-desc": "मिट्टी से भरपूर गहरी काली मिट्टी। उच्च सिकुड़न और दरार के लक्षण, उच्च नमी प्रतिधारण। कपास की खेती के लिए प्रसिद्ध ('काली कपास मिट्टी'), सतह के नीचे गहराई से नमी रखती है।",
+            "soil-red-desc": "क्रिस्टलीय कायांतरित चट्टानों से निर्मित। उच्च लौह तत्व, छिद्रपूर्ण संरचना, उत्कृष्ट जल निकासी। प्राकृतिक रूप से कम जल धारण क्षमता, जैविक खाद और विनियमित पानी की आवश्यकता होती है।",
+            "soil-alluvial-desc": "नदी नहरों द्वारा जमा की गई अत्यधिक उपजाऊ मिट्टी। पोटाश, फास्फोरिक एसिड और जैविक गाद से भरपूर। उत्कृष्ट नमी गुण, गेहूं, गन्ना और दालों के लिए उपयुक्त।",
+            "soil-laterite-desc": "गर्म और आर्द्र उष्णकटिबंधीय क्षेत्रों में बनने वाली लोहा और एल्युमिनियम से भरपूर मिट्टी। अत्यधिक अपक्षयित, अम्लीय और तेजी से जल निकासी वाली। फॉस्फोरस उर्वरक और नियमित जैविक खाद की आवश्यकता होती है।",
+            "soil-peaty-desc": "जलभराव वाले दलदली क्षेत्रों में बनने वाली जैविक तत्वों से भरपूर मिट्टी। बहुत उच्च जल धारण क्षमता लेकिन प्राकृतिक रूप से खराब जल निकासी वाली। उच्च अम्लता, जैविक पदार्थों से समृद्ध। नमी पसंद करने वाले विशेष पौधों के लिए सर्वोत्तम।",
+            "soil-saline-desc": "खराब जल निकासी वाले शुष्क और अर्ध-शुष्क क्षेत्रों में पाई जाने वाली नमक से प्रभावित मिट्टी। फसलों द्वारा पानी के अवशोषण को बाधित करती है। जिप्सम उपचार और नमक-सहित फसलों की आवश्यकता होती है।",
+            "soil-chalky-desc": "उच्च मात्रा में कैल्शियम कार्बोनेट (चूना) और पत्थरों वाली बहुत क्षारीय, उथली मिट्टी। अत्यधिक तेजी से जल निकासी होती है और जल्दी सूख जाती है। जैविक खाद और लौह सुधार की आवश्यकता होती है।",
+            "crop-rice": "चावल / धान",
+            "crop-wheat": "गेहूं",
+            "crop-cotton": "कपास",
+            "crop-maize": "मक्का",
+            "crop-potato": "आलू",
+            "crop-tomato": "टमाटर",
+            "crop-groundnut": "मूंगफली",
+            "crop-sugarcane": "गन्ना",
+            "crop-soybean": "सोयाबीन",
+            "crop-mustard": "सरसों",
+            "crop-barley": "जौ",
+            "crop-chickpea": "चना / छोले",
+            "crop-sunflower": "सूरजमुखी",
+            "crop-sorghum": "ज्वार (Sorghum)",
+            "crop-marigold": "गेंदा फूल (Marigold)",
+            "crop-rose": "गुलाब का फूल (Rose)",
+            "crop-jasmine": "मोगरा / चमेली (Jasmine)",
+            "crop-rice-desc": "धान एक जल-गहन उष्णकटिबंधीय अनाज है। यह ठहरे हुए पानी और गर्म, आर्द्र जलवायु में पनपता है, जिसके लिए चिकनी मिट्टी की आवश्यकता होती है जो पानी के निकास का विरोध करती है।",
+            "crop-wheat-desc": "गेहूं एक शीतकालीन अनाज की फसल है। इसके लिए ठंडे बढ़ते मौसम और परिपक्वता पर गर्म मौसम की आवश्यकता होती है। अच्छी जल निकासी वाले दोमट और जलोढ़ गाद को प्राथमिकता देता है।",
+            "crop-cotton-desc": "कपास एक गर्म मौसम की नकदी फसल है। गहरी काली कपास मिट्टी में पनपती है। प्रारंभिक चरणों में जलभराव के प्रति अत्यधिक संवेदनशील लेकिन बाद में सूखा-सहनशील।",
+            "crop-maize-desc": "मक्का एक बहुमुखी अनाज है। खड़े पानी (जलभराव) के प्रति अत्यधिक संवेदनशील और इसके वानस्पतिक और फूल आने के चरणों में मध्यम, समान रूप से दूरी पर पानी की आवश्यकता होती है।",
+            "crop-potato-desc": "आलू एक कंद की फसल है जिसके लिए ठंडे तापमान और रेतीली दोमट जैसी ढीली, हवादार मिट्टी की आवश्यकता होती है। भारी चिकनी मिट्टी के कारण जड़ें सड़ जाती हैं और कंद का आकार खराब हो जाता है।",
+            "crop-tomato-desc": "टमाटर एक संवेदनशील गर्म मौसम की फसल है। लगातार, मध्यम नमी की आवश्यकता होती है। अत्यधिक पानी देने से फल फट जाते हैं और सड़न हो जाती है।",
+            "crop-groundnut-desc": "मूंगफली एक फलीदार फसल है जो जमीन के नीचे पकती है। मूंगफली के अंकुर को मिट्टी में प्रवेश करने और आसानी से फली विकसित करने के लिए रेतीली दोमट की आवश्यकता होती है। उच्च जल निकासी महत्वपूर्ण है।",
+            "crop-sugarcane-desc": "गन्ना एक लंबी अवधि की, अत्यधिक जल-गहन फसल है। उच्च जल धारण क्षमता वाली जलोढ़ और चिकनी मिट्टी पर पनपने के लिए मजबूत नमी की उपलब्धता की आवश्यकता होती है।",
+            "crop-soybean-desc": "सोयाबीन एक प्रोटीन युक्त तिलहन है। फली भरने के दौरान सूखे के प्रति अत्यधिक संवेदनशील और जलभराव के प्रति संवेदनशील। दोमट मिट्टी पसंद करता है।",
+            "crop-mustard-desc": "सरसों एक कठोर शीतकालीन तिलहन फसल है। कम से मध्यम पानी की आवश्यकता होती है, न्यूनतम पानी के साथ रेतीली दोमट और जलोढ़ मिट्टी में पनपती है।",
+            "crop-barley-desc": "जौ एक सूखा-प्रतिरोधी ठंडे मौसम का अनाज है। गेहूं की तुलना में अधिक नमक-सहिष्णु, मध्यम पानी की जरूरतों के साथ हल्की रेतीली-दोमट मिट्टी में अच्छा प्रदर्शन करता है।",
+            "crop-chickpea-desc": "चना एक शीतकालीन दलहन की फसल है। जलभराव के प्रति अत्यधिक संवेदनशील। अवशिष्ट मिट्टी की नमी का उपयोग करने में अत्यंत कुशल; बहुत कम सिंचाई की आवश्यकता होती है।",
+            "crop-sunflower-desc": "सूरजमुखी एक अत्यधिक बहुमुखी तिलहन फूल की फसल है। गहरी मूसला जड़ों के साथ अत्यधिक सूखा-सहिष्णु, जिसके लिए अच्छी जल निकासी और धूप की आवश्यकता होती है।",
+            "crop-sorghum-desc": "ज्वार एक अत्यधिक जलवायु-अनुकूल शुष्क भूमि की फसल है। इसके लिए न्यूनतम पानी की आवश्यकता होती है और यह उच्च तापमान में जीवित रह सकती है, भारी मिट्टी में अच्छा प्रदर्शन करती है।",
+            "crop-marigold-desc": "गेंदा एक मजबूत, लोकप्रिय फूल वाला पौधा है जो कीट प्रबंधन, धार्मिक उपयोग और मालाओं के लिए उगाया जाता है। अत्यधिक अनुकूलनीय और उगाने में आसान।",
+            "crop-rose-desc": "गुलाब एक प्रीमियम व्यावसायिक पुष्पकृषि फसल है। इसके लिए समृद्ध जैविक मिट्टी, लगातार मध्यम नमी और सावधानीपूर्वक छंटाई की आवश्यकता होती है।",
+            "crop-jasmine-desc": "चमेली/मोगरा एक सुगंधित व्यावसायिक फूल वाली फसल है जिसका उपयोग इत्र और पारंपरिक मालाओं के लिए किया जाता है। गर्म, धूप वाले मौसम और अच्छी जल निकासी वाली मिट्टी में पनपती है।",
+            "crop-rice-tips": "प्रारंभिक विकास के दौरान 5-8 सेमी पानी का स्तर बनाए रखें। पकने की अवस्था तक मिट्टी को पूरी तरह सूखने न दें।",
+            "crop-wheat-tips": "क्राउन रूट इनिशिएशन (CRI) चरण (बुआई के 21-25 दिन बाद) और फूल आने के चरण के दौरान महत्वपूर्ण सिंचाई प्रदान करें।",
+            "crop-cotton-tips": "फूल आने और डोड बनने के दौरान मिट्टी की नमी इष्टतम सुनिश्चित करें। जड़ों में ऑक्सीजन की कमी को रोकने के लिए बाढ़ सिंचाई से बचें।",
+            "crop-maize-tips": "नरमंजर (Tasseling) और सिल्क निकलने के चरणों के दौरान पानी की कमी से बचें क्योंकि इससे उपज में भारी कमी आ सकती है।",
+            "crop-potato-tips": "बार-बार लेकिन हल्की सिंचाई करें। कंदों को धूप से बचाने और उन्हें ठंडा रखने के लिए मिट्टी चढ़ाकर रखें।",
+            "crop-tomato-tips": "फंगल रोगों से बचने के लिए पत्तियों के बजाय सीधे मिट्टी में पानी दें। फलों को फटने से बचाने के लिए लगातार नमी बनाए रखें।",
+            "crop-groundnut-tips": "फूल आने और सुइयां (Pegging) बनने के चरणों के दौरान सिंचाई प्रदान करें। चिकनी मिट्टी से बचें जो सुइयों के प्रवेश को रोकती हैं।",
+            "crop-sugarcane-tips": "गठन चरण (पहले 4 महीने) के दौरान महत्वपूर्ण सिंचाई की आवश्यकता होती है। नमी बनाए रखने के लिए सूखे पत्तों से मल्चिंग करें।",
+            "crop-soybean-tips": "फली बनने और फली भरने के दौरान पर्याप्त नमी सुनिश्चित करें। बुआई के बाद मिट्टी की पपड़ी न बनने दें।",
+            "crop-mustard-tips": "केवल 2 से 3 हल्की सिंचाइयों की आवश्यकता होती है: पहली फूल आने से पहले, दूसरी फली के विकास के चरण में।",
+            "crop-barley-tips": "वानस्पतिक अवस्था में अधिक पानी न दें। जड़ों में हवा का संचार बनाए रखें। नाइट्रोजन के बहने से बचें।",
+            "crop-chickpea-tips": "फूल आने पर पानी की कमी खतरनाक है, लेकिन अतिरिक्त पानी से वानस्पतिक वृद्धि अत्यधिक हो जाती है और फली की उपज शून्य होती है।",
+            "crop-sunflower-tips": "गहरी जड़ों को प्रोत्साहित करने के लिए गहरा लेकिन कम बार पानी दें। फूलों की कली के सड़ने को रोकने के लिए ऊपर से पानी देने से बचें।",
+            "crop-sorghum-tips": "यदि वर्षा अपर्याप्त हो, तो महत्वपूर्ण बूटिंग और अनाज भरने के चरणों के दौरान सिंचाई प्रदान करें।",
+            "crop-marigold-tips": "अत्यधिक पानी देने से बचें जिससे जड़ें सड़ जाती हैं और फूलों की संख्या कम हो जाती है। झाड़ीदार विकास और अधिक कलियों को प्रोत्साहित करने के लिए विकास युक्तियों को जल्दी पिंच करें।",
+            "crop-rose-tips": "सीधे जड़ों में पानी दें, काले धब्बों को रोकने के लिए पत्तियों को गीला करने से बचें। महीने में एक बार नाइट्रोजन और पोटाश से खाद दें।",
+            "crop-jasmine-tips": "मुख्य फूल आने के मौसम (गर्मी/मानसून) के दौरान नियमित रूप से सिंचाई करें। नई लकड़ी और फूलों को प्रोत्साहित करने के लिए फूल आने के बाद छंटाई करें।",
+            "crop-rice-cons": "पानी की 30% तक बचत करने के लिए लगातार बाढ़ के बजाय वैकल्पिक गीला और सूखा (AWD) तरीका लागू करें।",
+            "crop-wheat-cons": "पानी को समान रूप से वितरित करने और वाष्पीकरण के नुकसान को कम करने के लिए स्प्रिंकलर सिंचाई प्रणालियों का उपयोग करें।",
+            "crop-cotton-cons": "वाष्पीकरण को सीमित करने और पानी की दक्षता को अधिकतम करने के लिए काली मिट्टी के मल्च के नीचे ड्रिप सिंचाई का उपयोग करें।",
+            "crop-maize-cons": "मेड़-और-नाली (Ridge-and-furrow) रोपण का अभ्यास करें। जड़ों के पास नमी केंद्रित करने के लिए केवल नालियों में पानी दें।",
+            "crop-potato-cons": "90% तक जल अनुप्रयोग दक्षता प्राप्त करने के लिए प्लास्टिक मल्च के नीचे बिछाई गई ड्रिप नलियों का उपयोग करें।",
+            "crop-tomato-cons": "मिट्टी की नमी को 40% अधिक बनाए रखने के लिए पौधों के आधार के आसपास जैविक मल्च (पुआल/नारियल की भूसी) लगाएं।",
+            "crop-groundnut-cons": "मिट्टी को सख्त होने से बचाने के लिए फली बनने के दौरान स्प्रिंकलर सिंचाई से बचें। इसके बजाय ड्रिप टेप का उपयोग करें।",
+            "crop-sugarcane-cons": "वाष्पीकरण को नाटकीय रूप से कम करने और खरपतवार के विकास को रोकने के लिए फसल की पंक्तियों के बीच कचरा-मल्चिंग (Trash-mulching) का उपयोग करें।",
+            "crop-soybean-cons": "बिना जुताई वाली खेती खेत पर पिछली फसल के अवशेषों को रखती है, जिससे महत्वपूर्ण मिट्टी के पानी के भंडार सुरक्षित रहते हैं।",
+            "crop-mustard-cons": "बाढ़ सिंचाई की तुलना में फूल आने के दौरान एक एकल माइक्रो-स्प्रिंकलर सत्र अत्यधिक जल-कुशल है।",
+            "crop-barley-cons": "लेजर लैंड लेवलिंग का लाभ उठाएं ताकि पानी बिना किसी बर्बादी के पूरी तरह से वितरित हो सके।",
+            "crop-chickpea-cons": "पानी के संरक्षण और कवक जनित जड़ सड़न को रोकने के लिए चौड़ी क्यारी प्रणालियों में नाली सिंचाई पर भरोसा करें।",
+            "crop-sunflower-cons": "नालीदार बाढ़ सिंचाई की तुलना में पानी की 45% तक बचत करने के लिए सीधे पंक्तियों के साथ ड्रिप सिंचाई पाइपों का उपयोग करें।",
+            "crop-sorghum-cons": "यदि गहरी जड़ वाले क्षेत्र में अवशिष्ट नमी हो, तो सिंचाई से बचने के लिए मिट्टी की नमी सेंसर का उपयोग करें।",
+            "crop-marigold-cons": "नमी के वाष्पीकरण को रोकने और जड़ों को ठंडा रखने के लिए क्यारियों के आसपास हल्की सूखी घास (मल्चिंग) लगाएं।",
+            "crop-rose-cons": "वाष्पीकरण के नुकसान को कम करने के लिए केवल सुबह जल्दी पानी देने के लिए टाइमर के साथ स्वचालित ड्रिप प्रणालियों का उपयोग करें।",
+            "crop-jasmine-cons": "नमी को बनाए रखने के लिए झाड़ी के चारों ओर थाला (Basin) विधि से सिंचाई करें और घनी जैविक खाद का उपयोग करें।",
+            "tab-soillab": "मिट्टी प्रयोगशाला",
+            "soillab-title": "एआई मिट्टी विश्लेषण प्रयोगशाला",
+            "soillab-subtitle": "एआई-संचालित लैब रिपोर्ट प्राप्त करने के लिए अपने मिट्टी के नमूने का वर्णन करें।",
+            "soillab-color": "मिट्टी का रंग",
+            "soillab-texture": "बनावट का अहसास",
+            "soillab-moisture": "नमी का स्तर",
+            "soillab-organic": "जैविक पदार्थ के संकेत",
+            "soillab-ph": "पीएच स्ट्रिप रीडिंग",
+            "soillab-area": "खेत का क्षेत्रफल (एकड़)",
+            "btn-analyze-soil": "मिट्टी का नमूना विश्लेषण करें",
+            "soillab-placeholder-title": "मिट्टी विश्लेषण रिपोर्ट",
+            "soillab-placeholder-desc": "बाईं ओर अपने मिट्टी के नमूने की टिप्पणियां भरें और विस्तृत एआई लैब रिपोर्ट बनाने के लिए \"मिट्टी का नमूना विश्लेषण करें\" पर क्लिक करें।",
+            "sl-color-dark": "गहरा काला / चारकोल",
+            "sl-color-red": "लालिमा युक्त भूरा",
+            "sl-color-light": "हल्का भूरा / तन",
+            "sl-color-grey": "धूसर / राखी",
+            "sl-color-yellow": "पीलापन लिए",
+            "sl-tex-sticky": "चिपचिपी / चिकनी मिट्टी जैसी",
+            "sl-tex-smooth": "चिकनी / रेशमी (गाद)",
+            "sl-tex-gritty": "दानेदार / रेतीली",
+            "sl-tex-crumbly": "भुरभुरी / दोमट",
+            "sl-moist-waterlogged": "जलभराव / संतृप्त",
+            "sl-moist-moist": "नम / गीली",
+            "sl-moist-dry": "सूखी",
+            "sl-moist-verydry": "बहुत सूखी / दरारें",
+            "sl-org-worms": "केंचुए",
+            "sl-org-decayed": "सड़ी पत्तियां",
+            "sl-org-roots": "जड़ के टुकड़े",
+            "sl-org-fungal": "कवक वृद्धि",
+            "soillab-hero-title": "एआई मिट्टी स्वास्थ्य रिपोर्ट",
+            "soillab-hero-subtitle": "दृश्य और स्पर्श मिट्टी अवलोकनों से उत्पन्न",
+            "soillab-health-label": "मिट्टी का स्वास्थ्य",
+            "soillab-nutrient-title": "अनुमानित पोषक तत्व प्रोफ़ाइल",
+            "soillab-ph-title": "पीएच विश्लेषण और अम्लता प्रोफ़ाइल",
+            "soillab-crop-title": "फसल अनुकूलता रैंकिंग",
+            "soillab-amend-title": "मिट्टी सुधार सिफारिशें",
+            "soillab-n": "नाइट्रोजन (N)",
+            "soillab-p": "फॉस्फोरस (P)",
+            "soillab-k": "पोटेशियम (K)",
+            "soillab-fe": "लोहा (Fe)",
+            "soillab-zn": "जस्ता (Zn)",
+            "soillab-om": "जैविक पदार्थ",
+            "soillab-low": "कम",
+            "soillab-medium": "मध्यम",
+            "soillab-high": "उच्च",
+            "soillab-crop-name": "Crop",
+            "soillab-crop-match": "Match",
+            "soillab-crop-fert": "Fertilizer Suggestion",
+            "soillab-crop-rating": "Rating"
+        },
         es: { "weather-clear": "Cielo Despejado", "weather-cloudy": "Parcialmente Nublado", "weather-fog": "Neblina", "weather-drizzle": "Llovizna Ligera", "weather-rain": "Lluvioso", "weather-snow": "Nevado", "weather-showers": "Aguaceros Fuertes", "weather-storm": "Tormenta Eléctrica" },
         fr: { "weather-clear": "Ciel Dégagé", "weather-cloudy": "Partiellement Nuageux", "weather-fog": "Brouillard", "weather-drizzle": "Bruine Légère", "weather-rain": "Pluvieux", "weather-snow": "Neigeux", "weather-showers": "Fortes Averses", "weather-storm": "Orageux" },
         te: { "weather-clear": "నిర్మలమైన ఆకాశం", "weather-cloudy": "పాక్షికంగా మబ్బులు", "weather-fog": "పొగమంచు", "weather-drizzle": "చిరుజల్లులు", "weather-rain": "వర్షం", "weather-snow": "మంచు కురుస్తోంది", "weather-showers": "భారీ వర్షం", "weather-storm": "ఉరుములతో కూడిన వర్షం" },
@@ -3503,7 +3501,7 @@ function getWeatherDesc(descKey, defaultDesc) {
         bn: { "weather-clear": "মেঘমুক্ত আকাশ", "weather-cloudy": "আংশিক মেঘলা", "weather-fog": "কুয়াশাচ্ছন্ন", "weather-drizzle": "হালকা গুঁড়ি গুঁড়ি বৃষ্টি", "weather-rain": "বৃষ্টিপাত", "weather-snow": "তুষারপাত", "weather-showers": "ভারী বর্ষণ", "weather-storm": "বজ্রঝড়" },
         pa: { "weather-clear": "ਸਾਫ਼ ਅਸਮਾਨ", "weather-cloudy": "ਆਸ਼ਿਕ ਬੱਦਲਵਾਈ", "weather-fog": "ਧੁੰਦ", "weather-drizzle": "ਹਲਕੀ ਬੂੰਦਾ-ਬਾਂਦੀ", "weather-rain": "ਮੀਂਹ", "weather-snow": "ਬਰਫ਼ਬਾਰੀ", "weather-showers": "ਭਾਰੀ ਮੀਂਹ", "weather-storm": "ਝੱਖੜ / ਹਨੇਰੀ" }
     };
-    
+
     if (weatherTranslations[state.lang] && weatherTranslations[state.lang][descKey]) {
         return weatherTranslations[state.lang][descKey];
     }
@@ -3516,13 +3514,13 @@ function getWeatherDesc(descKey, defaultDesc) {
 
 async function fetchWeather(lat, lon) {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,surface_pressure&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto`;
-    
+
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Weather service returned error");
-        
+
         const data = await response.json();
-        
+
         // Parse current weather
         state.weather.current = {
             temp: data.current.temperature_2m,
@@ -3534,18 +3532,18 @@ async function fetchWeather(lat, lon) {
             code: data.current.weather_code,
             uv: 6.5 // Open-Meteo current UV is in a separate block; let's simulate UV based on weather code (clear = high, storm = low)
         };
-        
+
         if (state.weather.current.code >= 61) state.weather.current.uv = 1.2;
         else if (state.weather.current.code >= 1) state.weather.current.uv = 4.0;
-        
+
         // Parse 5-day forecast
         state.weather.daily = [];
         const today = new Date();
-        
+
         for (let i = 0; i < 7; i++) {
             const forecastDate = new Date(today);
             forecastDate.setDate(today.getDate() + i);
-            
+
             state.weather.daily.push({
                 date: forecastDate,
                 code: data.daily.weather_code[i],
@@ -3555,7 +3553,7 @@ async function fetchWeather(lat, lon) {
                 precipSum: data.daily.precipitation_sum[i]
             });
         }
-        
+
         state.weather.fetched = true;
         return true;
     } catch (error) {
@@ -3570,13 +3568,13 @@ function generateMockWeather(lat) {
     // Basic seasonal estimation based on latitude
     const isTropical = Math.abs(lat) < 23.5;
     const isSouthernHemisphere = lat < 0;
-    
+
     // Let's create logical defaults
     const currentMonth = new Date().getMonth(); // 0-11
     let baseTemp = 24.0;
 
     let humidity = 65;
-    
+
     if (isTropical) {
         baseTemp = 28.0;
         humidity = 75;
@@ -3590,7 +3588,7 @@ function generateMockWeather(lat) {
             humidity = isSouthernHemisphere ? 55 : 78;
         }
     }
-    
+
     state.weather.current = {
         temp: baseTemp,
         feelsLike: baseTemp + (humidity > 70 ? 2.5 : -1.0),
@@ -3601,21 +3599,21 @@ function generateMockWeather(lat) {
         code: 1, // Partly cloudy
         uv: baseTemp > 25 ? 8.0 : 3.5
     };
-    
+
     state.weather.daily = [];
     const today = new Date();
-    
+
     // Dynamic rain simulation for the 5-day cycle
     const rainyDayIndex = Math.floor(Math.random() * 7); // Pick one day to have potential rain
-    
+
     for (let i = 0; i < 7; i++) {
         const forecastDate = new Date(today);
         forecastDate.setDate(today.getDate() + i);
-        
+
         let code = 0; // Clear
         let precipSum = 0;
         let precipProb = 10;
-        
+
         if (i === rainyDayIndex) {
             code = 63; // Moderate Rain
             precipSum = 12.5; // mm
@@ -3624,7 +3622,7 @@ function generateMockWeather(lat) {
             code = 2; // Cloudy
             precipProb = 30;
         }
-        
+
         state.weather.daily.push({
             date: forecastDate,
             code: code,
@@ -3634,7 +3632,7 @@ function generateMockWeather(lat) {
             precipSum: precipSum
         });
     }
-    
+
     state.weather.fetched = true;
 }
 
@@ -3646,21 +3644,21 @@ function analyzeGrowthSuitability() {
     const crop = state.crop;
     const soil = state.soil;
     const weather = state.weather;
-    
+
     if (!crop || !soil || !weather.current) return;
-    
+
     let score = 100;
     const diagnostics = [];
     const lang = state.lang;
-    
+
     // --- 1. Temperature Analysis ---
     // Calculate average forecasted temp
     const temps = weather.daily.map(d => (d.tempMax + d.tempMin) / 2);
     const avgForecastTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
-    
+
     const tempOptimalMin = crop.tempMin;
     const tempOptimalMax = crop.tempMax;
-    
+
     if (avgForecastTemp >= tempOptimalMin && avgForecastTemp <= tempOptimalMax) {
         diagnostics.push({
             status: "optimal",
@@ -3687,13 +3685,13 @@ function analyzeGrowthSuitability() {
         // Temperature stress
         let severity = "warning";
         let diff = 0;
-        
+
         if (avgForecastTemp < tempOptimalMin) {
             diff = tempOptimalMin - avgForecastTemp;
             const penalty = Math.min(diff * 5, 45);
             score -= penalty;
             severity = diff > 8 ? "danger" : "warning";
-            
+
             diagnostics.push({
                 status: severity,
                 titleEn: "Cold Temperature Stress",
@@ -3720,7 +3718,7 @@ function analyzeGrowthSuitability() {
             const penalty = Math.min(diff * 5, 45);
             score -= penalty;
             severity = diff > 8 ? "danger" : "warning";
-            
+
             diagnostics.push({
                 status: severity,
                 titleEn: "Heat Temperature Stress",
@@ -3744,10 +3742,10 @@ function analyzeGrowthSuitability() {
             });
         }
     }
-    
+
     // --- 2. Soil Texture Compatibility Analysis ---
     const isSoilIdeal = crop.suitableSoils.includes(soil.id);
-    
+
     if (isSoilIdeal) {
         diagnostics.push({
             status: "optimal",
@@ -3773,7 +3771,7 @@ function analyzeGrowthSuitability() {
     } else {
         // Soil mismatch
         score -= 30;
-        
+
         // Critical compatibility warnings
         let matchSeverity = "warning";
         let titleEn = "Sub-Optimal Soil Compatibility";
@@ -3785,7 +3783,7 @@ function analyzeGrowthSuitability() {
         let titleMr = "जमीन या पिकासाठी मध्यम स्वरूपाची आहे";
         let titleBn = "মাটির গঠন ফসলের অনুকূলে নয়";
         let titlePa = "ਮਿੱਟੀ ਦੀ ਕਿਸਮ ਫ਼ਸਲ ਲਈ ਘੱਟ ਅਨੁਕੂਲ";
-        
+
         let descEn = `${getText(soil.nameKey, lang)} is not in the primary list of ideal soils for ${getText(crop.nameKey, lang)}. Root aeration or waterlogging issues may occur.`;
         let descHi = `${getText(soil.nameKey, lang)}, ${getText(crop.nameKey, lang)} के लिए आदर्श मिट्टी की सूची में नहीं है। जड़ों में हवा की कमी या जलभराव की समस्या हो सकती है।`;
         let descEs = `El ${getText(soil.nameKey, lang)} no está en la lista de suelos ideales para ${getText(crop.nameKey, lang)}. Pueden ocurrir problemas de aireación de raíces o encharcamiento.`;
@@ -3797,14 +3795,14 @@ function analyzeGrowthSuitability() {
         let descPa = `${getText(soil.nameKey, lang)}, ${getText(crop.nameKey, lang)} ਲਈ ਆਦਰਸ਼ ਮਿੱਟੀਆਂ ਦੀ ਸੂਚੀ ਵਿੱਚ ਨਹੀਂ ਹੈ। ਜੜ੍ਹਾਂ ਨੂੰ ਹਵਾ ਨਾ ਮਿਲਣ ਜਾਂ ਪਾਣੀ ਖੜ੍ਹਨ ਦੀ ਸਮੱਸਿਆ ਹੋ ਸਕਦੀ ਹੈ।`;
 
         // Special high-risk cases
-        if ((crop.id === "rice" && soil.id === "sandy") || 
+        if ((crop.id === "rice" && soil.id === "sandy") ||
             (crop.id === "groundnut" && (soil.id === "clay" || soil.id === "black-soil")) ||
             (crop.id === "potato" && (soil.id === "clay" || soil.id === "black-soil")) ||
             (crop.id === "chickpea" && (soil.id === "clay" || soil.id === "black-soil"))) {
-            
+
             score -= 20; // Extra heavy penalty for absolute mismatch
             matchSeverity = "danger";
-            
+
             titleEn = "Critical Soil-Crop Incompatibility";
             titleHi = "गंभीर मिट्टी-फसल असंगति";
             titleEs = "Incompatibilidad Crítica Suelo-Cultivo";
@@ -3814,7 +3812,7 @@ function analyzeGrowthSuitability() {
             titleMr = "माती आणि पीक यांच्यात गंभीर विसंगती";
             titleBn = "মাটি ও ফসলের মারাত্মক অমিল";
             titlePa = "ਮਿੱਟੀ ਅਤੇ ਫ਼ਸਲ ਦੀ ਗੰਭੀਰ ਅਨੁਕੂਲਤਾ";
-            
+
             if (crop.id === "rice") {
                 descEn = `Rice requires flood-like conditions. Sandy soil drains water too rapidly, resulting in extreme water stress and constant nutrient leaching.`;
                 descHi = `धान को बाढ़ जैसी जलमग्न परिस्थितियों की आवश्यकता होती है। रेतीली मिट्टी बहुत तेजी से पानी बहा देती है, जिससे फसल पर भारी तनाव और पोषक तत्वों की कमी हो जाती है।`;
@@ -3833,7 +3831,7 @@ function analyzeGrowthSuitability() {
                 descPa = `ਚੀਕਣੀ ਮਿੱਟੀ ਦੇ ਸਖ਼ਤ ਹੋਣ ਕਾਰਨ ਜੜ੍ਹਾਂ/ਆਲੂਆਂ ਦਾ ਵਿਕਾਸ ਬੁਰੀ ਤਰ੍ਹਾਂ ਰੁਕ ਜਾਂਦਾ ਹੈ ਅਤੇ ਪਾਣੀ ਖੜ੍ਹਨ ਨਾਲ ਜੜ੍ਹਾਂ ਗਲ ਜਾਂਦੀਆਂ ਹਨ।`;
             }
         }
-        
+
         diagnostics.push({
             status: matchSeverity,
             titleEn: titleEn,
@@ -3856,10 +3854,10 @@ function analyzeGrowthSuitability() {
             descPa: descPa
         });
     }
-    
+
     // --- 3. Rainfall / Excess Water Warning ---
     const totalRainfall = weather.daily.map(d => d.precipSum).reduce((a, b) => a + b, 0);
-    
+
     if (totalRainfall > 80 && (soil.id === "clay" || soil.id === "black-soil")) {
         score -= 15;
         diagnostics.push({
@@ -3884,10 +3882,10 @@ function analyzeGrowthSuitability() {
             descPa: `ਭਾਰੀ ਮੀਂਹ (${totalRainfall.toFixed(1)} ਮਿਲੀਮੀਟਰ) ਅਤੇ ਚੀਕਣੀ ਮਿੱਟੀ ਕਾਰਨ ਜੜ੍ਹਾਂ ਵਾਲੇ ਹਿੱਸੇ ਵਿੱਚ ਪਾਣੀ ਖੜ੍ਹ ਜਾਵੇਗਾ, ਜਿਸ ਨਾਲ ਹਵਾ ਦੀ ਕਮੀ ਹੋਵੇਗੀ।`
         });
     }
-    
+
     // Ensure score does not drop below 5%
     state.suitability.score = Math.max(score, 5);
-    
+
     // Verdict
     if (state.suitability.score >= 80) {
         state.suitability.verdict = "Optimal";
@@ -3896,7 +3894,7 @@ function analyzeGrowthSuitability() {
     } else {
         state.suitability.verdict = "Critical / High Risk";
     }
-    
+
     state.suitability.diagnostics = diagnostics;
 }
 
@@ -3909,13 +3907,13 @@ function calculateIrrigationSchedule() {
     const soil = state.soil;
     const stage = state.stage;
     const weather = state.weather;
-    
+
     if (!crop || !soil || weather.daily.length === 0) return;
-    
+
     const cropCoefficient = crop.kc[stage] || 0.8;
     const schedule = [];
     let totalWaterNeeded = 0;
-    
+
     weather.daily.forEach((day, index) => {
         // 1. Estimate reference evapotranspiration (ET0) for the day
         // Formula captures: solar radiation (temp proxy), temperature, wind speed, relative humidity
@@ -3923,38 +3921,38 @@ function calculateIrrigationSchedule() {
         const avgTemp = (day.tempMax + day.tempMin) / 2;
         const rhFactor = (100 - (index === 0 ? weather.current.humidity : 60)) / 100; // Proxy for relative humidity
         const windFactor = 1 + ((index === 0 ? weather.current.windSpeed : 12.0) / 20); // Proxy for wind speed
-        
+
         let et0 = 1.2 + (avgTemp * 0.12) * rhFactor * windFactor;
         et0 = Math.max(et0, 1.0); // Minimum 1mm evapotranspiration per day
-        
+
         // 2. Crop evapotranspiration (ETc)
         const etc = et0 * cropCoefficient;
-        
+
         // 3. Subtract rainfall (account for effective rainfall, roughly 75% of actual rainfall)
         const effectiveRain = day.precipSum * 0.75;
-        
+
         // 4. Calculate soil moisture deficit
         // Clay soil holds moisture longer (deficit accumulates slower), Sandy soil dries instantly
         const soilHoldingCapacityFactor = soil.retention / 100;
-        
+
         // Deficit = ETc - effectiveRain
         // Adjust deficit based on soil drainage: sandy soil drains, so the water required is higher
         let deficit = etc - effectiveRain;
-        
+
         if (soil.id === "sandy") {
             deficit *= 1.25; // Soil doesn't hold water, needs more irrigation frequency
         } else if (soil.id === "clay" || soil.id === "black-soil") {
             deficit *= 0.85; // Soil retains water, holds onto previous rain/irrigation
         }
-        
+
         let waterRequired = 0;
         let actionKey = "";
         let actionText = "";
-        
+
         if (deficit > 1.5) {
             waterRequired = Math.ceil(deficit);
             actionKey = "action-irrigate";
-            
+
             // Best time selection based on wind & temp
             if (avgTemp > 28) {
                 actionText = "Irrigate: Late Evening (Reduce evapotranspiration)";
@@ -3964,14 +3962,14 @@ function calculateIrrigationSchedule() {
         } else {
             waterRequired = 0;
             actionKey = "action-skip";
-            
+
             if (effectiveRain > 2.0) {
                 actionText = `Skip: Forecasted rain of ${day.precipSum.toFixed(1)}mm covers crop needs.`;
             } else {
                 actionText = "Skip: Soil moisture is adequate.";
             }
         }
-        
+
         schedule.push({
             date: day.date,
             tempMax: day.tempMax,
@@ -3982,59 +3980,59 @@ function calculateIrrigationSchedule() {
             actionKey: actionKey,
             actionText: actionText
         });
-        
+
         totalWaterNeeded += waterRequired;
     });
-    
+
     state.recommendation.schedule = schedule;
     state.recommendation.weeklyAvg = totalWaterNeeded / 5;
-    
+
     // Add custom crop tips and conservation tips
     // Translating descriptions/tips statically or using dictionary key lookups
     state.recommendation.criticalTips = [
         getText(crop.tipsKey, state.lang),
         state.lang === "en" ? `Soil texture notes: ${getText(soil.nameKey, state.lang)} has a water retention rating of ${soil.retention}%.` :
-        state.lang === "hi" ? `मिट्टी की विशेषताएं: ${getText(soil.nameKey, state.lang)} की जल धारण रेटिंग ${soil.retention}% है।` :
-        state.lang === "es" ? `Notas del suelo: El ${getText(soil.nameKey, state.lang)} tiene una retención de agua de ${soil.retention}%.` :
-        state.lang === "fr" ? `Notes de sol: Le ${getText(soil.nameKey, state.lang)} a un taux de rétention d'eau de ${soil.retention}%.` :
-        state.lang === "te" ? `నేల గమనికలు: ${getText(soil.nameKey, state.lang)} నీటిని పట్టి ఉంచే సామర్థ్యం ${soil.retention}% ఉంది.` :
-        state.lang === "ta" ? `மண் குறிப்புகள்: ${getText(soil.nameKey, state.lang)} மண்ணானது ${soil.retention}% நீர் பிடிப்பு கொண்டது.` :
-        state.lang === "mr" ? `माती नोंद: ${getText(soil.nameKey, state.lang)} मातीची जलधारण क्षमता ${soil.retention}% आहे.` :
-        state.lang === "bn" ? `মাটির তথ্য: ${getText(soil.nameKey, state.lang)} মাটির জল ধারণ ক্ষমতা ${soil.retention}%।` :
-        `ਮਿੱਟੀ ਦੀ ਜਾਣਕਾਰੀ: ${getText(soil.nameKey, state.lang)} ਦੀ ਜਲ-ਧਾਰਨ ਸਮਰੱਥਾ ${soil.retention}% ਹੈ।`,
-        
+            state.lang === "hi" ? `मिट्टी की विशेषताएं: ${getText(soil.nameKey, state.lang)} की जल धारण रेटिंग ${soil.retention}% है।` :
+                state.lang === "es" ? `Notas del suelo: El ${getText(soil.nameKey, state.lang)} tiene una retención de agua de ${soil.retention}%.` :
+                    state.lang === "fr" ? `Notes de sol: Le ${getText(soil.nameKey, state.lang)} a un taux de rétention d'eau de ${soil.retention}%.` :
+                        state.lang === "te" ? `నేల గమనికలు: ${getText(soil.nameKey, state.lang)} నీటిని పట్టి ఉంచే సామర్థ్యం ${soil.retention}% ఉంది.` :
+                            state.lang === "ta" ? `மண் குறிப்புகள்: ${getText(soil.nameKey, state.lang)} மண்ணானது ${soil.retention}% நீர் பிடிப்பு கொண்டது.` :
+                                state.lang === "mr" ? `माती नोंद: ${getText(soil.nameKey, state.lang)} मातीची जलधारण क्षमता ${soil.retention}% आहे.` :
+                                    state.lang === "bn" ? `মাটির তথ্য: ${getText(soil.nameKey, state.lang)} মাটির জল ধারণ ক্ষমতা ${soil.retention}%।` :
+                                        `ਮਿੱਟੀ ਦੀ ਜਾਣਕਾਰੀ: ${getText(soil.nameKey, state.lang)} ਦੀ ਜਲ-ਧਾਰਨ ਸਮਰੱਥਾ ${soil.retention}% ਹੈ।`,
+
         state.lang === "en" ? `Ensure irrigation channels are clear during the ${getText("stage-" + stage, state.lang)} stage.` :
-        state.lang === "hi" ? `${getText("stage-" + stage, state.lang)} अवस्था के दौरान सिंचाई नालियाँ साफ होनी चाहिए।` :
-        state.lang === "es" ? `Asegúrese de que los canales de riego estén despejados durante la etapa de ${getText("stage-" + stage, state.lang)}.` :
-        state.lang === "fr" ? `Assurez-vous que les canaux d'irrigation sont dégagés pendant la phase de ${getText("stage-" + stage, state.lang)}.` :
-        state.lang === "te" ? `${getText("stage-" + stage, state.lang)} దశలో కాల్వలలో పూడిక తీసి ఉంచుకోవాలి.` :
-        state.lang === "ta" ? `${getText("stage-" + stage, state.lang)} நிலையில் வடிகால் வாய்க்கால்கள் அடைப்பின்றி இருக்க வேண்டும்.` :
-        state.lang === "mr" ? `${getText("stage-" + stage, state.lang)} अवस्थेत पाणी वहनाचे मार्ग स्वच्छ ठेवावेत.` :
-        state.lang === "bn" ? `${getText("stage-" + stage, state.lang)} পর্যায়ে সেচ নালাগুলি পরিষ্কার ও সচল রাখুন।` :
-        `${getText("stage-" + stage, state.lang)} ਪੜਾਅ ਦੌਰਾਨ ਸਿੰਚਾਈ ਵਾਲੀਆਂ ਖਾਲਾਂ ਸਾਫ਼ ਹੋਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ।`
+            state.lang === "hi" ? `${getText("stage-" + stage, state.lang)} अवस्था के दौरान सिंचाई नालियाँ साफ होनी चाहिए।` :
+                state.lang === "es" ? `Asegúrese de que los canales de riego estén despejados durante la etapa de ${getText("stage-" + stage, state.lang)}.` :
+                    state.lang === "fr" ? `Assurez-vous que les canaux d'irrigation sont dégagés pendant la phase de ${getText("stage-" + stage, state.lang)}.` :
+                        state.lang === "te" ? `${getText("stage-" + stage, state.lang)} దశలో కాల్వలలో పూడిక తీసి ఉంచుకోవాలి.` :
+                            state.lang === "ta" ? `${getText("stage-" + stage, state.lang)} நிலையில் வடிகால் வாய்க்கால்கள் அடைப்பின்றி இருக்க வேண்டும்.` :
+                                state.lang === "mr" ? `${getText("stage-" + stage, state.lang)} अवस्थेत पाणी वहनाचे मार्ग स्वच्छ ठेवावेत.` :
+                                    state.lang === "bn" ? `${getText("stage-" + stage, state.lang)} পর্যায়ে সেচ নালাগুলি পরিষ্কার ও সচল রাখুন।` :
+                                        `${getText("stage-" + stage, state.lang)} ਪੜਾਅ ਦੌਰਾਨ ਸਿੰਚਾਈ ਵਾਲੀਆਂ ਖਾਲਾਂ ਸਾਫ਼ ਹੋਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ।`
     ];
-    
+
     state.recommendation.conservationTips = [
         getText(crop.consKey, state.lang),
         state.lang === "en" ? `For ${getText(soil.nameKey, state.lang)}, organic additions (compost) can reduce water needs by improving structure.` :
-        state.lang === "hi" ? `${getText(soil.nameKey, state.lang)} में जैविक खाद मिलाने से मिट्टी की जलधारण क्षमता सुधरती है और पानी की जरूरत कम होती है।` :
-        state.lang === "es" ? `Para el ${getText(soil.nameKey, state.lang)}, las adiciones orgánicas (compost) mejoran la estructura reduciendo necesidades.` :
-        state.lang === "fr" ? `Pour le ${getText(soil.nameKey, state.lang)}, les amendements organiques (compost) réduisent les besoins en eau.` :
-        state.lang === "te" ? `${getText(soil.nameKey, state.lang)} నేలలకు సేంద్రీయ ఎరువులు (కంపోస్ట్) వాడటం ద్వారా తేమ నిల్వ పెరిగి నీటి అవసరం తగ్గుతుంది.` :
-        state.lang === "ta" ? `${getText(soil.nameKey, state.lang)} மண்ணில் மட்கிய உரங்களைச் சேர்ப்பதால் கட்டமைப்பு மேம்பட்டு நீர் தேவை குறையும்.` :
-        state.lang === "mr" ? `${getText(soil.nameKey, state.lang)} मातीमध्ये सेंद्रिय खतांचा वापर केल्याने पाणी धरून ठेवण्याची क्षमता वाढेल.` :
-        state.lang === "bn" ? `${getText(soil.nameKey, state.lang)} মাটির জন্য জৈব সার প্রয়োগ করলে জল ধারণ ক্ষমতা বৃদ্ধি পায় ও জলের ব্যবহার কমে।` :
-        `${getText(soil.nameKey, state.lang)} ਵਿੱਚ ਰੂੜੀ ਖਾਦ ਮਿਲਾਉਣ ਨਾਲ ਪਾਣੀ ਦੀ ਬਚਤ ਹੁੰਦੀ ਹੈ।`,
-        
+            state.lang === "hi" ? `${getText(soil.nameKey, state.lang)} में जैविक खाद मिलाने से मिट्टी की जलधारण क्षमता सुधरती है और पानी की जरूरत कम होती है।` :
+                state.lang === "es" ? `Para el ${getText(soil.nameKey, state.lang)}, las adiciones orgánicas (compost) mejoran la estructura reduciendo necesidades.` :
+                    state.lang === "fr" ? `Pour le ${getText(soil.nameKey, state.lang)}, les amendements organiques (compost) réduisent les besoins en eau.` :
+                        state.lang === "te" ? `${getText(soil.nameKey, state.lang)} నేలలకు సేంద్రీయ ఎరువులు (కంపోస్ట్) వాడటం ద్వారా తేమ నిల్వ పెరిగి నీటి అవసరం తగ్గుతుంది.` :
+                            state.lang === "ta" ? `${getText(soil.nameKey, state.lang)} மண்ணில் மட்கிய உரங்களைச் சேர்ப்பதால் கட்டமைப்பு மேம்பட்டு நீர் தேவை குறையும்.` :
+                                state.lang === "mr" ? `${getText(soil.nameKey, state.lang)} मातीमध्ये सेंद्रिय खतांचा वापर केल्याने पाणी धरून ठेवण्याची क्षमता वाढेल.` :
+                                    state.lang === "bn" ? `${getText(soil.nameKey, state.lang)} মাটির জন্য জৈব সার প্রয়োগ করলে জল ধারণ ক্ষমতা বৃদ্ধি পায় ও জলের ব্যবহার কমে।` :
+                                        `${getText(soil.nameKey, state.lang)} ਵਿੱਚ ਰੂੜੀ ਖਾਦ ਮਿਲਾਉਣ ਨਾਲ ਪਾਣੀ ਦੀ ਬਚਤ ਹੁੰਦੀ ਹੈ।`,
+
         state.lang === "en" ? "Irrigate during cooler windless times to reduce evaporation loss by 35%." :
-        state.lang === "hi" ? "वाष्पीकरण के नुकसान को 35% तक कम करने के लिए हवा के बिना ठंडे समय के दौरान सिंचाई करें।" :
-        state.lang === "es" ? "Riegue en horarios más fríos y sin viento para reducir la pérdida por evaporación en un 35%." :
-        state.lang === "fr" ? "Irriguez pendant les périodes plus fraîches et sans vent pour réduire les pertes par évaporation de 35%." :
-        state.lang === "te" ? "ఎండ లేని చల్లని ప్రశాంత సమయాల్లో తడులు ఇవ్వడం ద్వారా 35% తేమ ఆవిరి కాకుండా కాపాడుకోవచ్చు." :
-        state.lang === "ta" ? "காற்றற்ற குளிர்ந்த நேரங்களில் பாசனம் செய்வதால் நீர் ஆவியாதல் 35% வரை குறையும்." :
-        state.lang === "mr" ? "उन्हाचा तडाखा नसलेल्या थंड वेळी पाणी दिल्यास ३५% बाष्पीभवन कमी होईल." :
-        state.lang === "bn" ? "বাষ্পীভবন জনিত অপচয় ৩৫% কমাতে দিনের শীতল ও শান্ত সময়ে সেচ দিন।" :
-        "ਵਾਸ਼ਪੀਕਰਨ ਨੂੰ 35% ਤੱਕ ਘਟਾਉਣ ਲਈ ਠੰਢੇ ਅਤੇ ਸ਼ਾਂਤ ਸਮੇਂ ਵਿੱਚ ਸਿੰਚਾਈ ਕਰੋ।"
+            state.lang === "hi" ? "वाष्पीकरण के नुकसान को 35% तक कम करने के लिए हवा के बिना ठंडे समय के दौरान सिंचाई करें।" :
+                state.lang === "es" ? "Riegue en horarios más fríos y sin viento para reducir la pérdida por evaporación en un 35%." :
+                    state.lang === "fr" ? "Irriguez pendant les périodes plus fraîches et sans vent pour réduire les pertes par évaporation de 35%." :
+                        state.lang === "te" ? "ఎండ లేని చల్లని ప్రశాంత సమయాల్లో తడులు ఇవ్వడం ద్వారా 35% తేమ ఆవిరి కాకుండా కాపాడుకోవచ్చు." :
+                            state.lang === "ta" ? "காற்றற்ற குளிர்ந்த நேரங்களில் பாசனம் செய்வதால் நீர் ஆவியாதல் 35% வரை குறையும்." :
+                                state.lang === "mr" ? "उन्हाचा तडाखा नसलेल्या थंड वेळी पाणी दिल्यास ३५% बाष्पीभवन कमी होईल." :
+                                    state.lang === "bn" ? "বাষ্পীভবন জনিত অপচয় ৩৫% কমাতে দিনের শীতল ও শান্ত সময়ে সেচ দিন।" :
+                                        "ਵਾਸ਼ਪੀਕਰਨ ਨੂੰ 35% ਤੱਕ ਘਟਾਉਣ ਲਈ ਠੰਢੇ ਅਤੇ ਸ਼ਾਂਤ ਸਮੇਂ ਵਿੱਚ ਸਿੰਚਾਈ ਕਰੋ।"
     ];
 }
 
@@ -4055,11 +4053,11 @@ function resolveLocation(val) {
     if (!val || typeof val !== 'string') return LOCATIONS[0];
     const clean = val.trim().toLowerCase();
     if (!clean) return LOCATIONS[0];
-    
+
     let loc = LOCATIONS.find(l => l.id.toLowerCase() === clean);
     if (loc) return loc;
-    
-    loc = LOCATIONS.find(l => 
+
+    loc = LOCATIONS.find(l =>
         (l.nameEn && l.nameEn.toLowerCase() === clean) ||
         (l.nameHi && l.nameHi.toLowerCase() === clean) ||
         (l.nameEs && l.nameEs.toLowerCase() === clean) ||
@@ -4071,8 +4069,8 @@ function resolveLocation(val) {
         (l.namePa && l.namePa.toLowerCase() === clean)
     );
     if (loc) return loc;
-    
-    loc = LOCATIONS.find(l => 
+
+    loc = LOCATIONS.find(l =>
         (l.nameEn && l.nameEn.toLowerCase().includes(clean)) ||
         (l.nameHi && l.nameHi.toLowerCase().includes(clean)) ||
         (l.nameEs && l.nameEs.toLowerCase().includes(clean)) ||
@@ -4096,19 +4094,19 @@ function resolveLocation(val) {
 
 async function resolveLocationAsync(val) {
     if (!val) return state.location || LOCATIONS[0];
-    
+
     // First try fast synchronous resolution
     const syncLoc = resolveLocation(val);
     if (syncLoc) return syncLoc;
 
     const clean = val.trim();
-    
+
     // If not found in static list, query Open-Meteo Geocoding API for exact coordinates!
     try {
         const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(clean)}&count=1&language=en`;
         const res = await fetch(geoUrl);
         const data = await res.json();
-        
+
         if (data && data.results && data.results.length > 0) {
             const r = data.results[0];
             const fullName = `${r.name}${r.admin1 ? ', ' + r.admin1 : ''}${r.country ? ', ' + r.country : ''}`;
@@ -4127,21 +4125,21 @@ async function resolveLocationAsync(val) {
                 lon: r.longitude,
                 defaultSoil: "loam"
             };
-            
+
             // Add to cache & datalist
             if (!window._customLocationsCache) window._customLocationsCache = [];
             window._customLocationsCache.push(customLoc);
-            
+
             if (!LOCATIONS.some(l => l.id === customLoc.id)) {
                 LOCATIONS.push(customLoc);
             }
-            
+
             return customLoc;
         }
     } catch (err) {
         console.warn("Geocoding API search failed, using fallback location", err);
     }
-    
+
     return state.location || LOCATIONS[0];
 }
 
@@ -4150,14 +4148,14 @@ function resolveSoil(val) {
     const clean = val.trim().toLowerCase();
     let soil = SOILS.find(s => s.id.toLowerCase() === clean);
     if (soil) return soil;
-    
-    soil = SOILS.find(s => 
+
+    soil = SOILS.find(s =>
         getText(s.nameKey, state.lang).toLowerCase() === clean ||
         getText(s.nameKey, "en").toLowerCase() === clean
     );
     if (soil) return soil;
-    
-    soil = SOILS.find(s => 
+
+    soil = SOILS.find(s =>
         getText(s.nameKey, state.lang).toLowerCase().includes(clean) ||
         getText(s.nameKey, "en").toLowerCase().includes(clean)
     );
@@ -4169,14 +4167,14 @@ function resolveCrop(val) {
     const clean = val.trim().toLowerCase();
     let crop = CROPS.find(c => c.id.toLowerCase() === clean);
     if (crop) return crop;
-    
-    crop = CROPS.find(c => 
+
+    crop = CROPS.find(c =>
         getText(c.nameKey, state.lang).toLowerCase() === clean ||
         getText(c.nameKey, "en").toLowerCase() === clean
     );
     if (crop) return crop;
-    
-    crop = CROPS.find(c => 
+
+    crop = CROPS.find(c =>
         getText(c.nameKey, state.lang).toLowerCase().includes(clean) ||
         getText(c.nameKey, "en").toLowerCase().includes(clean)
     );
@@ -4188,14 +4186,14 @@ function resolveStage(val) {
     const clean = val.trim().toLowerCase();
     let stage = STAGES.find(s => s.id === clean);
     if (stage) return stage.id;
-    
-    stage = STAGES.find(s => 
+
+    stage = STAGES.find(s =>
         getText(s.key, state.lang).toLowerCase() === clean ||
         getText(s.key, "en").toLowerCase() === clean
     );
     if (stage) return stage.id;
-    
-    stage = STAGES.find(s => 
+
+    stage = STAGES.find(s =>
         getText(s.key, state.lang).toLowerCase().includes(clean) ||
         getText(s.key, "en").toLowerCase().includes(clean)
     );
@@ -4205,73 +4203,73 @@ function resolveStage(val) {
 // Global application translation scanner
 function translateDOM() {
     const lang = state.lang;
-    
+
     // Scan for all tags with data-i18n
     const elements = document.querySelectorAll("[data-i18n]");
     elements.forEach(el => {
         const key = el.getAttribute("data-i18n");
         el.textContent = getText(key, lang);
     });
-    
+
     // Update placeholder texts for inputs
     const placeholders = {
         "select-location": lang === "hi" ? "क्षेत्र खोजने या टाइप करने के लिए..." :
-                            lang === "es" ? "Escriba para buscar región..." :
-                            lang === "fr" ? "Tapez pour rechercher la région..." :
-                            lang === "te" ? "ప్రాంతాన్ని టైప్ చేసి వెతకండి..." :
-                            lang === "ta" ? "பகுதியைத் தேட தட்டச்சு செய்யவும்..." :
+            lang === "es" ? "Escriba para buscar región..." :
+                lang === "fr" ? "Tapez pour rechercher la région..." :
+                    lang === "te" ? "ప్రాంతాన్ని టైప్ చేసి వెతకండి..." :
+                        lang === "ta" ? "பகுதியைத் தேட தட்டச்சு செய்யவும்..." :
                             lang === "mr" ? "प्रदेश शोधण्यासाठी टाईप करा..." :
-                            lang === "bn" ? "অঞ্চল খুঁজতে টাইপ করুন..." :
-                            lang === "pa" ? "ਖੇਤਰ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
-                            "Type to search region...",
+                                lang === "bn" ? "অঞ্চল খুঁজতে টাইপ করুন..." :
+                                    lang === "pa" ? "ਖੇਤਰ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
+                                        "Type to search region...",
         "select-soil": lang === "hi" ? "मिट्टी खोजने या टाइप करने के लिए..." :
-                       lang === "es" ? "Escriba para buscar suelo..." :
-                       lang === "fr" ? "Tapez pour rechercher le sol..." :
-                       lang === "te" ? "నేల రకాన్ని టైప్ చేసి వెతకండి..." :
-                       lang === "ta" ? "மண் வகையைத் தேட தட்டச்சு செய்யவும்..." :
-                       lang === "mr" ? "मातीचा प्रकार शोधण्यासाठी टाईप करा..." :
-                       lang === "bn" ? "মাটির ধরণ খুঁজতে টাইপ করুন..." :
-                       lang === "pa" ? "ਮਿੱਟੀ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
-                       "Type to search soil...",
+            lang === "es" ? "Escriba para buscar suelo..." :
+                lang === "fr" ? "Tapez pour rechercher le sol..." :
+                    lang === "te" ? "నేల రకాన్ని టైప్ చేసి వెతకండి..." :
+                        lang === "ta" ? "மண் வகையைத் தேட தட்டச்சு செய்யவும்..." :
+                            lang === "mr" ? "मातीचा प्रकार शोधण्यासाठी टाईप करा..." :
+                                lang === "bn" ? "মাটির ধরণ খুঁজতে টাইপ করুন..." :
+                                    lang === "pa" ? "ਮਿੱਟੀ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
+                                        "Type to search soil...",
         "select-crop": lang === "hi" ? "फसल खोजने या टाइप करने के लिए..." :
-                       lang === "es" ? "Escriba para buscar cultivo..." :
-                       lang === "fr" ? "Tapez pour rechercher la culture..." :
-                       lang === "te" ? "పంటను టైప్ చేసి వెతకండి..." :
-                       lang === "ta" ? "பயிரைத் தேட தட்டச்சு செய்யவும்..." :
-                       lang === "mr" ? "पीक शोधण्यासाठी टाईप करा..." :
-                       lang === "bn" ? "ফসল খুঁজতে টাইপ করুন..." :
-                       lang === "pa" ? "ਫ਼ਸਲ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
-                       "Type to search crop...",
+            lang === "es" ? "Escriba para buscar cultivo..." :
+                lang === "fr" ? "Tapez pour rechercher la culture..." :
+                    lang === "te" ? "పంటను టైప్ చేసి వెతకండి..." :
+                        lang === "ta" ? "பயிரைத் தேட தட்டச்சு செய்யவும்..." :
+                            lang === "mr" ? "पीक शोधण्यासाठी टाईप करा..." :
+                                lang === "bn" ? "ফসল খুঁজতে টাইপ করুন..." :
+                                    lang === "pa" ? "ਫ਼ਸਲ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
+                                        "Type to search crop...",
         "select-stage": lang === "hi" ? "अवस्था खोजने या टाइप करने के लिए..." :
-                        lang === "es" ? "Escriba para buscar etapa..." :
-                        lang === "fr" ? "Tapez pour rechercher l'étape..." :
-                        lang === "te" ? "పంట దశను టైప్ చేసి వెతకండి..." :
+            lang === "es" ? "Escriba para buscar etapa..." :
+                lang === "fr" ? "Tapez pour rechercher l'étape..." :
+                    lang === "te" ? "పంట దశను టైప్ చేసి వెతకండి..." :
                         lang === "ta" ? "நிலையைத் தேட தட்டச்சு செய்யவும்..." :
-                        lang === "mr" ? "अवस्था शोधण्यासाठी टाईप करा..." :
-                        lang === "bn" ? "ধাপ খুঁজতে টাইপ করুন..." :
-                        lang === "pa" ? "ਪੜਾਅ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
-                        "Type to search stage..."
+                            lang === "mr" ? "अवस्था शोधण्यासाठी टाईप करा..." :
+                                lang === "bn" ? "ধাপ খুঁজতে টাইপ করুন..." :
+                                    lang === "pa" ? "ਪੜਾਅ ਲੱਭਣ ਲਈ ਟਾਈਪ ਕਰੋ..." :
+                                        "Type to search stage..."
     };
-    
+
     Object.keys(placeholders).forEach(id => {
         const input = document.getElementById(id);
         if (input) input.placeholder = placeholders[id];
     });
-    
+
     // Update datalists
     updateDropdownOptions();
-    
+
     // Sync current values in translated names
     if (state.location && dom.selectLocation) {
         const name = lang === "hi" ? state.location.nameHi :
-                     lang === "es" ? state.location.nameEs :
-                     lang === "fr" ? state.location.nameFr :
-                     lang === "te" ? state.location.nameTe :
-                     lang === "ta" ? state.location.nameTa :
-                     lang === "mr" ? state.location.nameMr :
-                     lang === "bn" ? state.location.nameBn :
-                     lang === "pa" ? state.location.namePa :
-                     state.location.nameEn;
+            lang === "es" ? state.location.nameEs :
+                lang === "fr" ? state.location.nameFr :
+                    lang === "te" ? state.location.nameTe :
+                        lang === "ta" ? state.location.nameTa :
+                            lang === "mr" ? state.location.nameMr :
+                                lang === "bn" ? state.location.nameBn :
+                                    lang === "pa" ? state.location.namePa :
+                                        state.location.nameEn;
         dom.selectLocation.value = name;
     }
     if (state.soil && dom.selectSoil) {
@@ -4283,14 +4281,14 @@ function translateDOM() {
     if (state.stage && dom.selectStage) {
         dom.selectStage.value = getText("stage-" + state.stage, lang);
     }
-    
+
     // Update active tab contents if loaded
     renderActiveTab();
 }
 
 function updateDropdownOptions() {
     const lang = state.lang;
-    
+
     // 1. Location Datalist
     const locDatalist = document.getElementById("location-options");
     if (locDatalist) {
@@ -4305,13 +4303,13 @@ function updateDropdownOptions() {
             else if (lang === "mr") name = loc.nameMr;
             else if (lang === "bn") name = loc.nameBn;
             else if (lang === "pa") name = loc.namePa;
-            
+
             const option = document.createElement("option");
             option.value = name;
             locDatalist.appendChild(option);
         });
     }
-    
+
     // 2. Soil Datalist
     const soilDatalist = document.getElementById("soil-options");
     if (soilDatalist) {
@@ -4322,7 +4320,7 @@ function updateDropdownOptions() {
             soilDatalist.appendChild(option);
         });
     }
-    
+
     // 3. Crop Datalist
     const cropDatalist = document.getElementById("crop-options");
     if (cropDatalist) {
@@ -4344,7 +4342,7 @@ function updateDropdownOptions() {
             stageDatalist.appendChild(option);
         });
     }
-    
+
     // Education Selectors
     const selectedEduCrop = dom.eduSelectCrop.value;
     dom.eduSelectCrop.innerHTML = "";
@@ -4371,11 +4369,11 @@ function updateDropdownOptions() {
 function renderActiveTab() {
     const tab = state.activeTab;
     const lang = state.lang;
-    
+
     if (tab === "dashboard") {
         renderFertilizerPesticideSection();
-    renderProfitabilitySection();
-    renderDashboard();
+        renderProfitabilitySection();
+        renderDashboard();
     } else if (tab === "weather") {
         renderWeatherStation();
     } else if (tab === "schemes") {
@@ -4393,11 +4391,11 @@ dom.tabLinks.forEach(link => {
     link.addEventListener("click", () => {
         dom.tabLinks.forEach(item => item.classList.remove("active"));
         dom.tabPanels.forEach(panel => panel.classList.remove("active"));
-        
+
         link.classList.add("active");
         const panelId = link.getAttribute("data-tab");
         document.getElementById(panelId).classList.add("active");
-        
+
         state.activeTab = panelId;
         renderActiveTab();
     });
@@ -4406,12 +4404,12 @@ dom.tabLinks.forEach(link => {
 // Dashboard Renderer
 function renderDashboard() {
     const lang = state.lang;
-    
+
     // Location and Coordinates displays
     if (state.location) {
         dom.coordsDisplay.textContent = `Lat: ${state.location.lat.toFixed(2)} | Lon: ${state.location.lon.toFixed(2)}`;
     }
-    
+
     // Soil Profile rendering
     if (state.soil) {
         dom.soilNameTitle.textContent = getText(state.soil.nameKey, lang);
@@ -4419,17 +4417,17 @@ function renderDashboard() {
         dom.soilBarRetention.style.width = `${state.soil.retention}%`;
         dom.soilBarDrainage.style.width = `${state.soil.drainage}%`;
         dom.soilVisualAccent.style.backgroundColor = state.soil.color;
-        
+
         // Render sand/clay particles dynamically
         const graphic = dom.soilVisualAccent;
         // Clear existing particles
         const particles = graphic.querySelectorAll(".soil-particle");
         particles.forEach(p => p.remove());
-        
+
         // Add particles based on texture values
         const sandCount = Math.floor(state.soil.particles.sand / 8);
         const clayCount = Math.floor(state.soil.particles.clay / 8);
-        
+
         for (let i = 0; i < sandCount; i++) {
             const p = document.createElement("div");
             p.className = "soil-particle sand";
@@ -4445,35 +4443,35 @@ function renderDashboard() {
             graphic.appendChild(p);
         }
     }
-    
+
     // Weather overview rendering
     if (state.weather.current) {
         const cur = state.weather.current;
         dom.weatherCurrentTemp.textContent = formatTemp(cur.temp);
-        
+
         const interpreted = interpretWeatherCode(cur.code);
         dom.weatherCurrentDesc.textContent = getWeatherDesc(interpreted.descKey, interpreted.defaultDesc);
         dom.weatherMainIcon.className = interpreted.icon;
-        
+
         dom.weatherHumidity.textContent = `${cur.humidity}%`;
         dom.weatherPrecip.textContent = `${cur.precipProb}%`;
         dom.weatherWind.textContent = formatWind(cur.windSpeed);
         dom.weatherUV.textContent = cur.uv.toFixed(1);
     }
-    
+
     // Suitability Gauge & diagnostics rendering
     if (state.suitability.score !== null) {
         const score = state.suitability.score;
         dom.gaugeVal.textContent = `${score}%`;
-        
+
         // Convert score to offset (circumference of stroke-dasharray = 251.2)
         const offset = 251.2 - (251.2 * score) / 100;
         dom.gaugeFill.style.strokeDashoffset = offset;
-        
+
         // Verdict colors
         dom.gaugeFill.className.baseVal = "gauge-fill";
         dom.gaugeVerdict.textContent = state.suitability.verdict;
-        
+
         dom.suitabilityBadge.className = "suitability-alert";
         if (score >= 80) {
             dom.gaugeFill.classList.add("optimal");
@@ -4488,18 +4486,18 @@ function renderDashboard() {
             dom.suitabilityBadge.classList.add("danger");
             dom.suitabilityBadge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <span>High Risk of Crop Failure Detected</span>`;
         }
-        
+
         // Load diagnostics cards list
         dom.diagnosticList.innerHTML = "";
         state.suitability.diagnostics.forEach(diag => {
             const li = document.createElement("li");
             li.className = `diagnostic-item ${diag.status}`;
-            
+
             let icon = "fa-solid fa-circle-info";
             if (diag.status === "optimal") icon = "fa-solid fa-circle-check";
             else if (diag.status === "warning") icon = "fa-solid fa-triangle-exclamation";
             else if (diag.status === "danger") icon = "fa-solid fa-radiation";
-            
+
             let title = diag.titleEn;
             let desc = diag.descEn;
             if (lang === "hi") { title = diag.titleHi; desc = diag.descHi; }
@@ -4510,7 +4508,7 @@ function renderDashboard() {
             else if (lang === "mr") { title = diag.titleMr; desc = diag.descMr; }
             else if (lang === "bn") { title = diag.titleBn; desc = diag.descBn; }
             else if (lang === "pa") { title = diag.titlePa; desc = diag.descPa; }
-            
+
             li.innerHTML = `
                 <span class="diag-icon"><i class="${icon}"></i></span>
                 <div class="diag-body">
@@ -4526,44 +4524,44 @@ function renderDashboard() {
 // Weather Station Tab Renderer
 function renderWeatherStation() {
     if (!state.weather.current || state.weather.daily.length === 0) return;
-    
+
     const cur = state.weather.current;
     const lang = state.lang;
-    
+
     // Details left card
     dom.weatherDetailsLocation.textContent = state.location ? (
         lang === "hi" ? state.location.nameHi :
-        lang === "es" ? state.location.nameEs :
-        lang === "fr" ? state.location.nameFr :
-        lang === "te" ? state.location.nameTe :
-        lang === "ta" ? state.location.nameTa :
-        lang === "mr" ? state.location.nameMr :
-        lang === "bn" ? state.location.nameBn :
-        lang === "pa" ? state.location.namePa :
-        state.location.nameEn
+            lang === "es" ? state.location.nameEs :
+                lang === "fr" ? state.location.nameFr :
+                    lang === "te" ? state.location.nameTe :
+                        lang === "ta" ? state.location.nameTa :
+                            lang === "mr" ? state.location.nameMr :
+                                lang === "bn" ? state.location.nameBn :
+                                    lang === "pa" ? state.location.namePa :
+                                        state.location.nameEn
     ) : "Select region";
-    
+
     dom.weatherDetailsTemp.textContent = formatTemp(cur.temp);
-    
+
     const interpreted = interpretWeatherCode(cur.code);
     dom.weatherDetailsCondition.textContent = getWeatherDesc(interpreted.descKey, interpreted.defaultDesc);
     dom.weatherDetailsIcon.className = `weather-pulse-icon ${interpreted.icon}`;
-    
+
     dom.weatherSensorFeels.textContent = formatTemp(cur.feelsLike);
     dom.weatherSensorHumidity.textContent = `${cur.humidity}%`;
     dom.weatherSensorWind.textContent = formatWind(cur.windSpeed);
     dom.weatherSensorPressure.textContent = `${cur.pressure} hPa`;
-    
+
     // 7-Day forecast right grid list
     dom.forecastCardsWrapper.innerHTML = "";
     state.weather.daily.forEach((day, index) => {
         const dateStr = day.date.toLocaleDateString(lang, { weekday: 'short', month: 'short', day: 'numeric' });
         const dayInterpreted = interpretWeatherCode(day.code);
         const dayCondition = getWeatherDesc(dayInterpreted.descKey, dayInterpreted.defaultDesc);
-        
+
         const card = document.createElement("div");
         card.className = "forecast-row-card";
-        
+
         card.innerHTML = `
             <span class="forecast-day">${dateStr}</span>
             <i class="forecast-icon ${dayInterpreted.icon}"></i>
@@ -4578,36 +4576,36 @@ function renderWeatherStation() {
 // Education Tab Renderer
 function renderEducationCenter() {
     if (!dom.eduSelectCrop || !dom.eduSelectSoil) return;
-    
+
     const lang = state.lang;
-    
+
     // Populate Crop selector options if empty
     if (dom.eduSelectCrop.options.length === 0) {
-        dom.eduSelectCrop.innerHTML = CROPS.map(c => 
+        dom.eduSelectCrop.innerHTML = CROPS.map(c =>
             `<option value="${c.id}">${getText(c.nameKey, lang)}</option>`
         ).join("");
     }
-    
+
     // Populate Soil selector options if empty
     if (dom.eduSelectSoil.options.length === 0) {
-        dom.eduSelectSoil.innerHTML = SOILS.map(s => 
+        dom.eduSelectSoil.innerHTML = SOILS.map(s =>
             `<option value="${s.id}">${getText(s.nameKey, lang)}</option>`
         ).join("");
     }
-    
+
     const cropId = dom.eduSelectCrop.value || CROPS[0].id;
     const soilId = dom.eduSelectSoil.value || SOILS[0].id;
-    
+
     const selectedCrop = CROPS.find(c => c.id === cropId) || CROPS[0];
     const selectedSoil = SOILS.find(s => s.id === soilId) || SOILS[0];
-    
+
     // Render selected crop educational card
     if (selectedCrop && dom.eduCropCard) {
         const soilsTranslated = selectedCrop.suitableSoils.map(sid => {
             const sobj = SOILS.find(s => s.id === sid);
             return sobj ? getText(sobj.nameKey, lang) : sid;
         }).join(", ");
-        
+
         dom.eduCropCard.innerHTML = `
             <h4 class="edu-details-title" style="font-size: 1.15rem; color: var(--accent-green); margin-bottom: 8px;">
                 <i class="fa-solid fa-wheat-awn"></i> ${getText(selectedCrop.nameKey, lang)}
@@ -4637,7 +4635,7 @@ function renderEducationCenter() {
             </div>
         `;
     }
-    
+
     // Render selected soil educational card
     if (selectedSoil && dom.eduSoilCard) {
         dom.eduSoilCard.innerHTML = `
@@ -4684,12 +4682,12 @@ function addConsoleLine(text, type = "") {
 function handleConsoleCommand(inputVal) {
     const cleanVal = inputVal.trim();
     if (!cleanVal) return;
-    
+
     // Echo command
     addConsoleLine(`> ${cleanVal}`, "text-white");
-    
+
     const lowerInput = cleanVal.toLowerCase();
-    
+
     if (lowerInput === "/help") {
         addConsoleLine("Available Commands:", "text-success");
         addConsoleLine("  /generate            - Run irrigation suitability calculations", "text-success");
@@ -4701,13 +4699,13 @@ function handleConsoleCommand(inputVal) {
         addConsoleLine("  Or ask directly: \"Will wheat grow in rajasthan?\"", "text-warning");
         return;
     }
-    
+
     if (lowerInput === "/clear") {
         const consoleOut = document.getElementById("console-output");
         if (consoleOut) consoleOut.innerHTML = "";
         return;
     }
-    
+
     if (lowerInput === "/crops") {
         addConsoleLine("Supported Crops catalog:", "text-success");
         CROPS.forEach(c => {
@@ -4715,7 +4713,7 @@ function handleConsoleCommand(inputVal) {
         });
         return;
     }
-    
+
     if (lowerInput === "/locations") {
         addConsoleLine("Supported Agricultural Locations:", "text-success");
         LOCATIONS.forEach(l => {
@@ -4724,12 +4722,12 @@ function handleConsoleCommand(inputVal) {
         });
         return;
     }
-    
+
     if (lowerInput === "/generate") {
         runAIAdvisorSimulation();
         return;
     }
-    
+
     if (lowerInput.startsWith("/set crop ")) {
         const query = lowerInput.replace("/set crop ", "").trim();
         const cropObj = CROPS.find(c => c.id === query || getText(c.nameKey, "en").toLowerCase() === query || getText(c.nameKey, state.lang).toLowerCase() === query);
@@ -4743,7 +4741,7 @@ function handleConsoleCommand(inputVal) {
         }
         return;
     }
-    
+
     if (lowerInput.startsWith("/set location ")) {
         const query = lowerInput.replace("/set location ", "").trim();
         const locObj = LOCATIONS.find(l => l.id === query || l.nameEn.toLowerCase().includes(query) || l.nameHi.toLowerCase().includes(query));
@@ -4751,13 +4749,13 @@ function handleConsoleCommand(inputVal) {
             state.location = locObj;
             dom.selectLocation.value = locObj.id;
             dom.coordsDisplay.textContent = `Lat: ${locObj.lat.toFixed(2)} | Lon: ${locObj.lon.toFixed(2)}`;
-            
+
             // Auto fill default soil
             dom.selectSoil.value = locObj.defaultSoil;
             state.soil = SOILS.find(s => s.id === locObj.defaultSoil);
-            
+
             addConsoleLine(`[SYSTEM] Location successfully updated to: ${state.lang === "hi" ? locObj.nameHi : locObj.nameEn}`, "text-success");
-            
+
             fetchWeather(locObj.lat, locObj.lon).then(() => {
                 addConsoleLine(`[WEATHER] Loaded live weather forecast for new location.`, "text-success");
                 renderActiveTab();
@@ -4767,12 +4765,12 @@ function handleConsoleCommand(inputVal) {
         }
         return;
     }
-    
+
     // Natural Language suitability checker (Intent matching)
     let foundCrop = null;
     let foundLocation = null;
     let foundSoil = null;
-    
+
     // Match crop keywords
     CROPS.forEach(c => {
         const names = [c.id, getText(c.nameKey, "en"), getText(c.nameKey, state.lang)];
@@ -4782,7 +4780,7 @@ function handleConsoleCommand(inputVal) {
             }
         });
     });
-    
+
     // Match location keywords
     LOCATIONS.forEach(l => {
         const names = [l.id, l.nameEn, l.nameHi];
@@ -4792,7 +4790,7 @@ function handleConsoleCommand(inputVal) {
             }
         });
     });
-    
+
     // Match soil keywords
     SOILS.forEach(s => {
         const names = [s.id, getText(s.nameKey, "en"), getText(s.nameKey, state.lang)];
@@ -4802,52 +4800,52 @@ function handleConsoleCommand(inputVal) {
             }
         });
     });
-    
+
     if (foundCrop && (foundLocation || foundSoil)) {
         if (foundLocation) {
             state.location = foundLocation;
             dom.selectLocation.value = foundLocation.id;
             dom.coordsDisplay.textContent = `Lat: ${foundLocation.lat.toFixed(2)} | Lon: ${foundLocation.lon.toFixed(2)}`;
-            
+
             // Auto fill default soil
             dom.selectSoil.value = foundLocation.defaultSoil;
             state.soil = SOILS.find(s => s.id === foundLocation.defaultSoil);
         }
-        
+
         if (foundSoil) {
             state.soil = foundSoil;
             dom.selectSoil.value = foundSoil.id;
         }
-        
+
         state.crop = foundCrop;
         dom.selectCrop.value = foundCrop.id;
-        
+
         addConsoleLine(`[AI ENGINE] Processing rapid suitability analysis:`, "text-warning");
         addConsoleLine(`  - Target Crop: ${getText(state.crop.nameKey, state.lang)}`, "text-white");
         addConsoleLine(`  - Region: ${state.lang === "hi" ? state.location.nameHi : state.location.nameEn}`, "text-white");
         addConsoleLine(`  - Soil Profile: ${getText(state.soil.nameKey, state.lang)}`, "text-white");
-        
+
         fetchWeather(state.location.lat, state.location.lon).then(() => {
             analyzeGrowthSuitability();
-            
+
             addConsoleLine(`[AI ENGINE] Analysis Result:`, "text-warning");
             addConsoleLine(`  - Growing Score: ${state.suitability.score}%`, state.suitability.score >= 80 ? "text-success" : state.suitability.score >= 50 ? "text-warning" : "text-danger");
             addConsoleLine(`  - Verdict: ${state.suitability.verdict}`, state.suitability.score >= 80 ? "text-success" : state.suitability.score >= 50 ? "text-warning" : "text-danger");
-            
+
             state.suitability.diagnostics.forEach(d => {
                 const desc = state.lang === "hi" ? d.descHi : d.descEn;
                 addConsoleLine(`  * ${desc}`, "text-muted");
             });
-            
+
             addConsoleLine(`[SYSTEM] Syncing sidebar sliders to match query.`, "text-muted");
             addConsoleLine(`[SYSTEM] Type /generate to formulate a complete 7-day water schedule.`, "text-success");
-            
+
             renderFertilizerPesticideSection();
-    renderProfitabilitySection();
-    renderDashboard();
+            renderProfitabilitySection();
+            renderDashboard();
             renderActiveTab();
         });
-        
+
     } else {
         addConsoleLine("[Gemini AI] I can help you analyze crop growth. Please specify a crop and location.", "text-warning");
         addConsoleLine('Example: "Will wheat grow in rajasthan?" or "Can cotton grow in black soil?"', "text-warning");
@@ -4862,31 +4860,31 @@ function sleep(ms) {
 async function runAIAdvisorSimulation() {
     dom.btnSpinner.style.display = "inline-block";
     dom.btnGenerate.disabled = true;
-    
+
     // Auto-navigate to advisor tab so the user sees the console running!
     const advTab = document.querySelector('.tab-link[data-tab="advisor"]'); if (advTab) advTab.click();
-    
+
     const consoleOut = dom.consoleOutput;
     consoleOut.innerHTML = "";
     dom.advisorReport.style.display = "none";
-    
+
     const addLine = addConsoleLine;
-    
+
     const lang = state.lang;
     const locName = lang === "hi" ? state.location.nameHi :
-                    lang === "es" ? state.location.nameEs :
-                    lang === "fr" ? state.location.nameFr :
-                    lang === "te" ? state.location.nameTe :
+        lang === "es" ? state.location.nameEs :
+            lang === "fr" ? state.location.nameFr :
+                lang === "te" ? state.location.nameTe :
                     lang === "ta" ? state.location.nameTa :
-                    lang === "mr" ? state.location.nameMr :
-                    lang === "bn" ? state.location.nameBn :
-                    lang === "pa" ? state.location.namePa :
-                    state.location.nameEn;
-                    
+                        lang === "mr" ? state.location.nameMr :
+                            lang === "bn" ? state.location.nameBn :
+                                lang === "pa" ? state.location.namePa :
+                                    state.location.nameEn;
+
     const cropName = getText(state.crop.nameKey, lang);
     const soilName = getText(state.soil.nameKey, lang);
     const stageName = getText("stage-" + state.stage, lang);
-    
+
     // Core AI terminal dialogue simulations
     await sleep(200);
     addLine(`[SYSTEM] Initializing Gemini 3.5 Flash Agricultural Advisor...`, "text-muted");
@@ -4900,38 +4898,38 @@ async function runAIAdvisorSimulation() {
     addLine(`[INPUT] Targeted Cultivar: ${cropName} | Current stage: ${stageName}`, "text-white");
     await sleep(400);
     addLine(`[API] Fetching real-time weather prognostics from meteorological node (Open-Meteo)...`, "text-warning");
-    
+
     // Start API loading
     const apiSuccess = await fetchWeather(state.location.lat, state.location.lon);
-    
+
     if (apiSuccess) {
         addLine(`[API] SUCCESS: Weather data successfully fetched for coordinates.`, "text-success");
     } else {
         addLine(`[API] OFFLINE: Using localized historical meteorological data fallback matrix.`, "text-warning");
     }
-    
+
     await sleep(350);
     const temps = state.weather.daily.map(d => (d.tempMax + d.tempMin) / 2);
     const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
     const totalRain = state.weather.daily.map(d => d.precipSum).reduce((a, b) => a + b, 0);
-    
+
     addLine(`[WEATHER] Processed 7-Day Forecast: Avg Temp = ${avgTemp.toFixed(1)}°C | Cumulative expected precipitation = ${totalRain.toFixed(1)} mm.`, "text-success");
     await sleep(300);
-    
+
     // Growth analysis engine call
     analyzeGrowthSuitability();
     addLine(`[ENGINE] Growth Suitability Assessment completed. Suitability Score: ${state.suitability.score}% (${state.suitability.verdict}).`, "text-success");
     await sleep(400);
-    
+
     // Calculate Penman-Monteith Evapotranspiration
     const kc = (state.crop && state.crop.kc && state.crop.kc[state.stage]) !== undefined ? state.crop.kc[state.stage] : 0.8;
     addLine(`[AI-CORE] Matching Crop Water Factor. Coefficient (Kc) for "${cropName}" at "${stageName}": ${kc}`, "text-muted");
     await sleep(300);
     addLine(`[AI-CORE] Estimating daily Reference Evapotranspiration (ET0) using radiation, humidity, and wind vectors...`, "text-muted");
-    
+
     calculateIrrigationSchedule();
     await sleep(450);
-    
+
     const calculatedEt = (state.recommendation.weeklyAvg * 1.1).toFixed(1);
     addLine(`[AI-CORE] Estimated average daily Crop Evapotranspiration demand (ETc): ~ ${calculatedEt} mm/day.`, "text-muted");
     await sleep(300);
@@ -4939,16 +4937,16 @@ async function runAIAdvisorSimulation() {
     await sleep(400);
     addLine(`[SYSTEM] Compiling daily irrigation instructions and expert conservation advice...`, "text-muted");
     await sleep(500);
-    
+
     addLine(`[SYSTEM] 7-Day prescription generated successfully. Dispensing schedule below.`, "text-success");
     await sleep(150);
-    
+
     // UI updates
     renderSimulationReport();
-    
+
     dom.btnSpinner.style.display = "none";
     dom.btnGenerate.disabled = false;
-    
+
     // Render dashboard and weather since state changed
     renderFertilizerPesticideSection();
     renderProfitabilitySection();
@@ -5046,10 +5044,10 @@ const SCHEMES = [
 
 function renderGovernmentSchemes() {
     if (!dom.schemesCardsGrid) return;
-    
+
     const filterQuery = dom.schemeSearchInput ? dom.schemeSearchInput.value.trim().toLowerCase() : "";
-    
-    const filteredSchemes = SCHEMES.filter(s => 
+
+    const filteredSchemes = SCHEMES.filter(s =>
         s.title.toLowerCase().includes(filterQuery) ||
         s.category.toLowerCase().includes(filterQuery) ||
         s.subsidy.toLowerCase().includes(filterQuery) ||
@@ -5094,16 +5092,16 @@ function renderGovernmentSchemes() {
 function askAISchemeEligibility(schemeId) {
     const schemeObj = SCHEMES.find(s => s.id === schemeId);
     if (!schemeObj) return;
-    
+
     const locName = state.location ? (state.lang === "hi" ? state.location.nameHi : state.location.nameEn) : "my region";
     const cropName = state.crop ? getText(state.crop.nameKey, state.lang) : "my crop";
     const area = state.area || 1.0;
-    
+
     const prompt = `Am I eligible for ${schemeObj.title} (${schemeObj.subsidy}) in ${locName} for growing ${cropName} on ${area} acres? Explain exact eligibility criteria, government portal application process, state subsidy percentage, and required documents.`;
-    
+
     const advTab = document.querySelector('.tab-link[data-tab="advisor"]');
     if (advTab) advTab.click();
-    
+
     handleConsoleCommand(prompt);
 }
 
@@ -5114,16 +5112,16 @@ function askAISchemeEligibility(schemeId) {
 
 function calculateCropFinancials(cropObj, areaAcres) {
     if (!cropObj) return { totalYield: 0, pricePerQuintal: 0, grossRevenue: 0, estimatedCosts: 0, netProfit: 0 };
-    
+
     const area = areaAcres > 0 ? areaAcres : 1.0;
     const yieldPerAcre = cropObj.avgYieldQuintalsPerAcre || 20;
     const price = cropObj.mandiPricePerQuintal || 2200;
-    
+
     const totalYield = (yieldPerAcre * area).toFixed(0);
     const grossRevenue = (totalYield * price);
     const estimatedCosts = (grossRevenue * 0.35); // Approx 35% input & labor cost
     const netProfit = (grossRevenue - estimatedCosts);
-    
+
     return {
         totalYield,
         pricePerQuintal: price.toLocaleString(),
@@ -5135,13 +5133,13 @@ function calculateCropFinancials(cropObj, areaAcres) {
 
 function renderProfitabilitySection() {
     if (!dom.advisorProfitGrid) return;
-    
+
     const crop = state.crop || CROPS[0];
     const area = state.area || 1.0;
     const lang = state.lang;
-    
+
     const fin = calculateCropFinancials(crop, area);
-    
+
     dom.advisorProfitGrid.innerHTML = `
         <div class="profit-card yield">
             <div class="profit-card-icon"><i class="fa-solid fa-wheat-awn"></i></div>
@@ -5168,21 +5166,21 @@ function renderProfitabilitySection() {
 
 function renderSimulationReport() {
     const lang = state.lang;
-    
+
     // Show report element
     dom.advisorReport.style.display = "block";
-    
+
     // Subtitle text updates
     dom.advisorHeroSubtitle.textContent = state.lang === "en" ? `Smart irrigation plan for ${getText(state.crop.nameKey, lang)} at ${getText("stage-" + state.stage, lang)} stage.` :
-                                          state.lang === "hi" ? `${getText("stage-" + state.stage, lang)} चरण में ${getText(state.crop.nameKey, lang)} के लिए स्मार्ट सिंचाई योजना।` :
-                                          state.lang === "es" ? `Plan de riego inteligente para ${getText(state.crop.nameKey, lang)} en la etapa de ${getText("stage-" + state.stage, lang)}.` :
-                                          state.lang === "fr" ? `Plan d'irrigation intelligent pour le ${getText(state.crop.nameKey, lang)} au stade ${getText("stage-" + state.stage, lang)}.` :
-                                          state.lang === "te" ? `${getText("stage-" + state.stage, lang)} దశలో ${getText(state.crop.nameKey, lang)} పంటకు సరిపోయే నీటి పారుదల ప్రణాళిక.` :
-                                          state.lang === "ta" ? `${getText("stage-" + state.stage, lang)} நிலையில் உள்ள ${getText(state.crop.nameKey, lang)} பயிருக்கான பாசன திட்டம்.` :
-                                          state.lang === "mr" ? `${getText("stage-" + state.stage, lang)} अवस्थेतील ${getText(state.crop.nameKey, lang)} पिकाचे अचूक नियोजन.` :
-                                          state.lang === "bn" ? `${getText("stage-" + state.stage, lang)} ধাপে ${getText(state.crop.nameKey, lang)} এর জন্য স্মার্ট সেচ পরিকল্পনা।` :
-                                          `${getText("stage-" + state.stage, lang)} ਪੜਾਅ ਵਿੱਚ ${getText(state.crop.nameKey, lang)} ਲਈ ਸਮਾਰਟ ਸਿੰਚਾਈ ਯੋਜਨਾ।`;
-    
+        state.lang === "hi" ? `${getText("stage-" + state.stage, lang)} चरण में ${getText(state.crop.nameKey, lang)} के लिए स्मार्ट सिंचाई योजना।` :
+            state.lang === "es" ? `Plan de riego inteligente para ${getText(state.crop.nameKey, lang)} en la etapa de ${getText("stage-" + state.stage, lang)}.` :
+                state.lang === "fr" ? `Plan d'irrigation intelligent pour le ${getText(state.crop.nameKey, lang)} au stade ${getText("stage-" + state.stage, lang)}.` :
+                    state.lang === "te" ? `${getText("stage-" + state.stage, lang)} దశలో ${getText(state.crop.nameKey, lang)} పంటకు సరిపోయే నీటి పారుదల ప్రణాళిక.` :
+                        state.lang === "ta" ? `${getText("stage-" + state.stage, lang)} நிலையில் உள்ள ${getText(state.crop.nameKey, lang)} பயிருக்கான பாசன திட்டம்.` :
+                            state.lang === "mr" ? `${getText("stage-" + state.stage, lang)} अवस्थेतील ${getText(state.crop.nameKey, lang)} पिकाचे अचूक नियोजन.` :
+                                state.lang === "bn" ? `${getText("stage-" + state.stage, lang)} ধাপে ${getText(state.crop.nameKey, lang)} এর জন্য স্মার্ট সেচ পরিকল্পনা।` :
+                                    `${getText("stage-" + state.stage, lang)} ਪੜਾਅ ਵਿੱਚ ${getText(state.crop.nameKey, lang)} ਲਈ ਸਮਾਰਟ ਸਿੰਚਾਈ ਯੋਜਨਾ।`;
+
     // Avg water depth formatting
     if (state.unitImperial) {
         const avgInches = state.recommendation.weeklyAvg / 25.4;
@@ -5192,68 +5190,68 @@ function renderSimulationReport() {
         dom.advisorAvgWater.textContent = state.recommendation.weeklyAvg.toFixed(1);
         dom.advisorAvgUnit.textContent = "mm / day";
     }
-    
+
     // Daily schedule rows rendering
     dom.scheduleTbody.innerHTML = "";
     state.recommendation.schedule.forEach(row => {
         const dateStr = row.date.toLocaleDateString(lang, { weekday: 'short', month: 'short', day: 'numeric' });
         const tr = document.createElement("tr");
-        
+
         let actionBadge = `<span class="badge-irrigate"><i class="fa-solid fa-faucet-drip"></i> Irrigate</span>`;
         if (row.waterRequired === 0) {
             actionBadge = `<span class="badge-skip"><i class="fa-solid fa-droplet-slash"></i> Skip</span>`;
         }
-        
+
         // Custom translate action text on the fly
         let actionExplanation = row.actionText;
         if (row.waterRequired === 0) {
             if (row.rain > 2.0) {
                 actionExplanation = lang === "en" ? `Skip: Expected rain of ${row.rain.toFixed(1)}mm covers crop needs.` :
-                                    lang === "hi" ? `छोड़ें: ${row.rain.toFixed(1)} मिमी की वर्षा फसल की जरूरत पूरी करेगी।` :
-                                    lang === "es" ? `Evitar: Lluvia prevista de ${row.rain.toFixed(1)}mm cubre necesidades.` :
-                                    lang === "fr" ? `Éviter: Pluie prévue de ${row.rain.toFixed(1)}mm couvre les besoins.` :
-                                    lang === "te" ? `ఆపండి: ${row.rain.toFixed(1)}మిమీ వర్ష సూచన పంటకు సరిపోతుంది.` :
+                    lang === "hi" ? `छोड़ें: ${row.rain.toFixed(1)} मिमी की वर्षा फसल की जरूरत पूरी करेगी।` :
+                        lang === "es" ? `Evitar: Lluvia prevista de ${row.rain.toFixed(1)}mm cubre necesidades.` :
+                            lang === "fr" ? `Éviter: Pluie prévue de ${row.rain.toFixed(1)}mm couvre les besoins.` :
+                                lang === "te" ? `ఆపండి: ${row.rain.toFixed(1)}మిమీ వర్ష సూచన పంటకు సరిపోతుంది.` :
                                     lang === "ta" ? `தவிர்: முன்னறிவிக்கப்பட்ட ${row.rain.toFixed(1)}மிமீ மழையே போதுமானது.` :
-                                    lang === "mr" ? `टाळा: अंदाजीत ${row.rain.toFixed(1)} मिमी पाऊस पीक गरज पूर्ण करेल.` :
-                                    lang === "bn" ? `বাদ দিন: প্রত্যাশিত বৃষ্টিপাত (${row.rain.toFixed(1)}মিমি) ফসলের জল পূরণ করবে।` :
-                                    `ਛੱਡੋ: ਅੰਦਾਜ਼ਾ ਮੀਂਹ (${row.rain.toFixed(1)} ਮਿਲੀਮੀਟਰ) ਫ਼ਸਲ ਲਈ ਕਾਫ਼ੀ ਹੈ।`;
+                                        lang === "mr" ? `टाळा: अंदाजीत ${row.rain.toFixed(1)} मिमी पाऊस पीक गरज पूर्ण करेल.` :
+                                            lang === "bn" ? `বাদ দিন: প্রত্যাশিত বৃষ্টিপাত (${row.rain.toFixed(1)}মিমি) ফসলের জল পূরণ করবে।` :
+                                                `ਛੱਡੋ: ਅੰਦਾਜ਼ਾ ਮੀਂਹ (${row.rain.toFixed(1)} ਮਿਲੀਮੀਟਰ) ਫ਼ਸਲ ਲਈ ਕਾਫ਼ੀ ਹੈ।`;
             } else {
                 actionExplanation = lang === "en" ? "Skip: Soil moisture is adequate." :
-                                    lang === "hi" ? "छोड़ें: मिट्टी में नमी पर्याप्त है।" :
-                                    lang === "es" ? "Evitar: Humedad del suelo adecuada." :
-                                    lang === "fr" ? "Éviter: Humidité du sol adéquate." :
-                                    lang === "te" ? "ఆపండి: నేలలో తగినంత తేమ ఉంది." :
+                    lang === "hi" ? "छोड़ें: मिट्टी में नमी पर्याप्त है।" :
+                        lang === "es" ? "Evitar: Humedad del suelo adecuada." :
+                            lang === "fr" ? "Éviter: Humidité du sol adéquate." :
+                                lang === "te" ? "ఆపండి: నేలలో తగినంత తేమ ఉంది." :
                                     lang === "ta" ? "தவிர்: மண்ணில் ஈரப்பதம் போதுமானதாக உள்ளது." :
-                                    lang === "mr" ? "टाळा: मातीतील ओलावा पुरेसा आहे." :
-                                    lang === "bn" ? "বাদ দিন: মাটির আর্দ্রতা পর্যাপ্ত রয়েছে।" :
-                                    "ਛੱਡੋ: ਮਿੱਟੀ ਵਿੱਚ ਨਮੀ ਕਾਫ਼ੀ ਹੈ।";
+                                        lang === "mr" ? "टाळा: मातीतील ओलावा पुरेसा आहे." :
+                                            lang === "bn" ? "বাদ দিন: মাটির আর্দ্রতা পর্যাপ্ত রয়েছে।" :
+                                                "ਛੱਡੋ: ਮਿੱਟੀ ਵਿੱਚ ਨਮੀ ਕਾਫ਼ੀ ਹੈ।";
             }
         } else {
             // Irrigate details
             const avgTemp = (row.tempMin + row.tempMax) / 2;
             if (avgTemp > 28) {
                 actionExplanation = lang === "en" ? "Irrigate: Late Evening (Reduce evapotranspiration)" :
-                                    lang === "hi" ? "सिंचाई: देर शाम (वाष्पीकरण नुकसान कम करने के लिए)" :
-                                    lang === "es" ? "Riego: Tarde en la noche (Reduce evaporación)" :
-                                    lang === "fr" ? "Irriguer: En fin de soirée (Réduit l'évaporation)" :
-                                    lang === "te" ? "తడి ఇవ్వండి: సాయంత్రం వేళ (ఆవిరి కాకుండా కాపాడుకోవచ్చు)" :
+                    lang === "hi" ? "सिंचाई: देर शाम (वाष्पीकरण नुकसान कम करने के लिए)" :
+                        lang === "es" ? "Riego: Tarde en la noche (Reduce evaporación)" :
+                            lang === "fr" ? "Irriguer: En fin de soirée (Réduit l'évaporation)" :
+                                lang === "te" ? "తడి ఇవ్వండి: సాయంత్రం వేళ (ఆవిరి కాకుండా కాపాడుకోవచ్చు)" :
                                     lang === "ta" ? "பாசனம்: மாலை வேளை (ஆவியாவதை தடுக்கும்)" :
-                                    lang === "mr" ? "सिंचन: संध्याकाळी (बाष्पीभवन टाळण्यासाठी)" :
-                                    lang === "bn" ? "সেচ দিন: শেষ বিকেলে (বাষ্পীভবন হ্রাস করতে)" :
-                                    "ਸਿੰਚਾਈ: ਦੇਰ ਸ਼ਾਮ (ਵਾਸ਼ਪੀਕਰਨ ਘੱਟ ਕਰਨ ਲਈ)";
+                                        lang === "mr" ? "सिंचन: संध्याकाळी (बाष्पीभवन टाळण्यासाठी)" :
+                                            lang === "bn" ? "সেচ দিন: শেষ বিকেলে (বাষ্পীভবন হ্রাস করতে)" :
+                                                "ਸਿੰਚਾਈ: ਦੇਰ ਸ਼ਾਮ (ਵਾਸ਼ਪੀਕਰਨ ਘੱਟ ਕਰਨ ਲਈ)";
             } else {
                 actionExplanation = lang === "en" ? "Irrigate: Early Morning (Optimal)" :
-                                    lang === "hi" ? "सिंचाई: सुबह सवेरे (इष्टतम समय)" :
-                                    lang === "es" ? "Riego: Temprano en la mañana (Óptimo)" :
-                                    lang === "fr" ? "Irriguer: Tôt le matin (Optimal)" :
-                                    lang === "te" ? "తడి ఇవ్వండి: ఉదయం పూట (చాలా అనుకూలం)" :
+                    lang === "hi" ? "सिंचाई: सुबह सवेरे (इष्टतम समय)" :
+                        lang === "es" ? "Riego: Temprano en la mañana (Óptimo)" :
+                            lang === "fr" ? "Irriguer: Tôt le matin (Optimal)" :
+                                lang === "te" ? "తడి ఇవ్వండి: ఉదయం పూట (చాలా అనుకూలం)" :
                                     lang === "ta" ? "பாசனம்: அதிகாலை வேளை (சிறந்தது)" :
-                                    lang === "mr" ? "सिंचन: पहाटेच्या वेळी (योग्य वेळ)" :
-                                    lang === "bn" ? "সেচ দিন: কাকভোরে (অনুকূল সময়)" :
-                                    "ਸਿੰਚਾਈ: ਸਵੇਰੇ ਜਲਦੀ (ਸਭ ਤੋਂ ਵਧੀਆ)";
+                                        lang === "mr" ? "सिंचन: पहाटेच्या वेळी (योग्य वेळ)" :
+                                            lang === "bn" ? "সেচ দিন: কাকভোরে (অনুকূল সময়)" :
+                                                "ਸਿੰਚਾਈ: ਸਵੇਰੇ ਜਲਦੀ (ਸਭ ਤੋਂ ਵਧੀਆ)";
             }
         }
-        
+
         tr.innerHTML = `
             <td><strong>${dateStr}</strong></td>
             <td>${formatTemp(row.tempMin)} / ${formatTemp(row.tempMax)}</td>
@@ -5269,7 +5267,7 @@ function renderSimulationReport() {
         `;
         dom.scheduleTbody.appendChild(tr);
     });
-    
+
     // Critical care list tips
     dom.criticalTipsList.innerHTML = "";
     state.recommendation.criticalTips.forEach(tip => {
@@ -5277,7 +5275,7 @@ function renderSimulationReport() {
         li.textContent = tip;
         dom.criticalTipsList.appendChild(li);
     });
-    
+
     // Water conservation actions list
     dom.conservationTipsList.innerHTML = "";
     state.recommendation.conservationTips.forEach(tip => {
@@ -5297,7 +5295,7 @@ function analyzeSoilSample() {
     const moisture = dom.slMoisture.value;
     const ph = parseFloat(dom.slPh.value);
     const area = parseFloat(dom.slArea.value) || 2.5;
-    
+
     const organicSigns = {
         earthworms: dom.slEarthworms.checked,
         decayed: dom.slDecayed.checked,
@@ -5305,7 +5303,7 @@ function analyzeSoilSample() {
         fungal: dom.slFungal.checked
     };
     const organicCount = Object.values(organicSigns).filter(Boolean).length;
-    
+
     // ---- Color → Organic Carbon & Iron Estimation ----
     const colorProfiles = {
         "dark-black": { organicBase: 3.8, ironBase: 25, nBoost: 1.3, desc: "High humus content" },
@@ -5314,7 +5312,7 @@ function analyzeSoilSample() {
         "grey": { organicBase: 0.6, ironBase: 10, nBoost: 0.5, desc: "Low organic matter, possible leaching" },
         "yellowish": { organicBase: 0.9, ironBase: 45, nBoost: 0.6, desc: "Hydrated iron oxides present" }
     };
-    
+
     // ---- Texture → Drainage/Retention/Nutrient Profiles ----
     const textureProfiles = {
         "sticky": { nMod: 1.2, pMod: 0.9, kMod: 1.3, retention: 85, drainage: 15, soilMatch: "clay" },
@@ -5322,7 +5320,7 @@ function analyzeSoilSample() {
         "gritty": { nMod: 0.6, pMod: 0.7, kMod: 0.7, retention: 25, drainage: 90, soilMatch: "sandy" },
         "crumbly": { nMod: 1.0, pMod: 1.0, kMod: 1.0, retention: 60, drainage: 60, soilMatch: "loamy" }
     };
-    
+
     // ---- Moisture → Adjustment Factors ----
     const moistureFactors = {
         "waterlogged": { nMod: 0.7, available: 0.8, risk: "denitrification" },
@@ -5330,17 +5328,17 @@ function analyzeSoilSample() {
         "dry": { nMod: 0.85, available: 0.9, risk: "low-availability" },
         "very-dry": { nMod: 0.6, available: 0.7, risk: "nutrient-lockout" }
     };
-    
+
     const cp = colorProfiles[color] || colorProfiles["light-brown"];
     const tp = textureProfiles[texture] || textureProfiles["crumbly"];
     const mp = moistureFactors[moisture] || moistureFactors["moist"];
-    
+
     // ---- Calculate Nutrient Levels (kg/ha equivalent, normalized to 0-100 scale) ----
     let baseN = 45 + (cp.organicBase * 20);  // Nitrogen from organic matter
     baseN *= tp.nMod * mp.nMod * cp.nBoost;
     baseN += organicCount * 8;  // Organic signs boost nitrogen
     baseN = Math.min(Math.max(baseN, 5), 95);
-    
+
     let baseP = 22 + (cp.organicBase * 8);
     baseP *= tp.pMod * mp.available;
     // pH affects phosphorus availability — optimal at 6.0-7.5
@@ -5348,30 +5346,30 @@ function analyzeSoilSample() {
     else if (ph > 8.0) baseP *= 0.6;
     else if (ph >= 6.0 && ph <= 7.5) baseP *= 1.2;
     baseP = Math.min(Math.max(baseP, 5), 90);
-    
+
     let baseK = 35 + (cp.organicBase * 6);
     baseK *= tp.kMod * mp.available;
     if (texture === "sticky") baseK *= 1.15; // Clay retains potassium
     baseK = Math.min(Math.max(baseK, 5), 90);
-    
+
     let baseFe = cp.ironBase * mp.available;
     if (ph > 7.5) baseFe *= 0.4; // Iron locks at alkaline pH
     else if (ph < 6.0) baseFe *= 1.3;
     baseFe = Math.min(Math.max(baseFe, 5), 95);
-    
+
     let baseZn = 15 + (cp.organicBase * 5);
     baseZn *= mp.available;
     if (ph > 7.5) baseZn *= 0.5;
     else if (ph < 6.5) baseZn *= 1.2;
     baseZn = Math.min(Math.max(baseZn, 5), 85);
-    
+
     // ---- Organic Matter Percentage ----
     let organicMatter = cp.organicBase;
     organicMatter += organicCount * 0.6;
     if (moisture === "moist") organicMatter *= 1.1;
     if (moisture === "waterlogged") organicMatter *= 0.9; // Anaerobic decomposition
     organicMatter = Math.min(Math.max(organicMatter, 0.3), 8.0);
-    
+
     // ---- pH Analysis ----
     let phCategory, phDescription, phCropImpact;
     if (ph < 4.5) {
@@ -5399,60 +5397,60 @@ function analyzeSoilSample() {
         phDescription = "Strongly Alkaline — Severe nutrient lockout. Sodium buildup likely.";
         phCropImpact = "Very few crops survive. Requires gypsum treatment.";
     }
-    
+
     // ---- Soil Health Score ----
     let healthScore = 50;
-    
+
     // Nutrient balance contribution (max +25)
     const avgNutrient = (baseN + baseP + baseK) / 3;
     healthScore += Math.min(avgNutrient * 0.25, 25);
-    
+
     // pH contribution (max +15) — neutral is best
     const phDeviation = Math.abs(ph - 6.8);
     healthScore += Math.max(15 - phDeviation * 5, 0);
-    
+
     // Organic matter (max +15)
     healthScore += Math.min(organicMatter * 3, 15);
-    
+
     // Biological signs (max +10)
     healthScore += organicCount * 2.5;
-    
+
     // Moisture penalty
     if (moisture === "very-dry") healthScore -= 10;
     if (moisture === "waterlogged") healthScore -= 8;
-    
+
     healthScore = Math.min(Math.max(Math.round(healthScore), 5), 98);
-    
+
     // ---- Crop Compatibility Rankings ----
     const matchedSoilId = tp.soilMatch;
     const cropRankings = CROPS.map(crop => {
         let score = 50;
-        
+
         // Soil compatibility
         if (crop.suitableSoils.includes(matchedSoilId)) {
             score += 30;
         } else if (crop.suitableSoils.includes("loamy") || crop.suitableSoils.includes("alluvial")) {
             score += 10;
         }
-        
+
         // pH suitability
         if (ph >= 6.0 && ph <= 7.5) score += 15;
         else if (ph >= 5.5 && ph <= 8.0) score += 5;
         else score -= 10;
-        
+
         // Nutrient boost — nitrogen-hungry crops
         if (["rice", "maize", "sugarcane", "wheat"].includes(crop.id) && baseN > 50) score += 10;
         if (["groundnut", "chickpea", "soybean"].includes(crop.id) && baseP > 40) score += 10;
-        
+
         score = Math.min(Math.max(score, 10), 98);
-        
+
         // Fertilizer suggestion
         let fertSuggestion = "";
         if (baseN < 40) fertSuggestion += "Urea/Ammonium Sulfate";
         if (baseP < 35) fertSuggestion += (fertSuggestion ? " + " : "") + "DAP/SSP";
         if (baseK < 35) fertSuggestion += (fertSuggestion ? " + " : "") + "MOP";
         if (!fertSuggestion) fertSuggestion = "Balanced NPK (10:26:26)";
-        
+
         return {
             cropId: crop.id,
             cropName: getText(crop.nameKey, state.lang),
@@ -5460,10 +5458,10 @@ function analyzeSoilSample() {
             fertSuggestion: fertSuggestion
         };
     }).sort((a, b) => b.score - a.score).slice(0, 8);
-    
+
     // ---- Soil Amendments ----
     const amendments = [];
-    
+
     if (ph < 5.5) {
         amendments.push("Apply agricultural lime (CaCO₃) at 2-4 tonnes/ha to raise pH and reduce aluminum toxicity.");
     }
@@ -5497,11 +5495,11 @@ function analyzeSoilSample() {
     if (organicCount === 0) {
         amendments.push("Encourage biological activity: avoid excessive tillage, add organic residues, and reduce chemical pesticide use.");
     }
-    
+
     if (amendments.length === 0) {
         amendments.push("Your soil appears healthy! Continue regular crop rotation and organic matter addition to maintain fertility.");
     }
-    
+
     // ---- Store in State ----
     state.soilLab = {
         analyzed: true,
@@ -5519,28 +5517,28 @@ function analyzeSoilSample() {
 
 function renderSoilLabReport() {
     if (!state.soilLab.analyzed) return;
-    
+
     const lab = state.soilLab;
     const lang = state.lang;
-    
+
     function nutrientStatus(val) {
         if (val < 35) return { cls: "low", label: getText("soillab-low", lang) };
         if (val < 65) return { cls: "medium", label: getText("soillab-medium", lang) };
         return { cls: "high", label: getText("soillab-high", lang) };
     }
-    
+
     const nSt = nutrientStatus(lab.nutrients.n);
     const pSt = nutrientStatus(lab.nutrients.p);
     const kSt = nutrientStatus(lab.nutrients.k);
     const feSt = nutrientStatus(lab.nutrients.fe);
     const znSt = nutrientStatus(lab.nutrients.zn);
     const omSt = nutrientStatus(lab.organicMatter * 12);
-    
+
     // pH marker position (0-100%)
     const phPercent = ((lab.phValue - 3.0) / 7.0) * 100;
-    
+
     const phColorClass = lab.phCategory === "acidic" ? "acidic" : lab.phCategory === "neutral" ? "neutral" : "alkaline";
-    
+
     // Build crop compatibility table rows
     let cropRows = "";
     lab.cropRankings.forEach(cr => {
@@ -5556,13 +5554,13 @@ function renderSoilLabReport() {
                 <td><span class="nutrient-status ${cr.score >= 75 ? 'high' : cr.score >= 50 ? 'medium' : 'low'}">${ratingLabel}</span></td>
             </tr>`;
     });
-    
+
     // Build amendment items
     let amendItems = "";
     lab.amendments.forEach(a => {
         amendItems += `<li class="amendment-item"><i class="fa-solid fa-circle-check"></i><span>${a}</span></li>`;
     });
-    
+
     // Full report HTML
     const reportHTML = `
         <div class="soillab-report">
@@ -5677,7 +5675,7 @@ function renderSoilLabReport() {
             </div>
         </div>
     `;
-    
+
     dom.soillabReportArea.innerHTML = reportHTML;
 }
 
@@ -5696,10 +5694,10 @@ function calculateFertilizerAndPesticides(cropObj, stageId, areaAcres) {
             urea: 0, dap: 0, mop: 0, zinc: 0, fym: 0, splitNote: "", pesticides: []
         };
     }
-    
+
     const area = areaAcres > 0 ? areaAcres : 1.0;
     const f = cropObj.fertilizers;
-    
+
     return {
         urea: (f.ureaKgPerAcre * area).toFixed(1),
         dap: (f.dapKgPerAcre * area).toFixed(1),
@@ -5729,15 +5727,15 @@ function calculateFertilizerAndPesticides(cropObj, stageId, areaAcres) {
 
 function renderFertilizerPesticideSection() {
     if (!dom.advisorFertGrid || !dom.advisorPestList) return;
-    
+
     const crop = state.crop || CROPS[0];
     const stage = state.stage || "germination";
     const area = state.area || 1.0;
     const pref = state.preference || "balanced";
     const lang = state.lang;
-    
+
     const fp = calculateFertilizerAndPesticides(crop, stage, area);
-    
+
     if (pref === "organic" && crop.organic) {
         dom.advisorFertGrid.innerHTML = `
             <div class="fert-card urea" style="grid-column: span 2;">
@@ -5788,11 +5786,11 @@ function renderFertilizerPesticideSection() {
                 <div class="fert-card-lbl">${getText("fert-zinc", lang)}</div>
             </div>
         `;
-        
+
         if (dom.advisorFertSplitNote) {
             dom.advisorFertSplitNote.innerHTML = `<strong><i class="fa-solid fa-circle-info"></i> Application Schedule (${area} Acre${area > 1 ? 's' : ''}):</strong> ${fp.splitNote}`;
         }
-        
+
         if (fp.pesticides.length === 0) {
             dom.advisorPestList.innerHTML = `<div class="pest-alert-card"><div class="pest-solution">No critical pesticide required at this stage.</div></div>`;
         } else {
@@ -5813,7 +5811,7 @@ function renderFertilizerPesticideSection() {
             `).join("");
         }
     }
-    
+
     // Render Seed Treatment Guidance Box
     if (dom.advisorSeedTreatment) {
         dom.advisorSeedTreatment.innerHTML = `
@@ -5822,7 +5820,7 @@ function renderFertilizerPesticideSection() {
             </div>
         `;
     }
-    
+
     // Render Flower Booster Guidance Box
     if (dom.advisorFlowerBooster) {
         if (crop.flowerBoosters) {
@@ -5851,20 +5849,20 @@ let currentSeasonFilter = "all";
 function renderCropPlanner(filterSeason = "all") {
     currentSeasonFilter = filterSeason;
     if (!dom.plannerCalendarGrid || !dom.plannerRotationBox) return;
-    
+
     const lang = state.lang;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    
+
     // Filter crops based on selected season pill
     const filteredCrops = CROPS.filter(c => {
         if (filterSeason === "all") return true;
         return c.season === filterSeason;
     });
-    
+
     // Render Rotation Sequence for current active crop
     const mainCrop = state.crop || CROPS[0];
     const seq = mainCrop.rotationSequence || ["Pulse Crop", "Oilseed Crop", "Cereal Crop"];
-    
+
     dom.plannerRotationBox.innerHTML = `
         <div class="rotation-step-card">
             <span class="rotation-year-badge"><i class="fa-solid fa-leaf"></i> Year 1 (Current)</span>
@@ -5882,24 +5880,24 @@ function renderCropPlanner(filterSeason = "all") {
             <div class="rotation-benefit">Pest & Pathogen Break: Disrupts soil-borne fungal spores and weed cycles.</div>
         </div>
     `;
-    
+
     // Render Month-by-Month Timeline Grid
     dom.plannerCalendarGrid.innerHTML = filteredCrops.map(c => {
         const cropName = getText(c.nameKey, lang);
         const sowing = c.sowingMonths || [5, 6];
         const growth = c.growthMonths || [7, 8];
         const harvest = c.harvestMonths || [9, 10];
-        
+
         const monthCellsHTML = months.map((m, idx) => {
             let cls = "";
             let label = m[0];
             if (sowing.includes(idx)) cls = "sowing";
             else if (growth.includes(idx)) cls = "growth";
             else if (harvest.includes(idx)) cls = "harvest";
-            
+
             return `<div class="month-cell ${cls}" title="${m}">${label}</div>`;
         }).join("");
-        
+
         return `
             <div class="planner-calendar-card">
                 <div class="planner-card-header">
@@ -5926,15 +5924,15 @@ function renderCropPlanner(filterSeason = "all") {
 
 async function callGeminiAPI(userPrompt) {
     if (!state.geminiKey) return null;
-    
+
     const cropName = state.crop ? getText(state.crop.nameKey, state.lang) : "General Crop";
     const locName = state.location ? state.location.nameEn : "General Region";
     const soilName = state.soil ? getText(state.soil.nameKey, state.lang) : "General Soil";
     const stageName = state.stage || "germination";
     const area = state.area || 1.0;
-    
+
     const systemInstruction = `You are Krishi Jal AI, an expert agricultural scientist and agronomist. Provide practical, accurate, farmer-friendly advice on crops, irrigation, soil health, fertilizers, and pest control. Current farm context: Location: ${locName}, Soil: ${soilName}, Crop: ${cropName}, Growth Stage: ${stageName}, Farm Area: ${area} Acres, Practice Preference: ${state.preference}. Format response concisely with bullet points.`;
-    
+
     try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(state.geminiKey)}`;
         const body = {
@@ -5942,20 +5940,22 @@ async function callGeminiAPI(userPrompt) {
                 {
                     role: "user",
                     parts: [
-                        { text: `${systemInstruction}
+                        {
+                            text: `${systemInstruction}
 
-Farmer Question: ${userPrompt}` }
+Farmer Question: ${userPrompt}`
+                        }
                     ]
                 }
             ]
         };
-        
+
         const res = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
-        
+
         const data = await res.json();
         if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
             return data.candidates[0].content.parts.map(p => p.text).join("\n");
@@ -5963,25 +5963,25 @@ Farmer Question: ${userPrompt}` }
     } catch (err) {
         console.error("Gemini API Call Error:", err);
     }
-    
+
     return null;
 }
 
 function init() {
     // Initial dropdown/datalist options will be populated dynamically via translateDOM() at the end of init()
-    
+
     // Bind input listeners to support both typing searches and datalist auto-selects
     let locationDebounceTimer = null;
     const handleLocationChange = async () => {
         const val = dom.selectLocation.value;
         if (!val || val.trim().length < 2) return;
-        
+
         const locObj = await resolveLocationAsync(val);
-        
+
         if (locObj) {
             state.location = locObj;
             dom.coordsDisplay.textContent = `Lat: ${locObj.lat.toFixed(2)} | Lon: ${locObj.lon.toFixed(2)}`;
-            
+
             // Auto fill default soil if available
             if (locObj.defaultSoil) {
                 const defaultSoilObj = SOILS.find(s => s.id === locObj.defaultSoil);
@@ -5990,7 +5990,7 @@ function init() {
                     dom.selectSoil.value = getText(defaultSoilObj.nameKey, state.lang);
                 }
             }
-            
+
             await fetchWeather(locObj.lat, locObj.lon);
             renderActiveTab();
         }
@@ -6000,9 +6000,9 @@ function init() {
         clearTimeout(locationDebounceTimer);
         locationDebounceTimer = setTimeout(handleLocationChange, 400);
     });
-    
+
     dom.selectLocation.addEventListener("change", handleLocationChange);
-    
+
     dom.selectSoil.addEventListener("input", () => {
         const val = dom.selectSoil.value;
         const soilObj = resolveSoil(val);
@@ -6011,7 +6011,7 @@ function init() {
             renderActiveTab();
         }
     });
-    
+
     dom.selectCrop.addEventListener("input", () => {
         const val = dom.selectCrop.value;
         const cropObj = resolveCrop(val);
@@ -6019,15 +6019,15 @@ function init() {
             state.crop = cropObj;
         }
     });
-    
+
     if (dom.selectPreference) {
         dom.selectPreference.addEventListener("change", () => {
             state.preference = dom.selectPreference.value;
             renderFertilizerPesticideSection();
-    renderProfitabilitySection();
+            renderProfitabilitySection();
         });
     }
-    
+
     if (dom.selectArea) {
         dom.selectArea.addEventListener("input", () => {
             const val = parseFloat(dom.selectArea.value);
@@ -6036,12 +6036,12 @@ function init() {
             }
         });
     }
-    
+
     dom.selectStage.addEventListener("input", () => {
         const val = dom.selectStage.value;
         state.stage = resolveStage(val);
     });
-    
+
     // Select all text in inputs on click for immediate typing
     const inputsToSelect = [dom.selectLocation, dom.selectSoil, dom.selectCrop, dom.selectStage];
     inputsToSelect.forEach(inp => {
@@ -6049,24 +6049,24 @@ function init() {
             inp.addEventListener("click", () => inp.select());
         }
     });
-    
+
     // Global language change selector trigger
     dom.selectLang.addEventListener("change", () => {
         state.lang = dom.selectLang.value;
         translateDOM();
     });
-    
+
     // Imperial units metric toggle
     dom.toggleUnits.addEventListener("change", () => {
         state.unitImperial = dom.toggleUnits.checked;
-        
+
         // Rerender active tab elements to reflect conversion instantly
         renderActiveTab();
         if (dom.advisorReport.style.display === "block") {
             renderSimulationReport();
         }
     });
-    
+
     // Terminal console input cmd processing bind
     dom.consoleCmdInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
@@ -6091,26 +6091,26 @@ function init() {
         // Show spinner for active feedback
         if (dom.btnSpinner) dom.btnSpinner.style.display = "inline-block";
         dom.btnGenerate.disabled = true;
-        
+
         try {
             // Resolve exact location asynchronously (supports any global city/region via Geocoding API)
             state.location = await resolveLocationAsync(dom.selectLocation.value);
             if (state.location && dom.coordsDisplay) {
                 dom.coordsDisplay.textContent = `Lat: ${state.location.lat.toFixed(2)} | Lon: ${state.location.lon.toFixed(2)}`;
             }
-            
+
             state.soil = resolveSoil(dom.selectSoil.value);
             state.crop = resolveCrop(dom.selectCrop.value);
             state.stage = resolveStage(dom.selectStage.value);
             if (dom.selectArea && parseFloat(dom.selectArea.value) > 0) {
                 state.area = parseFloat(dom.selectArea.value);
             }
-            
+
             // Always fetch real-time 7-day weather for the resolved location before generating plan!
             if (state.location) {
                 await fetchWeather(state.location.lat, state.location.lon);
             }
-            
+
             runAIAdvisorSimulation();
         } catch (err) {
             console.error("Error generating simulation:", err);
@@ -6119,34 +6119,34 @@ function init() {
             dom.btnGenerate.disabled = false;
         }
     });
-    
+
     // Soil Lab: pH slider live display update
     if (dom.slPh) {
         dom.slPh.addEventListener("input", () => {
             dom.slPhDisplay.textContent = parseFloat(dom.slPh.value).toFixed(1);
         });
     }
-    
+
     // Soil Lab: Analyze button
     if (dom.btnAnalyzeSoil) {
         dom.btnAnalyzeSoil.addEventListener("click", () => {
             // Show spinner
             dom.slBtnSpinner.style.display = "inline-block";
             dom.btnAnalyzeSoil.disabled = true;
-            
+
             // Simulate AI processing delay for premium feel
             setTimeout(() => {
                 analyzeSoilSample();
                 renderSoilLabReport();
-                
+
                 // Hide spinner
                 dom.slBtnSpinner.style.display = "none";
                 dom.btnAnalyzeSoil.disabled = false;
             }, 1200);
         });
     }
-    
-        // Global AI Smart Live Search Bar Handlers
+
+    // Global AI Smart Live Search Bar Handlers
     if (dom.globalSearchInput && dom.globalSearchResults) {
         const renderSearchResults = (query) => {
             const clean = query.trim().toLowerCase();
@@ -6156,19 +6156,19 @@ function init() {
                 return;
             }
 
-            const matchedCrops = CROPS.filter(c => 
-                c.id.includes(clean) || 
+            const matchedCrops = CROPS.filter(c =>
+                c.id.includes(clean) ||
                 getText(c.nameKey, state.lang).toLowerCase().includes(clean)
             );
 
-            const matchedSoils = SOILS.filter(s => 
-                s.id.includes(clean) || 
+            const matchedSoils = SOILS.filter(s =>
+                s.id.includes(clean) ||
                 getText(s.nameKey, state.lang).toLowerCase().includes(clean)
             );
 
-            const matchedLocations = LOCATIONS.filter(l => 
-                l.id.includes(clean) || 
-                l.nameEn.toLowerCase().includes(clean) || 
+            const matchedLocations = LOCATIONS.filter(l =>
+                l.id.includes(clean) ||
+                l.nameEn.toLowerCase().includes(clean) ||
                 (l.nameHi && l.nameHi.toLowerCase().includes(clean))
             );
 
@@ -6295,7 +6295,7 @@ function init() {
             }
         });
     }
-    
+
     // AI Quick Prompt Chips Click Listeners
     const promptChips = document.querySelectorAll(".prompt-chip");
     promptChips.forEach(chip => {
@@ -6308,10 +6308,10 @@ function init() {
         });
     });
 
-        if (dom.eduSelectCrop) dom.eduSelectCrop.addEventListener("change", renderEducationCenter);
+    if (dom.eduSelectCrop) dom.eduSelectCrop.addEventListener("change", renderEducationCenter);
     if (dom.eduSelectSoil) dom.eduSelectSoil.addEventListener("change", renderEducationCenter);
 
-        if (dom.schemeSearchInput) {
+    if (dom.schemeSearchInput) {
         dom.schemeSearchInput.addEventListener("input", renderGovernmentSchemes);
     }
 
@@ -6320,7 +6320,7 @@ function init() {
     state.soil = SOILS.find(s => s.id === state.location.defaultSoil) || SOILS[0];
     state.crop = CROPS[0];
     state.stage = "germination";
-    
+
     // Bind season filter pill buttons in Crop Planner tab
     const seasonPills = document.querySelectorAll(".season-pill");
     seasonPills.forEach(pill => {
@@ -6331,54 +6331,12 @@ function init() {
             renderCropPlanner(season);
         });
     });
-    
+
     if (!localStorage.getItem("krishi_gemini_key")) {
         localStorage.setItem("krishi_gemini_key", "");
         state.geminiKey = "";
     }
-    
-    // Modal & Gemini AI Key Handlers
-    if (dom.btnAiKey && dom.modalAiKey) {
-        dom.btnAiKey.addEventListener("click", () => {
-            if (dom.inputGeminiKey) dom.inputGeminiKey.value = state.geminiKey;
-            dom.modalAiKey.style.display = "flex";
-        });
-    }
-    
-    if (dom.btnCloseModal && dom.modalAiKey) {
-        dom.btnCloseModal.addEventListener("click", () => {
-            dom.modalAiKey.style.display = "none";
-        });
-    }
-    
-    if (dom.modalAiKey) {
-        dom.modalAiKey.addEventListener("click", (e) => {
-            if (e.target === dom.modalAiKey) {
-                dom.modalAiKey.style.display = "none";
-            }
-        });
-    }
-    
-    if (dom.btnSaveKey) {
-        dom.btnSaveKey.addEventListener("click", () => {
-            const key = dom.inputGeminiKey.value.trim();
-            state.geminiKey = key;
-            localStorage.setItem("krishi_gemini_key", key);
-            dom.modalAiKey.style.display = "none";
-            addConsoleLine(`[AI SYSTEM] Gemini 1.5 Flash API Key connected successfully!`, "text-success");
-        });
-    }
-    
-    if (dom.btnClearKey) {
-        dom.btnClearKey.addEventListener("click", () => {
-            state.geminiKey = "";
-            localStorage.removeItem("krishi_gemini_key");
-            if (dom.inputGeminiKey) dom.inputGeminiKey.value = "";
-            dom.modalAiKey.style.display = "none";
-            addConsoleLine(`[AI SYSTEM] API Key cleared. Switched to built-in agronomic matrix.`, "text-warning");
-        });
-    }
-    
+
 }
 
 // Start application when DOM is ready

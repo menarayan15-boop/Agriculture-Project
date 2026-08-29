@@ -75,7 +75,11 @@ export function LandingPage({ onStart }) {
           marginTop: '-40px' // Lift slightly
         }}
       >
-        <img src="/logo.svg" alt="Krishi Jal Logo" style={{ width: '72px', height: '72px', marginBottom: '24px' }} />
+        <img 
+          src="/logo.svg" 
+          alt="Krishi Jal Logo" 
+          style={{ width: '84px', height: '84px', marginBottom: '24px', filter: 'drop-shadow(0 6px 16px rgba(16, 185, 129, 0.5))' }} 
+        />
         
         <h1 style={{
           fontSize: 'clamp(2.5rem, 5vw, 4rem)',

@@ -7,8 +7,8 @@ export function Navbar({ onOpenAiModal }) {
   return (
     <nav className="main-nav">
       <div className="nav-container">
-        <div className="brand-logo">
-          <i className="fa-solid fa-droplet brand-icon"></i>
+        <div className="brand-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <img src="/logo.svg" alt="Krishi Jal Logo" style={{ width: '38px', height: '38px', objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(16, 185, 129, 0.4))' }} />
           <div>
             <h1 className="brand-title">Krishi Jal <span className="brand-badge">AI 3.5</span></h1>
             <p className="brand-sub">Smart Agricultural Irrigation &amp; Yield Advisor</p>
