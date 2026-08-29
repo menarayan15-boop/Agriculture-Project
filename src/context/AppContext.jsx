@@ -8,6 +8,7 @@ const AppContext = createContext();
 
 export function AppProvider({ children }) {
   const [lang, setLang] = useState(() => localStorage.getItem('krishi_lang') || 'en');
+  const [theme, setTheme] = useState(() => localStorage.getItem('krishi_theme') || 'dark');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [location, setLocation] = useState(LOCATIONS[0]);
   const [soil, setSoil] = useState(SOILS[0]);
@@ -263,8 +264,17 @@ export function AppProvider({ children }) {
     return applyPersonalizationRules(explicitProfile, baseInsights, lang);
   }, [location, soil, crop, area, stage, preference, lang, explicitProfile]);
 
+  const toggleTheme = () => {
+    setTheme(prev => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('krishi_theme', next);
+      return next;
+    });
+  };
+
   const value = {
     lang, setLang: changeLanguage,
+    theme, setTheme, toggleTheme,
     activeTab, setActiveTab,
     location, setLocation,
     soil, setSoil,

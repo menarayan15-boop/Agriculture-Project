@@ -1,0 +1,24 @@
+{
+    "name": "SmartFarm \u2014 AI Agricultural Intelligence",
+    "short_name": "SmartFarm",
+    "description": "Offline-first smart farming platform with AI crop recommendation, IoT irrigation control, and farmer health monitoring.",
+    "theme_color": "#0f5132",
+    "background_color": "#0b1120",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "start_url": "/",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "/favicon.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}

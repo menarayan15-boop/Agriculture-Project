@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { getText } from '../data/constants';
 import GoogleTranslate from './GoogleTranslate';
 
-export function Header({ onOpenAiModal }) {
+export function Header({ onOpenAiModal, onNavigate }) {
   const { lang, setLang, geminiKey, setShowOnboarding } = useApp();
   const [profileOpen, setProfileOpen] = useState(false);
 
@@ -34,6 +34,58 @@ export function Header({ onOpenAiModal }) {
       </div>
 
       <div className="header-actions">
+        {/* Hub / Home button */}
+        <button
+          onClick={() => onNavigate && onNavigate('landing')}
+          title="Back to Landing Portal Hub"
+          style={{
+            background: 'rgba(255, 255, 255, 0.06)',
+            border: '1px solid var(--border-color)',
+            color: 'var(--text-primary)',
+            padding: '7px 12px',
+            borderRadius: 'var(--border-radius-sm)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontSize: '0.85rem',
+            fontWeight: '600',
+            transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
+        >
+          <i className="fa-solid fa-house" style={{ color: 'var(--highlight)' }}></i>
+          <span>Hub</span>
+        </button>
+
+        {/* Switch to Software Farmers Portal */}
+        <button
+          onClick={() => onNavigate && onNavigate('software-farmers')}
+          title="Switch to Software Farmers SmartFarm Suite"
+          style={{
+            background: 'linear-gradient(135deg, #0f5132 0%, #198754 100%)',
+            border: '1px solid rgba(32, 201, 151, 0.4)',
+            color: '#ffffff',
+            padding: '7px 14px',
+            borderRadius: 'var(--border-radius-sm)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '0.85rem',
+            fontWeight: '700',
+            boxShadow: '0 2px 8px rgba(25, 135, 84, 0.35)',
+            transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+        >
+          <i className="fa-solid fa-microchip" style={{ color: '#6ee7b7' }}></i>
+          <span>Software Farmers</span>
+          <i className="fa-solid fa-arrow-right" style={{ fontSize: '0.75rem', opacity: 0.8 }}></i>
+        </button>
+
         {/* Unit Switcher */}
         <div className="unit-toggle-container">
           <span className="toggle-label">°C / mm</span>

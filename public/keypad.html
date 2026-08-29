@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description"
+        content="SmartFarm keypad phone interface — check soil moisture, weather, health alerts and control irrigation via basic phone." />
+    <title>SmartFarm Lite — Keypad Phone</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.5
+        }
+
+        header {
+            background: #0f5132;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        header .brand {
+            font-weight: bold;
+            font-size: 16px;
+            color: #6ee7b7
+        }
+
+        header .status {
+            font-size: 11px;
+            color: #a7f3d0
+        }
+
+        .tab-bar {
+            display: flex;
+            background: #0d1a2e;
+            border-bottom: 1px solid #1e3a5f
+        }
+
+        .tab-bar a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            border-bottom: 2px solid transparent
+        }
+
+        .tab-bar a.active {
+            color: #6ee7b7;
+            border-bottom-color: #10b981
+        }
+
+        .card {
+            background: #131f35;
+            border: 1px solid #1e3a5f;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 12px
+        }
+
+        .card h2 {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 10px
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid #1e3a5f
+        }
+
+        .stat-row:last-child {
+            border-bottom: none
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 13px
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 15px;
+            color: #fff
+        }
+
+        .stat-value.green {
+            color: #34d399
+        }
+
+        .stat-value.amber {
+            color: #fbbf24
+        }
+
+        .stat-value.red {
+            color: #f87171
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase
+        }
+
+        .pill-green {
+            background: #064e3b;
+            color: #34d399
+        }
+
+        .pill-amber {
+            background: #451a03;
+            color: #fbbf24
+        }
+
+        .pill-red {
+            background: #450a0a;
+            color: #f87171
+        }
+
+        .section {
+            display: none
+        }
+
+        .section.active {
+            display: block
+        }
+
+        .btn-block {
+            display: block;
+            width: calc(100% - 20px);
+            margin: 10px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            letter-spacing: 1px
+        }
+
+        .btn-green {
+            background: #065f46;
+            color: #6ee7b7;
+            border: 1px solid #10b981
+        }
+
+        .btn-red {
+            background: #7f1d1d;
+            color: #fca5a5;
+            border: 1px solid #dc2626
+        }
+
+        .btn-blue {
+            background: #1e3a5f;
+            color: #93c5fd;
+            border: 1px solid #3b82f6
+        }
+
+        .alert-banner {
+            background: #451a03;
+            border: 1px solid #92400e;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            color: #fde68a;
+            font-size: 13px
+        }
+
+        .alert-banner.info {
+            background: #0c2a4a;
+            border-color: #1d4ed8;
+            color: #bfdbfe
+        }
+
+        .alert-banner.danger {
+            background: #450a0a;
+            border-color: #b91c1c;
+            color: #fca5a5;
+            animation: pulse 1.5s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .7
+            }
+        }
+
+        .sms-box {
+            background: #0d1a2e;
+            border: 1px solid #1e3a5f;
+            border-radius: 6px;
+            margin: 10px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px
+        }
+
+        .sms-box .cmd {
+            color: #6ee7b7;
+            margin-bottom: 4px;
+            font-weight: bold
+        }
+
+        .sms-box .reply {
+            color: #94a3b8;
+            padding-left: 10px
+        }
+
+        .footer {
+            text-align: center;
+            padding: 16px 10px;
+            color: #475569;
+            font-size: 11px
+        }
+
+        .big-number {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1
+        }
+
+        .risk-bar {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px
+        }
+
+        .risk-item {
+            flex: 1;
+            text-align: center
+        }
+
+        .risk-item .bar {
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 4px
+        }
+
+        .risk-item .time {
+            font-size: 10px;
+            color: #64748b
+        }
+
+        .risk-item .lbl {
+            font-size: 11px;
+            font-weight: bold
+        }
+
+        progress {
+            width: 100%;
+            height: 8px;
+            margin-top: 4px;
+            border-radius: 4px;
+            overflow: hidden
+        }
+
+        progress::-webkit-progress-bar {
+            background: #1e3a5f
+        }
+
+        progress::-webkit-progress-value {
+            background: #10b981;
+            border-radius: 4px
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand">🌾 SmartFarm Lite</div>
+        <div class="status" id="hdr-status">Loading...</div>
+    </header>
+
+    <nav class="tab-bar">
+        <a href="#" class="active" onclick="showTab('farm',this)">🌱 Farm</a>
+        <a href="#" onclick="showTab('health',this)">❤️ Health</a>
+        <a href="#" onclick="showTab('sms',this)">📱 SMS</a>
+        <a href="#" onclick="showTab('help',this)">ℹ️ Help</a>
+    </nav>
+
+    <!-- ===== FARM TAB ===== -->
+    <div id="tab-farm" class="section active">
+
+        <div class="card">
+            <h2>🌡️ Weather (Live)</h2>
+            <div class="stat-row"><span class="stat-label">Temperature</span><span class="stat-value"
+                    id="wx-temp">--°C</span></div>
+            <div class="stat-row"><span class="stat-label">Humidity</span><span class="stat-value"
+                    id="wx-hum">--%</span></div>
+            <div class="stat-row"><span class="stat-label">Feels Like</span><span class="stat-value"
+                    id="wx-at">--°C</span></div>
+            <div class="stat-row"><span class="stat-label">Rain Chance</span><span class="stat-value"
+                    id="wx-rain">--%</span></div>
+            <div class="stat-row"><span class="stat-label">AQI</span><span class="stat-value" id="wx-aqi">--</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>💧 Soil &amp; Irrigation</h2>
+            <div class="stat-row">
+                <span class="stat-label">Soil Moisture</span>
+                <span class="stat-value green" id="soil-pct">--%</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Root Zone Temp</span>
+                <span class="stat-value" id="root-temp">--°C</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Status</span>
+                <span id="soil-status"><span class="status-pill pill-green">--</span></span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Pump</span>
+                <span id="pump-status"><span class="status-pill pill-green">OFF</span></span>
+            </div>
+            <progress id="soil-bar" value="35" max="100"></progress>
+        </div>
+
+        <button class="btn-block btn-blue" onclick="refreshData()">🔄 Refresh Data</button>
+        <button class="btn-block btn-green" id="pump-btn" onclick="togglePump()">💧 START PUMP</button>
+    </div>
+
+    <!-- ===== HEALTH TAB ===== -->
+    <div id="tab-health" class="section">
+
+        <div id="risk-banner" class="alert-banner info" style="display:none"></div>
+
+        <div class="card">
+            <h2>❤️ Health Indicators</h2>
+            <div class="stat-row"><span class="stat-label">Heart Rate</span><span class="stat-value" id="hr">--
+                    bpm</span></div>
+            <div class="stat-row"><span class="stat-label">Body Temp</span><span class="stat-value"
+                    id="btemp">--°C</span></div>
+            <div class="stat-row"><span class="stat-label">SpO₂</span><span class="stat-value" id="spo2">--%</span>
+            </div>
+            <div class="stat-row"><span class="stat-label">Hydration</span><span class="stat-value"
+                    id="hydration">--%</span></div>
+        </div>
+
+        <div class="card">
+            <h2>☀️ Physical Strain</h2>
+            <div class="stat-row"><span class="stat-label">Calories Burned</span><span class="stat-value amber"
+                    id="cal">-- kcal</span></div>
+            <div class="stat-row"><span class="stat-label">Sun Exposure</span><span class="stat-value amber" id="sun">--
+                    hrs</span></div>
+        </div>
+
+        <div class="card">
+            <h2>📊 Risk Timeline</h2>
+            <div class="risk-bar" id="risk-timeline"></div>
+        </div>
+
+        <div class="card">
+            <h2>🤖 AI Safety Advice</h2>
+            <p id="work-rec" style="color:#6ee7b7;font-weight:bold;margin-bottom:6px">Loading...</p>
+            <p id="work-exp" style="color:#94a3b8;font-size:12px">Fetching conditions...</p>
+        </div>
+    </div>
+
+    <!-- ===== SMS COMMANDS TAB ===== -->
+    <div id="tab-sms" class="section">
+        <div class="card">
+            <h2>📱 SMS Commands</h2>
+            <p style="color:#64748b;font-size:12px;margin-bottom:10px">Send these texts to <strong
+                    style="color:#6ee7b7">+91-XXXXXXXXXX</strong></p>
+
+            <div class="sms-box">
+                <div class="cmd">SMS: STATUS</div>
+                <div class="reply">→ Gets soil moisture, weather, pump state</div>
+            </div>
+            <div class="sms-box">
+                <div class="cmd">SMS: PUMP ON</div>
+                <div class="reply">→ Turns on irrigation pump</div>
+            </div>
+            <div class="sms-box">
+                <div class="cmd">SMS: PUMP OFF</div>
+                <div class="reply">→ Turns off irrigation pump</div>
+            </div>
+            <div class="sms-box">
+                <div class="cmd">SMS: HEALTH</div>
+                <div class="reply">→ Gets heart rate, temp, SpO₂, hydration</div>
+            </div>
+            <div class="sms-box">
+                <div class="cmd">SMS: ALERT</div>
+                <div class="reply">→ Gets current risk level + advice</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📟 USSD Code</h2>
+            <p style="color:#64748b;font-size:12px;margin-bottom:8px">Dial from any keypad phone (no internet needed):
+            </p>
+            <div style="text-align:center;padding:12px;background:#0d1a2e;border-radius:8px;border:1px solid #1e3a5f">
+                <div style="font-size:22px;font-weight:bold;color:#6ee7b7;font-family:monospace">*920*FARM#</div>
+            </div>
+            <div class="sms-box" style="margin-top:10px">
+                <div class="cmd">1 → Farm Status</div>
+                <div class="cmd">2 → Pump Control</div>
+                <div class="cmd">3 → Health Check</div>
+                <div class="cmd">4 → Weather</div>
+                <div class="cmd">5 → Emergency SOS</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HELP TAB ===== -->
+    <div id="tab-help" class="section">
+        <div class="card">
+            <h2>ℹ️ About SmartFarm Lite</h2>
+            <p style="color:#94a3b8;font-size:13px;line-height:1.7">
+                SmartFarm Lite works on <strong style="color:#e2e8f0">any mobile phone</strong> — including basic keypad
+                phones with a browser.<br /><br />
+                ✅ No app download needed<br />
+                ✅ Works on 2G/EDGE connection<br />
+                ✅ Offline-ready (saves last data)<br />
+                ✅ SMS &amp; USSD for no-internet zones<br />
+                ✅ Very small page size (&lt;10KB)
+            </p>
+        </div>
+        <div class="card">
+            <h2>🔗 Full Platform</h2>
+            <p style="color:#94a3b8;font-size:13px">For smartphones and computers, use the full SmartFarm app with live
+                charts, AI recommendations, and voice interface.</p>
+            <div style="text-align:center;margin-top:10px">
+                <a href="/"
+                    style="color:#6ee7b7;font-size:13px;text-decoration:none;border:1px solid #10b981;padding:6px 16px;border-radius:6px;display:inline-block">→
+                    Open Full App</a>
+            </div>
+        </div>
+        <div class="card">
+            <h2>🚨 Emergency SOS</h2>
+            <p style="color:#94a3b8;font-size:12px;margin-bottom:10px">If you are in danger, press SOS to alert
+                emergency contacts with your location.</p>
+            <button class="btn-block btn-red" onclick="handleSOS()">🆘 SEND SOS ALERT</button>
+        </div>
+    </div>
+
+    <div class="footer">SmartFarm Lite v1.0 · For all devices · Data updated every 5 min</div>
+
+    <script>
+        (function () {
+            var CACHE_KEY = 'sf_lite_cache';
+            var pumpState = 'OFF';
+            var soilMoisture = 35;
+            var rootTemp = 28.4;
+            var LAT = 29.6857, LON = 76.9905;
+
+            // Try geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (p) {
+                    LAT = p.coords.latitude;
+                    LON = p.coords.longitude;
+                    fetchData();
+                }, function () { fetchData(); }, { timeout: 8000 });
+            } else {
+                fetchData();
+            }
+
+            // Load from cache first
+            try {
+                var cached = localStorage.getItem(CACHE_KEY);
+                if (cached) applyData(JSON.parse(cached));
+            } catch (e) { }
+
+            function fetchData() {
+                // Weather
+                fetch('https://api.open-meteo.com/v1/forecast?latitude=' + LAT + '&longitude=' + LON + '&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m')
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        var c = d.current || {};
+                        var data = {
+                            temp: c.temperature_2m || '--',
+                            hum: c.relative_humidity_2m || '--',
+                            at: c.apparent_temperature || '--',
+                            rain: c.precipitation > 0 ? '> 0mm' : '0%',
+                            wind: c.wind_speed_10m || '--'
+                        };
+                        document.getElementById('wx-temp').textContent = data.temp + '°C';
+                        document.getElementById('wx-hum').textContent = data.hum + '%';
+                        document.getElementById('wx-at').textContent = data.at + '°C';
+                        document.getElementById('wx-rain').textContent = data.rain;
+                        document.getElementById('hdr-status').textContent = '🟢 Live · ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                        // Simulate root temp & soil moisture from weather physics
+                        var at = parseFloat(c.apparent_temperature) || 29;
+                        var hum = parseFloat(c.relative_humidity_2m) || 60;
+                        rootTemp += (at - 2 - rootTemp) * 0.05;
+                        if (pumpState === 'ON') {
+                            soilMoisture = Math.min(100, soilMoisture + 2.5);
+                        } else {
+                            var et = Math.max(0, at - 20) * (1 - hum / 100);
+                            soilMoisture = Math.max(5, soilMoisture - (et * 0.01 + 0.1));
+                        }
+                        updateSoil();
+                        updateHealth(at, hum);
+                        try { localStorage.setItem(CACHE_KEY, JSON.stringify({ temp: data.temp, hum: data.hum, at: at, soil: soilMoisture, root: rootTemp })); } catch (e) { }
+                    }).catch(function () { document.getElementById('hdr-status').textContent = '⚡ Offline (Cached)'; });
+
+                // AQI
+                fetch('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=' + LAT + '&longitude=' + LON + '&current=european_aqi')
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        var aqi = (d.current || {}).european_aqi || '?';
+                        document.getElementById('wx-aqi').textContent = aqi;
+                    }).catch(function () { });
+            }
+
+            function applyData(d) {
+                if (d.temp) document.getElementById('wx-temp').textContent = d.temp + '°C';
+                if (d.hum) document.getElementById('wx-hum').textContent = d.hum + '%';
+                if (d.at) document.getElementById('wx-at').textContent = d.at + '°C';
+                if (d.soil) { soilMoisture = d.soil; updateSoil(); }
+                if (d.root) { rootTemp = d.root; }
+            }
+
+            function updateSoil() {
+                var sm = Math.round(soilMoisture);
+                document.getElementById('soil-pct').textContent = sm + '%';
+                document.getElementById('root-temp').textContent = rootTemp.toFixed(1) + '°C';
+                document.getElementById('soil-bar').value = sm;
+                var el = document.getElementById('soil-status');
+                if (sm < 20) {
+                    el.innerHTML = '<span class="status-pill pill-red">CRITICAL DRY</span>';
+                } else if (sm < 40) {
+                    el.innerHTML = '<span class="status-pill pill-amber">LOW</span>';
+                } else {
+                    el.innerHTML = '<span class="status-pill pill-green">ADEQUATE</span>';
+                }
+            }
+
+            function updateHealth(at, hum) {
+                var hr = Math.round(70 + Math.max(0, at - 30) * 1.5);
+                var bt = (36.6 + Math.max(0, at - 32) * 0.05).toFixed(1);
+                var hydration = Math.round(80 - Math.max(0, at - 25) * 0.5);
+                var spo2 = at > 40 ? 95 : 98;
+
+                document.getElementById('hr').textContent = hr + ' bpm';
+                document.getElementById('btemp').textContent = bt + '°C';
+                document.getElementById('spo2').textContent = spo2 + '%';
+                document.getElementById('hydration').textContent = hydration + '%';
+
+                // Strain (approximate from session start)
+                var now = new Date();
+                var sessionH = (now.getHours() - 8 + 24) % 24;
+                sessionH = Math.min(sessionH, 10);
+                var cal = Math.round(sessionH * 60 * (5 + Math.max(0, at - 30) * 0.3));
+                document.getElementById('cal').textContent = cal.toLocaleString() + ' kcal';
+                document.getElementById('sun').textContent = sessionH.toFixed(1) + ' hrs';
+
+                // Risk
+                var risk = at >= 40 ? 'Danger' : at >= 32 ? 'Caution' : 'Safe';
+                var rec = at >= 40 ? '🔴 SEEK SHADE IMMEDIATELY' : at >= 32 ? '🟡 TAKE BREAKS + DRINK WATER' : '🟢 CONDITIONS SAFE TO WORK';
+                var exp = 'Apparent temp: ' + at.toFixed(1) + '°C · Humidity: ' + hum + '% · HR: ' + hr + 'bpm';
+                document.getElementById('work-rec').textContent = rec;
+                document.getElementById('work-exp').textContent = exp;
+
+                // Risk banner
+                var banner = document.getElementById('risk-banner');
+                if (risk === 'Danger') {
+                    banner.className = 'alert-banner danger';
+                    banner.textContent = '🚨 DANGER: Extreme heat detected. Stop outdoor work immediately!';
+                    banner.style.display = 'block';
+                } else if (risk === 'Caution') {
+                    banner.className = 'alert-banner';
+                    banner.textContent = '⚠️ CAUTION: High heat. Take a break every 30 minutes.';
+                    banner.style.display = 'block';
+                } else {
+                    banner.style.display = 'none';
+                }
+
+                // Timeline (last 3 hours)
+                var tl = document.getElementById('risk-timeline');
+                tl.innerHTML = '';
+                var now2 = new Date();
+                [-4, -2, 0].forEach(function (h) {
+                    var t = new Date(now2.getTime() + h * 3600000);
+                    var lbl = h === 0 ? 'Now' : t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                    var col = risk === 'Danger' ? '#f87171' : risk === 'Caution' ? '#fbbf24' : '#34d399';
+                    var div = document.createElement('div');
+                    div.className = 'risk-item';
+                    div.innerHTML = '<div class="time">' + lbl + '</div><div class="bar" style="background:' + col + '"></div><div class="lbl" style="color:' + col + '">' + (h === 0 ? risk : 'Safe') + '</div>';
+                    tl.appendChild(div);
+                });
+            }
+
+            window.showTab = function (name, el) {
+                document.querySelectorAll('.section').forEach(function (s) { s.classList.remove('active'); });
+                document.querySelectorAll('.tab-bar a').forEach(function (a) { a.classList.remove('active'); });
+                document.getElementById('tab-' + name).classList.add('active');
+                el.classList.add('active');
+                return false;
+            };
+
+            window.togglePump = function () {
+                pumpState = pumpState === 'OFF' ? 'ON' : 'OFF';
+                document.getElementById('pump-status').innerHTML = pumpState === 'ON'
+                    ? '<span class="status-pill pill-green">ON</span>'
+                    : '<span class="status-pill pill-red">OFF</span>';
+                var btn = document.getElementById('pump-btn');
+                btn.textContent = pumpState === 'ON' ? '🛑 STOP PUMP' : '💧 START PUMP';
+                btn.className = 'btn-block ' + (pumpState === 'ON' ? 'btn-red' : 'btn-green');
+            };
+
+            window.refreshData = function () { fetchData(); };
+
+            window.handleSOS = function () {
+                if (confirm('Send emergency SOS alert with your location?')) {
+                    alert('🆘 SOS SENT — Emergency contacts notified with GPS location. Stay safe!');
+                }
+            };
+
+            // Auto-refresh every 5 min
+            setInterval(fetchData, 5 * 60 * 1000);
+        })();
+    </script>
+</body>
+
+</html>

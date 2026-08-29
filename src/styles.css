@@ -507,7 +507,7 @@ body {
 }
 
 .tab-panel {
-    display: none;
+    display: block;
     animation: fadeIn 0.4s ease-out forwards;
 }
 
