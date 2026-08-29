@@ -96,10 +96,46 @@ export function Header({ onOpenAiModal, onNavigate }) {
           <span className="toggle-label">°F / inches</span>
         </div>
 
-        {/* Google Translate Language Selector */}
-        <div className="lang-selector-wrapper">
-          <i className="fa-solid fa-language lang-icon"></i>
-          <GoogleTranslate />
+        {/* Language Selector Dropdown */}
+        <div 
+          className="lang-selector-wrapper"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            background: 'rgba(255, 255, 255, 0.08)',
+            border: '1px solid var(--border-color)',
+            borderRadius: 'var(--border-radius-sm)',
+            padding: '5px 10px'
+          }}
+        >
+          <i className="fa-solid fa-language lang-icon" style={{ color: 'var(--highlight)', fontSize: '1rem' }}></i>
+          <select
+            id="krishi-lang-select"
+            value={lang}
+            onChange={(e) => setLang(e.target.value)}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-primary)',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              outline: 'none',
+              fontFamily: 'inherit'
+            }}
+          >
+            <option value="en" style={{ background: '#0d1e15', color: '#ffffff' }}>English</option>
+            <option value="hi" style={{ background: '#0d1e15', color: '#ffffff' }}>हिन्दी (Hindi)</option>
+            <option value="te" style={{ background: '#0d1e15', color: '#ffffff' }}>తెలుగు (Telugu)</option>
+            <option value="ta" style={{ background: '#0d1e15', color: '#ffffff' }}>தமிழ் (Tamil)</option>
+            <option value="kn" style={{ background: '#0d1e15', color: '#ffffff' }}>ಕನ್ನಡ (Kannada)</option>
+            <option value="pa" style={{ background: '#0d1e15', color: '#ffffff' }}>ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="mr" style={{ background: '#0d1e15', color: '#ffffff' }}>मराठी (Marathi)</option>
+            <option value="bn" style={{ background: '#0d1e15', color: '#ffffff' }}>বাংলা (Bengali)</option>
+            <option value="gu" style={{ background: '#0d1e15', color: '#ffffff' }}>ગુજરાતી (Gujarati)</option>
+            <option value="or" style={{ background: '#0d1e15', color: '#ffffff' }}>ଓଡ଼ିଆ (Odia)</option>
+          </select>
         </div>
 
         {/* Profile Dropdown */}
