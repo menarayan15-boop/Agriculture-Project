@@ -158,10 +158,17 @@ export const CROPS = [
     waterReqMm: 1200,
     avgYieldQuintalsPerAcre: 25,
     mandiPricePerQuintal: 2300,
-    seedTreatment: "Treat seeds with Carbendazim 2g/kg or Trichoderma 5g/kg before nursery sowing.",
+    cropCycleDays: "120 – 145 Days",
+    sowingMonths: "June – July (Monsoon)",
+    idealSoilPh: "5.5 – 7.0 (Slightly Acidic)",
+    recommendedSoil: "Clay, Clay-Loam, Alluvial Soil",
+    criticalStages: "Nursery, Active Tillering, Panicle Initiation, Flowering (requires 2-5cm standing water)",
+    majorPests: "Yellow Stem Borer, Leaf Folder, Brown Plant Hopper (BPH), Rice Blast, Bacterial Leaf Blight",
+    seedTreatment: "Soak seeds in Carbendazim (2g/kg) + Streptocycline (0.1g/kg) for 12 hours before nursery sowing.",
     fertilizers: { ureaKgPerAcre: 50, dapKgPerAcre: 30, mopKgPerAcre: 20 },
-    desc: "Major staple kharif crop requiring standing water and warm humid climate during growth.",
-    tips: "Maintain 2-5 cm standing water during tillering stage. Apply Zinc Sulphate 10 kg/acre to prevent Khaira disease."
+    desc: "Major staple kharif cereal crop requiring standing water, warm humid climate, and rich nitrogen fertility.",
+    tips: "Maintain 2-5 cm standing water during tillering. Apply Zinc Sulphate @ 10 kg/acre to prevent Khaira disease.",
+    harvestAdvice: "Harvest when 80-85% panicles turn golden yellow and grain moisture drops to 20%. Sun-dry before milling."
   },
   {
     id: "maize",
@@ -180,10 +187,17 @@ export const CROPS = [
     waterReqMm: 550,
     avgYieldQuintalsPerAcre: 22,
     mandiPricePerQuintal: 2225,
-    seedTreatment: "Coat seeds with Thiram 3g/kg or Cyantraniliprole for Fall Armyworm defense.",
+    cropCycleDays: "90 – 110 Days",
+    sowingMonths: "June 15 – July 15",
+    idealSoilPh: "6.0 – 7.5 (Neutral)",
+    recommendedSoil: "Well-Drained Loamy & Alluvial Soil",
+    criticalStages: "Knee-High Stage (25d), Tasseling / Silking (50d), Grain Filling (75d)",
+    majorPests: "Fall Armyworm (FAW), Stem Borer, Turcicum Leaf Blight",
+    seedTreatment: "Coat seeds with Cyantraniliprole 600 FS (4ml/kg seed) for early Fall Armyworm protection.",
     fertilizers: { ureaKgPerAcre: 45, dapKgPerAcre: 35, mopKgPerAcre: 15 },
-    desc: "Versatile cereal crop used for grain, fodder, and industrial starch production.",
-    tips: "Ensure excellent field drainage. Avoid waterlogging during knee-high and tasseling stages."
+    desc: "Versatile dual-purpose cereal crop used for grain, cattle green fodder, and industrial starch.",
+    tips: "Ensure excellent field drainage. Avoid waterlogging during knee-high and silking stages.",
+    harvestAdvice: "Harvest when husk leaves turn brown and black layer forms at the grain base."
   },
   {
     id: "bajra",
@@ -202,10 +216,17 @@ export const CROPS = [
     waterReqMm: 350,
     avgYieldQuintalsPerAcre: 14,
     mandiPricePerQuintal: 2625,
-    seedTreatment: "Treat seeds with Metalaxyl 6g/kg to prevent Downy Mildew / Ergot disease.",
+    cropCycleDays: "80 – 95 Days",
+    sowingMonths: "July 1 – July 25",
+    idealSoilPh: "6.5 – 8.2 (Alkaline Tolerant)",
+    recommendedSoil: "Sandy Loam & Light Arid Soil",
+    criticalStages: "Tillering (20d), Flowering (45d), Grain Development",
+    majorPests: "Downy Mildew (Green Ear), Ergot, Shoot Fly",
+    seedTreatment: "Treat seeds with Metalaxyl 35 SD @ 6g/kg to manage Downy Mildew disease.",
     fertilizers: { ureaKgPerAcre: 30, dapKgPerAcre: 20, mopKgPerAcre: 10 },
-    desc: "Drought-hardy nutrient-rich millet ideal for arid and semi-arid sandy loam soils.",
-    tips: "Provide protective irrigation at tillering and flowering stages if monsoon dry spells occur."
+    desc: "Drought-hardy nutrient-dense millet rich in iron and calcium, ideal for arid soils.",
+    tips: "Provide 1-2 protective irrigations at tillering and flowering if monsoon dry spells occur.",
+    harvestAdvice: "Cut earheads when grains are hard and dry to 12% moisture."
   },
   {
     id: "jowar",
@@ -224,10 +245,17 @@ export const CROPS = [
     waterReqMm: 400,
     avgYieldQuintalsPerAcre: 15,
     mandiPricePerQuintal: 3180,
-    seedTreatment: "Seed treatment with Imidacloprid 5g/kg protects against Shoot Fly in early growth.",
+    cropCycleDays: "100 – 115 Days",
+    sowingMonths: "June 15 – July 10",
+    idealSoilPh: "6.0 – 8.5",
+    recommendedSoil: "Black Cotton & Clay Loam Soil",
+    criticalStages: "Flag Leaf Stage (35d), Booting & Grain Development",
+    majorPests: "Sorghum Shoot Fly, Stem Borer, Grain Mold",
+    seedTreatment: "Seed treatment with Imidacloprid 70 WS (5g/kg) repels Shoot Fly attack.",
     fertilizers: { ureaKgPerAcre: 35, dapKgPerAcre: 25, mopKgPerAcre: 10 },
     desc: "Resilient millet suitable for dual-purpose grain and nutritious cattle green fodder.",
-    tips: "Incorporate Azospirillum and PSB bio-fertilizers for better root growth and drought tolerance."
+    tips: "Incorporate Azospirillum bio-fertilizer for better root growth and drought tolerance.",
+    harvestAdvice: "Harvest when grain turns firm and panicle stalk dries completely."
   },
   {
     id: "cotton",
@@ -246,10 +274,17 @@ export const CROPS = [
     waterReqMm: 750,
     avgYieldQuintalsPerAcre: 12,
     mandiPricePerQuintal: 7121,
-    seedTreatment: "Treat seeds with Carboxin 2g/kg and Chlorpyrifos for soil insect protection.",
+    cropCycleDays: "150 – 180 Days",
+    sowingMonths: "May – June",
+    idealSoilPh: "6.5 – 8.0 (Alkaline)",
+    recommendedSoil: "Deep Black Cotton Soil & Clay Loam",
+    criticalStages: "Square Formation (45d), Flowering (70d), Boll Development (100d)",
+    majorPests: "Pink Bollworm, Whitefly, Thrips, Aphids, Leaf Curl Virus",
+    seedTreatment: "Treat seeds with Carboxin 2g/kg + Chlorpyrifos for soil-borne pests.",
     fertilizers: { ureaKgPerAcre: 40, dapKgPerAcre: 30, mopKgPerAcre: 25 },
-    desc: "Major commercial fiber crop requiring deep well-drained black cotton soil.",
-    tips: "Monitor for Pink Bollworm using pheromone traps. Irrigate every 12-15 days during flowering and boll filling."
+    desc: "Major commercial fiber cash crop requiring deep well-drained black cotton soil.",
+    tips: "Monitor Pink Bollworm using pheromone traps. Irrigate every 12-15 days during boll filling.",
+    harvestAdvice: "Pick clean fully opened bolls in morning hours after dew dries."
   },
   {
     id: "soybean",
@@ -268,10 +303,17 @@ export const CROPS = [
     waterReqMm: 500,
     avgYieldQuintalsPerAcre: 10,
     mandiPricePerQuintal: 4892,
-    seedTreatment: "Inoculate seeds with Rhizobium japonicum culture (5g/kg) and Thiram 2g/kg.",
+    cropCycleDays: "95 – 110 Days",
+    sowingMonths: "June 20 – July 15",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Black Cotton & Clay Loam Soil",
+    criticalStages: "Flowering Stage (35d), Pod Formation (55d), Seed Filling (75d)",
+    majorPests: "Girdle Beetle, Tobacco Caterpillar, Yellow Mosaic Virus",
+    seedTreatment: "Inoculate seeds with Rhizobium japonicum (5g/kg) + Thiram (2g/kg).",
     fertilizers: { ureaKgPerAcre: 15, dapKgPerAcre: 40, mopKgPerAcre: 20 },
     desc: "High protein & oil crop essential for food and poultry feed industry.",
-    tips: "Apply 10 kg/acre Elemental Sulphur to boost seed oil content and nitrogen nodulation."
+    tips: "Apply 10 kg/acre Elemental Sulphur to boost seed oil content and nitrogen nodulation.",
+    harvestAdvice: "Harvest when 95% leaves drop and pods rattle when shaken."
   },
   {
     id: "groundnut",
@@ -290,10 +332,17 @@ export const CROPS = [
     waterReqMm: 450,
     avgYieldQuintalsPerAcre: 12,
     mandiPricePerQuintal: 6783,
+    cropCycleDays: "105 – 120 Days",
+    sowingMonths: "June 15 – July 15",
+    idealSoilPh: "6.0 – 7.2",
+    recommendedSoil: "Light Sandy Loam & Red Soil",
+    criticalStages: "Flowering (30d), Pegging (45d), Pod Development (70d)",
+    majorPests: "Tikka Leaf Spot, White Grub, Collar Rot",
     seedTreatment: "Treat seed pods with Mancozeb 3g/kg seed to prevent seedling blight.",
     fertilizers: { ureaKgPerAcre: 15, dapKgPerAcre: 30, mopKgPerAcre: 20 },
     desc: "Popular oilseed and legume crop ideal for light sandy loam soils.",
-    tips: "Apply Gypsum @ 100 kg/acre during pegging stage (40-45 days) for firm pod shell development."
+    tips: "Apply Gypsum @ 100 kg/acre during pegging stage (40-45 days) for firm pod shell development.",
+    harvestAdvice: "Dig out plants when inner pod shell wall turns dark brown."
   },
   {
     id: "tur",
@@ -312,10 +361,17 @@ export const CROPS = [
     waterReqMm: 400,
     avgYieldQuintalsPerAcre: 8,
     mandiPricePerQuintal: 7550,
+    cropCycleDays: "150 – 180 Days",
+    sowingMonths: "June – July",
+    idealSoilPh: "6.5 – 7.8",
+    recommendedSoil: "Deep Well-Drained Loamy Soil",
+    criticalStages: "Flower Bud Initiation, Pod Formation",
+    majorPests: "Pod Borer (Helicoverpa), Fusarium Wilt, Sterility Mosaic",
     seedTreatment: "Treat with Rhizobium and Trichoderma viride 4g/kg to manage Fusarium Wilt.",
     fertilizers: { ureaKgPerAcre: 10, dapKgPerAcre: 40, mopKgPerAcre: 15 },
     desc: "Long duration leguminous pulse rich in dietary protein and soil nitrogen builder.",
-    tips: "Intercrop with Soybean or Sorghum to maximize land utilization and reduce pest risks."
+    tips: "Intercrop with Soybean or Sorghum to maximize land utilization and reduce pest risks.",
+    harvestAdvice: "Harvest when 80% pods dry and turn brown."
   },
   {
     id: "moong",
@@ -334,10 +390,17 @@ export const CROPS = [
     waterReqMm: 300,
     avgYieldQuintalsPerAcre: 6,
     mandiPricePerQuintal: 8682,
+    cropCycleDays: "60 – 70 Days",
+    sowingMonths: "June 20 – July 15",
+    idealSoilPh: "6.2 – 7.5",
+    recommendedSoil: "Alluvial & Sandy Loam Soil",
+    criticalStages: "Flowering (30d), Pod Formation (45d)",
+    majorPests: "Whitefly, Yellow Mosaic Virus, Pod Borer",
     seedTreatment: "Rhizobium inoculation 200g per 10kg seed with Jaggery solution.",
     fertilizers: { ureaKgPerAcre: 10, dapKgPerAcre: 30, mopKgPerAcre: 10 },
     desc: "Short-duration (60-65 days) nutritious pulse crop excellent for crop rotation.",
-    tips: "Spray Neem oil (10,000 ppm) or Dimethoate to prevent Whitefly transmission of Yellow Mosaic Virus."
+    tips: "Spray Neem oil (10,000 ppm) or Dimethoate to prevent Whitefly transmission of Yellow Mosaic Virus.",
+    harvestAdvice: "Pick mature pods in 2-3 hand pickings as pods dry."
   },
   {
     id: "urad",
@@ -356,10 +419,17 @@ export const CROPS = [
     waterReqMm: 320,
     avgYieldQuintalsPerAcre: 6,
     mandiPricePerQuintal: 7400,
+    cropCycleDays: "70 – 85 Days",
+    sowingMonths: "June 25 – July 20",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Loamy & Black Soil",
+    criticalStages: "Flowering Stage, Pod Development",
+    majorPests: "Yellow Mosaic Virus, Powdery Mildew, Hairy Caterpillar",
     seedTreatment: "Treat seeds with Captan 2.5g/kg + Rhizobium bio-fertilizer.",
     fertilizers: { ureaKgPerAcre: 10, dapKgPerAcre: 30, mopKgPerAcre: 10 },
     desc: "High protein legume crop improving soil organic carbon and structure.",
-    tips: "Provide 1 light irrigation at pod initiation if rain fails during mid-Kharif."
+    tips: "Provide 1 light irrigation at pod initiation if rain fails during mid-Kharif.",
+    harvestAdvice: "Harvest when pods turn black and dry."
   },
 
   // ─── RABI CROPS (Winter) ───
@@ -380,10 +450,17 @@ export const CROPS = [
     waterReqMm: 450,
     avgYieldQuintalsPerAcre: 22,
     mandiPricePerQuintal: 2425,
+    cropCycleDays: "110 – 125 Days",
+    sowingMonths: "Nov 1 – Nov 25 (Rabi)",
+    idealSoilPh: "6.0 – 7.5 (Neutral Soil)",
+    recommendedSoil: "Well-Drained Alluvial & Clay Loam",
+    criticalStages: "Crown Root Initiation (21d CRI), Tillering (42d), Flowering (70d), Milk Stage (90d)",
+    majorPests: "Loose Smut, Yellow/Brown Rust, Aphids, Termites",
     seedTreatment: "Treat with Tebuconazole 1.5g/kg seed to prevent Loose Smut disease.",
     fertilizers: { ureaKgPerAcre: 55, dapKgPerAcre: 40, mopKgPerAcre: 20 },
     desc: "Primary winter staple cereal requiring cool growing weather and CRI stage irrigation.",
-    tips: "First irrigation at Crown Root Initiation (CRI) stage at 21 days after sowing is critical for high tillering."
+    tips: "First irrigation at Crown Root Initiation (CRI) stage at 21 days after sowing is critical for high tillering.",
+    harvestAdvice: "Harvest when crop turns golden yellow and grain moisture falls below 14%."
   },
   {
     id: "mustard",
@@ -402,10 +479,17 @@ export const CROPS = [
     waterReqMm: 300,
     avgYieldQuintalsPerAcre: 9,
     mandiPricePerQuintal: 5950,
+    cropCycleDays: "105 – 120 Days",
+    sowingMonths: "Oct 1 – Oct 25",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Loamy & Sandy Loam Soil",
+    criticalStages: "Rosette Stage (25d), Flowering (45d), Pod Filling (70d)",
+    majorPests: "Mustard Aphids, White Rust, Alternaria Blight",
     seedTreatment: "Treat with Metalaxyl 6g/kg to manage White Rust and Downy Mildew.",
     fertilizers: { ureaKgPerAcre: 35, dapKgPerAcre: 25, mopKgPerAcre: 15 },
     desc: "Major winter oilseed crop high in pungent oil content and yellow flowers.",
-    tips: "Applying 10 kg/acre Single Super Phosphate (SSP) or Sulphur increases seed oil percentage by 3-5%."
+    tips: "Applying 10 kg/acre Single Super Phosphate (SSP) or Sulphur increases seed oil percentage by 3-5%.",
+    harvestAdvice: "Harvest when 75% pods turn yellow to prevent seed shattering."
   },
   {
     id: "chickpea",
@@ -424,10 +508,17 @@ export const CROPS = [
     waterReqMm: 250,
     avgYieldQuintalsPerAcre: 10,
     mandiPricePerQuintal: 5440,
+    cropCycleDays: "110 – 120 Days",
+    sowingMonths: "Oct 15 – Nov 15",
+    idealSoilPh: "6.0 – 7.8",
+    recommendedSoil: "Clay Loam & Black Soil",
+    criticalStages: "Pre-Flowering (45d), Pod Development (75d)",
+    majorPests: "Gram Pod Borer (Helicoverpa), Fusarium Wilt, Root Rot",
     seedTreatment: "Seed treatment with Trichoderma 5g/kg + Rhizobium culture.",
     fertilizers: { ureaKgPerAcre: 10, dapKgPerAcre: 35, mopKgPerAcre: 15 },
     desc: "Important Rabi pulse crop thriving on residual soil moisture in light loam soils.",
-    tips: "Nipping / topping apical tips at 35-40 days encourages lateral branching and pod production."
+    tips: "Nipping / topping apical tips at 35-40 days encourages lateral branching and pod production.",
+    harvestAdvice: "Harvest when leaves turn yellow and dry pods rattle."
   },
   {
     id: "barley",
@@ -446,10 +537,17 @@ export const CROPS = [
     waterReqMm: 300,
     avgYieldQuintalsPerAcre: 18,
     mandiPricePerQuintal: 1735,
+    cropCycleDays: "100 – 115 Days",
+    sowingMonths: "Nov 1 – Nov 30",
+    idealSoilPh: "6.5 – 8.2 (Saline Tolerant)",
+    recommendedSoil: "Sandy Loam & Saline/Alkaline Soil",
+    criticalStages: "Tillering (30d), Flowering (60d)",
+    majorPests: "Covered Smut, Barley Yellow Dwarf Virus, Rust",
     seedTreatment: "Treat with Carboxin 2g/kg seed against Covered Smut.",
     fertilizers: { ureaKgPerAcre: 35, dapKgPerAcre: 25, mopKgPerAcre: 15 },
     desc: "Hardy cereal resilient to saline soils and low rainfall environments.",
-    tips: "Requires 2-3 irrigations; avoid excess nitrogen application to prevent crop lodging."
+    tips: "Requires 2-3 irrigations; avoid excess nitrogen application to prevent crop lodging.",
+    harvestAdvice: "Harvest when straw turns light yellow and grain is hard."
   },
   {
     id: "potato",
@@ -468,10 +566,17 @@ export const CROPS = [
     waterReqMm: 500,
     avgYieldQuintalsPerAcre: 120,
     mandiPricePerQuintal: 1450,
+    cropCycleDays: "100 – 115 Days",
+    sowingMonths: "Oct 15 – Nov 15 (Rabi)",
+    idealSoilPh: "5.2 – 6.5 (Slightly Acidic)",
+    recommendedSoil: "Loose Well-Aerated Sandy Loam",
+    criticalStages: "Sprouting (15d), Tuber Initiation (30d), Tuber Bulking (60d)",
+    majorPests: "Late Blight (Phytophthora), Early Blight, Potato Tuber Moth, Aphids",
     seedTreatment: "Dip seed tubers in Mancozeb (3g/L water) for 10 min to prevent Late Blight.",
     fertilizers: { ureaKgPerAcre: 60, dapKgPerAcre: 50, mopKgPerAcre: 40 },
     desc: "High yielding cash vegetable tuber crop requiring loose aerated loamy soil.",
-    tips: "Perform earthing up at 30 days post planting to cover developing tubers from sunlight and greening."
+    tips: "Perform earthing up at 30 days post planting to cover developing tubers from sunlight and greening.",
+    harvestAdvice: "Dehaulm (cut top foliage) 10-12 days before digging for skin curing."
   },
   {
     id: "onion",
@@ -490,10 +595,17 @@ export const CROPS = [
     waterReqMm: 550,
     avgYieldQuintalsPerAcre: 100,
     mandiPricePerQuintal: 2100,
+    cropCycleDays: "120 – 140 Days",
+    sowingMonths: "Dec 1 – Dec 30 (Transplanting)",
+    idealSoilPh: "6.0 – 7.2",
+    recommendedSoil: "Friable Sandy Loam & Alluvial Soil",
+    criticalStages: "Transplanting Establishment, Bulb Initiation (45d), Bulb Development (75d)",
+    majorPests: "Onion Thrips, Purple Blotch, Stemphylium Blight",
     seedTreatment: "Treat seedlings with Carbendazim root dip before field transplanting.",
     fertilizers: { ureaKgPerAcre: 45, dapKgPerAcre: 35, mopKgPerAcre: 30 },
     desc: "Essential culinary bulb crop needing balanced NPK and sulphur fertility.",
-    tips: "Stop irrigation 15 days prior to harvest to allow proper bulb neck drying and long storage life."
+    tips: "Stop irrigation 15 days prior to harvest to allow proper bulb neck drying and long storage life.",
+    harvestAdvice: "Harvest when 50% tops fall naturally (neck fall stage)."
   },
   {
     id: "garlic",
@@ -512,10 +624,17 @@ export const CROPS = [
     waterReqMm: 400,
     avgYieldQuintalsPerAcre: 45,
     mandiPricePerQuintal: 8500,
+    cropCycleDays: "130 – 150 Days",
+    sowingMonths: "Oct 1 – Nov 10",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Rich Sandy Loam with High Organic Humus",
+    criticalStages: "Clove Germination, Vegetative Bulbing, Clove Expansion",
+    majorPests: "Garlic Thrips, Purple Blotch, Basal Rot",
     seedTreatment: "Treat cloves with Thiram 3g/kg seed clove prior to planting.",
     fertilizers: { ureaKgPerAcre: 40, dapKgPerAcre: 30, mopKgPerAcre: 25 },
     desc: "High value condiment bulb crop rich in medicinal essential oils.",
-    tips: "Requires weed-free loose soil and light frequent irrigations until bulb maturity."
+    tips: "Requires weed-free loose soil and light frequent irrigations until bulb maturity.",
+    harvestAdvice: "Pull bulbs when leaves dry and turn yellow-brown."
   },
   {
     id: "lentil",
@@ -534,10 +653,17 @@ export const CROPS = [
     waterReqMm: 220,
     avgYieldQuintalsPerAcre: 7,
     mandiPricePerQuintal: 6700,
+    cropCycleDays: "110 – 125 Days",
+    sowingMonths: "Oct 20 – Nov 15",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Loamy & Alluvial Soil",
+    criticalStages: "Flowering Stage, Pod Development",
+    majorPests: "Lentil Rust, Stemphylium Blight, Aphids",
     seedTreatment: "Rhizobium leguminosarum inoculation + Trichoderma viride.",
     fertilizers: { ureaKgPerAcre: 10, dapKgPerAcre: 30, mopKgPerAcre: 10 },
     desc: "Protein rich winter pulse with low water requirement and high nitrogen fixing ability.",
-    tips: "Give 1 irrigation at flowering stage if winter rains do not occur."
+    tips: "Give 1 irrigation at flowering stage if winter rains do not occur.",
+    harvestAdvice: "Harvest when plants turn brown and lower pods dry."
   },
 
   // ─── ZAID CROPS (Summer) ───
@@ -558,10 +684,17 @@ export const CROPS = [
     waterReqMm: 400,
     avgYieldQuintalsPerAcre: 150,
     mandiPricePerQuintal: 1200,
+    cropCycleDays: "80 – 95 Days",
+    sowingMonths: "Feb 15 – March 20",
+    idealSoilPh: "6.0 – 7.2",
+    recommendedSoil: "Sandy Riverbed Soil & Light Loam",
+    criticalStages: "Vining (25d), Flowering & Fruit Set (45d), Fruit Expansion (65d)",
+    majorPests: "Fruit Fly, Powdery Mildew, Downy Mildew",
     seedTreatment: "Soak seeds in warm water with Carbendazim 2g/L for 6 hours.",
     fertilizers: { ureaKgPerAcre: 40, dapKgPerAcre: 30, mopKgPerAcre: 30 },
     desc: "Refreshing summer melon crop requiring warm climate and sandy riverbed soils.",
-    tips: "Use silver-black mulching paper and drip fertigation for high fruit sweetness (Brix > 11)."
+    tips: "Use silver-black mulching paper and drip fertigation for high fruit sweetness (Brix > 11).",
+    harvestAdvice: "Harvest when tendril near fruit stalk dries and fruit bottom turns dull yellow."
   },
   {
     id: "muskmelon",
@@ -580,10 +713,17 @@ export const CROPS = [
     waterReqMm: 350,
     avgYieldQuintalsPerAcre: 90,
     mandiPricePerQuintal: 1800,
+    cropCycleDays: "75 – 90 Days",
+    sowingMonths: "Feb 20 – March 25",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Sandy Loam & Alluvial Soil",
+    criticalStages: "Vining, Flowering, Fruit Netting",
+    majorPests: "Fruit Fly, Aphids, Fusarium Wilt",
     seedTreatment: "Treat seeds with Thiram 3g/kg seed before sowing.",
     fertilizers: { ureaKgPerAcre: 35, dapKgPerAcre: 25, mopKgPerAcre: 25 },
     desc: "Aromatic summer melon thriving in dry warm conditions with low humidity.",
-    tips: "Avoid over-irrigation near harvest to prevent fruit cracking and sugar dilution."
+    tips: "Avoid over-irrigation near harvest to prevent fruit cracking and sugar dilution.",
+    harvestAdvice: "Harvest at full slip stage when fruit detaches easily from vine."
   },
   {
     id: "cucumber",
@@ -602,10 +742,17 @@ export const CROPS = [
     waterReqMm: 350,
     avgYieldQuintalsPerAcre: 80,
     mandiPricePerQuintal: 1500,
+    cropCycleDays: "50 – 65 Days",
+    sowingMonths: "Feb 15 – April 10",
+    idealSoilPh: "5.8 – 7.0",
+    recommendedSoil: "Rich Loamy & Silt Soil",
+    criticalStages: "Vining, Flowering, Continuous Fruit Harvesting",
+    majorPests: "Red Pumpkin Beetle, Downy Mildew, Fruit Fly",
     seedTreatment: "Treat seeds with Trichoderma harzianum 4g/kg seed.",
     fertilizers: { ureaKgPerAcre: 30, dapKgPerAcre: 25, mopKgPerAcre: 20 },
     desc: "Fast 45-day commercial summer salad crop yielding multiple pickings.",
-    tips: "Trellising or net vertical farming improves fruit length, color, and market value."
+    tips: "Trellising or net vertical farming improves fruit length, color, and market value.",
+    harvestAdvice: "Harvest tender green fruits every 2 days."
   },
   {
     id: "okra",
@@ -624,10 +771,17 @@ export const CROPS = [
     waterReqMm: 400,
     avgYieldQuintalsPerAcre: 55,
     mandiPricePerQuintal: 2400,
+    cropCycleDays: "70 – 90 Days",
+    sowingMonths: "Feb 15 – March 30",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Sandy Loam & Clay Loam",
+    criticalStages: "Germination, Flowering, Continuous Pod Pickings",
+    majorPests: "Yellow Vein Mosaic Virus (YVMV), Shoot & Fruit Borer, Whitefly",
     seedTreatment: "Soak seeds in Imidacloprid solution (3g/kg) to repel early jassids.",
     fertilizers: { ureaKgPerAcre: 40, dapKgPerAcre: 30, mopKgPerAcre: 20 },
     desc: "Popular summer vegetable crop providing continuous fruit pickings every 2 days.",
-    tips: "Spray Neem oil (10,000 ppm) weekly to manage Whitefly and Yellow Vein Mosaic Virus."
+    tips: "Spray Neem oil (10,000 ppm) weekly to manage Whitefly and Yellow Vein Mosaic Virus.",
+    harvestAdvice: "Harvest tender 3-4 inch pods every alternate day."
   },
 
   // ─── PERENNIAL / ALL-SEASON CROPS ───
@@ -648,10 +802,17 @@ export const CROPS = [
     waterReqMm: 1500,
     avgYieldQuintalsPerAcre: 350,
     mandiPricePerQuintal: 355,
+    cropCycleDays: "300 – 360 Days",
+    sowingMonths: "Oct–Nov & Feb–March",
+    idealSoilPh: "6.5 – 8.0",
+    recommendedSoil: "Deep Alluvial, Heavy Clay & Black Soil",
+    criticalStages: "Germination (30d), Formative Stage (60-120d), Grand Growth (120-250d)",
+    majorPests: "Early Shoot Borer, Top Borer, Red Rot, Pyrilla",
     seedTreatment: "Hot water treatment (52°C for 30 min) or Carbendazim dip for setts.",
     fertilizers: { ureaKgPerAcre: 120, dapKgPerAcre: 60, mopKgPerAcre: 40 },
     desc: "High biomass perennial cash crop feeding sugar mills and bio-ethanol plants.",
-    tips: "Earthing up at 120 days prevents stalk lodging. Irrigate every 8-10 days in peak summer."
+    tips: "Earthing up at 120 days prevents stalk lodging. Irrigate every 8-10 days in peak summer.",
+    harvestAdvice: "Harvest when Brix juice reading exceeds 18%."
   },
   {
     id: "tomato",
@@ -670,10 +831,17 @@ export const CROPS = [
     waterReqMm: 600,
     avgYieldQuintalsPerAcre: 180,
     mandiPricePerQuintal: 2200,
+    cropCycleDays: "110 – 140 Days",
+    sowingMonths: "June–July & Oct–Nov",
+    idealSoilPh: "6.0 – 7.2 (Neutral)",
+    recommendedSoil: "Well-Drained Loamy & Red Soil",
+    criticalStages: "Transplanting Establishment, Flowering (40d), Fruit Setting (60d), Harvesting",
+    majorPests: "Fruit Borer (Helicoverpa), Early Blight, Whitefly, Leaf Curl Virus",
     seedTreatment: "Seed treatment with Imidacloprid + Thiram 3g/kg seed.",
     fertilizers: { ureaKgPerAcre: 50, dapKgPerAcre: 40, mopKgPerAcre: 35 },
     desc: "High-value horticulture vegetable grown in open fields and shade nets.",
-    tips: "Staking plants with bamboo poles prevents ground fruit rot and increases marketable fruit grade."
+    tips: "Staking plants with bamboo poles prevents ground fruit rot and increases marketable fruit grade.",
+    harvestAdvice: "Pick at breaker/pink stage for transport or red ripe for local market."
   },
   {
     id: "chilli",
@@ -692,10 +860,17 @@ export const CROPS = [
     waterReqMm: 500,
     avgYieldQuintalsPerAcre: 40,
     mandiPricePerQuintal: 8000,
+    cropCycleDays: "140 – 170 Days",
+    sowingMonths: "June–July & Jan–Feb",
+    idealSoilPh: "6.0 – 7.5",
+    recommendedSoil: "Loamy & Black Cotton Soil",
+    criticalStages: "Flowering, Fruit Set, Pod Expansion",
+    majorPests: "Chilli Thrips, Mites, Leaf Curl Virus, Dieback / Anthracnose",
     seedTreatment: "Treat seeds with Pseudomonas fluorescens 10g/kg seed.",
     fertilizers: { ureaKgPerAcre: 45, dapKgPerAcre: 35, mopKgPerAcre: 30 },
     desc: "Pungent spice and vegetable crop with high market demand for dry & green pods.",
-    tips: "Spray Fipronil or Spinosad to control Thrips and prevent Leaf Curl Virus."
+    tips: "Spray Fipronil or Spinosad to control Thrips and prevent Leaf Curl Virus.",
+    harvestAdvice: "Pick green chillies every week or dry red pods on tarpaulins."
   },
   {
     id: "banana",
@@ -714,10 +889,17 @@ export const CROPS = [
     waterReqMm: 1800,
     avgYieldQuintalsPerAcre: 300,
     mandiPricePerQuintal: 1600,
+    cropCycleDays: "330 – 360 Days",
+    sowingMonths: "June – August",
+    idealSoilPh: "6.5 – 7.5",
+    recommendedSoil: "Deep Alluvial & Clay Loam Soil",
+    criticalStages: "Vegetative Growth (1-6mo), Shooting / Bunch Emergence (8mo), Bunch Filling",
+    majorPests: "Sigatoka Leaf Spot, Panama Wilt, Rhizome Weevil",
     seedTreatment: "Dip tissue culture plantlet roots in Carbendazim 2g/L water.",
     fertilizers: { ureaKgPerAcre: 150, dapKgPerAcre: 80, mopKgPerAcre: 120 },
     desc: "Perennial fruit plantation crop responding exceptionally to drip irrigation.",
-    tips: "Tissue culture Grand Naine plantlets with drip fertigation and bunch covers yield 30 kg/bunch."
+    tips: "Tissue culture Grand Naine plantlets with drip fertigation and bunch covers yield 30 kg/bunch.",
+    harvestAdvice: "Harvest when top fingers turn light green and ridges disappear."
   },
   {
     id: "mango",
@@ -736,10 +918,17 @@ export const CROPS = [
     waterReqMm: 800,
     avgYieldQuintalsPerAcre: 60,
     mandiPricePerQuintal: 4500,
+    cropCycleDays: "Perennial Orchard",
+    sowingMonths: "July – Sept (Planting)",
+    idealSoilPh: "5.5 – 7.5",
+    recommendedSoil: "Deep Alluvial & Loamy Soil",
+    criticalStages: "Flowering (Jan–Feb), Fruit Set, Fruit Enlargement (March–May)",
+    majorPests: "Mango Hopper, Powdery Mildew, Fruit Fly, Anthracnose",
     seedTreatment: "Grafted saplings treated with Trichoderma root soil application.",
     fertilizers: { ureaKgPerAcre: 60, dapKgPerAcre: 50, mopKgPerAcre: 50 },
     desc: "King of fruits perennial orchard crop thriving in tropical warm climates.",
-    tips: "Prune dead branches after harvest. Apply Paclobutrazol in October for regular annual flowering."
+    tips: "Prune dead branches after harvest. Apply Paclobutrazol in October for regular annual flowering.",
+    harvestAdvice: "Harvest mature fruits with pedicel when fruit shoulder turns full."
   }
 ];
 

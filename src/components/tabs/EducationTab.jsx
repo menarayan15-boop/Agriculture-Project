@@ -15,7 +15,7 @@ export function EducationTab() {
   const handleSpeakProfile = () => {
     const cropName = selectedCrop.name || getText(selectedCrop.nameKey, lang);
     const desc = selectedCrop.desc || getText(selectedCrop.descKey, lang);
-    const speechText = `${cropName}. ${desc}. Recommended water demand is ${selectedCrop.waterReqMm || 500} millimeters. Expected yield is ${selectedCrop.avgYieldQuintalsPerAcre || 20} quintals per acre. Soil recommendations: ${selectedSoil.name}. ${selectedSoil.desc}`;
+    const speechText = `${cropName}. ${desc}. Duration: ${selectedCrop.cropCycleDays || '110 days'}. Water demand is ${selectedCrop.waterReqMm || 500} mm. Yield is ${selectedCrop.avgYieldQuintalsPerAcre || 20} quintals per acre. Soil recommendations: ${selectedSoil.name}. ${selectedSoil.desc}`;
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const ut = new SpeechSynthesisUtterance(speechText);
@@ -87,7 +87,7 @@ export function EducationTab() {
               Agri Guide: Comprehensive Plant &amp; Soil Profiles
             </h2>
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '4px 0 0 0' }}>
-              Select any crop or soil type below to inspect complete agronomic parameters, soil composition, fertilizer schedules, and field management.
+              Select any crop or soil type below to inspect complete 360° agronomic parameters, growth stages, pest defenses, and soil health advice.
             </p>
           </div>
           <button type="button" className="edu-tts-btn" onClick={handleSpeakProfile}>
@@ -254,6 +254,25 @@ export function EducationTab() {
               {selectedCrop.desc || getText(selectedCrop.descKey, lang)}
             </p>
 
+            {/* Growth & Duration Highlights */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '1.2rem' }}>
+              {selectedCrop.cropCycleDays && (
+                <span style={{ fontSize: '0.78rem', background: 'rgba(250, 204, 21, 0.15)', color: '#facc15', border: '1px solid rgba(250, 204, 21, 0.3)', padding: '4px 10px', borderRadius: '12px', fontWeight: 700 }}>
+                  Duration: {selectedCrop.cropCycleDays}
+                </span>
+              )}
+              {selectedCrop.sowingMonths && (
+                <span style={{ fontSize: '0.78rem', background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '4px 10px', borderRadius: '12px', fontWeight: 700 }}>
+                  Sowing Window: {selectedCrop.sowingMonths}
+                </span>
+              )}
+              {selectedCrop.idealSoilPh && (
+                <span style={{ fontSize: '0.78rem', background: 'rgba(168, 85, 247, 0.15)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.3)', padding: '4px 10px', borderRadius: '12px', fontWeight: 700 }}>
+                  Soil pH: {selectedCrop.idealSoilPh}
+                </span>
+              )}
+            </div>
+
             {/* Key Growth Metrics Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(135px, 1fr))', gap: '10px', marginBottom: '1.2rem' }}>
               <div style={{ background: 'rgba(255,255,255,0.04)', padding: '10px 12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
@@ -273,6 +292,30 @@ export function EducationTab() {
                 <strong style={{ color: 'var(--primary-light)', fontSize: '0.95rem' }}>₹{(selectedCrop.mandiPricePerQuintal || 2200).toLocaleString('en-IN')}/Qtl</strong>
               </div>
             </div>
+
+            {/* Recommended Soil Texture */}
+            {selectedCrop.recommendedSoil && (
+              <div style={{ background: 'rgba(255,255,255,0.04)', padding: '10px 12px', borderRadius: '10px', border: '1px solid var(--border-color)', marginBottom: '12px', fontSize: '0.84rem' }}>
+                <span style={{ color: '#94a3b8', fontWeight: 700 }}>Recommended Soil Texture: </span>
+                <span style={{ color: '#fff', fontWeight: 600 }}>{selectedCrop.recommendedSoil}</span>
+              </div>
+            )}
+
+            {/* Critical Growth & Irrigation Stages */}
+            {selectedCrop.criticalStages && (
+              <div style={{ background: 'rgba(56, 189, 248, 0.08)', padding: '12px 14px', borderRadius: '12px', border: '1px solid rgba(56, 189, 248, 0.25)', marginBottom: '12px' }}>
+                <h5 style={{ margin: '0 0 4px 0', color: '#38bdf8', fontSize: '0.88rem', fontWeight: 700 }}>Critical Growth &amp; Irrigation Stages:</h5>
+                <p style={{ margin: 0, fontSize: '0.84rem', color: '#e2e8f0', lineHeight: 1.45 }}>{selectedCrop.criticalStages}</p>
+              </div>
+            )}
+
+            {/* Major Pests & Diseases Defense Plan */}
+            {selectedCrop.majorPests && (
+              <div style={{ background: 'rgba(244, 63, 94, 0.1)', padding: '12px 14px', borderRadius: '12px', border: '1px solid rgba(244, 63, 94, 0.3)', marginBottom: '12px' }}>
+                <h5 style={{ margin: '0 0 4px 0', color: '#fb7185', fontSize: '0.88rem', fontWeight: 700 }}>Major Pests &amp; Diseases:</h5>
+                <p style={{ margin: 0, fontSize: '0.84rem', color: '#ffe4e6', lineHeight: 1.45 }}>{selectedCrop.majorPests}</p>
+              </div>
+            )}
 
             {/* Seed Treatment & Chemical Defense */}
             {selectedCrop.seedTreatment && (
@@ -294,11 +337,19 @@ export function EducationTab() {
               </div>
             )}
 
-            {/* Agronomic Advice */}
-            <div style={{ background: 'rgba(45, 212, 191, 0.08)', padding: '12px 14px', borderRadius: '12px', border: '1px solid rgba(45, 212, 191, 0.25)' }}>
-              <h5 style={{ margin: '0 0 4px 0', color: '#2dd4bf', fontSize: '0.88rem', fontWeight: 700 }}>Agronomic Field &amp; Harvest Advice:</h5>
+            {/* Agronomic Advice & Harvest Strategy */}
+            <div style={{ background: 'rgba(45, 212, 191, 0.08)', padding: '12px 14px', borderRadius: '12px', border: '1px solid rgba(45, 212, 191, 0.25)', marginBottom: selectedCrop.harvestAdvice ? '12px' : 0 }}>
+              <h5 style={{ margin: '0 0 4px 0', color: '#2dd4bf', fontSize: '0.88rem', fontWeight: 700 }}>Agronomic Field Advice:</h5>
               <p style={{ margin: 0, fontSize: '0.84rem', color: '#e2e8f0', fontStyle: 'italic', lineHeight: 1.45 }}>{selectedCrop.tips || getText(selectedCrop.tipsKey, lang)}</p>
             </div>
+
+            {/* Harvest & Storage Strategy */}
+            {selectedCrop.harvestAdvice && (
+              <div style={{ background: 'rgba(250, 204, 21, 0.08)', padding: '12px 14px', borderRadius: '12px', border: '1px solid rgba(250, 204, 21, 0.25)' }}>
+                <h5 style={{ margin: '0 0 4px 0', color: '#facc15', fontSize: '0.88rem', fontWeight: 700 }}>Harvest &amp; Storage Guidelines:</h5>
+                <p style={{ margin: 0, fontSize: '0.84rem', color: '#fef08a', lineHeight: 1.45 }}>{selectedCrop.harvestAdvice}</p>
+              </div>
+            )}
 
           </div>
 
