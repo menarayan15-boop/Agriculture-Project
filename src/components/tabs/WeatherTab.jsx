@@ -317,9 +317,6 @@ export function WeatherTab() {
                       <span style={{ fontWeight: 700, fontSize: '14px', color: '#e2e8f0', minWidth: '100px' }}>
                         {day.tempMin}°C / {day.tempMax}°C
                       </span>
-                      <span style={{ color: '#38bdf8', fontSize: '13px', fontWeight: 700, minWidth: '70px' }}>
-                        <i className="fa-solid fa-droplet" style={{ marginRight: '4px' }}></i>{day.precipProb}%
-                      </span>
                       <span style={{ fontSize: '13px', color: '#cbd5e1', flex: 1, textAlign: 'right' }}>
                         {dayInterpreted.defaultDesc} ({day.precipSum > 0 ? `${day.precipSum.toFixed(1)} mm` : day.snowSum > 0 ? `${day.snowSum.toFixed(1)} cm` : '0 mm'})
                       </span>
