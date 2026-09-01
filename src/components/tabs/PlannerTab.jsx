@@ -17,24 +17,201 @@ const SEASONS = [
     growMonths: [7, 8],
     harvestMonths: [9, 10],
     crops: [
-      { name: 'Rice / Paddy', duration: '90–150 days', water: 'High', soil: 'Clay, Clay-Loam', rotation: 'Wheat (Rabi) → Moong (Zaid)' },
-      { name: 'Maize / Corn', duration: '85–100 days', water: 'Medium', soil: 'Loamy, Sandy-Loam', rotation: 'Mustard (Rabi) → Potato (Rabi)' },
-      { name: 'Cotton', duration: '150–180 days', water: 'Medium', soil: 'Black Cotton Soil', rotation: 'Sunflower (Zaid) → Wheat (Rabi)' },
-      { name: 'Groundnut / Peanut', duration: '90–120 days', water: 'Medium', soil: 'Sandy, Sandy-Loam', rotation: 'Wheat (Rabi) → Groundnut → Soybean' },
-      { name: 'Soybean', duration: '90–110 days', water: 'Medium', soil: 'Loamy, Clay-Loam', rotation: 'Wheat (Rabi) → Soybean → Maize' },
-      { name: 'Sugarcane', duration: '300–365 days', water: 'Very High', soil: 'Deep Loam, Alluvial', rotation: 'Ratoon crop or Pulse crop' },
-      { name: 'Pearl Millet / Bajra', duration: '65–90 days', water: 'Low', soil: 'Sandy, Sandy-Loam', rotation: 'Mustard (Rabi) → Fallow (Zaid)' },
-      { name: 'Sorghum / Jowar', duration: '90–120 days', water: 'Low', soil: 'Medium Black, Loam', rotation: 'Gram (Rabi) → Fallow (Zaid)' },
-      { name: 'Moong / Green Gram', duration: '55–70 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Wheat (Rabi) → Moong → Rice (Kharif)' },
-      { name: 'Urad / Black Gram', duration: '60–75 days', water: 'Low-Medium', soil: 'Loam, Clay-Loam', rotation: 'Wheat (Rabi) → Urad → Wheat' },
-      { name: 'Pigeon Pea / Arhar', duration: '150–200 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Sorghum (Kharif intercrop) → Wheat (Rabi)' },
-      { name: 'Sesame / Til', duration: '70–90 days', water: 'Low', soil: 'Sandy-Loam, Well-Drained', rotation: 'Chickpea (Rabi) → Sesame → Rice' },
-      { name: 'Turmeric', duration: '240–270 days', water: 'High', soil: 'Loam, Clay-Loam, Rich Organic', rotation: 'Perennial / Rotation with Maize or Banana' },
-      { name: 'Ginger', duration: '210–240 days', water: 'High', soil: 'Sandy-Loam, Well-Drained', rotation: 'Rotation every 3–4 years with Cereal crops' },
-      { name: 'Castor', duration: '140–180 days', water: 'Low-Medium', soil: 'Sandy-Loam, Red Soil', rotation: 'Pulse (Rabi) → Castor → Groundnut' },
-      { name: 'Cluster Bean / Guar', duration: '75–90 days', water: 'Low', soil: 'Sandy-Loam, Arid Soil', rotation: 'Barley (Rabi) → Guar → Wheat' },
-      { name: 'Okra / Bhindi', duration: '45–65 days', water: 'Medium', soil: 'Loamy, Sandy-Loam', rotation: 'Potato (Rabi) → Okra → Peas (Rabi)' },
-      { name: 'Chilli / Red Pepper', duration: '120–150 days', water: 'Medium', soil: 'Sandy-Loam, Loam', rotation: 'Onion (Rabi) → Chilli → Wheat' },
+      {
+        name: 'Rice / Paddy (धान)',
+        duration: '120–145 days',
+        water: '1200 mm (High)',
+        soil: 'Clay, Clay-Loam, Alluvial',
+        seedRate: '15–20 kg/acre (Transplanting)',
+        spacing: '20 cm × 15 cm',
+        yieldBenchmark: '24–28 Qtl / Acre',
+        nutrientReq: 'Urea: 50 kg | DAP: 30 kg | MOP: 20 kg | Zinc: 10 kg',
+        irrigationPhases: 'Nursery, Active Tillering, Panicle Initiation, Flowering',
+        rotation: 'Paddy (Kharif) → Wheat (Rabi) → Moong (Zaid)',
+        rotationBenefit: 'Puddling improves clay water holding; follow with Wheat and legume Moong for nitrogen recharge.',
+        pestAlert: 'Yellow Stem Borer, Leaf Folder — Soak seed in Carbendazim + Streptocycline.',
+        harvestIndicator: '80-85% panicles turn golden straw yellow.'
+      },
+      {
+        name: 'Maize / Corn (मक्का)',
+        duration: '90–110 days',
+        water: '550 mm (Medium)',
+        soil: 'Loamy, Sandy-Loam, Alluvial',
+        seedRate: '8–10 kg/acre',
+        spacing: '60 cm × 20 cm',
+        yieldBenchmark: '20–25 Qtl / Acre',
+        nutrientReq: 'Urea: 45 kg | DAP: 35 kg | MOP: 15 kg',
+        irrigationPhases: 'Knee-High Stage (25d), Tasseling / Silking (50d), Grain Filling (75d)',
+        rotation: 'Maize (Kharif) → Mustard (Rabi) → Potato / Vegetables',
+        rotationBenefit: 'Deep rooting loosens soil; excellent fit before winter oilseed Mustard.',
+        pestAlert: 'Fall Armyworm (FAW) — Coat seed with Cyantraniliprole 600 FS.',
+        harvestIndicator: 'Husk leaves dry and black layer forms at grain base.'
+      },
+      {
+        name: 'Cotton (कपास)',
+        duration: '150–180 days',
+        water: '750 mm (Medium-High)',
+        soil: 'Deep Black Cotton, Clay Loam',
+        seedRate: '1.5–2 kg/acre (Bt Cotton)',
+        spacing: '90 cm × 60 cm',
+        yieldBenchmark: '10–14 Qtl / Acre',
+        nutrientReq: 'Urea: 40 kg | DAP: 30 kg | MOP: 25 kg',
+        irrigationPhases: 'Square Formation (45d), Flowering (70d), Boll Development (100d)',
+        rotation: 'Cotton (Kharif) → Wheat / Sunflower (Rabi) → Legume Fallow',
+        rotationBenefit: 'Long taproot accesses subsoil nutrients; rotating with legumes controls soil-borne nematodes.',
+        pestAlert: 'Pink Bollworm, Whitefly — Use pheromone traps & Carboxin seed treatment.',
+        harvestIndicator: 'Bolls open cleanly with white fluffy lint.'
+      },
+      {
+        name: 'Groundnut / Peanut (मूंगफली)',
+        duration: '105–120 days',
+        water: '450 mm (Medium)',
+        soil: 'Light Sandy Loam, Red Soil',
+        seedRate: '45–50 kg/acre (Kernel)',
+        spacing: '30 cm × 10 cm',
+        yieldBenchmark: '11–14 Qtl / Acre',
+        nutrientReq: 'Urea: 15 kg | DAP: 30 kg | MOP: 20 kg | Gypsum: 100 kg',
+        irrigationPhases: 'Flowering (30d), Pegging (45d), Pod Filling (70d)',
+        rotation: 'Groundnut (Kharif) → Wheat (Rabi) → Fallow / Sesame',
+        rotationBenefit: 'Fixes 40-60 kg N/ha; leaf litter adds organic matter to light soils.',
+        pestAlert: 'Tikka Leaf Spot, White Grub — Treat pods with Mancozeb 3g/kg.',
+        harvestIndicator: 'Pod inner wall turns dark brown upon shelling.'
+      },
+      {
+        name: 'Soybean (सोयाबीन)',
+        duration: '95–110 days',
+        water: '500 mm (Medium)',
+        soil: 'Black Cotton, Clay Loam',
+        seedRate: '25–30 kg/acre',
+        spacing: '45 cm × 5 cm',
+        yieldBenchmark: '9–12 Qtl / Acre',
+        nutrientReq: 'Urea: 15 kg | DAP: 40 kg | MOP: 20 kg | Sulphur: 10 kg',
+        irrigationPhases: 'Flowering (35d), Pod Formation (55d), Seed Filling (75d)',
+        rotation: 'Soybean (Kharif) → Wheat (Rabi) → Moong / Maize',
+        rotationBenefit: 'Adds 80-120 kg N/ha into soil; leaves enrich topsoil for subsequent Wheat crop.',
+        pestAlert: 'Girdle Beetle, Yellow Mosaic Virus — Inoculate with Rhizobium japonicum.',
+        harvestIndicator: '95% leaves shed and pods rattle when shaken.'
+      },
+      {
+        name: 'Sugarcane (गन्ना)',
+        duration: '300–360 days',
+        water: '1500 mm (Very High)',
+        soil: 'Deep Alluvial, Heavy Clay, Black Soil',
+        seedRate: '35,000–40,000 Setts/acre',
+        spacing: '90 cm × 30 cm',
+        yieldBenchmark: '320–380 Qtl / Acre',
+        nutrientReq: 'Urea: 120 kg | DAP: 60 kg | MOP: 40 kg',
+        irrigationPhases: 'Germination (30d), Formative Stage (60-120d), Grand Growth (120-250d)',
+        rotation: 'Sugarcane (Autumn) → Ratoon Crop → Legume / Pulse Crop',
+        rotationBenefit: 'Massive bio-mass generation; ratoon cropping saves land prep cost.',
+        pestAlert: 'Early Shoot Borer, Red Rot — Dip setts in Carbendazim or hot water (52°C).',
+        harvestIndicator: 'Hand refractometer Brix juice reading exceeds 18%.'
+      },
+      {
+        name: 'Pearl Millet / Bajra (बाजरा)',
+        duration: '80–95 days',
+        water: '350 mm (Low)',
+        soil: 'Sandy Loam, Light Arid Soil',
+        seedRate: '1.5–2 kg/acre',
+        spacing: '45 cm × 12 cm',
+        yieldBenchmark: '12–16 Qtl / Acre',
+        nutrientReq: 'Urea: 30 kg | DAP: 20 kg | MOP: 10 kg',
+        irrigationPhases: 'Tillering (20d), Flowering (45d), Grain Formation',
+        rotation: 'Bajra (Kharif) → Mustard (Rabi) → Fallow / Moong',
+        rotationBenefit: 'Extremely drought hardy; ideal break crop for dryland soils.',
+        pestAlert: 'Downy Mildew, Ergot — Treat seed with Metalaxyl 35 SD 6g/kg.',
+        harvestIndicator: 'Earheads turn greyish-brown and grain hardens.'
+      },
+      {
+        name: 'Sorghum / Jowar (ज्वार)',
+        duration: '100–115 days',
+        water: '400 mm (Low)',
+        soil: 'Medium Black, Loamy Soil',
+        seedRate: '3–4 kg/acre',
+        spacing: '45 cm × 15 cm',
+        yieldBenchmark: '13–17 Qtl / Acre',
+        nutrientReq: 'Urea: 35 kg | DAP: 25 kg | MOP: 10 kg',
+        irrigationPhases: 'Flag Leaf Stage (35d), Booting & Grain Filling',
+        rotation: 'Jowar (Kharif) → Gram / Chickpea (Rabi) → Fallow',
+        rotationBenefit: 'Provides rich cattle green fodder and grain while conserving subsoil water.',
+        pestAlert: 'Shoot Fly, Stem Borer — Seed treatment with Imidacloprid 70 WS.',
+        harvestIndicator: 'Grains turn hard and panicle stalk dries completely.'
+      },
+      {
+        name: 'Moong / Green Gram (मूंग)',
+        duration: '60–70 days',
+        water: '300 mm (Low)',
+        soil: 'Sandy Loam, Alluvial Soil',
+        seedRate: '8–10 kg/acre',
+        spacing: '30 cm × 10 cm',
+        yieldBenchmark: '5–7 Qtl / Acre',
+        nutrientReq: 'Urea: 10 kg | DAP: 30 kg | MOP: 10 kg',
+        irrigationPhases: 'Flowering (30d), Pod Formation (45d)',
+        rotation: 'Moong (Kharif) → Wheat (Rabi) → Paddy (Kharif)',
+        rotationBenefit: 'Fast 60-day crop; adds 30-40 kg N/ha and improves soil structure.',
+        pestAlert: 'Whitefly, Yellow Mosaic Virus — Spray Neem oil 10,000 ppm.',
+        harvestIndicator: 'Pods turn dark brown/black.'
+      },
+      {
+        name: 'Urad / Black Gram (उड़द)',
+        duration: '70–85 days',
+        water: '320 mm (Low-Medium)',
+        soil: 'Loam, Clay Loam',
+        seedRate: '8–10 kg/acre',
+        spacing: '30 cm × 10 cm',
+        yieldBenchmark: '5–7 Qtl / Acre',
+        nutrientReq: 'Urea: 10 kg | DAP: 30 kg | MOP: 10 kg',
+        irrigationPhases: 'Flowering, Pod Development',
+        rotation: 'Urad (Kharif) → Wheat (Rabi) → Urad / Vegetables',
+        rotationBenefit: 'Enriches soil organic nitrogen and suppresses weed growth.',
+        pestAlert: 'Hairy Caterpillar, YMV — Treat seeds with Captan 2.5g/kg.',
+        harvestIndicator: 'Pods dry and turn dark black.'
+      },
+      {
+        name: 'Pigeon Pea / Tur (अरहर)',
+        duration: '150–180 days',
+        water: '400 mm (Low)',
+        soil: 'Deep Well-Drained Loam',
+        seedRate: '5–6 kg/acre',
+        spacing: '60 cm × 20 cm',
+        yieldBenchmark: '7–10 Qtl / Acre',
+        nutrientReq: 'Urea: 10 kg | DAP: 40 kg | MOP: 15 kg',
+        irrigationPhases: 'Flower Bud Initiation, Pod Formation',
+        rotation: 'Tur + Sorghum (Intercrop) → Wheat / Fallow (Rabi)',
+        rotationBenefit: 'Deep taproot breaks hard soil pans and fixes 100 kg N/ha.',
+        pestAlert: 'Pod Borer (Helicoverpa), Fusarium Wilt — Inoculate Trichoderma viride.',
+        harvestIndicator: '80% pods dry and turn yellow-brown.'
+      },
+      {
+        name: 'Okra / Bhindi (भिंडी)',
+        duration: '70–90 days',
+        water: '400 mm (Medium)',
+        soil: 'Loamy, Sandy Loam',
+        seedRate: '3.5–4 kg/acre',
+        spacing: '45 cm × 30 cm',
+        yieldBenchmark: '50–65 Qtl / Acre',
+        nutrientReq: 'Urea: 40 kg | DAP: 30 kg | MOP: 20 kg',
+        irrigationPhases: 'Germination, Flowering, Continuous Picking',
+        rotation: 'Okra (Kharif) → Potato / Peas (Rabi) → Watermelon (Zaid)',
+        rotationBenefit: 'High value commercial vegetable providing quick cash flow.',
+        pestAlert: 'Yellow Vein Mosaic Virus, Jassids — Soak seed in Imidacloprid.',
+        harvestIndicator: 'Harvest tender 3-4 inch pods every alternate day.'
+      },
+      {
+        name: 'Chilli / Red Pepper (मिर्च)',
+        duration: '140–170 days',
+        water: '500 mm (Medium)',
+        soil: 'Sandy Loam, Black Cotton',
+        seedRate: '200–250 g/acre (Nursery)',
+        spacing: '60 cm × 45 cm',
+        yieldBenchmark: '35–45 Qtl / Acre',
+        nutrientReq: 'Urea: 45 kg | DAP: 35 kg | MOP: 30 kg',
+        irrigationPhases: 'Transplanting, Flowering, Fruit Setting',
+        rotation: 'Chilli (Kharif) → Onion (Rabi) → Wheat (Rabi)',
+        rotationBenefit: 'High cash returns per acre; breaks monoculture grain pest cycles.',
+        pestAlert: 'Chilli Thrips, Mites, Anthracnose — Dip roots in Pseudomonas.',
+        harvestIndicator: 'Pick green chillies weekly or mature red pods for drying.'
+      }
     ]
   },
   {
@@ -50,22 +227,126 @@ const SEASONS = [
     growMonths: [11, 0],
     harvestMonths: [1, 2, 3],
     crops: [
-      { name: 'Wheat', duration: '100–130 days', water: 'Medium', soil: 'Loamy, Clay-Loam', rotation: 'Rice (Kharif) → Wheat → Moong (Zaid)' },
-      { name: 'Mustard / Rapeseed', duration: '90–110 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Pearl Millet (Kharif) → Mustard → Fallow' },
-      { name: 'Gram / Chickpea', duration: '90–120 days', water: 'Low', soil: 'Sandy-Loam, Red Soil', rotation: 'Rice (Kharif) → Chickpea → Sesame' },
-      { name: 'Barley', duration: '85–100 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Cluster Bean (Kharif) → Barley → Fallow' },
-      { name: 'Peas / Field Peas', duration: '70–90 days', water: 'Low-Medium', soil: 'Loam, Sandy-Loam', rotation: 'Maize (Kharif) → Peas → Toria' },
-      { name: 'Potato', duration: '70–90 days', water: 'Medium', soil: 'Sandy-Loam, Loam', rotation: 'Paddy (Kharif) → Potato → Sunflower (Zaid)' },
-      { name: 'Lentil / Masoor Dal', duration: '90–110 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Sorghum (Kharif) → Lentil → Sesame (Zaid)' },
-      { name: 'Sunflower (Rabi)', duration: '90–110 days', water: 'Low-Medium', soil: 'Any Well-Drained', rotation: 'Soybean (Kharif) → Sunflower → Mung Bean' },
-      { name: 'Coriander / Dhania', duration: '60–90 days', water: 'Low-Medium', soil: 'Sandy-Loam, Loam', rotation: 'Sorghum (Kharif) → Coriander → Moong' },
-      { name: 'Fenugreek / Methi', duration: '100–130 days', water: 'Low', soil: 'Sandy-Loam, Clay-Loam', rotation: 'Cotton (Kharif) → Methi → Okra' },
-      { name: 'Onion (Rabi)', duration: '120–150 days', water: 'Medium', soil: 'Sandy-Loam, Loam', rotation: 'Rice (Kharif) → Onion → Watermelon (Zaid)' },
-      { name: 'Garlic', duration: '120–150 days', water: 'Medium', soil: 'Sandy-Loam, Well-Drained', rotation: 'Soybean (Kharif) → Garlic → Cucumber (Zaid)' },
-      { name: 'Cauliflower / Cabbage', duration: '60–90 days', water: 'Medium', soil: 'Loamy, Clay-Loam, Fertile', rotation: 'Maize (Kharif) → Cauliflower → Moong (Zaid)' },
-      { name: 'Safflower', duration: '130–160 days', water: 'Very Low', soil: 'Deep Black, Clay-Loam', rotation: 'Sorghum (Kharif) → Safflower → Groundnut' },
-      { name: 'Linseed / Flaxseed', duration: '110–130 days', water: 'Low', soil: 'Loam, Clay-Loam', rotation: 'Sorghum (Kharif) → Linseed → Moong (Zaid)' },
-      { name: 'Toria / Rapeseed', duration: '70–85 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Early Kharif → Toria → Wheat (Late Rabi)' },
+      {
+        name: 'Wheat (गेहूं)',
+        duration: '110–125 days',
+        water: '450 mm (Medium)',
+        soil: 'Well-Drained Alluvial, Clay Loam',
+        seedRate: '40–45 kg/acre',
+        spacing: '22.5 cm Row Spacing',
+        yieldBenchmark: '20–25 Qtl / Acre',
+        nutrientReq: 'Urea: 55 kg | DAP: 40 kg | MOP: 20 kg',
+        irrigationPhases: 'CRI Stage (21d), Tillering (42d), Flowering (70d), Milk Stage (90d)',
+        rotation: 'Paddy (Kharif) → Wheat (Rabi) → Moong (Zaid)',
+        rotationBenefit: 'Staple winter cereal responding heavily to first CRI irrigation.',
+        pestAlert: 'Loose Smut, Rust, Aphids — Treat seed with Tebuconazole 1.5g/kg.',
+        harvestIndicator: 'Crop turns golden yellow and grain moisture drops below 14%.'
+      },
+      {
+        name: 'Mustard / Sarson (सरसों)',
+        duration: '105–120 days',
+        water: '300 mm (Low)',
+        soil: 'Loamy, Sandy Loam',
+        seedRate: '1.5–2 kg/acre',
+        spacing: '30 cm × 10 cm',
+        yieldBenchmark: '8–11 Qtl / Acre',
+        nutrientReq: 'Urea: 35 kg | DAP: 25 kg | MOP: 15 kg | Sulphur: 10 kg',
+        irrigationPhases: 'Rosette Stage (25d), Flowering (45d), Pod Filling (70d)',
+        rotation: 'Bajra (Kharif) → Mustard (Rabi) → Fallow / Moong',
+        rotationBenefit: 'Low water consumption; Sulphur application boosts seed oil by 3-5%.',
+        pestAlert: 'Mustard Aphids, White Rust — Spray Dimethoate or Metalaxyl.',
+        harvestIndicator: '75% pods turn yellow to avoid seed shattering.'
+      },
+      {
+        name: 'Gram / Chickpea (चना)',
+        duration: '110–120 days',
+        water: '250 mm (Low)',
+        soil: 'Clay Loam, Black Cotton',
+        seedRate: '25–30 kg/acre',
+        spacing: '30 cm × 10 cm',
+        yieldBenchmark: '9–12 Qtl / Acre',
+        nutrientReq: 'Urea: 10 kg | DAP: 35 kg | MOP: 15 kg',
+        irrigationPhases: 'Pre-Flowering (45d), Pod Development (75d)',
+        rotation: 'Paddy (Kharif) → Chickpea (Rabi) → Sesame (Zaid)',
+        rotationBenefit: 'Thrives on residual moisture; fixes 40 kg N/ha.',
+        pestAlert: 'Pod Borer (Helicoverpa), Fusarium Wilt — Nipping tips at 35d increases pods.',
+        harvestIndicator: 'Leaves turn yellow and dry pods rattle.'
+      },
+      {
+        name: 'Barley / Jau (जौ)',
+        duration: '100–115 days',
+        water: '300 mm (Low)',
+        soil: 'Sandy Loam, Saline/Alkaline Soil',
+        seedRate: '35–40 kg/acre',
+        spacing: '22.5 cm Row Spacing',
+        yieldBenchmark: '16–20 Qtl / Acre',
+        nutrientReq: 'Urea: 35 kg | DAP: 25 kg | MOP: 15 kg',
+        irrigationPhases: 'Tillering (30d), Flowering (60d)',
+        rotation: 'Cluster Bean (Kharif) → Barley (Rabi) → Fallow',
+        rotationBenefit: 'Highly salt and drought tolerant; ideal for problem soils.',
+        pestAlert: 'Covered Smut, Rust — Treat seed with Carboxin 2g/kg.',
+        harvestIndicator: 'Straw turns light golden yellow.'
+      },
+      {
+        name: 'Potato (आलू)',
+        duration: '100–115 days',
+        water: '500 mm (Medium)',
+        soil: 'Loose Sandy Loam, Alluvial',
+        seedRate: '800–1000 kg/acre (Tubers)',
+        spacing: '60 cm × 20 cm',
+        yieldBenchmark: '110–130 Qtl / Acre',
+        nutrientReq: 'Urea: 60 kg | DAP: 50 kg | MOP: 40 kg',
+        irrigationPhases: 'Sprouting (15d), Tuber Initiation (30d), Tuber Bulking (60d)',
+        rotation: 'Paddy (Kharif) → Potato (Rabi) → Sunflower / Cucurbits (Zaid)',
+        rotationBenefit: 'High value tuber crop; heavy organic residue left in soil.',
+        pestAlert: 'Late Blight, Early Blight — Dip seed tubers in Mancozeb (3g/L).',
+        harvestIndicator: 'Dehaulm (cut top foliage) 10-12 days before digging.'
+      },
+      {
+        name: 'Onion (Rabi) (प्याज)',
+        duration: '120–140 days',
+        water: '550 mm (Medium)',
+        soil: 'Friable Sandy Loam, Alluvial',
+        seedRate: '3–4 kg/acre (Nursery)',
+        spacing: '15 cm × 10 cm',
+        yieldBenchmark: '90–110 Qtl / Acre',
+        nutrientReq: 'Urea: 45 kg | DAP: 35 kg | MOP: 30 kg',
+        irrigationPhases: 'Transplanting, Bulb Initiation (45d), Bulb Expansion (75d)',
+        rotation: 'Rice (Kharif) → Onion (Rabi) → Watermelon (Zaid)',
+        rotationBenefit: 'Sulphur application improves pungency and shelf life.',
+        pestAlert: 'Onion Thrips, Purple Blotch — Dip root seedlings in Carbendazim.',
+        harvestIndicator: '50% tops fall naturally (neck fall stage).'
+      },
+      {
+        name: 'Garlic (लहसुन)',
+        duration: '130–150 days',
+        water: '400 mm (Medium)',
+        soil: 'Rich Sandy Loam with Humus',
+        seedRate: '200–250 kg Cloves/acre',
+        spacing: '15 cm × 7.5 cm',
+        yieldBenchmark: '40–50 Qtl / Acre',
+        nutrientReq: 'Urea: 40 kg | DAP: 30 kg | MOP: 25 kg',
+        irrigationPhases: 'Germination, Bulbing, Clove Expansion',
+        rotation: 'Soybean (Kharif) → Garlic (Rabi) → Cucumber (Zaid)',
+        rotationBenefit: 'Medicinal spice crop with high market returns.',
+        pestAlert: 'Thrips, Basal Rot — Treat seed cloves with Thiram 3g/kg.',
+        harvestIndicator: 'Leaves dry and turn yellowish-brown.'
+      },
+      {
+        name: 'Lentil / Masoor Dal (मसूर)',
+        duration: '110–125 days',
+        water: '220 mm (Low)',
+        soil: 'Loamy, Alluvial Soil',
+        seedRate: '12–15 kg/acre',
+        spacing: '30 cm × 5 cm',
+        yieldBenchmark: '6–8 Qtl / Acre',
+        nutrientReq: 'Urea: 10 kg | DAP: 30 kg | MOP: 10 kg',
+        irrigationPhases: 'Flowering Stage, Pod Development',
+        rotation: 'Sorghum (Kharif) → Lentil (Rabi) → Sesame (Zaid)',
+        rotationBenefit: 'Low water requirement pulse that fixes soil nitrogen.',
+        pestAlert: 'Lentil Rust, Stemphylium Blight — Inoculate with Rhizobium.',
+        harvestIndicator: 'Plants turn brown and lower pods dry.'
+      }
     ]
   },
   {
@@ -81,20 +362,66 @@ const SEASONS = [
     growMonths: [4],
     harvestMonths: [5, 6],
     crops: [
-      { name: 'Watermelon', duration: '60–90 days', water: 'Medium', soil: 'Sandy-Loam, Light Soil', rotation: 'Wheat (Rabi) → Watermelon → Maize (Kharif)' },
-      { name: 'Cucumber', duration: '50–70 days', water: 'Medium', soil: 'Loam, Sandy-Loam', rotation: 'Wheat (Rabi) → Cucumber → Tomato (Kharif)' },
-      { name: 'Sunflower (Zaid)', duration: '75–100 days', water: 'Medium', soil: 'Any Well-Drained', rotation: 'Gram (Rabi) → Sunflower → Soybean (Kharif)' },
-      { name: 'Moong / Green Gram', duration: '55–70 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Wheat (Rabi) → Moong → Rice (Kharif)' },
-      { name: 'Bitter Gourd / Karela', duration: '55–75 days', water: 'Medium', soil: 'Loam, Sandy-Loam', rotation: 'Wheat (Rabi) → Karela → Cabbage (Rabi)' },
-      { name: 'Bottle Gourd / Lauki', duration: '50–70 days', water: 'Medium', soil: 'Loamy, Fertile', rotation: 'Potato (Rabi) → Lauki → Maize (Kharif)' },
-      { name: 'Muskmelon / Kharbooza', duration: '70–90 days', water: 'Low-Medium', soil: 'Sandy-Loam', rotation: 'Wheat (Rabi) → Muskmelon → Paddy' },
-      { name: 'Sponge Gourd / Tori', duration: '50–65 days', water: 'Medium', soil: 'Loam, Sandy-Loam', rotation: 'Wheat (Rabi) → Sponge Gourd → Okra (Kharif)' },
-      { name: 'Pumpkin / Kaddu', duration: '60–80 days', water: 'Medium', soil: 'Loamy, Well-Drained', rotation: 'Rabi Crop → Pumpkin → Soybean (Kharif)' },
-      { name: 'Cowpea / Lobia', duration: '60–75 days', water: 'Low-Medium', soil: 'Sandy-Loam, Loam', rotation: 'Wheat (Rabi) → Cowpea → Rice (Kharif)' },
-      { name: 'Urad / Black Gram (Zaid)', duration: '60–75 days', water: 'Low', soil: 'Sandy-Loam, Loam', rotation: 'Wheat (Rabi) → Urad → Cotton (Kharif)' },
-      { name: 'Marigold (Zaid)', duration: '60–90 days', water: 'Medium', soil: 'Sandy-Loam, Any Fertile', rotation: 'Vegetable → Marigold (Break Crop) → Vegetables' },
-      { name: 'Sesame / Til', duration: '70–90 days', water: 'Low', soil: 'Sandy-Loam, Well-Drained', rotation: 'Chickpea (Rabi) → Sesame → Paddy (Kharif)' },
-      { name: 'Fodder Sorghum / Napier', duration: '40–60 days', water: 'Medium', soil: 'Any Fertile Soil', rotation: 'Seasonal Fodder Rotation' },
+      {
+        name: 'Watermelon (तरबूज)',
+        duration: '80–95 days',
+        water: '400 mm (Medium)',
+        soil: 'Sandy Riverbed, Light Loam',
+        seedRate: '1–1.5 kg/acre',
+        spacing: '2 m × 0.5 m',
+        yieldBenchmark: '140–160 Qtl / Acre',
+        nutrientReq: 'Urea: 40 kg | DAP: 30 kg | MOP: 30 kg',
+        irrigationPhases: 'Vining (25d), Flowering (45d), Fruit Expansion (65d)',
+        rotation: 'Wheat (Rabi) → Watermelon (Zaid) → Maize (Kharif)',
+        rotationBenefit: 'Utilizes summer sunshine; silver mulch + drip yields Brix > 11.',
+        pestAlert: 'Fruit Fly, Powdery Mildew — Soak seed in Carbendazim 2g/L.',
+        harvestIndicator: 'Tendril near stalk turns dry and fruit bottom turns dull yellow.'
+      },
+      {
+        name: 'Muskmelon / Kharbuja (खरबूजा)',
+        duration: '75–90 days',
+        water: '350 mm (Medium)',
+        soil: 'Sandy Loam, Alluvial',
+        seedRate: '800 g–1 kg/acre',
+        spacing: '1.5 m × 0.5 m',
+        yieldBenchmark: '85–100 Qtl / Acre',
+        nutrientReq: 'Urea: 35 kg | DAP: 25 kg | MOP: 25 kg',
+        irrigationPhases: 'Vining, Flowering, Fruit Netting',
+        rotation: 'Wheat (Rabi) → Muskmelon (Zaid) → Paddy (Kharif)',
+        rotationBenefit: 'Aromatic summer melon with high market value.',
+        pestAlert: 'Fruit Fly, Fusarium Wilt — Treat seed with Thiram 3g/kg.',
+        harvestIndicator: 'Full slip stage (fruit detaches easily from vine).'
+      },
+      {
+        name: 'Cucumber (खीरा)',
+        duration: '50–65 days',
+        water: '350 mm (Medium)',
+        soil: 'Rich Loamy, Silt Soil',
+        seedRate: '1 kg/acre',
+        spacing: '1.5 m × 0.4 m',
+        yieldBenchmark: '75–90 Qtl / Acre',
+        nutrientReq: 'Urea: 30 kg | DAP: 25 kg | MOP: 20 kg',
+        irrigationPhases: 'Vining, Flowering, Continuous Picking',
+        rotation: 'Wheat (Rabi) → Cucumber (Zaid) → Tomato (Kharif)',
+        rotationBenefit: 'Fast 45-day salad crop providing quick cash returns.',
+        pestAlert: 'Red Pumpkin Beetle, Downy Mildew — Treat seed with Trichoderma.',
+        harvestIndicator: 'Harvest tender green fruits every 2 days.'
+      },
+      {
+        name: 'Moong / Green Gram (Zaid) (मूंग)',
+        duration: '55–70 days',
+        water: '280 mm (Low)',
+        soil: 'Sandy Loam, Loam',
+        seedRate: '10–12 kg/acre',
+        spacing: '25 cm × 10 cm',
+        yieldBenchmark: '5–7 Qtl / Acre',
+        nutrientReq: 'Urea: 10 kg | DAP: 30 kg | MOP: 10 kg',
+        irrigationPhases: 'Flowering, Pod Formation',
+        rotation: 'Wheat (Rabi) → Moong (Zaid) → Paddy / Maize (Kharif)',
+        rotationBenefit: 'Captures summer window to fix 35 kg N/ha before monsoon Paddy.',
+        pestAlert: 'Whitefly, Yellow Mosaic Virus — Spray Neem oil 10,000 ppm.',
+        harvestIndicator: 'Pods turn dark brown/black.'
+      }
     ]
   }
 ];
@@ -129,7 +456,7 @@ function MonthBar({ season }) {
 }
 
 export function PlannerTab() {
-  const { crop: activeCrop, lang } = useApp();
+  const { lang } = useApp();
   const [selectedSeason, setSelectedSeason] = useState('kharif');
   const [selectedCrop, setSelectedCrop] = useState(null);
   const [activePlanView, setActivePlanView] = useState('calendar'); // 'calendar' | 'rotation'
@@ -149,10 +476,10 @@ export function PlannerTab() {
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '0 0 6px 0', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <i className="fa-solid fa-calendar-days" style={{ color: '#38bdf8' }}></i>
-            Seasonal Sowing Calendar &amp; Crop Rotation Engine
+            Crop Sowing Calendar &amp; Rotation Engine
           </h2>
           <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Plan multi-crop rotations to optimize nitrogen fixation and reduce pest vector risk.
+            Plan multi-crop rotations with detailed agronomic schedules, seed rates, fertilizer dosages, and pest defense protocols.
           </p>
         </div>
 
@@ -194,7 +521,7 @@ export function PlannerTab() {
                   boxShadow: selectedSeason === s.id ? `0 4px 16px ${s.color}55` : 'none',
                   transition: 'all 0.2s ease'
                 }}>
-                <i className={`fa-solid ${s.icon}`}></i> {s.name}
+                <i className={`fa-solid ${s.icon}`}></i> {s.name} ({s.crops.length} Crops)
               </button>
             ))}
           </div>
@@ -217,7 +544,7 @@ export function PlannerTab() {
           </div>
 
           {/* Crop Cards Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '16px' }}>
             {season.crops.map((crop, idx) => {
               const isSelected = selectedCrop === idx;
               return (
@@ -238,6 +565,7 @@ export function PlannerTab() {
                     <i className={`fa-solid fa-chevron-${isSelected ? 'up' : 'down'}`} style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}></i>
                   </div>
 
+                  {/* Summary Badges */}
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '10px' }}>
                     <span style={{ background: 'rgba(255,255,255,0.08)', padding: '3px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#94a3b8' }}>
                       <i className="fa-solid fa-clock" style={{ marginRight: '4px' }}></i>{crop.duration}
@@ -245,34 +573,99 @@ export function PlannerTab() {
                     <span style={{ background: 'rgba(56,189,248,0.15)', padding: '3px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#38bdf8' }}>
                       <i className="fa-solid fa-droplet" style={{ marginRight: '4px' }}></i>Water: {crop.water}
                     </span>
+                    {crop.yieldBenchmark && (
+                      <span style={{ background: 'rgba(168,85,247,0.15)', padding: '3px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#c084fc' }}>
+                        <i className="fa-solid fa-wheat-awn" style={{ marginRight: '4px' }}></i>Yield: {crop.yieldBenchmark}
+                      </span>
+                    )}
                   </div>
 
-                  <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
                     <i className="fa-solid fa-mountain" style={{ marginRight: '6px', color: '#a78bfa' }}></i>
-                    Soil: {crop.soil}
+                    <strong>Soil:</strong> {crop.soil}
                   </p>
 
-                  {/* Expanded Details */}
+                  {/* Expanded 360 Agronomic Details */}
                   {isSelected && (
-                    <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: `1px solid ${season.color}44` }}>
-                      <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '10px', padding: '12px' }}>
-                        <p style={{ margin: '0 0 6px 0', fontWeight: 'bold', color: season.color, fontSize: '0.85rem' }}>
+                    <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: `1px solid ${season.color}44`, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      
+                      {/* Seed & Spacing Info */}
+                      {(crop.seedRate || crop.spacing) && (
+                        <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
+                          {crop.seedRate && (
+                            <div style={{ marginBottom: '4px', color: '#e2e8f0' }}>
+                              <strong style={{ color: '#facc15' }}>🌱 Seed Rate:</strong> {crop.seedRate}
+                            </div>
+                          )}
+                          {crop.spacing && (
+                            <div style={{ color: '#e2e8f0' }}>
+                              <strong style={{ color: '#38bdf8' }}>📏 Spacing:</strong> {crop.spacing}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Nutrient Dosage */}
+                      {crop.nutrientReq && (
+                        <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
+                          <strong style={{ color: '#34d399', display: 'block', marginBottom: '2px' }}>🧪 NPK Fertilizer Dosage:</strong>
+                          <span style={{ color: '#fff' }}>{crop.nutrientReq}</span>
+                        </div>
+                      )}
+
+                      {/* Critical Irrigation Stages */}
+                      {crop.irrigationPhases && (
+                        <div style={{ background: 'rgba(56, 189, 248, 0.08)', border: '1px solid rgba(56, 189, 248, 0.25)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
+                          <strong style={{ color: '#38bdf8', display: 'block', marginBottom: '2px' }}>💧 Critical Water Stages:</strong>
+                          <span style={{ color: '#cbd5e1' }}>{crop.irrigationPhases}</span>
+                        </div>
+                      )}
+
+                      {/* Rotation Benefit */}
+                      {crop.rotationBenefit && (
+                        <div style={{ background: 'rgba(250, 204, 21, 0.08)', border: '1px solid rgba(250, 204, 21, 0.25)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
+                          <strong style={{ color: '#facc15', display: 'block', marginBottom: '2px' }}>🔄 Rotation Agronomic Benefit:</strong>
+                          <span style={{ color: '#fef08a' }}>{crop.rotationBenefit}</span>
+                        </div>
+                      )}
+
+                      {/* Pest Alert & Prevention */}
+                      {crop.pestAlert && (
+                        <div style={{ background: 'rgba(244, 63, 94, 0.1)', border: '1px solid rgba(244, 63, 94, 0.3)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
+                          <strong style={{ color: '#fb7185', display: 'block', marginBottom: '2px' }}>⚠️ Major Pests &amp; Defense:</strong>
+                          <span style={{ color: '#ffe4e6' }}>{crop.pestAlert}</span>
+                        </div>
+                      )}
+
+                      {/* Harvest Indicator */}
+                      {crop.harvestIndicator && (
+                        <div style={{ background: 'rgba(168, 85, 247, 0.1)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
+                          <strong style={{ color: '#c084fc', display: 'block', marginBottom: '2px' }}>🌾 Harvest Readiness Sign:</strong>
+                          <span style={{ color: '#e9d5ff' }}>{crop.harvestIndicator}</span>
+                        </div>
+                      )}
+
+                      {/* Rotation Sequence */}
+                      <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '10px', padding: '10px 12px' }}>
+                        <p style={{ margin: '0 0 4px 0', fontWeight: 'bold', color: season.color, fontSize: '0.82rem' }}>
                           <i className="fa-solid fa-arrows-rotate" style={{ marginRight: '6px' }}></i>Recommended Rotation Sequence:
                         </p>
-                        <p style={{ margin: 0, fontSize: '0.88rem', color: '#e2e8f0', lineHeight: '1.6' }}>
+                        <p style={{ margin: 0, fontSize: '0.85rem', color: '#e2e8f0', lineHeight: '1.4' }}>
                           {crop.rotation}
                         </p>
                       </div>
-                      <div style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
-                        <div style={{ flex: 1, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: '8px', padding: '10px', textAlign: 'center', fontSize: '0.8rem' }}>
+
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <div style={{ flex: 1, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: '8px', padding: '8px', textAlign: 'center', fontSize: '0.78rem' }}>
                           <div style={{ color: 'var(--primary-light)', fontWeight: 'bold', marginBottom: '2px' }}>{season.sowing}</div>
                           <div style={{ color: 'var(--text-secondary)' }}>Sowing Window</div>
                         </div>
-                        <div style={{ flex: 1, background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.3)', borderRadius: '8px', padding: '10px', textAlign: 'center', fontSize: '0.8rem' }}>
+                        <div style={{ flex: 1, background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.3)', borderRadius: '8px', padding: '8px', textAlign: 'center', fontSize: '0.78rem' }}>
                           <div style={{ color: '#fb923c', fontWeight: 'bold', marginBottom: '2px' }}>{season.harvest}</div>
                           <div style={{ color: 'var(--text-secondary)' }}>Harvest Window</div>
                         </div>
                       </div>
+
                     </div>
                   )}
                 </div>
@@ -292,41 +685,41 @@ export function PlannerTab() {
                 title: 'North India — Wheat-Paddy Belt',
                 icon: 'fa-wheat-awn', color: '#fbbf24',
                 steps: [
-                  { season: 'Kharif', crop: 'Paddy (Rice)', months: 'Jun – Oct', icon: 'fa-seedling', color: '#10b981' },
-                  { season: 'Rabi', crop: 'Wheat', months: 'Nov – Apr', icon: 'fa-seedling', color: '#38bdf8' },
-                  { season: 'Zaid', crop: 'Moong / Fallow', months: 'Apr – Jun', icon: 'fa-seedling', color: '#fbbf24' }
+                  { season: 'Kharif', crop: 'Paddy (Rice)', months: 'Jun – Oct', detail: 'Transplanting in puddled soil; requires 1200mm water & Zinc Sulphate application.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Wheat', months: 'Nov – Apr', detail: 'Sown at 22.5cm row spacing; critical 1st irrigation at Crown Root Initiation (21d).', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'Moong / Green Gram', months: 'Apr – Jun', detail: 'Short 60-day summer pulse fixing 35-45 kg N/ha into soil before next monsoon.', icon: 'fa-seedling', color: '#fbbf24' }
                 ],
-                benefit: 'Classic Punjab/Haryana rotation. Maintains soil organic matter. Moong in Zaid adds 20–40 kg N/ha.'
+                benefit: 'Classic Indo-Gangetic rotation. Maintains soil organic matter. Incorporating Moong in Zaid reduces subsequent Wheat nitrogen fertilizer requirement by 25%.'
               },
               {
-                title: 'Central India — Cotton-Wheat Belt',
+                title: 'Central India — Cotton-Wheat & Soybean Belt',
                 icon: 'fa-circle-nodes', color: '#a78bfa',
                 steps: [
-                  { season: 'Kharif', crop: 'Cotton / Soybean', months: 'Jun – Nov', icon: 'fa-seedling', color: '#10b981' },
-                  { season: 'Rabi', crop: 'Wheat / Gram', months: 'Nov – Mar', icon: 'fa-seedling', color: '#38bdf8' },
-                  { season: 'Zaid', crop: 'Sunflower / Fallow', months: 'Mar – Jun', icon: 'fa-seedling', color: '#fbbf24' }
+                  { season: 'Kharif', crop: 'Cotton / Soybean', months: 'Jun – Nov', detail: 'Black cotton soil moisture retention; Soybean inoculates Rhizobium japonicum.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Wheat / Chickpea', months: 'Nov – Mar', detail: 'Wheat following leguminous Soybean gets organic N boost from foliage decay.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'Sunflower / Fallow', months: 'Mar – Jun', detail: 'Deep taproot breaks hard soil pans and disrupts soil-borne nematode cycles.', icon: 'fa-seedling', color: '#fbbf24' }
                 ],
-                benefit: 'Reduces Bollworm pressure. Soybean fixes 80–120 kg N/ha. Sunflower breaks pest cycles effectively.'
+                benefit: 'Reduces Pink Bollworm pressure. Soybean fixes 80–120 kg N/ha. Sunflower breaks weed and disease cycles effectively.'
               },
               {
-                title: 'South India — Rice-Rice-Pulse',
+                title: 'South India — Rice-Rice-Pulse System',
                 icon: 'fa-layer-group', color: '#34d399',
                 steps: [
-                  { season: 'Kharif I', crop: 'Paddy (Samba)', months: 'Jun – Oct', icon: 'fa-seedling', color: '#10b981' },
-                  { season: 'Rabi', crop: 'Paddy (Rabi)', months: 'Nov – Feb', icon: 'fa-seedling', color: '#38bdf8' },
-                  { season: 'Zaid', crop: 'Black Gram / Cowpea', months: 'Feb – May', icon: 'fa-seedling', color: '#fbbf24' }
+                  { season: 'Kharif I', crop: 'Paddy (Samba)', months: 'Jun – Oct', detail: 'Main monsoon rice crop in river deltas.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Paddy (Thaladi / Rabi)', months: 'Nov – Feb', detail: 'Winter irrigated rice crop.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'Black Gram / Cowpea', months: 'Feb – May', detail: 'Residual moisture pulse crop fixing nitrogen.', icon: 'fa-seedling', color: '#fbbf24' }
                 ],
-                benefit: 'Tamil Nadu / Andhra rotation. Pulse fixes N naturally reducing fertilizer cost by 30–40%.'
+                benefit: 'Cauvery & Krishna delta rotation. Pulses grown on rice stubble fix natural nitrogen, saving ₹2,500/acre in fertilizer expenses.'
               },
               {
-                title: 'Vegetable Farmer — Year-Round',
+                title: 'Vegetable Farmer — Intensive Year-Round',
                 icon: 'fa-carrot', color: '#f87171',
                 steps: [
-                  { season: 'Kharif', crop: 'Tomato / Chilli / Brinjal', months: 'Jun – Sep', icon: 'fa-seedling', color: '#10b981' },
-                  { season: 'Rabi', crop: 'Potato / Cauliflower / Peas', months: 'Oct – Feb', icon: 'fa-seedling', color: '#38bdf8' },
-                  { season: 'Zaid', crop: 'Cucumber / Bottle Gourd', months: 'Mar – Jun', icon: 'fa-seedling', color: '#fbbf24' }
+                  { season: 'Kharif', crop: 'Tomato / Chilli / Okra', months: 'Jun – Sep', detail: 'Staked Solanaceous crops with high market return per acre.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Potato / Cauliflower / Peas', months: 'Oct – Feb', detail: 'Cool season root and brassica crops with heavy organic residue.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'Watermelon / Cucumber', months: 'Mar – Jun', detail: 'Silver mulch cucurbits yielding high Brix sugar melons in summer.', icon: 'fa-seedling', color: '#fbbf24' }
                 ],
-                benefit: 'High-income rotation for market-gardening farmers. Crop diversity reduces soil pathogen buildup.'
+                benefit: 'High-yield commercial rotation for peri-urban farmers. Multi-family crop switching prevents host-specific pest outbreaks.'
               }
             ].map((plan, idx) => (
               <div key={idx} style={{
@@ -339,15 +732,17 @@ export function PlannerTab() {
                   {plan.title}
                 </h3>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
                   {plan.steps.map((step, si) => (
-                    <div key={si} style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '10px 14px' }}>
-                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: step.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        <i className={`fa-solid ${step.icon}`} style={{ color: '#000', fontSize: '0.75rem' }}></i>
+                    <div key={si} style={{ display: 'flex', flexDirection: 'column', gap: '4px', background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '12px 14px', borderLeft: `3px solid ${step.color}` }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ fontWeight: 'bold', fontSize: '0.92rem', color: 'white' }}>{step.crop}</div>
+                        <span style={{ fontSize: '0.74rem', background: 'rgba(255,255,255,0.08)', color: step.color, padding: '2px 8px', borderRadius: '6px', fontWeight: 700 }}>
+                          {step.season} ({step.months})
+                        </span>
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 'bold', fontSize: '0.88rem', color: 'white' }}>{step.crop}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{step.season} | {step.months}</div>
+                      <div style={{ fontSize: '0.8rem', color: '#cbd5e1', lineHeight: 1.35 }}>
+                        {step.detail}
                       </div>
                     </div>
                   ))}
@@ -356,7 +751,7 @@ export function PlannerTab() {
                 <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '12px', borderLeft: `3px solid ${plan.color}` }}>
                   <p style={{ margin: 0, fontSize: '0.82rem', color: '#cbd5e1', lineHeight: '1.5' }}>
                     <i className="fa-solid fa-circle-info" style={{ color: plan.color, marginRight: '6px' }}></i>
-                    {plan.benefit}
+                    <strong>Agronomic Rotation Benefit:</strong> {plan.benefit}
                   </p>
                 </div>
               </div>
