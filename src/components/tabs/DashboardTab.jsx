@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { SOILS, getText } from '../../data/constants';
+import { CropRoadmapCard } from '../CropRoadmapCard';
 
 function interpretWeatherCode(code) {
   let icon = "fa-solid fa-sun";
@@ -40,6 +41,8 @@ export function DashboardTab() {
     location,
     soil,
     crop,
+    area,
+    sowingDate,
     lang,
     report,
     farmerInsights
@@ -256,62 +259,7 @@ export function DashboardTab() {
           </div>
         </div>
 
-        {/* Current Weather Conditions Card */}
-        <div className="dash-card">
-          <h3 className="card-title">Current Weather Conditions</h3>
-          {weatherLoading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}>
-              <i className="fa-solid fa-circle-notch fa-spin fa-2x" style={{ color: 'var(--accent-green)' }}></i>
-            </div>
-          ) : weather ? (
-            <>
-              <div className="weather-brief">
-                <div className="weather-main-icon">
-                  <i className={weatherInterpreted.icon} style={{ fontSize: '2.5rem', color: 'var(--accent-orange)' }}></i>
-                </div>
-                <div className="weather-main-details">
-                  <span className="weather-temp">{weather.temp}°C</span>
-                  <span className="weather-desc">{weatherInterpreted.defaultDesc}</span>
-                </div>
-              </div>
-              <div className="weather-details-grid">
-                <div className="weather-metric">
-                  <span className="metric-icon"><i class="fa-solid fa-droplet"></i></span>
-                  <div className="metric-meta">
-                    <span className="metric-name">Humidity</span>
-                    <span className="metric-val">{weather.humidity}%</span>
-                  </div>
-                </div>
-                <div className="weather-metric">
-                  <span className="metric-icon"><i class="fa-solid fa-cloud-showers-water"></i></span>
-                  <div className="metric-meta">
-                    <span className="metric-name">Rain Probability</span>
-                    <span className="metric-val">{weather.precipProb}%</span>
-                  </div>
-                </div>
-                <div className="weather-metric">
-                  <span className="metric-icon"><i class="fa-solid fa-wind"></i></span>
-                  <div className="metric-meta">
-                    <span className="metric-name">Wind Speed</span>
-                    <span className="metric-val">{weather.windSpeed} km/h</span>
-                  </div>
-                </div>
-                <div className="weather-metric">
-                  <span className="metric-icon"><i class="fa-solid fa-sun"></i></span>
-                  <div className="metric-meta">
-                    <span className="metric-name">UV Index</span>
-                    <span className="metric-val">{weather.uv.toFixed(1)}</span>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="placeholder-box" style={{ padding: '20px', textAlign: 'center' }}>
-              <i className="fa-solid fa-cloud" style={{ fontSize: '2rem', color: 'var(--text-muted)' }}></i>
-              <p>Select location to check weather conditions</p>
-            </div>
-          )}
-        </div>
+
 
         {/* Soil Retention & Properties Card */}
         <div className="dash-card">
@@ -399,6 +347,17 @@ export function DashboardTab() {
             )}
           </ul>
         </div>
+
+        {/* ─── Step-by-Step Irrigation & Crop Care Roadmap ─── */}
+        <CropRoadmapCard 
+          report={report} 
+          crop={crop} 
+          location={location} 
+          area={area} 
+          soil={soil} 
+          lang={lang} 
+          sowingDate={sowingDate}
+        />
 
       </div>
     </div>

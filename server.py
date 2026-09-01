@@ -1398,13 +1398,6 @@ def calc_haversine(lat1, lon1, lat2, lon2):
     return round(R * c, 1)
 
 class KrishiJalHandler(SimpleHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        dist_dir = os.path.join(BASE_DIR, 'dist')
-        if os.path.exists(dist_dir) and os.path.isdir(dist_dir):
-            super().__init__(*args, directory=dist_dir, **kwargs)
-        else:
-            super().__init__(*args, **kwargs)
-
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')

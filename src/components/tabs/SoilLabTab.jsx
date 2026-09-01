@@ -95,7 +95,161 @@ export function SoilLabTab() {
   const [analysisSteps, setAnalysisSteps] = useState([]);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [analysisError, setAnalysisError] = useState('');
+  const [soilWarning, setSoilWarning] = useState('');
   const fileInputRef = useRef(null);
+
+  // Helper function: Client-side Strict Soil Classifier (Color + Luminance + Texture + Object Rejection)
+  const checkIsSoilImage = (imageDataUrl) => {
+    return new Promise((resolve) => {
+      if (!imageDataUrl) return resolve({ isSoil: false, reason: 'No image' });
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const width = 120;
+          const height = 120;
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+          const imageData = ctx.getImageData(0, 0, width, height);
+          const data = imageData.data;
+
+          let earthTonePixels = 0;
+          let greenPlantPixels = 0;
+          let pinkLeafPixels = 0;
+          let highBluePixels = 0;
+          let artificialBrightPixels = 0;
+          let totalLuminance = 0;
+          const luminances = new Float32Array(width * height);
+
+          const totalPixels = width * height;
+
+          for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const pixelIdx = i / 4;
+
+            // Compute luminance (0 to 255)
+            const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+            luminances[pixelIdx] = lum;
+            totalLuminance += lum;
+
+            // 1. Plant Leaf & Green Foliage check (Green dominant)
+            const isGreenLeaf = (g > r + 3 && g > b + 3 && g >= 40) || (g >= 1.08 * r && g >= 1.08 * b);
+
+            // 2. Pink / Magenta / Caladium Leaf Veins & Floral patterns check
+            const isPinkLeaf = (r > 125 && b > 85 && r > g + 12 && Math.abs(r - b) < 75) || (r > 165 && g < 145 && b > 95);
+
+            if (isGreenLeaf) greenPlantPixels++;
+            if (isPinkLeaf) pinkLeafPixels++;
+
+            // 3. Bright Artificial / Metallic / White Car / Light Gray / Liquid Splash / Reflection check:
+            // Real natural soil is dark or medium earth dirt (lum <= 165 and max(R,G,B) <= 175)
+            const isTooBrightOrWhite = (lum > 160) || (r > 170 && g > 170 && b > 170) || (r > 200) || (g > 200) || (b > 200);
+            const isBlueOrCyan = (b > r + 15 && b > g + 8);
+            const isBrightRedOrNeon = (r > 180 && g < 120 && b < 120) || (g > 180 && r < 130 && b < 130);
+
+            if (isTooBrightOrWhite || isBrightRedOrNeon) {
+              artificialBrightPixels++;
+            }
+            if (isBlueOrCyan) {
+              highBluePixels++;
+            }
+
+            // 4. Earth/Soil tones (Dark Black Soil, Red Soil, Brown Soil, Yellow Loam, Clay, Mud)
+            // MUST be natural earth dirt tones (lum <= 160, max RGB <= 170, NOT green/pink/bright)
+            if (!isGreenLeaf && !isPinkLeaf && !isTooBrightOrWhite && !isBlueOrCyan && !isBrightRedOrNeon) {
+              const isDarkEarth = (r < 75 && g < 75 && b < 75 && Math.abs(r - g) < 25 && Math.abs(r - b) < 25);
+              const isBrownEarth = (r >= g - 12 && r > b + 8 && r >= 30 && r <= 170);
+              const isRedEarth = (r > g + 15 && r > b + 20 && r >= 45 && r <= 170);
+              const isYellowLoam = (r >= 95 && g >= 75 && b < g - 10 && r > b + 30 && r <= 170);
+              const isClayLoam = (r >= 45 && g >= 35 && b < r - 10 && Math.abs(r - g) < 40 && r <= 170);
+
+              if (isDarkEarth || isBrownEarth || isRedEarth || isYellowLoam || isClayLoam) {
+                earthTonePixels++;
+              }
+            }
+          }
+
+          const avgLuminance = totalLuminance / totalPixels;
+
+          // Compute Luminance Standard Deviation across image
+          let sumSqDiff = 0;
+          for (let i = 0; i < totalPixels; i++) {
+            const diff = luminances[i] - avgLuminance;
+            sumSqDiff += diff * diff;
+          }
+          const stdDevLuminance = Math.sqrt(sumSqDiff / totalPixels);
+
+          // Compute Neighbor Difference (Surface Texture Granularity)
+          let totalNeighborDiff = 0;
+          let neighborCount = 0;
+          for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+              const currentLum = luminances[y * width + x];
+              if (x < width - 1) {
+                totalNeighborDiff += Math.abs(currentLum - luminances[y * width + (x + 1)]);
+                neighborCount++;
+              }
+              if (y < height - 1) {
+                totalNeighborDiff += Math.abs(currentLum - luminances[(y + 1) * width + x]);
+                neighborCount++;
+              }
+            }
+          }
+          const avgTextureDiff = neighborCount > 0 ? (totalNeighborDiff / neighborCount) : 0;
+
+          const earthRatio = earthTonePixels / totalPixels;
+          const plantRatio = (greenPlantPixels + pinkLeafPixels) / totalPixels;
+          const blueRatio = highBluePixels / totalPixels;
+          const brightRatio = artificialBrightPixels / totalPixels;
+
+          // REJECTION CHECK 1: PLANT LEAF / FOLIAGE / FLOWERS DETECTED
+          if (plantRatio >= 0.15) {
+            return resolve({
+              isSoil: false,
+              reason: 'plant_leaf_detected',
+              error: '❌ अमान्य फोटो (Plant / Leaf Photo Detected)! यह पौधे या पत्ती (Plant Leaf) की फोटो है। सॉइल लैब में केवल खेत या गमले की मिट्टी की फोटो अपलोड करें। (फसल सलाह के लिए Advisor टैब देखें।)'
+            });
+          }
+
+          // REJECTION CHECK 2: BRIGHT / WHITE / CAR / BUILDING / NON-SOIL OBJECTS
+          if (brightRatio >= 0.20 || blueRatio >= 0.20 || earthRatio < 0.50) {
+            return resolve({
+              isSoil: false,
+              reason: 'non_soil_object_or_bright',
+              error: '❌ अमान्य फोटो (Not a Soil Photo)! यह मिट्टी की फोटो नहीं है (सफ़ेद/रंगीन गाड़ी, इमारत, बैकग्राउंड या वस्तु की फोटो)। AI केवल खेत या गमले की असली मिट्टी (dark/brown soil) की फोटो का परीक्षण करता है।'
+            });
+          }
+
+          // REJECTION CHECK 3: SMOOTH PAPER / CARDBOARD / WALLPAPER REJECTION
+          if (avgTextureDiff < 8.0 || stdDevLuminance < 9.0) {
+            return resolve({
+              isSoil: false,
+              reason: 'smooth_paper_or_background',
+              error: '❌ अमान्य फोटो (Not Soil - Smooth Paper/Background)! यह प्लेन भूरे कागज़ या बैकग्राउंड (Smooth Paper/Cardboard) की फोटो है! असली मिट्टी में दरारें, दाने और मिट्टी की बनावट (texture) होती है। कृपया खेत या गमले से असली मिट्टी की फोटो अपलोड करें।'
+            });
+          }
+
+          // Valid soil photo with natural dirt grain & earth tones
+          resolve({
+            isSoil: true,
+            earthRatio,
+            plantRatio,
+            avgTextureDiff,
+            stdDevLuminance
+          });
+        } catch (e) {
+          resolve({ isSoil: true, earthRatio: 0.5 });
+        }
+      };
+      img.onerror = () => resolve({ isSoil: true, earthRatio: 0.5 });
+      img.src = imageDataUrl;
+    });
+  };
 
   const calculateHealthScore = () => {
     const avgNPK = (nStatus + pStatus + kStatus) / 3;
@@ -121,12 +275,19 @@ export function SoilLabTab() {
       return;
     }
     setAnalysisError('');
+    setSoilWarning('');
     setAnalysisResult(null);
     setImageMime(file.type);
     const reader = new FileReader();
-    reader.onload = (e) => {
-      setImagePreview(e.target.result);
-      setImageBase64(e.target.result.split(',')[1]);
+    reader.onload = async (e) => {
+      const dataUrl = e.target.result;
+      setImagePreview(dataUrl);
+      setImageBase64(dataUrl.split(',')[1]);
+
+      const check = await checkIsSoilImage(dataUrl);
+      if (!check.isSoil) {
+        setSoilWarning(check.error || '⚠️ फोटो चेतावनी: यह फोटो मिट्टी की नहीं लग रही है। केवल खेत या गमले से असली मिट्टी की फोटो अपलोड करें।');
+      }
     };
     reader.readAsDataURL(file);
   }, []);
@@ -139,7 +300,7 @@ export function SoilLabTab() {
 
   // Run AI Analysis
   const handleAnalyze = async () => {
-    if (!imageBase64) {
+    if (!imageBase64 || !imagePreview) {
       setAnalysisError('कृपया पहले मिट्टी की फोटो चुनें। / Please choose a soil photo first.');
       return;
     }
@@ -147,6 +308,14 @@ export function SoilLabTab() {
     setAnalyzing(true);
     setAnalysisError('');
     setAnalysisResult(null);
+
+    // 1. Client-Side Soil Verification (Color + Luminance + Texture Granularity)
+    const canvasCheck = await checkIsSoilImage(imagePreview);
+    if (!canvasCheck.isSoil) {
+      setAnalyzing(false);
+      setAnalysisError(canvasCheck.error || '❌ अमान्य फोटो! यह असली मिट्टी की फोटो नहीं है (गाड़ी, इमारत, पत्ती या बैकग्राउंड)। AI केवल खेत या गमले से असली मिट्टी की फोटो का परीक्षण कर सकता है।');
+      return;
+    }
 
     // Setup visual loading steps for farmers
     const steps = [
@@ -177,21 +346,31 @@ export function SoilLabTab() {
         clearInterval(timer);
         setAnalyzing(false);
         if (result.success && result.analysis) {
-          setAnalysisResult(result.analysis);
+          if (result.analysis.is_soil === false) {
+            setAnalysisError(result.analysis.error || '❌ यह मिट्टी की फोटो नहीं है! / Not a soil photo!');
+          } else {
+            setAnalysisResult(result.analysis);
+          }
         } else {
-          // Fallback to Simulation if API key is invalid or quota exceeded
-          runSimulation();
+          // If result had explicit rejection error, show it! DO NOT run simulation for rejections!
+          if (result.error && (result.error.includes('नहीं है') || result.error.includes('Not a soil') || result.error.includes('❌'))) {
+            setAnalysisError(result.error);
+          } else {
+            // ONLY fallback to simulation if canvasCheck ALREADY verified it's genuine soil
+            runSimulation();
+          }
         }
       } catch (err) {
         clearInterval(timer);
-        runSimulation();
+        setAnalyzing(false);
+        setAnalysisError('❌ सर्वर से संपर्क नहीं हो सका। कृपया केवल असली मिट्टी की फोटो अपलोड करें।');
       }
     } else {
-      // Direct simulation if no API key is set
+      // Direct simulation mode ONLY when canvas check passed 100%
       setTimeout(() => {
         clearInterval(timer);
         runSimulation();
-      }, 5000);
+      }, 4500);
     }
   };
 
@@ -435,6 +614,7 @@ export function SoilLabTab() {
     setImageBase64(null);
     setAnalysisResult(null);
     setAnalysisError('');
+    setSoilWarning('');
     setAnalysisSteps([]);
   };
 
@@ -609,6 +789,29 @@ export function SoilLabTab() {
                 >
                   {analyzing ? '🔍 जांच हो रही है... / Analyzing...' : '🔍 मिट्टी की जांच शुरू करें / Start Soil Test'}
                 </button>
+
+                {soilWarning && !analysisError && (
+                  <div style={{
+                    marginTop: '12px', padding: '12px 16px', borderRadius: '12px',
+                    background: 'rgba(245, 158, 11, 0.15)', border: '1px solid #f59e0b',
+                    color: '#fbbf24', fontSize: '13px', fontWeight: 600, lineHeight: 1.5
+                  }}>
+                    {soilWarning}
+                  </div>
+                )}
+
+                {analysisError && (
+                  <div style={{
+                    marginTop: '16px', padding: '16px 20px', borderRadius: '14px',
+                    background: 'rgba(239, 68, 68, 0.18)', border: '2px solid #ef4444',
+                    color: '#f87171', fontSize: '15px', fontWeight: 700, lineHeight: 1.5,
+                    display: 'flex', alignItems: 'center', gap: '12px',
+                    boxShadow: '0 4px 14px rgba(239, 68, 68, 0.2)'
+                  }}>
+                    <span style={{ fontSize: '24px' }}>🚫</span>
+                    <div>{analysisError}</div>
+                  </div>
+                )}
               </div>
             )}
 

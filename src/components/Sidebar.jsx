@@ -9,6 +9,7 @@ export function Sidebar() {
     crop, setCrop,
     stage, setStage,
     area, setArea,
+    sowingDate, setSowingDate,
     preference, setPreference,
     lang,
     loading,
@@ -200,7 +201,7 @@ export function Sidebar() {
                 e.target.style.borderColor = '#28c76f';
                 e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
               }}
-              onBlur={(e) => {
+              onBlur={async (e) => {
                 e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
                 e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
                 const val = e.target.value;
@@ -209,14 +210,24 @@ export function Sidebar() {
                   (l.nameHi && l.nameHi.toLowerCase() === val.toLowerCase())
                 );
                 if (!found && val.trim() && val !== location?.nameEn) {
-                  setLocation({
-                    id: val.toLowerCase().replace(/\s+/g, '-'),
-                    nameEn: val,
-                    nameHi: val,
-                    lat: location?.lat || 28.61,
-                    lon: location?.lon || 77.20,
-                    defaultSoil: 'loamy'
-                  });
+                  try {
+                    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(val.trim())}&count=1&language=en&format=json`);
+                    const geoData = await geoRes.json();
+                    if (geoData && geoData.results && geoData.results.length > 0) {
+                      const res = geoData.results[0];
+                      const formattedName = `${res.admin1 || res.name}${res.name !== res.admin1 ? ' (' + res.name + ')' : ''}, ${res.country || 'India'}`;
+                      setLocation({
+                        id: res.name.toLowerCase().replace(/\s+/g, '-'),
+                        nameEn: formattedName,
+                        nameHi: formattedName,
+                        lat: res.latitude,
+                        lon: res.longitude,
+                        defaultSoil: 'loamy'
+                      });
+                    }
+                  } catch (err) {
+                    console.warn('Sidebar geocoding lookup failed:', err);
+                  }
                 }
               }}
             />
@@ -437,6 +448,49 @@ export function Sidebar() {
                 </option>
               ))}
             </select>
+          </div>
+        </div>
+
+        {/* Sowing Date */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <label style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '0.88rem',
+            fontWeight: 600,
+            color: '#ffffff'
+          }}>
+            <i className="fa-solid fa-calendar-days" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <span>{lang === 'hi' ? 'बुआई की तारीख (Sowing Date)' : 'Sowing Date'}</span>
+          </label>
+          <div style={{ position: 'relative' }}>
+            <input
+              type="date"
+              value={sowingDate || ''}
+              onChange={(e) => setSowingDate(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '11px 14px',
+                borderRadius: '10px',
+                background: 'rgba(10, 24, 18, 0.75)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                color: '#ffffff',
+                fontSize: '0.92rem',
+                fontWeight: 500,
+                outline: 'none',
+                transition: 'all 0.2s ease',
+                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = '#28c76f';
+                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+              }}
+            />
           </div>
         </div>
 

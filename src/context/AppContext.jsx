@@ -3,6 +3,7 @@ import { LOCATIONS, SOILS, CROPS } from '../data/constants';
 import { fetchServerStatus, fetchFarmerProfile, saveFarmerProfile } from '../services/api';
 import { generateFarmerInsights } from '../services/farmerProfileEngine';
 import { applyPersonalizationRules } from '../services/personalizationRules';
+import { getCropRoadmap } from '../data/cropRoadmapData';
 
 const AppContext = createContext();
 
@@ -16,6 +17,7 @@ export function AppProvider({ children }) {
   const [stage, setStage] = useState('veg');
   const [area, setArea] = useState(1.0);
   const [preference, setPreference] = useState('balanced');
+  const [sowingDate, setSowingDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [geminiKey, setGeminiKey] = useState(() => localStorage.getItem('krishi_gemini_key') || '');
   const [serverOnline, setServerOnline] = useState(false);
 
@@ -245,11 +247,21 @@ export function AppProvider({ children }) {
         ];
       }
 
+      const cropRoadmap = getCropRoadmap(
+        crop?.id || 'wheat',
+        crop?.nameEn || crop?.name || 'Wheat',
+        location?.id || 'punjab',
+        area || 1,
+        sowingDate,
+        soil
+      );
+
       setReport({
         suitabilityScore: finalScore,
         verdict,
         waterAvg: (crop.baseWater * area * (0.9 + Math.random() * 0.3)).toFixed(1),
-        tips
+        tips,
+        cropRoadmap
       });
     }, 600);
   };
@@ -281,6 +293,7 @@ export function AppProvider({ children }) {
     crop, setCrop,
     stage, setStage,
     area, setArea,
+    sowingDate, setSowingDate,
     preference, setPreference,
     geminiKey, saveAiKey,
     serverOnline,

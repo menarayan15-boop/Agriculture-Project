@@ -28,22 +28,34 @@ function interpretWeatherCode(code) {
 }
 
 export function WeatherTab() {
-  const { location } = useApp();
+  const { location, setLocation } = useApp();
   const [currentWeather, setCurrentWeather] = useState(null);
   const [dailyForecast, setDailyForecast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchInput, setSearchInput] = useState('');
+  const [searchLoading, setSearchLoading] = useState(false);
 
+  // Sync search input with location name
+  useEffect(() => {
+    if (location && location.nameEn) {
+      setSearchInput(location.nameEn);
+    }
+  }, [location]);
+
+  // Fetch Open-Meteo Weather API for current location coordinates
   useEffect(() => {
     if (!location || !location.lat) {
-      setError('कृपया पहले स्थान चुनें / Please select a location in Farm Settings first.');
+      setError('कृपया पहले स्थान चुनें / Please select a location.');
       setLoading(false);
       return;
     }
 
     setLoading(true);
     setError(null);
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,surface_pressure&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto`;
+    
+    // Open-Meteo forecast endpoint with full variables
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,rain,snowfall,surface_pressure,pressure_msl,weather_code&hourly=temperature_2m,relative_humidity_2m,rain,surface_pressure,wind_speed_10m&daily=weather_code,temperature_2m_min,temperature_2m_max,sunshine_duration,sunset,sunrise,rain_sum,snowfall_sum,precipitation_probability_max&timezone=auto`;
 
     fetch(url)
       .then(res => res.json())
@@ -54,7 +66,9 @@ export function WeatherTab() {
             feelsLike: data.current.apparent_temperature,
             humidity: data.current.relative_humidity_2m,
             windSpeed: data.current.wind_speed_10m,
-            pressure: data.current.surface_pressure,
+            pressure: data.current.surface_pressure || data.current.pressure_msl,
+            rain: data.current.rain || 0,
+            snowfall: data.current.snowfall || 0,
             code: data.current.weather_code
           });
         }
@@ -67,7 +81,8 @@ export function WeatherTab() {
               tempMin: data.daily.temperature_2m_min[index],
               tempMax: data.daily.temperature_2m_max[index],
               precipProb: data.daily.precipitation_probability_max[index],
-              precipSum: data.daily.precipitation_sum[index]
+              precipSum: data.daily.rain_sum ? data.daily.rain_sum[index] : 0,
+              snowSum: data.daily.snowfall_sum ? data.daily.snowfall_sum[index] : 0
             };
           });
           setDailyForecast(days);
@@ -75,11 +90,41 @@ export function WeatherTab() {
         setLoading(false);
       })
       .catch(err => {
-        console.warn('Weather tab fetch failed:', err);
-        setError('मौसम डेटा नहीं मिला / Failed to fetch weather data. Please check your internet connection.');
+        console.warn('Open-Meteo fetch failed:', err);
+        setError('मौसम डेटा नहीं मिला / Failed to fetch Open-Meteo weather data.');
         setLoading(false);
       });
   }, [location]);
+
+  // Search location via Open-Meteo Geocoding API
+  const handleSearchLocation = async (e) => {
+    e.preventDefault();
+    if (!searchInput.trim()) return;
+    setSearchLoading(true);
+    try {
+      const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchInput.trim())}&count=1&language=en&format=json`);
+      const geoData = await geoRes.json();
+      if (geoData && geoData.results && geoData.results.length > 0) {
+        const res = geoData.results[0];
+        const formattedName = `${res.admin1 || res.name}${res.name !== res.admin1 ? ' (' + res.name + ')' : ''}, ${res.country || 'India'}`;
+        setLocation({
+          id: res.name.toLowerCase().replace(/\s+/g, '-'),
+          nameEn: formattedName,
+          nameHi: formattedName,
+          lat: res.latitude,
+          lon: res.longitude,
+          defaultSoil: 'loamy'
+        });
+      } else {
+        alert('Location not found. Please try entering a different city or region name.');
+      }
+    } catch (err) {
+      console.warn('Geocoding search failed:', err);
+      alert('Could not search location. Please check your internet connection.');
+    } finally {
+      setSearchLoading(false);
+    }
+  };
 
   const currentInterpreted = currentWeather 
     ? interpretWeatherCode(currentWeather.code) 
@@ -94,8 +139,8 @@ export function WeatherTab() {
   };
 
   const currentCardStyle = {
-    background: 'linear-gradient(135deg, rgba(21, 128, 61, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)',
-    border: '1px solid rgba(16, 185, 129, 0.3)',
+    background: 'linear-gradient(135deg, rgba(21, 128, 61, 0.18) 0%, rgba(10, 25, 16, 0.95) 100%)',
+    border: '1px solid rgba(16, 185, 129, 0.35)',
     borderRadius: '18px',
     padding: '24px',
     color: '#fff',
@@ -105,7 +150,7 @@ export function WeatherTab() {
 
   const sensorGridStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
     gap: '12px',
     marginTop: '20px',
   };
@@ -141,25 +186,68 @@ export function WeatherTab() {
     color: '#fff',
   });
 
-  if (loading) {
-    return (
-      <div className="tab-panel active" style={{ padding: 0 }}>
-        <div style={containerStyle}>
+  return (
+    <div className="tab-panel active" style={{ padding: 0 }}>
+      <div style={containerStyle}>
+
+        {/* ─── LOCATION SEARCH BAR ─── */}
+        <form onSubmit={handleSearchLocation} style={{
+          display: 'flex',
+          gap: '10px',
+          marginBottom: '16px',
+          background: 'rgba(10, 25, 16, 0.9)',
+          padding: '8px 12px',
+          borderRadius: '14px',
+          border: '1px solid rgba(40, 199, 111, 0.3)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', color: '#10b981', paddingLeft: '8px' }}>
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search location (e.g. Bilaspur, Shimla, Nashik, Ludhiana)..."
+            style={{
+              flex: 1,
+              background: 'transparent',
+              border: 'none',
+              color: '#ffffff',
+              fontSize: '0.95rem',
+              outline: 'none',
+              padding: '6px 0'
+            }}
+          />
+          <button
+            type="submit"
+            disabled={searchLoading}
+            style={{
+              background: 'var(--primary)',
+              border: 'none',
+              borderRadius: '10px',
+              color: '#ffffff',
+              padding: '8px 16px',
+              fontSize: '0.9rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+          >
+            {searchLoading ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-location-dot"></i>}
+            <span>Search</span>
+          </button>
+        </form>
+
+        {loading ? (
           <div style={{ textAlign: 'center', padding: '60px 20px' }}>
             <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: '40px', color: '#10b981' }}></i>
             <p style={{ marginTop: '16px', fontSize: '16px', color: '#cbd5e1' }}>
-              मौसम डेटा लोड हो रहा है... / Loading weather data...
+              Open-Meteo मौसम डेटा लोड हो रहा है... / Fetching Open-Meteo weather data...
             </p>
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="tab-panel active" style={{ padding: 0 }}>
-        <div style={containerStyle}>
+        ) : error ? (
           <div style={{
             textAlign: 'center', padding: '40px 20px',
             background: 'rgba(239, 68, 68, 0.1)', borderRadius: '16px', border: '1px solid rgba(239, 68, 68, 0.3)',
@@ -167,111 +255,106 @@ export function WeatherTab() {
             <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: '36px', color: '#f87171' }}></i>
             <p style={{ marginTop: '12px', fontSize: '16px', color: '#f87171', fontWeight: 600 }}>{error}</p>
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="tab-panel active" style={{ padding: 0 }}>
-      <div style={containerStyle}>
-
-        {/* ─── CURRENT WEATHER HERO ─── */}
-        <div style={currentCardStyle}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-            <div style={{ fontSize: '56px', width: '70px', height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <i className={currentInterpreted.icon} style={{ color: currentInterpreted.color }}></i>
-            </div>
-            <div style={{ flex: 1, minWidth: '180px' }}>
-              <div style={{ fontSize: '48px', fontWeight: 800, lineHeight: 1 }}>
-                {currentWeather?.temp ?? '--'}°C
-              </div>
-              <div style={{ fontSize: '16px', color: '#cbd5e1', marginTop: '4px', fontWeight: 600 }}>
-                {currentInterpreted.defaultDesc}
-              </div>
-              <div style={{ fontSize: '14px', color: '#94a3b8', marginTop: '4px' }}>
-                <i className="fa-solid fa-location-dot" style={{ marginRight: '6px', color: '#10b981' }}></i>
-                {location?.nameEn || 'Selected Region'}
-              </div>
-            </div>
-          </div>
-
-          {/* Sensor Metrics */}
-          <div style={sensorGridStyle}>
-            <div style={sensorCardStyle}>
-              <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-temperature-half" style={{ color: '#10b981', marginRight: '4px' }}></i> महसूस / Feels Like</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.feelsLike ?? '--'}°C</div>
-            </div>
-            <div style={sensorCardStyle}>
-              <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-droplet" style={{ color: '#38bdf8', marginRight: '4px' }}></i> नमी / Humidity</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.humidity ?? '--'}%</div>
-            </div>
-            <div style={sensorCardStyle}>
-              <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-wind" style={{ color: '#34d399', marginRight: '4px' }}></i> हवा / Wind</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.windSpeed ?? '--'} km/h</div>
-            </div>
-            <div style={sensorCardStyle}>
-              <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-gauge-simple-high" style={{ color: '#a78bfa', marginRight: '4px' }}></i> दबाव / Pressure</div>
-              <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.pressure ?? '--'} hPa</div>
-            </div>
-          </div>
-        </div>
-
-        {/* ─── 7-DAY FORECAST ─── */}
-        <div style={forecastCardStyle}>
-          <h3 style={{ margin: '0 0 16px', fontSize: '1.2rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <i className="fa-solid fa-calendar-week" style={{ color: '#10b981' }}></i>
-            <span>7 दिन का मौसम / 7-Day Forecast</span>
-          </h3>
-
-          {dailyForecast.length > 0 ? (
-            dailyForecast.map((day, idx) => {
-              const dayInterpreted = interpretWeatherCode(day.code);
-              return (
-                <div key={idx} style={dayRowStyle(idx)}>
-                  <span style={{ fontWeight: 600, minWidth: '120px', color: '#fff', fontSize: '14px' }}>{day.dateStr}</span>
-                  <div style={{ width: '30px', textAlign: 'center' }}>
-                    <i className={dayInterpreted.icon} style={{ fontSize: '20px', color: dayInterpreted.color }}></i>
-                  </div>
-                  <span style={{ fontWeight: 700, fontSize: '14px', color: '#e2e8f0', minWidth: '100px' }}>
-                    {day.tempMin}°C / {day.tempMax}°C
-                  </span>
-                  <span style={{ color: '#38bdf8', fontSize: '13px', fontWeight: 700, minWidth: '70px' }}>
-                    <i className="fa-solid fa-droplet" style={{ marginRight: '4px' }}></i>{day.precipProb}%
-                  </span>
-                  <span style={{ fontSize: '13px', color: '#cbd5e1', flex: 1, textAlign: 'right' }}>
-                    {dayInterpreted.defaultDesc} ({day.precipSum.toFixed(1)} mm)
-                  </span>
+        ) : (
+          <>
+            {/* ─── CURRENT WEATHER HERO ─── */}
+            <div style={currentCardStyle}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                <div style={{ fontSize: '56px', width: '70px', height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <i className={currentInterpreted.icon} style={{ color: currentInterpreted.color }}></i>
                 </div>
-              );
-            })
-          ) : (
-            <p style={{ textAlign: 'center', color: '#94a3b8', padding: '20px' }}>
-              कोई पूर्वानुमान डेटा उपलब्ध नहीं / No forecast data available.
-            </p>
-          )}
-        </div>
+                <div style={{ flex: 1, minWidth: '180px' }}>
+                  <div style={{ fontSize: '48px', fontWeight: 800, lineHeight: 1 }}>
+                    {currentWeather?.temp ?? '--'}°C
+                  </div>
+                  <div style={{ fontSize: '16px', color: '#cbd5e1', marginTop: '4px', fontWeight: 600 }}>
+                    {currentInterpreted.defaultDesc}
+                  </div>
+                  <div style={{ fontSize: '14px', color: '#94a3b8', marginTop: '4px' }}>
+                    <i className="fa-solid fa-location-dot" style={{ marginRight: '6px', color: '#10b981' }}></i>
+                    {location?.nameEn || 'Selected Location'}
+                  </div>
+                </div>
+              </div>
 
-        {/* ─── FARMING TIP ─── */}
-        {currentWeather && (
-          <div style={{
-            marginTop: '16px', padding: '16px 20px',
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '14px',
-          }}>
-            <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px', color: 'var(--primary-light)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="fa-solid fa-seedling"></i>
-              <span>🌾 खेती सुझाव / Farming Tip</span>
+              {/* Sensor Metrics */}
+              <div style={sensorGridStyle}>
+                <div style={sensorCardStyle}>
+                  <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-temperature-half" style={{ color: '#10b981', marginRight: '4px' }}></i> महसूस / Feels Like</div>
+                  <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.feelsLike ?? '--'}°C</div>
+                </div>
+                <div style={sensorCardStyle}>
+                  <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-droplet" style={{ color: '#38bdf8', marginRight: '4px' }}></i> नमी / Humidity</div>
+                  <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.humidity ?? '--'}%</div>
+                </div>
+                <div style={sensorCardStyle}>
+                  <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-wind" style={{ color: '#34d399', marginRight: '4px' }}></i> हवा / Wind</div>
+                  <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.windSpeed ?? '--'} km/h</div>
+                </div>
+                <div style={sensorCardStyle}>
+                  <div style={{ fontSize: '13px', color: '#cbd5e1' }}><i className="fa-solid fa-gauge-simple-high" style={{ color: '#a78bfa', marginRight: '4px' }}></i> दबाव / Pressure</div>
+                  <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '6px', color: '#fff' }}>{currentWeather?.pressure ?? '--'} hPa</div>
+                </div>
+              </div>
             </div>
-            <div style={{ fontSize: '14px', color: '#cbd5e1', lineHeight: 1.6 }}>
-              {currentWeather.temp > 35
-                ? '⚠️ तापमान बहुत अधिक है! सिंचाई सुबह 6-8 बजे करें, लू से फसल बचाएं। High temperature alert — irrigate early morning, protect crops from heat stress.'
-                : currentWeather.humidity > 80
-                  ? '💧 नमी ज़्यादा है — फफूंद रोग का खतरा, कीटनाशक छिड़काव करें। High humidity — risk of fungal diseases, consider preventive spray.'
-                  : '✅ मौसम खेती के लिए अनुकूल है। Weather is favorable for farming operations.'}
+
+            {/* ─── 7-DAY FORECAST ─── */}
+            <div style={forecastCardStyle}>
+              <h3 style={{ margin: '0 0 16px', fontSize: '1.2rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <i className="fa-solid fa-calendar-week" style={{ color: '#10b981' }}></i>
+                <span>7 दिन का मौसम / 7-Day Forecast</span>
+              </h3>
+
+              {dailyForecast.length > 0 ? (
+                dailyForecast.map((day, idx) => {
+                  const dayInterpreted = interpretWeatherCode(day.code);
+                  return (
+                    <div key={idx} style={dayRowStyle(idx)}>
+                      <span style={{ fontWeight: 600, minWidth: '120px', color: '#fff', fontSize: '14px' }}>{day.dateStr}</span>
+                      <div style={{ width: '30px', textAlign: 'center' }}>
+                        <i className={dayInterpreted.icon} style={{ fontSize: '20px', color: dayInterpreted.color }}></i>
+                      </div>
+                      <span style={{ fontWeight: 700, fontSize: '14px', color: '#e2e8f0', minWidth: '100px' }}>
+                        {day.tempMin}°C / {day.tempMax}°C
+                      </span>
+                      <span style={{ color: '#38bdf8', fontSize: '13px', fontWeight: 700, minWidth: '70px' }}>
+                        <i className="fa-solid fa-droplet" style={{ marginRight: '4px' }}></i>{day.precipProb}%
+                      </span>
+                      <span style={{ fontSize: '13px', color: '#cbd5e1', flex: 1, textAlign: 'right' }}>
+                        {dayInterpreted.defaultDesc} ({day.precipSum > 0 ? `${day.precipSum.toFixed(1)} mm` : day.snowSum > 0 ? `${day.snowSum.toFixed(1)} cm` : '0 mm'})
+                      </span>
+                    </div>
+                  );
+                })
+              ) : (
+                <p style={{ textAlign: 'center', color: '#94a3b8', padding: '20px' }}>
+                  कोई पूर्वानुमान डेटा उपलब्ध नहीं / No forecast data available.
+                </p>
+              )}
             </div>
-          </div>
+
+            {/* ─── FARMING TIP ─── */}
+            {currentWeather && (
+              <div style={{
+                marginTop: '16px', padding: '16px 20px',
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '14px',
+              }}>
+                <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '6px', color: 'var(--primary-light)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <i className="fa-solid fa-seedling"></i>
+                  <span>🌾 खेती सुझाव / Farming Tip</span>
+                </div>
+                <div style={{ fontSize: '14px', color: '#cbd5e1', lineHeight: 1.6 }}>
+                  {currentWeather.temp > 35
+                    ? '⚠️ तापमान बहुत अधिक है! सिंचाई सुबह 6-8 बजे करें, लू से फसल बचाएं। High temperature alert — irrigate early morning, protect crops from heat stress.'
+                    : currentWeather.humidity > 80
+                      ? '💧 नमी ज़्यादा है — फफूंद रोग का खतरा, कीटनाशक छिड़काव करें। High humidity — risk of fungal diseases, consider preventive spray.'
+                      : '✅ मौसम खेती के लिए अनुकूल है। Weather is favorable for farming operations.'}
+                </div>
+              </div>
+            )}
+          </>
         )}
 
       </div>

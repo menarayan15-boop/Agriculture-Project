@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Weather Forecast Proxy</title>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Weather UI CSS -->
+    <link rel="stylesheet" href="weather-style.css">
+</head>
+<body>
+    <div class="weather-app-container">
+        
+        <!-- Header & Search Bar -->
+        <header class="app-header">
+            <div class="brand">
+                <i class="fa-solid fa-cloud-sun-rain brand-icon"></i>
+                <h1>SkyPulse Weather</h1>
+            </div>
+            
+            <form id="search-form" class="search-box">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="city-input" placeholder="Search city globally (e.g., Tokyo, London, Paris)..." autocomplete="off" />
+                </div>
+                <button type="submit" class="btn btn-search">
+                    <span>Search</span>
+                </button>
+                <button type="button" id="geo-btn" class="btn btn-geo" title="Use Current GPS Location">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                </button>
+            </form>
+        </header>
+
+        <!-- Status / Error Banner -->
+        <div id="status-banner" class="status-banner hidden">
+            <i class="fa-solid fa-circle-exclamation alert-icon"></i>
+            <span id="status-message">Something went wrong.</span>
+        </div>
+
+        <!-- Main Loading Spinner -->
+        <div id="loader" class="loader-container">
+            <div class="spinner"></div>
+            <p>Fetching real-time weather metrics...</p>
+        </div>
+
+        <!-- Weather Content Dashboard (Hidden until loaded) -->
+        <main id="weather-content" class="weather-content hidden">
+            
+            <!-- Current Weather Card -->
+            <section class="current-card">
+                <div class="card-header">
+                    <div class="location-badge">
+                        <i class="fa-solid fa-location-dot loc-icon"></i>
+                        <h2 id="city-name">London, GB</h2>
+                    </div>
+                    <div class="cache-tag" id="cache-tag" title="Served from server 15-minute memory cache">
+                        <i class="fa-solid fa-bolt"></i> Cached
+                    </div>
+                    
+                    <!-- Temperature Unit Toggle (°C / °F) -->
+                    <div class="unit-toggle-wrapper">
+                        <button type="button" id="unit-c" class="unit-btn active">°C</button>
+                        <span class="unit-divider">|</span>
+                        <button type="button" id="unit-f" class="unit-btn">°F</button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="hero-temp-box">
+                        <img id="weather-icon" src="https://openweathermap.org/img/wn/02d@4x.png" alt="Weather icon" class="hero-icon" />
+                        <div class="temp-display">
+                            <span id="current-temp" class="temp-value">22.4</span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-meta">
+                        <h3 id="weather-desc" class="weather-desc">Scattered Clouds</h3>
+                        <p class="feels-like">Feels like <span id="feels-like-temp">21.8</span><span class="unit-symbol">°C</span></p>
+                    </div>
+                </div>
+
+                <!-- Sensor Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon humidity-icon"><i class="fa-solid fa-droplet"></i></div>
+                        <div class="metric-info">
+                            <span class="metric-label">Humidity</span>
+                            <strong id="humidity-val" class="metric-value">65%</strong>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon wind-icon"><i class="fa-solid fa-wind"></i></div>
+                        <div class="metric-info">
+                            <span class="metric-label">Wind Speed</span>
+                            <strong id="wind-val" class="metric-value">4.1 m/s</strong>
+                        </div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-icon pressure-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                        <div class="metric-info">
+                            <span class="metric-label">Pressure</span>
+                            <strong id="pressure-val" class="metric-value">1012 hPa</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5-Day Forecast List Preview Card -->
+            <section class="forecast-card">
+                <div class="forecast-header">
+                    <i class="fa-solid fa-calendar-days forecast-title-icon"></i>
+                    <h3>5-Day Daily Forecast</h3>
+                </div>
+                
+                <div id="forecast-list" class="forecast-list">
+                    <!-- Dynamic Daily Forecast Cards rendered by JS -->
+                </div>
+            </section>
+        </main>
+        
+        <footer class="app-footer">
+            <p>Protected by Node.js Proxy Backend &bull; OpenWeatherMap API &bull; 15-Min Rate Limit Cache</p>
+        </footer>
+    </div>
+
+    <!-- Weather App JS -->
+    <script src="weather-app.js"></script>
+</body>
+</html>
