@@ -464,9 +464,10 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
 
   // Direct Google Maps Directions URL (works 100% reliably in any browser)
   const googleMapsDirectionsUrl = useMemo(() => {
-    return `https://www.google.com/maps/dir/?api=1&destination=${hospital.lat},${hospital.lon}&destination_place_id=${encodeURIComponent(
-      hospital.name
-    )}`;
+    const destination = hospital.name && hospital.city
+      ? `${hospital.name}, ${hospital.city}`
+      : `${hospital.lat},${hospital.lon}`;
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
   }, [hospital]);
 
   const handleRiskAssessment = useCallback(() => {
@@ -843,16 +844,17 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 </div>
               </div>
 
-              {/* Map Pin Button (Opens interactive navigation route & modal) */}
-              <button
-                type="button"
+              {/* Map Pin Button (Directly opens Google Maps) */}
+              <a
+                href={googleMapsDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hospital-pin-btn"
-                onClick={handleOpenDirections}
-                title={isHindi ? 'मानचित्र और नेविगेशन मार्ग खोलें' : 'Open Hospital Navigation & GPS Route'}
-                aria-label="View Hospital Navigation"
+                title={isHindi ? 'गूगल मैप्स में अस्पताल का मार्ग खोलें' : 'Open Hospital Navigation in Google Maps'}
+                aria-label="Open Hospital Navigation in Google Maps"
               >
                 <i className="fa-solid fa-location-dot"></i>
-              </button>
+              </a>
             </div>
 
             {/* Action Buttons */}
@@ -866,16 +868,17 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 <span>{isHindi ? '108 पर कॉल करें' : 'Call 108'}</span>
               </a>
 
-              {/* Directions Button: Triggers Directions Modal & External Maps Link */}
-              <button
-                type="button"
+              {/* Directions Button: Directly launches Google Maps turn-by-turn routing */}
+              <a
+                href={googleMapsDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hospital-btn directions-btn"
-                onClick={handleOpenDirections}
-                title="Open Turn-by-Turn Directions & GPS Route"
+                title={isHindi ? 'गूगल मैप्स में दिशा-निर्देश खोलें' : 'Open Turn-by-Turn GPS Directions in Google Maps'}
               >
                 <i className="fa-solid fa-compass"></i>
                 <span>{isHindi ? 'दिशा-निर्देश' : 'Directions'}</span>
-              </button>
+              </a>
             </div>
           </div>
 
