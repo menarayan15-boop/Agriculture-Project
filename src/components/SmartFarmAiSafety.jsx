@@ -462,13 +462,25 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
     );
   }, [location]);
 
-  // Direct Google Maps Directions URL (works 100% reliably in any browser)
+  // Direct Google Maps Directions URL
   const googleMapsDirectionsUrl = useMemo(() => {
-    const destination = hospital.name && hospital.city
-      ? `${hospital.name}, ${hospital.city}`
-      : `${hospital.lat},${hospital.lon}`;
-    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+    return `https://www.google.com/maps/dir/?api=1&destination=${hospital.lat},${hospital.lon}`;
   }, [hospital]);
+
+  const handleOpenGoogleMaps = useCallback(
+    (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${hospital.lat},${hospital.lon}`;
+      const newTab = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+        window.location.href = url;
+      }
+    },
+    [hospital]
+  );
 
   const handleRiskAssessment = useCallback(() => {
     setIsAssessing(true);
@@ -495,19 +507,9 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
     handleRiskAssessment();
   };
 
-  const handleCall108 = () => {
+  const handleCall108 = (e) => {
+    if (e) e.stopPropagation();
     window.location.href = 'tel:108';
-  };
-
-  const handleOpenDirections = (e) => {
-    if (e) e.preventDefault();
-    setShowDirectionsModal(true);
-  };
-
-  const handleCopyCoords = () => {
-    navigator.clipboard.writeText(`${hospital.lat}, ${hospital.lon}`);
-    setCopiedCoords(true);
-    setTimeout(() => setCopiedCoords(false), 2500);
   };
 
   const isReiSafe = sprayHoursAgo >= 24;
@@ -831,7 +833,12 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
             </div>
 
             <div className="hospital-content-row">
-              <div className="hospital-info-box">
+              <div
+                className="hospital-info-box"
+                onClick={handleOpenGoogleMaps}
+                style={{ cursor: 'pointer' }}
+                title={isHindi ? 'गूगल मैप्स में अस्पताल का मार्ग खोलें' : 'Open Hospital Route in Google Maps'}
+              >
                 <h3 className="hospital-name-heading">
                   {isHindi ? hospital.nameHi || hospital.name : hospital.name}
                 </h3>
@@ -849,6 +856,7 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 href={googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={handleOpenGoogleMaps}
                 className="hospital-pin-btn"
                 title={isHindi ? 'गूगल मैप्स में अस्पताल का मार्ग खोलें' : 'Open Hospital Navigation in Google Maps'}
                 aria-label="Open Hospital Navigation in Google Maps"
@@ -861,6 +869,7 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
             <div className="hospital-actions-row">
               <a
                 href="tel:108"
+                onClick={handleCall108}
                 className="hospital-btn call-108-btn"
                 title="Call 108 Emergency Ambulance"
               >
@@ -873,6 +882,7 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 href={googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={handleOpenGoogleMaps}
                 className="hospital-btn directions-btn"
                 title={isHindi ? 'गूगल मैप्स में दिशा-निर्देश खोलें' : 'Open Turn-by-Turn GPS Directions in Google Maps'}
               >
