@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { SOILS, getText } from '../../data/constants';
+import { SmartFarmAiSafety } from '../SmartFarmAiSafety';
 
 function interpretWeatherCode(code) {
   let icon = "fa-solid fa-sun";
@@ -84,6 +85,9 @@ export function DashboardTab() {
 
   return (
     <div className="tab-panel active">
+      {/* SmartFarm AI Decision & Farmer Safety Working Model */}
+      <SmartFarmAiSafety liveWeatherData={weather} />
+
       <div className="dashboard-grid">
         
         {/* AI Farmer Profile Card */}
