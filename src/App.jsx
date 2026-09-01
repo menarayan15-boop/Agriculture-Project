@@ -19,7 +19,6 @@ import { GeminiKeyModal } from './components/modals/GeminiKeyModal';
 import { RentalBookingModal } from './components/modals/RentalBookingModal';
 import { OnboardingWizard } from './components/modals/OnboardingWizard';
 import { LandingPage } from './components/LandingPage';
-import FloatingAssistant from './components/FloatingAssistant';
 import { SoftwareFarmersApp } from './software-farmers/SoftwareFarmersApp';
 
 export function App() {
@@ -123,12 +122,6 @@ export function App() {
               </div>
             </main>
           </div>
-
-          {/* Floating Assistant FAB */}
-          <FloatingAssistant onTabChange={(tab) => {
-            const map = { voice: 'voice-ai', weather: 'weather', mandi: 'mandi', soil: 'soillab' };
-            if (map[tab]) setActiveTab(map[tab]);
-          }} />
 
           {/* Modals */}
           {aiModalOpen && <GeminiKeyModal onClose={() => setAiModalOpen(false)} />}

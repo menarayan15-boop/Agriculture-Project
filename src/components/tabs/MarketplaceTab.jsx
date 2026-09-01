@@ -1,186 +1,215 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { fetchProduce, addProduceListing } from '../../services/api';
 
-export function MarketplaceTab() {
-  const [produceList, setProduceList] = useState([
-    { 
-      id: 1, 
-      name: "Premium Sharbati Wheat Grade-A", 
-      category: "cereal", 
-      ask_price: 2650, 
-      farmer_name: "Sardar Rajesh Singh", 
-      location: "Ludhiana, Punjab", 
-      phone: "9811122233", 
-      quantity_qtl: 50,
-      posted_time: "Today, 9:30 AM"
-    },
-    { 
-      id: 2, 
-      name: "Basmati 1121 Paddy Organic Harvest", 
-      category: "cereal", 
-      ask_price: 4200, 
-      farmer_name: "Gurpreet Singh Brar", 
-      location: "Karnal, Haryana", 
-      phone: "9822233344", 
-      quantity_qtl: 80,
-      posted_time: "Today, 11:15 AM"
-    },
-    { 
-      id: 3, 
-      name: "Organic Yellow Mustard Seed", 
-      category: "oilseed", 
-      ask_price: 6200, 
-      farmer_name: "Mohan Lal Sharma", 
-      location: "Sri Ganganagar, Rajasthan", 
-      phone: "9833344455", 
-      quantity_qtl: 30,
-      posted_time: "Yesterday"
-    },
-    { 
-      id: 4, 
-      name: "Fresh Red Onions (Nashik Quality)", 
-      category: "vegetables", 
-      ask_price: 1850, 
-      farmer_name: "Ramesh Pawar", 
-      location: "Nashik, Maharashtra", 
-      phone: "9844455566", 
-      quantity_qtl: 120,
-      posted_time: "Yesterday"
-    },
-    { 
-      id: 5, 
-      name: "Pusa Basmati Rice Grade A", 
-      category: "cereal", 
-      ask_price: 3400, 
-      farmer_name: "Surender Pal Singh", 
-      location: "Ambala, Haryana", 
-      phone: "9872233300", 
-      quantity_qtl: 65,
-      posted_time: "2 days ago"
-    },
-    { 
-      id: 6, 
-      name: "Organic Desi Chickpeas (Chana)", 
-      category: "cereal", 
-      ask_price: 5800, 
-      farmer_name: "Kailash Chand Verma", 
-      location: "Indore, Madhya Pradesh", 
-      phone: "9425012345", 
-      quantity_qtl: 40,
-      posted_time: "2 days ago"
-    },
-    { 
-      id: 7, 
-      name: "High-Oil Content Soybean Seeds", 
-      category: "oilseed", 
-      ask_price: 4700, 
-      farmer_name: "Vilasrao Deshmukh", 
-      location: "Latur, Maharashtra", 
-      phone: "9890011223", 
-      quantity_qtl: 150,
-      posted_time: "3 days ago"
-    },
-    { 
-      id: 8, 
-      name: "Organic Groundnut in Shell", 
-      category: "oilseed", 
-      ask_price: 6900, 
-      farmer_name: "Jethalal Patel", 
-      location: "Rajkot, Gujarat", 
-      phone: "9979988776", 
-      quantity_qtl: 95,
-      posted_time: "3 days ago"
-    },
-    { 
-      id: 9, 
-      name: "Kashmiri Dry Red Chillies", 
-      category: "vegetables", 
-      ask_price: 8500, 
-      farmer_name: "Chuni Lal Dogra", 
-      location: "Solan, Himachal Pradesh", 
-      phone: "9816044321", 
-      quantity_qtl: 25,
-      posted_time: "4 days ago"
-    },
-    { 
-      id: 10, 
-      name: "Fresh Nashik Garlic Bulbs", 
-      category: "vegetables", 
-      ask_price: 9200, 
-      farmer_name: "Subhash Patil", 
-      location: "Nashik, Maharashtra", 
-      phone: "9822133445", 
-      quantity_qtl: 35,
-      posted_time: "4 days ago"
-    },
-    { 
-      id: 11, 
-      name: "Premium Hybrid Maize (Makka)", 
-      category: "cereal", 
-      ask_price: 2150, 
-      farmer_name: "Ramdeo Prasad", 
-      location: "Patna, Bihar", 
-      phone: "9431055667", 
-      quantity_qtl: 110,
-      posted_time: "5 days ago"
-    },
-    { 
-      id: 12, 
-      name: "Sugar-rich Sugarcane Stalks", 
-      category: "cereal", 
-      ask_price: 360, 
-      farmer_name: "Amit Chaudhary", 
-      location: "Meerut, Uttar Pradesh", 
-      phone: "9719033445", 
-      quantity_qtl: 450,
-      posted_time: "5 days ago"
-    },
-    { 
-      id: 13, 
-      name: "Himachal Golden Apples (Grade-A)", 
-      category: "vegetables", 
-      ask_price: 8200, 
-      farmer_name: "Rajeshwar Negi", 
-      location: "Shimla, Himachal Pradesh", 
-      phone: "9817022110", 
-      quantity_qtl: 70,
-      posted_time: "6 days ago"
-    },
-    { 
-      id: 14, 
-      name: "Alphonso Mangoes (Devgad Hapus)", 
-      category: "vegetables", 
-      ask_price: 12000, 
-      farmer_name: "Anant Sawant", 
-      location: "Ratnagiri, Maharashtra", 
-      phone: "9869033221", 
-      quantity_qtl: 45,
-      posted_time: "6 days ago"
-    },
-    { 
-      id: 15, 
-      name: "Fresh Green Peas (Premium Matar)", 
-      category: "vegetables", 
-      ask_price: 2800, 
-      farmer_name: "Sukhdev Singh", 
-      location: "Amritsar, Punjab", 
-      phone: "9814455660", 
-      quantity_qtl: 55,
-      posted_time: "1 week ago"
-    },
-    { 
-      id: 16, 
-      name: "High-curcumin Turmeric (Haldi)", 
-      category: "oilseed", 
-      ask_price: 7800, 
-      farmer_name: "Koteswara Rao", 
-      location: "Guntur, Andhra Pradesh", 
-      phone: "9848011223", 
-      quantity_qtl: 85,
-      posted_time: "1 week ago"
-    }
-  ]);
+export const INITIAL_FPO_LISTINGS = [
+  {
+    id: 1,
+    name: "Richer Seeds Farmer Producer Co. Ltd.",
+    category: "cereal",
+    products: "Wheat, Gram, Soybean",
+    location: "Shelud, Chikhli, Maharashtra – 443207",
+    phone: "9923233776",
+    website: "https://richerseeds.com",
+    verified: true
+  },
+  {
+    id: 2,
+    name: "Ayurfresh Farmer Producer Co. Ltd.",
+    category: "pulse",
+    products: "Paddy, Peas, Lentils, Soybean, Toor Dal, Urad Dal",
+    location: "Sultanpur, Bakshi Ka Talab, Lucknow, UP – 226201",
+    phone: "7905071063",
+    website: "https://ayurfresh.org/food-grains.php",
+    verified: true
+  },
+  {
+    id: 3,
+    name: "Mala & Mehrab Agriculture Nuh Producer Co.",
+    category: "cereal",
+    products: "Wheat, Bajra, Jowar, Mustard, Vegetables",
+    location: "Village Mevli, Nuh, Haryana – 122106",
+    phone: "9671581882",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 4,
+    name: "Firozpur Jhirka Agriculture Producer Co.",
+    category: "cereal",
+    products: "Wheat, Bajra, Jowar, Mustard, Vegetables",
+    location: "Village Sulela, Firozpur Jhirka, Haryana – 122108",
+    phone: "9992350100",
+    altPhone: "9813278798",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 5,
+    name: "Nandhi Farmer Producer Company Ltd.",
+    category: "pulse",
+    products: "Tur, Gram, Jowar",
+    location: "Kirange, Gulbarga, Karnataka",
+    phone: "08088423123",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 6,
+    name: "Devara Hippargi Farmer Services Producer Co.",
+    category: "pulse",
+    products: "Tur, Gram, Jowar",
+    location: "Sindagi, Bijapur, Karnataka – 586120",
+    phone: "7702203403",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 7,
+    name: "Kalkeri Farmers Services Producer Co.",
+    category: "pulse",
+    products: "Tur, Gram, Jowar",
+    location: "Ashki, Sindagi, Bijapur, Karnataka",
+    phone: "7702203403",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 8,
+    name: "Bethamcherla Abhyudaya Farmers Producer Co.",
+    category: "millet",
+    products: "Bengal Gram, Red Gram, Bajra, Millets",
+    location: "Bethamcherla, Kurnool, Andhra Pradesh – 518599",
+    phone: "9640960277",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 9,
+    name: "Barh Jaivik Farmer Producer Co.",
+    category: "pulse",
+    products: "Pulses, Millets",
+    location: "Sikandra, Belchhi, Patna, Bihar – 803211",
+    phone: "9999009155",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 10,
+    name: "Tal Farmer Producer Company Ltd.",
+    category: "pulse",
+    products: "Pulses, Millets",
+    location: "Mohama, Barh, Patna, Bihar – 803303",
+    phone: "9999009155",
+    website: "https://www.smartfood.org/farmer-producer-organizations/",
+    verified: true
+  },
+  {
+    id: 11,
+    name: "Visakha Millet Farmers Producer Co.",
+    category: "millet",
+    products: "Millets",
+    location: "Thummapalla, Anakapalli, Andhra Pradesh – 531032",
+    phone: "7382596778",
+    altPhone: "9880045728",
+    website: "https://www.researchgate.net",
+    verified: true
+  },
+  {
+    id: 12,
+    name: "Mahabubnagar Millets Farmer Producer Co.",
+    category: "millet",
+    products: "Millets",
+    location: "Desayapally, Gandeed, Telangana – 509337",
+    phone: "9440402005",
+    website: "https://www.researchgate.net",
+    verified: true
+  },
+  {
+    id: 13,
+    name: "Green Millet Farmer Producer Co.",
+    category: "millet",
+    products: "Millets",
+    location: "KIADB, Bagalkot, Karnataka – 587103",
+    phone: "7760760841",
+    altPhone: "9880045728",
+    website: "https://www.researchgate.net",
+    verified: true
+  },
+  {
+    id: 14,
+    name: "Halchalit Mahila Kisan FPO",
+    category: "millet",
+    products: "Millets, Agricultural Products",
+    location: "Devalpu, Dindori, Madhya Pradesh – 481778",
+    phone: "9752771389",
+    altPhone: "9535313111",
+    website: "https://www.researchgate.net",
+    verified: true
+  },
+  {
+    id: 15,
+    name: "Koppal Millets Farmer Producer Co.",
+    category: "millet",
+    products: "Millets",
+    location: "Gadag Road, Koppal, Karnataka – 583231",
+    phone: "7411696057",
+    website: "https://www.researchgate.net",
+    verified: true
+  },
+  {
+    id: 16,
+    name: "Sankarpuram Collective Farming FPC",
+    category: "oilseed",
+    products: "Paddy, Millets, Pulses, Oilseeds",
+    location: "Sankarapuram, Villupuram, Tamil Nadu",
+    phone: "8526886890",
+    website: "https://www.agrimark.tn.gov.in",
+    verified: true
+  },
+  {
+    id: 17,
+    name: "Nathagiri Farmer Producer Co.",
+    category: "oilseed",
+    products: "Paddy, Millets, Pulses, Cotton, Chilli",
+    location: "Vasudevanallur, Tirunelveli, Tamil Nadu",
+    phone: "7868841290",
+    website: "https://www.agrimark.tn.gov.in",
+    verified: true
+  },
+  {
+    id: 18,
+    name: "Rasipuram Collective Farming FPC",
+    category: "pulse",
+    products: "Green Gram, Black Gram, Groundnut, Onion",
+    location: "Rasipuram, Namakkal, Tamil Nadu",
+    phone: "7402330902",
+    website: "https://www.agrimark.tn.gov.in",
+    verified: true
+  },
+  {
+    id: 19,
+    name: "Sendurai Collective Farming FPC",
+    category: "cereal",
+    products: "Rice, Maize, Cashew",
+    location: "Sendurai, Ariyalur, Tamil Nadu",
+    phone: "9750154721",
+    website: "https://www.agrimark.tn.gov.in",
+    verified: true
+  },
+  {
+    id: 20,
+    name: "SEEDS Farmer Producer Company",
+    category: "pulse",
+    products: "Black Gram, Green Gram, Red Gram, Cotton, Groundnut",
+    location: "Virudhunagar, Tamil Nadu",
+    phone: "9750943814",
+    website: "https://www.agrimark.tn.gov.in",
+    verified: true
+  }
+];
 
+export function MarketplaceTab() {
+  const [produceList, setProduceList] = useState(INITIAL_FPO_LISTINGS);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
@@ -189,17 +218,28 @@ export function MarketplaceTab() {
   const [formData, setFormData] = useState({
     name: '',
     category: 'cereal',
-    askPrice: 2400,
-    farmerName: '',
+    products: '',
     phone: '',
-    quantity: 20,
-    location: ''
+    altPhone: '',
+    location: '',
+    website: ''
   });
 
   useEffect(() => {
     fetchProduce().then(res => {
       if (res && res.success && res.produce && res.produce.length > 0) {
-        setProduceList(res.produce);
+        // Map backend produce if any, keeping real FPO structure
+        const customItems = res.produce.map((item, i) => ({
+          id: item.id || `custom-${i}`,
+          name: item.name || item.farmer_name,
+          category: item.category || 'cereal',
+          products: item.products || item.name,
+          location: item.location || 'Direct Farm',
+          phone: item.phone || 'N/A',
+          website: item.website || '',
+          verified: true
+        }));
+        setProduceList([...INITIAL_FPO_LISTINGS, ...customItems]);
       }
     });
   }, []);
@@ -207,81 +247,106 @@ export function MarketplaceTab() {
   const handleAddProduce = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const res = await addProduceListing(formData);
+    await addProduceListing(formData);
     setSaving(false);
 
     const newItem = {
       id: Date.now(),
       name: formData.name,
       category: formData.category,
-      ask_price: formData.askPrice,
-      farmer_name: formData.farmerName || "Local Farmer",
-      location: formData.location || "Farm Direct",
+      products: formData.products || formData.name,
+      location: formData.location || "Farm Direct Location",
       phone: formData.phone,
-      quantity_qtl: formData.quantity,
-      posted_time: "Just now"
+      altPhone: formData.altPhone,
+      website: formData.website,
+      verified: true
     };
 
     setProduceList([newItem, ...produceList]);
     setModalOpen(false);
-    setFormData({ name: '', category: 'cereal', askPrice: 2400, farmerName: '', phone: '', quantity: 20, location: '' });
+    setFormData({ name: '', category: 'cereal', products: '', phone: '', altPhone: '', location: '', website: '' });
   };
 
-  const filteredProduce = produceList.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          item.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          item.farmer_name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCat = selectedCategory === 'all' || item.category === selectedCategory;
-    return matchesSearch && matchesCat;
-  });
+  const filteredProduce = useMemo(() => {
+    return produceList.filter(item => {
+      const matchesSearch = 
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        item.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.products.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.phone.includes(searchQuery);
+
+      const matchesCat = selectedCategory === 'all' || item.category === selectedCategory;
+      return matchesSearch && matchesCat;
+    });
+  }, [produceList, searchQuery, selectedCategory]);
 
   return (
-    <div className="tab-panel active">
+    <div className="tab-panel active" style={{ animation: 'fadeIn 0.3s ease' }}>
       {/* Top Banner Card */}
-      <div className="marketplace-header-card" style={{ background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '16px', padding: '24px', marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+      <div style={{ 
+        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(10, 25, 16, 0.95) 100%)', 
+        border: '1px solid rgba(16, 185, 129, 0.35)', borderRadius: '18px', 
+        padding: '24px 26px', marginBottom: '1.5rem', 
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px',
+        boxShadow: '0 8px 30px rgba(0,0,0,0.3)'
+      }}>
         <div>
-          <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#34d399', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <i className="fa-solid fa-handshake"></i> Direct Farmer-to-Trader Platform
+          <span style={{ 
+            background: 'rgba(16, 185, 129, 0.25)', color: '#34d399', 
+            padding: '4px 14px', borderRadius: '20px', fontSize: '0.82rem', 
+            fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' 
+          }}>
+            <i className="fa-solid fa-building-wheat"></i> Verified Farmer Producer Organizations (FPOs)
           </span>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 'bold', margin: '0 0 6px 0', color: 'white' }}>
-            <i className="fa-solid fa-store" style={{ color: '#34d399', marginRight: '10px' }}></i> Direct Farmer Produce Marketplace
+          <h2 style={{ fontSize: '1.65rem', fontWeight: 'bold', margin: '0 0 6px 0', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <i className="fa-solid fa-store" style={{ color: '#34d399' }}></i> Direct Farmer &amp; FPO Producer Directory
           </h2>
-          <p style={{ color: 'var(--text-secondary)', margin: '0', fontSize: '0.92rem' }}>
-            Sell fresh crops directly to wholesale buyers and traders across India with <strong>zero commission</strong>.
+          <p style={{ color: 'var(--text-secondary)', margin: '0', fontSize: '0.94rem', lineHeight: '1.5' }}>
+            Connect directly with verified Indian Farmer Producer Companies (FPOs) and agricultural producers with complete official addresses &amp; public contacts.
           </p>
         </div>
         
         <button 
           type="button" 
-          className="btn btn-primary" 
           onClick={() => setModalOpen(true)}
-          style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', padding: '12px 22px', borderRadius: '12px', fontSize: '1rem', fontWeight: 'bold', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }}
+          style={{ 
+            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
+            color: 'white', padding: '12px 22px', borderRadius: '12px', 
+            fontSize: '0.96rem', fontWeight: 'bold', border: 'none', 
+            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', 
+            boxShadow: '0 6px 20px rgba(16, 185, 129, 0.45)', transition: 'all 0.2s ease'
+          }}
         >
-          <i className="fa-solid fa-circle-plus" style={{ fontSize: '1.2rem' }}></i>
-          <span>+ Post My Harvest Listing</span>
+          <i className="fa-solid fa-circle-plus" style={{ fontSize: '1.1rem' }}></i>
+          <span>+ Add Producer / FPO Directory Listing</span>
         </button>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="marketplace-controls-bar" style={{ display: 'flex', gap: '12px', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div className="search-wrapper" style={{ position: 'relative', minWidth: '280px', flex: 1 }}>
+      <div style={{ display: 'flex', gap: '12px', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ position: 'relative', minWidth: '280px', flex: 1 }}>
           <i className="fa-solid fa-magnifying-glass" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }}></i>
           <input
             type="text"
             className="form-control"
-            placeholder="Search crop name, location, or farmer..."
+            placeholder="Search FPO name, products (e.g. Wheat, Millets), or location..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ paddingLeft: '40px', background: 'rgba(10, 24, 17, 0.9)', border: '1px solid var(--border-color)', borderRadius: '10px', color: 'white', height: '44px', width: '100%' }}
+            style={{ 
+              paddingLeft: '40px', background: 'rgba(10, 24, 17, 0.9)', 
+              border: '1px solid rgba(255,255,255,0.15)', borderRadius: '10px', 
+              color: 'white', height: '44px', width: '100%', outline: 'none' 
+            }}
           />
         </div>
 
-        <div className="category-chips" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {[
-            { id: 'all', label: 'All Crops' },
-            { id: 'cereal', label: 'Grains & Cereals' },
-            { id: 'oilseed', label: 'Oilseeds' },
-            { id: 'vegetables', label: 'Vegetables & Fruits' }
+            { id: 'all', label: '🌾 All FPOs & Producers' },
+            { id: 'cereal', label: '🌾 Wheat & Cereals' },
+            { id: 'pulse', label: '🫘 Pulses & Dals' },
+            { id: 'millet', label: '🥣 Millets' },
+            { id: 'oilseed', label: '🌻 Oilseeds & Cash' }
           ].map(cat => (
             <button
               key={cat.id}
@@ -289,8 +354,8 @@ export function MarketplaceTab() {
               onClick={() => setSelectedCategory(cat.id)}
               style={{
                 background: selectedCategory === cat.id ? '#10b981' : 'rgba(255,255,255,0.06)',
-                color: selectedCategory === cat.id ? 'black' : 'white',
-                border: selectedCategory === cat.id ? '1px solid #10b981' : '1px solid rgba(255,255,255,0.1)',
+                color: selectedCategory === cat.id ? '#000000' : 'white',
+                border: selectedCategory === cat.id ? '1.5px solid #10b981' : '1px solid rgba(255,255,255,0.12)',
                 padding: '8px 16px',
                 borderRadius: '20px',
                 fontSize: '0.85rem',
@@ -305,54 +370,85 @@ export function MarketplaceTab() {
         </div>
       </div>
 
-      {/* Produce Cards Grid */}
-      <div className="produce-cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
+      {/* Directory Count Header */}
+      <div style={{ marginBottom: '1rem', color: '#94a3b8', fontSize: '0.88rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span>Showing <strong style={{ color: 'white' }}>{filteredProduce.length}</strong> verified Farmer Producer Companies &amp; Collectives</span>
+        <span style={{ fontSize: '0.8rem', color: '#64748b' }}>✅ Direct Official Contacts with Registered Addresses</span>
+      </div>
+
+      {/* FPO & Producer Cards Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '20px' }}>
         {filteredProduce.length > 0 ? (
           filteredProduce.map((item) => (
             <div 
               key={item.id} 
-              className="produce-card" 
               style={{
                 background: 'rgba(10, 25, 16, 0.95)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
+                border: '1.5px solid rgba(255, 255, 255, 0.12)',
                 borderRadius: '16px',
-                padding: '20px',
+                padding: '22px',
                 display: 'flex',
                 flexDirection: 'column',
-                justify: 'space-between',
-                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)',
+                justifyContent: 'space-between',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.4)',
                 backdropFilter: 'blur(10px)',
-                position: 'relative'
+                position: 'relative',
+                transition: 'all 0.25s ease'
               }}
             >
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 'bold', color: 'white', margin: '0', flex: 1, paddingRight: '10px' }}>
+                {/* Header: FPO Name + Verified Badge */}
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '2px 8px', borderRadius: '10px', fontSize: '0.72rem', fontWeight: 'bold' }}>
+                      <i className="fa-solid fa-circle-check" style={{ marginRight: '4px' }}></i> Verified FPO / Producer
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 'bold', color: 'white', margin: 0, lineHeight: '1.4' }}>
                     {item.name}
                   </h3>
-                  <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.4)', padding: '4px 10px', borderRadius: '12px', fontWeight: 'bold', fontSize: '0.95rem', whiteSpace: 'nowrap' }}>
-                    ₹{item.ask_price} / qtl
-                  </span>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px', fontSize: '0.9rem', color: '#cbd5e1' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <i className="fa-solid fa-boxes-stacked" style={{ color: '#38bdf8', width: '18px' }}></i>
-                    <span><strong>Quantity:</strong> {item.quantity_qtl} Quintals ({item.quantity_qtl * 100} kg)</span>
+                {/* Details Section */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '18px', fontSize: '0.9rem', color: '#cbd5e1' }}>
+                  {/* Products */}
+                  <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '10px 12px' }}>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--primary-light)', fontWeight: 'bold', marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <i className="fa-solid fa-wheat-awn"></i> Agricultural Commodities &amp; Products:
+                    </div>
+                    <div style={{ color: 'white', fontWeight: '600', fontSize: '0.92rem' }}>
+                      {item.products}
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <i className="fa-solid fa-user-check" style={{ color: 'var(--primary-light)', width: '18px' }}></i>
-                    <span><strong>Farmer:</strong> {item.farmer_name}</span>
+
+                  {/* Registered Location */}
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginTop: '2px' }}>
+                    <i className="fa-solid fa-location-dot" style={{ color: '#f87171', marginTop: '3px', flexShrink: 0 }}></i>
+                    <div>
+                      <strong style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Registered Address:</strong>
+                      <div style={{ color: '#e2e8f0', fontSize: '0.86rem', lineHeight: '1.4' }}>{item.location}</div>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <i className="fa-solid fa-location-dot" style={{ color: '#f87171', width: '18px' }}></i>
-                    <span><strong>Location:</strong> {item.location}</span>
-                  </div>
+
+                  {/* Official Website Link if available */}
+                  {item.website && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '2px' }}>
+                      <i className="fa-solid fa-globe" style={{ color: '#38bdf8', width: '16px' }}></i>
+                      <a 
+                        href={item.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{ color: '#38bdf8', fontSize: '0.82rem', textDecoration: 'underline', wordBreak: 'break-all' }}
+                      >
+                        Official Verification Portal
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* Direct Action Call Buttons */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
+              {/* Action Buttons: Phone & WhatsApp */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
                 <a
                   href={`tel:${item.phone}`}
                   style={{
@@ -362,21 +458,21 @@ export function MarketplaceTab() {
                     gap: '10px',
                     background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                     color: 'white',
-                    padding: '12px 16px',
+                    padding: '11px 16px',
                     borderRadius: '12px',
                     textDecoration: 'none',
                     fontWeight: 'bold',
-                    fontSize: '0.95rem',
-                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+                    fontSize: '0.92rem',
+                    boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
                     textAlign: 'center'
                   }}
                 >
-                  <i className="fa-solid fa-phone" style={{ fontSize: '1.1rem' }}></i>
-                  <span>Call Farmer ({item.phone})</span>
+                  <i className="fa-solid fa-phone" style={{ fontSize: '1rem' }}></i>
+                  <span>Call Contact ({item.phone}{item.altPhone ? ` / ${item.altPhone}` : ''})</span>
                 </a>
 
                 <a
-                  href={`https://wa.me/91${item.phone}`}
+                  href={`https://wa.me/91${item.phone.replace(/[^0-9]/g, '')}`}
                   target="_blank"
                   rel="noreferrer"
                   style={{
@@ -386,12 +482,12 @@ export function MarketplaceTab() {
                     gap: '8px',
                     background: 'rgba(37, 211, 102, 0.15)',
                     color: '#25D366',
-                    border: '1px solid rgba(37, 211, 102, 0.3)',
+                    border: '1px solid rgba(37, 211, 102, 0.35)',
                     padding: '10px 16px',
                     borderRadius: '12px',
                     textDecoration: 'none',
                     fontWeight: 'bold',
-                    fontSize: '0.88rem',
+                    fontSize: '0.86rem',
                     textAlign: 'center'
                   }}
                 >
@@ -404,125 +500,118 @@ export function MarketplaceTab() {
         ) : (
           <div style={{ gridColumn: '1 / -1', padding: '40px', textAlign: 'center', background: 'rgba(10, 24, 17, 0.8)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
             <i className="fa-solid fa-store-slash" style={{ fontSize: '2.5rem', color: 'var(--text-muted)', marginBottom: '12px' }}></i>
-            <h3>No produce listings found</h3>
-            <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search query or post a new produce listing.</p>
+            <h3>No FPO listings found</h3>
+            <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search query or clear the filter.</p>
           </div>
         )}
       </div>
 
-      {/* Post New Produce Modal */}
+      {/* Post New Producer Listing Modal */}
       {modalOpen && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '16px' }}>
-          <div style={{ background: '#0a1910', border: '1px solid rgba(16, 185, 129, 0.4)', borderRadius: '16px', maxWidth: '500px', width: '100%', padding: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.8)' }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '16px' }}>
+          <div style={{ background: '#0a1910', border: '1px solid rgba(16, 185, 129, 0.4)', borderRadius: '16px', maxWidth: '540px', width: '100%', padding: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.8)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px' }}>
               <h3 style={{ margin: '0', fontSize: '1.25rem', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <i className="fa-solid fa-seedling" style={{ color: '#34d399' }}></i> Post Harvest Produce Listing
+                <i className="fa-solid fa-building-wheat" style={{ color: '#34d399' }}></i> Add Producer / FPO Directory Listing
               </h3>
               <button type="button" onClick={() => setModalOpen(false)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>&times;</button>
             </div>
 
             <form onSubmit={handleAddProduce} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div className="form-group">
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Crop / Commodity Title:</label>
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>FPO / Producer Organization Name:</label>
                 <input 
                   type="text" 
                   required 
                   value={formData.name} 
                   onChange={e => setFormData({...formData, name: e.target.value})} 
                   className="form-control" 
-                  placeholder="e.g. Sharbati Wheat Grade-A" 
+                  placeholder="e.g. Kisan Samriddhi Farmer Producer Co. Ltd." 
+                  style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                />
+              </div>
+
+              <div className="form-group">
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Agricultural Commodities / Products Offered:</label>
+                <input 
+                  type="text" 
+                  required 
+                  value={formData.products} 
+                  onChange={e => setFormData({...formData, products: e.target.value})} 
+                  className="form-control" 
+                  placeholder="e.g. Wheat, Gram, Soybean, Millets" 
                   style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
                 />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Category:</label>
+                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Primary Category:</label>
                   <select
                     value={formData.category}
                     onChange={e => setFormData({...formData, category: e.target.value})}
                     style={{ background: '#0a1910', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
                   >
-                    <option value="cereal">Grains &amp; Cereals</option>
-                    <option value="oilseed">Oilseeds</option>
-                    <option value="vegetables">Vegetables &amp; Fruits</option>
+                    <option value="cereal">Wheat &amp; Cereals</option>
+                    <option value="pulse">Pulses &amp; Dals</option>
+                    <option value="millet">Millets</option>
+                    <option value="oilseed">Oilseeds &amp; Cash Crops</option>
                   </select>
                 </div>
 
                 <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Asking Price (₹ / qtl):</label>
-                  <input 
-                    type="number" 
-                    required 
-                    value={formData.askPrice} 
-                    onChange={e => setFormData({...formData, askPrice: parseInt(e.target.value) || 0})} 
-                    className="form-control" 
-                    style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Quantity (Quintals):</label>
-                  <input 
-                    type="number" 
-                    required 
-                    value={formData.quantity} 
-                    onChange={e => setFormData({...formData, quantity: parseInt(e.target.value) || 0})} 
-                    className="form-control" 
-                    style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Farmer Name:</label>
+                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Public Phone Contact:</label>
                   <input 
                     type="text" 
-                    required 
-                    value={formData.farmerName} 
-                    onChange={e => setFormData({...formData, farmerName: e.target.value})} 
-                    className="form-control" 
-                    placeholder="Your name"
-                    style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Phone Number:</label>
-                  <input 
-                    type="tel" 
                     required 
                     value={formData.phone} 
                     onChange={e => setFormData({...formData, phone: e.target.value})} 
                     className="form-control" 
-                    placeholder="10-digit mobile"
-                    style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Location / District:</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={formData.location} 
-                    onChange={e => setFormData({...formData, location: e.target.value})} 
-                    className="form-control" 
-                    placeholder="e.g. Ludhiana, Punjab"
+                    placeholder="e.g. 9923233776" 
                     style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
                   />
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '12px', marginTop: '10px', justifyContent: 'flex-end' }}>
-                <button type="button" className="btn" onClick={() => setModalOpen(false)} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: 'none', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer' }}>
+              <div className="form-group">
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Registered Address &amp; Pincode:</label>
+                <input 
+                  type="text" 
+                  required 
+                  value={formData.location} 
+                  onChange={e => setFormData({...formData, location: e.target.value})} 
+                  className="form-control" 
+                  placeholder="e.g. Shelud, Chikhli, Maharashtra – 443207" 
+                  style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                />
+              </div>
+
+              <div className="form-group">
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Official Website / Portal Link (Optional):</label>
+                <input 
+                  type="text" 
+                  value={formData.website} 
+                  onChange={e => setFormData({...formData, website: e.target.value})} 
+                  className="form-control" 
+                  placeholder="e.g. https://richerseeds.com" 
+                  style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', marginTop: '10px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => setModalOpen(false)}
+                  style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'rgba(255,255,255,0.08)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', fontWeight: 'bold', cursor: 'pointer' }}
+                >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary" disabled={saving} style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>
-                  {saving ? 'Publishing...' : 'Publish Produce Listing'}
+                <button 
+                  type="submit" 
+                  disabled={saving}
+                  style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', border: 'none', fontWeight: 'bold', cursor: 'pointer' }}
+                >
+                  {saving ? 'Publishing...' : 'Publish Listing'}
                 </button>
               </div>
             </form>

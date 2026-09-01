@@ -346,11 +346,31 @@ export function LandingPage({ onStartKrishiJal, onStartSoftwareFarmers, onOpenDi
           {/* Feature List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '28px' }}>
             {[
-              { icon: '🤖', title: 'Gemini AI Voice Crop Advisor', tag: 'Voice AI' },
-              { icon: '🧪', title: 'Soil Diagnostic Lab & Reports', tag: 'Soil Lab' },
-              { icon: '🚜', title: 'Farm Equipment Rental Marketplace', tag: 'Rentals' },
-              { icon: '📈', title: 'Live Mandi Commodity Prices', tag: 'Mandi' },
-              { icon: '🏛️', title: 'Government Schemes & Subsidies', tag: 'Schemes' }
+              { 
+                icon: '🤖', 
+                title: isHindi ? 'जेमिनी एआई वॉइस फसल सलाहकार' : 'Gemini AI Voice Crop Advisor', 
+                tag: isHindi ? 'वॉइस एआई' : 'Voice AI' 
+              },
+              { 
+                icon: '🧪', 
+                title: isHindi ? 'सॉइल डायग्नोस्टिक लैब व रिपोर्ट' : 'Soil Diagnostic Lab & Reports', 
+                tag: isHindi ? 'सॉइल लैब' : 'Soil Lab' 
+              },
+              { 
+                icon: '🚜', 
+                title: isHindi ? 'कृषि उपकरण रेंटल मार्केटप्लेस' : 'Farm Equipment Rental Marketplace', 
+                tag: isHindi ? 'रेंटल' : 'Rentals' 
+              },
+              { 
+                icon: '📈', 
+                title: isHindi ? 'लाइव मंडी कमोडिटी भाव' : 'Live Mandi Commodity Prices', 
+                tag: isHindi ? 'मंडी' : 'Mandi' 
+              },
+              { 
+                icon: '🏛️', 
+                title: isHindi ? 'सरकारी योजनाएं व सब्सिडी' : 'Government Schemes & Subsidies', 
+                tag: isHindi ? 'योजनाएं' : 'Schemes' 
+              }
             ].map((f, idx) => (
               <div
                 key={idx}
@@ -491,11 +511,31 @@ export function LandingPage({ onStartKrishiJal, onStartSoftwareFarmers, onOpenDi
           {/* Feature List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '28px' }}>
             {[
-              { icon: '🚰', title: 'Automated IoT Pump & Water Control', tag: 'IoT Control' },
-              { icon: '🌱', title: '2D Field View & Soil Digital Twin', tag: 'Digital Twin' },
-              { icon: '🏛️', title: 'Multi-Lingual Touch Village Kiosk', tag: 'Kiosk Mode' },
-              { icon: '📱', title: 'Offline SMS, Voice IVR & USSD Engine', tag: 'Offline Sim' },
-              { icon: '📊', title: 'Admin Officer Control & SIH Metrics', tag: 'Admin Control' }
+              { 
+                icon: '🚰', 
+                title: isHindi ? 'ऑटोमेटेड IoT पंप व वॉटर कंट्रोल' : 'Automated IoT Pump & Water Control', 
+                tag: isHindi ? 'IoT कंट्रोल' : 'IoT Control' 
+              },
+              { 
+                icon: '🌱', 
+                title: isHindi ? '2D फील्ड व्यू व सॉइल डिजिटल ट्विन' : '2D Field View & Soil Digital Twin', 
+                tag: isHindi ? 'डिजिटल ट्विन' : 'Digital Twin' 
+              },
+              { 
+                icon: '🏛️', 
+                title: isHindi ? 'बहुभाषी टच ग्राम कियोस्क' : 'Multi-Lingual Touch Village Kiosk', 
+                tag: isHindi ? 'कियोस्क मोड' : 'Kiosk Mode' 
+              },
+              { 
+                icon: '📱', 
+                title: isHindi ? 'ऑफलाइन SMS, वॉयस IVR व USSD इंजन' : 'Offline SMS, Voice IVR & USSD Engine', 
+                tag: isHindi ? 'ऑफलाइन सिम' : 'Offline Sim' 
+              },
+              { 
+                icon: '📊', 
+                title: isHindi ? 'एडमिन ऑफिसर कंट्रोल व SIH मेट्रिक्स' : 'Admin Officer Control & SIH Metrics', 
+                tag: isHindi ? 'एडमिन कंट्रोल' : 'Admin Control' 
+              }
             ].map((f, idx) => (
               <div
                 key={idx}

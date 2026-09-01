@@ -1,369 +1,399 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-import { CENTRAL_SCHEMES, STATE_SCHEMES, MSP_TABLE_2025_26 } from '../../data/constants';
+import { CENTRAL_SCHEMES, STATE_SCHEMES } from '../../data/constants';
 
-// ── Category pill colours ──────────────────────────────────────────────────────
-const CATEGORY_COLORS = {
-  'Direct Income Support': 'var(--primary-light)',
-  'Crop Insurance': '#3b82f6',
-  'Life Insurance': '#3b82f6',
-  'Renewable Energy & Solar': '#f59e0b',
-  'Energy Security': '#f59e0b',
-  'Solar & Water Lift': '#f59e0b',
-  'Farm Machinery & Tools': '#8b5cf6',
-  'Agricultural Credit': '#06b6d4',
-  'Credit & Finance': '#06b6d4',
-  'Organic Farming': '#84cc16',
-  'Soil Health & Water': '#84cc16',
-  'Soil Testing & Health': '#84cc16',
-  'Micro Irrigation': '#06b6d4',
-  'Water Harvesting': '#06b6d4',
-  'Farmer Training': '#f97316',
-  'Farmer Education': '#f97316',
-  'Farmer Welfare': '#f97316',
-  'Animal Husbandry': '#ec4899',
-  'Beekeeping & Honey': '#f59e0b',
-  'Agro-Processing & MSME': '#8b5cf6',
-  'Digital Market Linkage': '#a855f7',
-  'Direct Marketing': '#a855f7',
-  'Storage & Warehousing': '#64748b',
-  'Crop Production Boost': 'var(--primary-light)',
-  'Agriculture Development': 'var(--primary-light)',
-  'Tribal Horticulture': '#84cc16',
-  'Farmer Producer Organisations': '#06b6d4',
-  'Sugarcane Development': '#84cc16',
-  'Crop Registration': '#3b82f6',
-  'Price Deficiency Support': '#f59e0b',
-  'Debt Relief': '#ef4444',
-  'Power & Solar': '#f59e0b',
-};
+// Standard documents & eligibility helper for farmer clarity
+function getSchemeHelperDetails(scheme) {
+  let eligibility = "All Indian farmers, small & marginal landholders, and agricultural workers.";
+  let docs = "Aadhaar Card, Land Record (Khasra/Khatoni), Bank Passbook, Passport Photo.";
+  let helpline = "1800-180-1551 (Kisan Call Center / Free)";
 
-function getCategoryColor(cat) {
-  return CATEGORY_COLORS[cat] || '#a855f7';
+  const titleLower = scheme.title.toLowerCase();
+  const categoryLower = (scheme.category || '').toLowerCase();
+
+  if (titleLower.includes('pm-kisan') || titleLower.includes('kisan samman')) {
+    eligibility = "Landholding farmer families with cultivable land in their name.";
+    docs = "Aadhaar Card (linked to Mobile), Bank Account (Aadhaar Seeded), Land Registry Document.";
+    helpline = "155261 / 1800115526 (PM-KISAN Toll Free)";
+  } else if (titleLower.includes('fasal bima') || titleLower.includes('insurance') || titleLower.includes('pmfby')) {
+    eligibility = "All farmers growing notified crops in notified areas (Loanee & Non-loanee).";
+    docs = "Aadhaar Card, Land Sowing Certificate, Bank Passbook, Khasra Number.";
+    helpline = "1800-200-5142 (PMFBY Toll Free)";
+  } else if (titleLower.includes('kusum') || titleLower.includes('solar')) {
+    eligibility = "Individual farmers, FPOs, Cooperatives having agriculture land for pump installation.";
+    docs = "Aadhaar Card, Land Ownership Proof, Bank Passbook, Electricity Bill (if grid connected).";
+    helpline = "1800-180-3333 (MNRE Solar Helpline)";
+  } else if (titleLower.includes('credit card') || titleLower.includes('kcc') || titleLower.includes('loan')) {
+    eligibility = "Individual farmers, joint borrowers, tenant farmers, oral lessees & SHGs.";
+    docs = "Aadhaar Card, PAN Card, Land Revenue Records, Bank Account Details.";
+    helpline = "1800-180-1551 / Contact Nearest Bank Branch";
+  } else if (titleLower.includes('rythu bandhu') || titleLower.includes('kalia') || titleLower.includes('krushak') || titleLower.includes('magel tyala')) {
+    eligibility = "State registered resident farmers with verified land records.";
+    docs = "Aadhaar Card, State Residence Proof, Land Record (Pattadar Passbook / 7/12 extract), Bank Passbook.";
+  }
+
+  return { eligibility, docs, helpline };
 }
 
-// ── Scheme Card Component ─────────────────────────────────────────────────────
-function SchemeCard({ scheme }) {
-  const [expanded, setExpanded] = useState(false);
-  const color = getCategoryColor(scheme.category);
-
-  return (
-    <div style={{
-      background: 'rgba(255,255,255,0.04)',
-      border: `1px solid rgba(255,255,255,0.08)`,
-      borderLeft: `4px solid ${color}`,
-      borderRadius: '16px',
-      padding: '1.1rem 1.2rem',
-      transition: 'all 0.25s',
-      cursor: 'pointer',
-    }}
-      onClick={() => setExpanded(v => !v)}
-      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-    >
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-        <div style={{
-          width: 40, height: 40, borderRadius: '10px', flexShrink: 0,
-          background: `${color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '1.3rem', border: `1px solid ${color}30`
-        }}>
-          {scheme.icon || '📋'}
-        </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
-            <h3 style={{ margin: 0, fontSize: '0.92rem', lineHeight: 1.4, color: 'rgba(255,255,255,0.92)' }}>
-              {scheme.title}
-            </h3>
-            <i className={`fa-solid fa-chevron-${expanded ? 'up' : 'down'}`} style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.8rem', marginTop: '3px', flexShrink: 0 }} />
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '6px' }}>
-            <span style={{
-              background: `${color}20`, border: `1px solid ${color}40`,
-              color, borderRadius: '20px', padding: '2px 8px', fontSize: '0.72rem', fontWeight: 600
-            }}>{scheme.category}</span>
-            <span style={{
-              background: 'rgba(251,191,36,0.15)', border: '1px solid rgba(251,191,36,0.3)',
-              color: '#fbbf24', borderRadius: '20px', padding: '2px 8px', fontSize: '0.72rem', fontWeight: 700
-            }}>🎁 {scheme.subsidy}</span>
-            {scheme.stateName && (
-              <span style={{
-                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
-                color: 'rgba(255,255,255,0.5)', borderRadius: '20px', padding: '2px 8px', fontSize: '0.72rem'
-              }}>📍 {scheme.stateName}</span>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Expandable Detail */}
-      {expanded && (
-        <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-          <p style={{ margin: '0 0 10px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.65 }}>
-            {scheme.details}
-          </p>
-          {scheme.ministry && (
-            <p style={{ margin: '0 0 10px', fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>
-              🏛️ {scheme.ministry}
-            </p>
-          )}
-          <a
-            href={scheme.link} target="_blank" rel="noreferrer"
-            onClick={e => e.stopPropagation()}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: `${color}20`, border: `1px solid ${color}40`,
-              color, borderRadius: '8px', padding: '7px 14px', fontSize: '0.8rem', fontWeight: 600,
-              textDecoration: 'none', transition: 'all 0.2s'
-            }}
-          >
-            Apply / View on Portal <i className="fa-solid fa-up-right-from-square" style={{ fontSize: '0.75rem' }} />
-          </a>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ── Stats Bar ─────────────────────────────────────────────────────────────────
-function StatPill({ icon, label, value, color }) {
-  return (
-    <div style={{
-      background: `${color}15`, border: `1px solid ${color}30`,
-      borderRadius: '12px', padding: '10px 16px', textAlign: 'center', flex: 1, minWidth: '120px'
-    }}>
-      <div style={{ fontSize: '1.2rem', marginBottom: '2px' }}>{icon}</div>
-      <div style={{ fontSize: '1.1rem', fontWeight: 800, color }}>{value}</div>
-      <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.45)', marginTop: '2px' }}>{label}</div>
-    </div>
-  );
-}
-
-// ── Main SchemesTab ───────────────────────────────────────────────────────────
 export function SchemesTab() {
-  const { lang, location, farmerProfile } = useApp();
-  const [subTab, setSubTab] = useState('central');
+  const { farmerProfile } = useApp();
+  const [subTab, setSubTab] = useState('central'); // 'central' | 'state'
   const [search, setSearch] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedStateFilter, setSelectedStateFilter] = useState('All');
+  const [selectedState, setSelectedState] = useState('All');
+  const [expandedSchemeId, setExpandedSchemeId] = useState(null);
 
-  // Sync state filter with farmer profile location state
-  React.useEffect(() => {
+  // Sync state selector with user location if available
+  useEffect(() => {
     if (farmerProfile?.state) {
-      setSelectedStateFilter(farmerProfile.state);
+      setSelectedState(farmerProfile.state);
     }
   }, [farmerProfile]);
 
-  const getFilteredSchemes = () => {
-    let list = subTab === 'central' ? CENTRAL_SCHEMES : STATE_SCHEMES;
-    
-    if (subTab === 'state' && selectedStateFilter !== 'All') {
-      list = list.filter(s => s.stateName.toLowerCase() === selectedStateFilter.toLowerCase());
+  // Extract unique state names
+  const availableStates = Array.from(new Set(STATE_SCHEMES.map(s => s.stateName))).sort();
+
+  // Filter schemes cleanly
+  const currentSchemes = subTab === 'central' ? CENTRAL_SCHEMES : STATE_SCHEMES;
+
+  const filteredSchemes = currentSchemes.filter(scheme => {
+    // Filter by State if in State schemes tab
+    if (subTab === 'state' && selectedState !== 'All') {
+      if (scheme.stateName && scheme.stateName.toLowerCase() !== selectedState.toLowerCase()) {
+        return false;
+      }
     }
 
+    // Filter by search query
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter(s =>
-        s.title.toLowerCase().includes(q) ||
-        s.category.toLowerCase().includes(q) ||
-        s.details.toLowerCase().includes(q) ||
-        (s.stateName && s.stateName.toLowerCase().includes(q))
-      );
+      const matchTitle = scheme.title.toLowerCase().includes(q);
+      const matchSubsidy = (scheme.subsidy || '').toLowerCase().includes(q);
+      const matchDetails = (scheme.details || '').toLowerCase().includes(q);
+      const matchState = scheme.stateName ? scheme.stateName.toLowerCase().includes(q) : false;
+      return matchTitle || matchSubsidy || matchDetails || matchState;
     }
-    if (activeCategory !== 'All') {
-      list = list.filter(s => s.category === activeCategory);
-    }
-    return list;
-  };
 
-  const currentList = subTab === 'central' ? CENTRAL_SCHEMES : STATE_SCHEMES;
-  const allCategories = ['All', ...Array.from(new Set(currentList.map(s => s.category)))];
-  const filtered = getFilteredSchemes();
-
-  // MSP stats
-  const maxMSP = Math.max(...MSP_TABLE_2025_26.map(m => m.msp));
-  const kharifCount = MSP_TABLE_2025_26.filter(m => m.season === 'Kharif').length;
-  const rabiCount = MSP_TABLE_2025_26.filter(m => m.season === 'Rabi').length;
+    return true;
+  });
 
   return (
-    <div className="tab-panel active" style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+    <div className="tab-panel active" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', animation: 'fadeIn 0.3s ease' }}>
 
-      {/* ── Header ─────────────────────────────────────────────────────── */}
+      {/* Header Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(96,165,250,0.12), rgba(168,85,247,0.08))',
-        border: '1px solid rgba(96,165,250,0.2)', borderRadius: '18px', padding: '1.5rem'
+        background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)',
+        border: '1px solid rgba(59, 130, 246, 0.35)', borderRadius: '18px',
+        padding: '24px 26px',
+        marginBottom: '0.8rem',
+        boxShadow: '0 8px 30px rgba(0,0,0,0.3)'
       }}>
-        <h2 style={{ margin: '0 0 4px' }}>
-          <i className="fa-solid fa-building-columns" style={{ color: '#60a5fa', marginRight: '10px' }} />
-          Government Agricultural Schemes &amp; Subsidies
-        </h2>
-        <p style={{ margin: 0, color: 'rgba(255,255,255,0.55)', fontSize: '0.88rem' }}>
-          Explore 40+ central &amp; state government schemes — subsidies, insurance, credit, MSP rates, and more.
-        </p>
-        {/* Stats */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '1rem' }}>
-          <StatPill icon="🏛️" label="Central Schemes" value={CENTRAL_SCHEMES.length} color="#60a5fa" />
-          <StatPill icon="📍" label="State Schemes" value={STATE_SCHEMES.length} color="#a855f7" />
-          <StatPill icon="🌾" label="MSP Crops Covered" value={MSP_TABLE_2025_26.length} color="var(--primary-light)" />
-          <StatPill icon="💰" label="Max MSP (₹/qtl)" value={`₹${maxMSP.toLocaleString()}`} color="#f59e0b" />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+          <div>
+            <span style={{ 
+              background: 'rgba(59, 130, 246, 0.25)', color: '#60a5fa', 
+              padding: '4px 14px', borderRadius: '20px', fontSize: '0.82rem', 
+              fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' 
+            }}>
+              <i className="fa-solid fa-[#60a5fa] fa-building-columns"></i> Official Government Support Portals
+            </span>
+            <h2 style={{ fontSize: '1.65rem', fontWeight: 'bold', margin: '0 0 6px 0', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <i className="fa-solid fa-hand-holding-hand" style={{ color: '#60a5fa' }}></i> Farmer Government Schemes &amp; Subsidies
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', margin: '0', fontSize: '0.94rem', lineHeight: '1.5' }}>
+              Simple guide to Central &amp; State Government agricultural schemes — direct cash transfers, solar pump subsidies, crop insurance, and low-interest loans.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* ── Sub-Tab Navigation ─────────────────────────────────────────── */}
-      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
-        {[
-          { id: 'central', icon: '🏛️', label: `Central Schemes (${CENTRAL_SCHEMES.length})` },
-          { id: 'state', icon: '📍', label: `State Schemes (${STATE_SCHEMES.length})` },
-          { id: 'msp', icon: '📊', label: `MSP Rates 2025–26 (${MSP_TABLE_2025_26.length})` }
-        ].map(t => (
-          <button key={t.id} onClick={() => { setSubTab(t.id); setSearch(''); setActiveCategory('All'); }} style={{
-            padding: '9px 16px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-            fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s',
-            background: subTab === t.id ? 'linear-gradient(135deg,#3b82f6,#2563eb)' : 'rgba(255,255,255,0.06)',
-            color: subTab === t.id ? '#fff' : 'rgba(255,255,255,0.55)',
-            boxShadow: subTab === t.id ? '0 4px 12px rgba(59,130,246,0.3)' : 'none'
-          }}>
-            {t.icon} {t.label}
+      {/* Navigation Tabs: Central Schemes vs State Schemes */}
+      <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', margin: '0.4rem 0 0.8rem 0' }}>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', flex: '1', minWidth: '280px' }}>
+          {/* Central Schemes Button */}
+          <button 
+            type="button" 
+            onClick={() => { setSubTab('central'); setSearch(''); setExpandedSchemeId(null); }} 
+            style={{
+              flex: '1', minWidth: '220px', padding: '12px 18px', borderRadius: '14px', cursor: 'pointer',
+              border: subTab === 'central' ? '2px solid #60a5fa' : '1.5px solid rgba(59, 130, 246, 0.35)',
+              fontWeight: 'bold', transition: 'all 0.25s ease',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
+              background: subTab === 'central' 
+                ? 'linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%)' 
+                : 'rgba(15, 23, 42, 0.75)',
+              color: 'white',
+              boxShadow: subTab === 'central' ? '0 6px 22px rgba(37, 99, 235, 0.45)' : 'none',
+              transform: subTab === 'central' ? 'translateY(-2px)' : 'none'
+            }}>
+            <span style={{ 
+              fontSize: '1.3rem', width: '36px', height: '36px', borderRadius: '10px', 
+              background: subTab === 'central' ? 'rgba(255,255,255,0.2)' : 'rgba(59, 130, 246, 0.15)', 
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 
+            }}>🏛️</span>
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontSize: '0.96rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                Central Schemes
+                <span style={{ 
+                  background: subTab === 'central' ? 'rgba(0,0,0,0.3)' : 'rgba(59, 130, 246, 0.25)', 
+                  color: subTab === 'central' ? '#bfdbfe' : '#60a5fa', 
+                  padding: '2px 8px', borderRadius: '12px', fontSize: '0.75rem' 
+                }}>
+                  {CENTRAL_SCHEMES.length}
+                </span>
+              </div>
+              <div style={{ fontSize: '0.78rem', color: subTab === 'central' ? '#dbeafe' : '#93c5fd', fontWeight: 'normal', marginTop: '1px' }}>
+                केंद्र सरकार की योजनाएं
+              </div>
+            </div>
           </button>
-        ))}
 
-        {/* State Filter for State Schemes */}
+          {/* State Schemes Button */}
+          <button 
+            type="button" 
+            onClick={() => { setSubTab('state'); setSearch(''); setExpandedSchemeId(null); }} 
+            style={{
+              flex: '1', minWidth: '220px', padding: '12px 18px', borderRadius: '14px', cursor: 'pointer',
+              border: subTab === 'state' ? '2px solid #c084fc' : '1.5px solid rgba(168, 85, 247, 0.35)',
+              fontWeight: 'bold', transition: 'all 0.25s ease',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
+              background: subTab === 'state' 
+                ? 'linear-gradient(135deg, #7e22ce 0%, #a855f7 100%)' 
+                : 'rgba(15, 23, 42, 0.75)',
+              color: 'white',
+              boxShadow: subTab === 'state' ? '0 6px 22px rgba(126, 34, 206, 0.45)' : 'none',
+              transform: subTab === 'state' ? 'translateY(-2px)' : 'none'
+            }}>
+            <span style={{ 
+              fontSize: '1.3rem', width: '36px', height: '36px', borderRadius: '10px', 
+              background: subTab === 'state' ? 'rgba(255,255,255,0.2)' : 'rgba(168, 85, 247, 0.15)', 
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 
+            }}>📍</span>
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontSize: '0.96rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                State Schemes
+                <span style={{ 
+                  background: subTab === 'state' ? 'rgba(0,0,0,0.3)' : 'rgba(168, 85, 247, 0.25)', 
+                  color: subTab === 'state' ? '#e9d5ff' : '#c084fc', 
+                  padding: '2px 8px', borderRadius: '12px', fontSize: '0.75rem' 
+                }}>
+                  {STATE_SCHEMES.length}
+                </span>
+              </div>
+              <div style={{ fontSize: '0.78rem', color: subTab === 'state' ? '#f3e8ff' : '#e9d5ff', fontWeight: 'normal', marginTop: '1px' }}>
+                राज्य सरकार की योजनाएं
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* State Filter Dropdown (visible when State Schemes is selected) */}
         {subTab === 'state' && (
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginLeft: '8px' }}>
-            <span style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.45)' }}>State:</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(10, 24, 17, 0.9)', padding: '6px 14px', borderRadius: '12px', border: '1px solid rgba(168, 85, 247, 0.4)' }}>
+            <i className="fa-solid fa-location-dot" style={{ color: '#c084fc' }}></i>
+            <span style={{ fontSize: '0.88rem', color: '#e2e8f0', fontWeight: 'bold' }}>Filter State:</span>
             <select
-              value={selectedStateFilter}
-              onChange={e => setSelectedStateFilter(e.target.value)}
+              value={selectedState}
+              onChange={e => setSelectedState(e.target.value)}
               style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.1)',
+                background: '#0a1910',
+                border: '1px solid rgba(255,255,255,0.15)',
                 color: '#fff',
                 padding: '6px 12px',
                 borderRadius: '8px',
-                fontSize: '0.82rem',
+                fontSize: '0.88rem',
                 outline: 'none',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontWeight: 'bold'
               }}
             >
-              <option value="All">All States</option>
-              {Array.from(new Set(STATE_SCHEMES.map(s => s.stateName))).sort().map(st => (
+              <option value="All">All States (सभी राज्य)</option>
+              {availableStates.map(st => (
                 <option key={st} value={st}>{st}</option>
               ))}
             </select>
           </div>
         )}
+      </div>
 
-        {/* Search */}
-        {subTab !== 'msp' && (
-          <div style={{ marginLeft: 'auto', position: 'relative' }}>
-            <i className="fa-solid fa-search" style={{ position: 'absolute', left: '11px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)', fontSize: '0.8rem' }} />
-            <input
-              type="text"
-              placeholder="Search scheme..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              style={{
-                padding: '8px 12px 8px 32px', borderRadius: '10px',
-                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-                color: '#fff', fontSize: '0.85rem', width: '200px'
-              }}
-            />
-          </div>
+      {/* Simple Search Bar */}
+      <div style={{ position: 'relative', width: '100%' }}>
+        <i className="fa-solid fa-magnifying-glass" style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)', fontSize: '1.1rem' }}></i>
+        <input
+          type="text"
+          placeholder="🔍 Search scheme by name, amount or benefit (e.g. 6000, solar pump, loan, insurance)..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{
+            width: '100%', padding: '14px 45px 14px 46px', borderRadius: '14px',
+            background: 'rgba(10, 24, 17, 0.95)', border: '1px solid rgba(255, 255, 255, 0.18)',
+            color: 'white', fontSize: '0.95rem', outline: 'none',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+          }}
+        />
+        {search && (
+          <button 
+            type="button" 
+            onClick={() => setSearch('')}
+            style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#94a3b8', fontSize: '1.2rem', cursor: 'pointer' }}>
+            &times;
+          </button>
         )}
       </div>
 
-      {/* ── MSP Table ──────────────────────────────────────────────────── */}
-      {subTab === 'msp' && (
-        <div>
-          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '1rem' }}>
-            <span style={{ background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.25)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.8rem', color: 'var(--primary-light)' }}>
-              🌱 Kharif: {kharifCount} crops
-            </span>
-            <span style={{ background: 'rgba(96,165,250,0.12)', border: '1px solid rgba(96,165,250,0.25)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.8rem', color: '#93c5fd' }}>
-              ❄️ Rabi: {rabiCount} crops
-            </span>
-            <span style={{ background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.25)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.8rem', color: '#fbbf24' }}>
-              📅 Annual: {MSP_TABLE_2025_26.filter(m => m.season === 'Annual').length} crops
-            </span>
-          </div>
-          <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
-              <thead>
-                <tr style={{ background: 'rgba(255,255,255,0.06)' }}>
-                  {['Crop Name', 'Season', 'MSP Rate (₹/qtl)', 'Hike 2025-26', 'Status'].map(h => (
-                    <th key={h} style={{ padding: '12px 16px', textAlign: 'left', color: 'rgba(255,255,255,0.6)', fontSize: '0.78rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {MSP_TABLE_2025_26.map((item, idx) => (
-                  <tr key={idx} style={{ borderTop: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.15s' }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.04)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    <td style={{ padding: '11px 16px', fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>{item.icon} {item.crop}</td>
-                    <td style={{ padding: '11px 16px' }}>
-                      <span style={{
-                        padding: '3px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 600,
-                        background: item.season === 'Kharif' ? 'rgba(34,197,94,0.15)' : item.season === 'Rabi' ? 'rgba(96,165,250,0.15)' : 'rgba(251,191,36,0.15)',
-                        color: item.season === 'Kharif' ? 'var(--primary-light)' : item.season === 'Rabi' ? '#93c5fd' : '#fbbf24'
-                      }}>{item.season}</span>
-                    </td>
-                    <td style={{ padding: '11px 16px', color: 'var(--primary-light)', fontWeight: 700, fontSize: '0.95rem' }}>₹{item.msp.toLocaleString()}</td>
-                    <td style={{ padding: '11px 16px', color: '#facc15', fontWeight: 600 }}>{item.change}</td>
-                    <td style={{ padding: '11px 16px' }}>
-                      <span style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: 'var(--primary-light)', borderRadius: '6px', padding: '3px 8px', fontSize: '0.73rem', fontWeight: 600 }}>GoI Floor Price</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+      {/* Results Header Count */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#94a3b8', fontSize: '0.88rem' }}>
+        <span>
+          Showing <strong style={{ color: 'white' }}>{filteredSchemes.length}</strong> scheme(s) under <strong style={{ color: subTab === 'central' ? '#60a5fa' : '#c084fc' }}>{subTab === 'central' ? 'Central Government' : (selectedState === 'All' ? 'All State Governments' : selectedState)}</strong>
+        </span>
+        <span style={{ fontSize: '0.8rem', color: '#64748b' }}>💡 Click any scheme to expand full eligibility &amp; documents</span>
+      </div>
 
-      {/* ── Scheme Cards ───────────────────────────────────────────────── */}
-      {subTab !== 'msp' && (
-        <div>
-          {/* Category Filter Pills */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '1rem' }}>
-            {allCategories.map(cat => {
-              const color = cat === 'All' ? '#60a5fa' : getCategoryColor(cat);
-              return (
-                <button key={cat} onClick={() => setActiveCategory(cat)} style={{
-                  padding: '5px 12px', borderRadius: '20px', border: `1px solid ${activeCategory === cat ? color : 'rgba(255,255,255,0.1)'}`,
-                  background: activeCategory === cat ? `${color}22` : 'transparent',
-                  color: activeCategory === cat ? color : 'rgba(255,255,255,0.45)',
-                  fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', whiteSpace: 'nowrap'
-                }}>
-                  {cat}
-                </button>
-              );
-            })}
-          </div>
+      {/* Simple, Large Scheme Cards Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px' }}>
+        {filteredSchemes.length > 0 ? (
+          filteredSchemes.map((scheme) => {
+            const isExpanded = expandedSchemeId === scheme.id;
+            const helper = getSchemeHelperDetails(scheme);
+            const cardAccentColor = subTab === 'central' ? '#3b82f6' : '#a855f7';
 
-          {/* Results count */}
-          <div style={{ marginBottom: '0.8rem', fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)' }}>
-            Showing <strong style={{ color: '#60a5fa' }}>{filtered.length}</strong> of <strong>{currentList.length}</strong> schemes
-            {activeCategory !== 'All' && <span> in <strong style={{ color: getCategoryColor(activeCategory) }}>{activeCategory}</strong></span>}
-          </div>
+            return (
+              <div 
+                key={scheme.id}
+                onClick={() => setExpandedSchemeId(isExpanded ? null : scheme.id)}
+                style={{
+                  background: isExpanded ? 'rgba(15, 30, 22, 0.96)' : 'rgba(10, 24, 17, 0.88)',
+                  border: `1.5px solid ${isExpanded ? cardAccentColor : 'rgba(255, 255, 255, 0.12)'}`,
+                  borderRadius: '16px', padding: '22px',
+                  cursor: 'pointer', transition: 'all 0.25s ease',
+                  boxShadow: isExpanded ? `0 8px 30px ${cardAccentColor}33` : '0 4px 15px rgba(0,0,0,0.2)',
+                  display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
+                }}
+              >
+                <div>
+                  {/* Top Row: Icon + Title + Subsidy Badge */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', marginBottom: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{
+                        width: '44px', height: '44px', borderRadius: '12px', flexShrink: 0,
+                        background: `${cardAccentColor}20`, border: `1px solid ${cardAccentColor}40`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: '1.4rem'
+                      }}>
+                        {scheme.icon || '📋'}
+                      </div>
+                      <div>
+                        <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 'bold', color: 'white', lineHeight: '1.35' }}>
+                          {scheme.title}
+                        </h3>
+                        {scheme.stateName && (
+                          <div style={{ fontSize: '0.8rem', color: '#c084fc', marginTop: '2px', fontWeight: 'bold' }}>
+                            📍 {scheme.stateName} Government
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
 
-          {/* Scheme Cards Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '0.8rem' }}>
-            {filtered.length > 0 ? filtered.map(scheme => (
-              <SchemeCard key={scheme.id} scheme={scheme} />
-            )) : (
-              <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: 'rgba(255,255,255,0.35)' }}>
-                <div style={{ fontSize: '3rem', marginBottom: '12px' }}>🔍</div>
-                <p>No schemes found for "<strong>{search || activeCategory}</strong>"</p>
-                <button onClick={() => { setSearch(''); setActiveCategory('All'); }} style={{ marginTop: '10px', background: 'rgba(96,165,250,0.15)', border: '1px solid rgba(96,165,250,0.3)', color: '#60a5fa', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem' }}>
-                  Clear Filters
-                </button>
+                  {/* Benefit Badge */}
+                  <div style={{ marginBottom: '14px' }}>
+                    <span style={{
+                      background: 'rgba(251, 191, 36, 0.18)', border: '1.5px solid rgba(251, 191, 36, 0.4)',
+                      color: '#fbbf24', padding: '6px 14px', borderRadius: '20px',
+                      fontSize: '0.88rem', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px'
+                    }}>
+                      <i className="fa-solid fa-gift"></i> Benefit: {scheme.subsidy}
+                    </span>
+                  </div>
+
+                  {/* Main Details Summary */}
+                  <p style={{ margin: '0 0 14px 0', fontSize: '0.9rem', color: '#e2e8f0', lineHeight: '1.6' }}>
+                    {scheme.details}
+                  </p>
+                </div>
+
+                {/* EXPANDED DETAILS SECTION */}
+                {isExpanded ? (
+                  <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: `1px solid ${cardAccentColor}44`, animation: 'fadeIn 0.2s ease' }}
+                    onClick={e => e.stopPropagation()}>
+                    
+                    {/* Eligibility Box */}
+                    <div style={{ background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '10px', padding: '12px', marginBottom: '10px' }}>
+                      <div style={{ color: '#60a5fa', fontWeight: 'bold', fontSize: '0.84rem', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <i className="fa-solid fa-user-check"></i> Eligibility Criteria (पात्रता):
+                      </div>
+                      <div style={{ color: '#e2e8f0', fontSize: '0.84rem', lineHeight: '1.4' }}>
+                        {helper.eligibility}
+                      </div>
+                    </div>
+
+                    {/* Required Documents Box */}
+                    <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '10px', padding: '12px', marginBottom: '14px' }}>
+                      <div style={{ color: '#34d399', fontWeight: 'bold', fontSize: '0.84rem', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <i className="fa-solid fa-file-invoice"></i> Required Documents (आवश्यक दस्तावेज):
+                      </div>
+                      <div style={{ color: '#e2e8f0', fontSize: '0.84rem', lineHeight: '1.4' }}>
+                        {helper.docs}
+                      </div>
+                    </div>
+
+                    {scheme.ministry && (
+                      <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginBottom: '12px' }}>
+                        🏛️ <strong>Managing Ministry / Department:</strong> {scheme.ministry}
+                      </div>
+                    )}
+
+                    {/* Action Buttons */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <a
+                        href={scheme.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                          background: `linear-gradient(135deg, ${cardAccentColor} 0%, ${subTab === 'central' ? '#2563eb' : '#9333ea'} 100%)`,
+                          color: 'white', padding: '11px 16px', borderRadius: '10px',
+                          textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem',
+                          textAlign: 'center', boxShadow: '0 4px 14px rgba(0,0,0,0.3)'
+                        }}
+                      >
+                        <span>Apply on Official Scheme Portal</span>
+                        <i className="fa-solid fa-up-right-from-square" style={{ fontSize: '0.8rem' }}></i>
+                      </a>
+
+                      <a
+                        href={`tel:${helper.helpline.split(' ')[0]}`}
+                        style={{
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                          background: 'rgba(255,255,255,0.06)', color: '#4ade80',
+                          border: '1px solid rgba(74, 222, 128, 0.3)', padding: '9px 16px', borderRadius: '10px',
+                          textDecoration: 'none', fontWeight: 'bold', fontSize: '0.84rem',
+                          textAlign: 'center'
+                        }}
+                      >
+                        <i className="fa-solid fa-phone"></i>
+                        <span>Helpline: {helper.helpline}</span>
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                    <span style={{ fontSize: '0.82rem', color: cardAccentColor, fontWeight: 'bold' }}>
+                      Tap to view eligibility &amp; apply →
+                    </span>
+                    <i className="fa-solid fa-chevron-down" style={{ color: '#64748b', fontSize: '0.8rem' }}></i>
+                  </div>
+                )}
               </div>
-            )}
+            );
+          })
+        ) : (
+          <div style={{ gridColumn: '1 / -1', padding: '40px', textAlign: 'center', background: 'rgba(10, 24, 17, 0.8)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+            <i className="fa-solid fa-building-columns" style={{ fontSize: '2.5rem', color: 'var(--text-muted)', marginBottom: '12px' }}></i>
+            <h3>No schemes found matching your search</h3>
+            <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search term or select another state.</p>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

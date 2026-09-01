@@ -16,6 +16,7 @@ import base64
 sys.stdout.reconfigure(encoding='utf-8')
 import math
 import time
+import ssl
 
 PORT = 8000
 DB_FILE = "krishi_jal.db"
@@ -2121,6 +2122,108 @@ Please analyze the soil and return a JSON response with EXACTLY this structure (
                     "profile": updated_row
                 }).encode('utf-8'))
                 return
+
+            # 4. API: Groq Agricultural AI Chat Endpoint
+            if path == "/api/groq/chat":
+                query = data.get("query", "").strip()
+                crop = data.get("crop", "Wheat")
+                soil = data.get("soil", "Sandy Loam")
+                area = data.get("area", 1.0)
+                location = data.get("location", "Punjab, India")
+                lang = data.get("lang", "en-IN")
+                api_key = data.get("apiKey", "").strip() or "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"
+
+                if not query:
+                    self.send_response(400)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"error": "Query string is required"}).encode('utf-8'))
+                    return
+
+                lang_map = {
+                    "en-IN": "English (clear, professional agricultural English)",
+                    "hi-IN": "Hindi (शुद्ध, सरल हिन्दी भाषा)",
+                    "pa-IN": "Punjabi (ਸਪੱਸ਼ਟ, ਸਰਲ ਪੰਜਾਬੀ)",
+                    "mr-IN": "Marathi (सोपी, स्पष्ट मराठी)",
+                    "te-IN": "Telugu (స్పష్టమైన తెలుగు)",
+                    "ta-IN": "Tamil (தெளிவான தமிழ்)",
+                    "bn-IN": "Bengali (সহজ বাংলা)"
+                }
+                target_lang = lang_map.get(lang, "English")
+
+                system_prompt = f"""You are "Krishi Jal AI Agronomist" — a senior agricultural scientist trained on comprehensive ICAR, PAU, and international agronomical research datasets.
+
+FARMER'S ACTIVE FIELD PROFILE:
+- Target Crop: {crop}
+- Soil Type: {soil}
+- Location / Region: {location}
+- Farm Area: {area} acres
+
+KNOWLEDGE & BEHAVIOR MANDATE:
+1. ANSWER EXACTLY WHAT IS ASKED: Provide direct, technically accurate, field-tested agronomic advice tailored specifically to the farmer's question.
+2. CHEMICAL & BIOLOGICAL PRECISION: When advising on pests/diseases, provide exact active chemical ingredients (e.g. Propiconazole 25% EC, Emamectin Benzoate 5% SG, Imidacloprid 17.8% SL), exact recommended dosages per acre (or per 100-200 liters of water), and safety intervals.
+3. FERTILIZER CALCULATION: When advising on fertilizers, compute exact quantities of Urea, DAP, MOP (Potash), and micronutrients (Zinc Sulphate, Boron) for {area} acres.
+4. LANGUAGE: Answer strictly in {target_lang}.
+5. CONCISE & ACTIONABLE: Deliver 3-5 high-impact, actionable sentences. Avoid generic boilerplate filler.
+6. NO MARKDOWN: Output pure clean plain text without *, **, #, or bullet symbols for seamless text-to-speech audio."""
+
+                models = ["qwen/qwen3.8-27b", "openai/gpt-oss-120b", "qwen/qwen3.6-27b"]
+                ai_answer = None
+
+                for model in models:
+                    try:
+                        req_body = json.dumps({
+                            "model": model,
+                            "messages": [
+                                {"role": "system", "content": system_prompt},
+                                {"role": "user", "content": query}
+                            ],
+                            "temperature": 0.7,
+                            "max_tokens": 550,
+                            "top_p": 0.95
+                        }).encode('utf-8')
+
+                        req = urllib.request.Request(
+                            "https://api.groq.com/openai/v1/chat/completions",
+                            data=req_body,
+                            headers={
+                                "Authorization": f"Bearer {api_key}",
+                                "Content-Type": "application/json",
+                                "User-Agent": "KrishiJal/3.8"
+                            }
+                        )
+
+                        ssl_ctx = ssl.create_default_context()
+                        ssl_ctx.check_hostname = False
+                        ssl_ctx.verify_mode = ssl.CERT_NONE
+                        with urllib.request.urlopen(req, timeout=15, context=ssl_ctx) as res:
+                            if res.status == 200:
+                                res_data = json.loads(res.read().decode('utf-8'))
+                                raw_text = res_data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                                if raw_text:
+                                    clean_text = raw_text.replace("*", "").replace("#", "").replace("`", "").strip()
+                                    ai_answer = clean_text
+                                    break
+                    except Exception as err:
+                        import traceback
+                        print(f"[Groq AI Model {model} Error]: {type(err).__name__}: {err}", flush=True)
+                        traceback.print_exc()
+
+                if ai_answer:
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({
+                        "success": True,
+                        "answer": ai_answer
+                    }).encode('utf-8'))
+                    return
+                else:
+                    self.send_response(502)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"error": "Failed to generate AI response from Groq models."}).encode('utf-8'))
+                    return
 
             self.send_response(404)
             self.end_headers()

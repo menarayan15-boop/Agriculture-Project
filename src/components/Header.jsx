@@ -86,15 +86,7 @@ export function Header({ onOpenAiModal, onNavigate }) {
           <i className="fa-solid fa-arrow-right" style={{ fontSize: '0.75rem', opacity: 0.8 }}></i>
         </button>
 
-        {/* Unit Switcher */}
-        <div className="unit-toggle-container">
-          <span className="toggle-label">°C / mm</span>
-          <label className="switch">
-            <input type="checkbox" id="toggle-units" />
-            <span className="slider round"></span>
-          </label>
-          <span className="toggle-label">°F / inches</span>
-        </div>
+
 
         {/* Language Selector Dropdown */}
         <div 

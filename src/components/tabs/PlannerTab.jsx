@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
+import { CROP_SEASONS_DATA, SOIL_TYPES_CATALOG } from '../../data/cropDetailsData';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -428,7 +429,7 @@ const SEASONS = [
 
 function MonthBar({ season }) {
   return (
-    <div style={{ display: 'flex', gap: '3px', marginTop: '12px', flexWrap: 'nowrap', overflowX: 'auto' }}>
+    <div style={{ display: 'flex', gap: '3px', marginTop: '12px', flexWrap: 'nowrap', overflowX: 'auto', paddingBottom: '4px' }}>
       {MONTHS.map((m, idx) => {
         const isSow = season.sowMonths.includes(idx);
         const isGrow = season.growMonths.includes(idx);
@@ -442,12 +443,13 @@ function MonthBar({ season }) {
 
         return (
           <div key={m} style={{
-            flex: '1', minWidth: '28px', textAlign: 'center', padding: '6px 2px',
+            flex: '1', minWidth: '32px', textAlign: 'center', padding: '7px 2px',
             borderRadius: '6px', background: bg, color: textColor,
-            fontSize: '0.62rem', fontWeight: 'bold', flexShrink: 0
+            fontSize: '0.65rem', fontWeight: 'bold', flexShrink: 0,
+            transition: 'all 0.2s ease'
           }}>
             <div>{m}</div>
-            {label && <div style={{ fontSize: '0.55rem', opacity: 0.9 }}>{label}</div>}
+            {label && <div style={{ fontSize: '0.55rem', opacity: 0.95, marginTop: '2px' }}>{label}</div>}
           </div>
         );
       })}
@@ -458,20 +460,49 @@ function MonthBar({ season }) {
 export function PlannerTab() {
   const { lang } = useApp();
   const [selectedSeason, setSelectedSeason] = useState('kharif');
-  const [selectedCrop, setSelectedCrop] = useState(null);
-  const [activePlanView, setActivePlanView] = useState('calendar'); // 'calendar' | 'rotation'
+  const [selectedCropId, setSelectedCropId] = useState(null);
+  const [activePlanView, setActivePlanView] = useState('calendar'); // 'calendar' | 'rotation' | 'soils'
 
-  const season = SEASONS.find(s => s.id === selectedSeason);
+  // Search & Filters
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterSoil, setFilterSoil] = useState('all');
+  const [filterWater, setFilterWater] = useState('all');
+  const [filterCategory, setFilterCategory] = useState('all');
+
+  const season = CROP_SEASONS_DATA.find(s => s.id === selectedSeason) || CROP_SEASONS_DATA[0];
+
+  // Filter crops based on search and dropdown filters
+  const filteredCrops = useMemo(() => {
+    return season.crops.filter(crop => {
+      const matchSearch = !searchQuery.trim() ||
+        crop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        crop.hindiName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        crop.soil.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        crop.climate.climateType.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchSoil = filterSoil === 'all' ||
+        crop.soil.toLowerCase().includes(filterSoil.toLowerCase());
+
+      const matchWater = filterWater === 'all' ||
+        crop.water.toLowerCase() === filterWater.toLowerCase();
+
+      const matchCategory = filterCategory === 'all' ||
+        (crop.category && crop.category.toLowerCase().includes(filterCategory.toLowerCase()));
+
+      return matchSearch && matchSoil && matchWater && matchCategory;
+    });
+  }, [season, searchQuery, filterSoil, filterWater, filterCategory]);
 
   return (
-    <div className="tab-panel active">
+    <div className="tab-panel active" style={{ animation: 'fadeIn 0.3s ease' }}>
 
-      {/* Header */}
+      {/* Header Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(10, 24, 17, 0.95) 100%)',
-        border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '16px',
-        padding: '22px 24px', marginBottom: '1.5rem',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px'
+        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(10, 24, 17, 0.95) 100%)',
+        border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '18px',
+        padding: '24px 26px', marginBottom: '1.5rem',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)'
       }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '0 0 6px 0', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -483,43 +514,55 @@ export function PlannerTab() {
           </p>
         </div>
 
-        {/* View Toggle */}
-        <div style={{ display: 'flex', gap: '8px' }}>
+        {/* View Toggle Buttons */}
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <button type="button" onClick={() => setActivePlanView('calendar')} style={{
-            padding: '8px 16px', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 'bold',
-            border: '1.5px solid', cursor: 'pointer',
-            background: activePlanView === 'calendar' ? '#38bdf8' : 'transparent',
-            color: activePlanView === 'calendar' ? '#000' : '#38bdf8',
-            borderColor: '#38bdf8'
+            padding: '9px 16px', borderRadius: '10px', fontSize: '0.86rem', fontWeight: 'bold',
+            border: '1.5px solid #10b981', cursor: 'pointer',
+            background: activePlanView === 'calendar' ? '#10b981' : 'transparent',
+            color: activePlanView === 'calendar' ? '#000' : '#10b981',
+            transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px'
           }}>
-            <i className="fa-solid fa-calendar" style={{ marginRight: '6px' }}></i>Calendar
+            <i className="fa-solid fa-calendar-days"></i> Seasonal Crops
+          </button>
+          <button type="button" onClick={() => setActivePlanView('soils')} style={{
+            padding: '9px 16px', borderRadius: '10px', fontSize: '0.86rem', fontWeight: 'bold',
+            border: '1.5px solid #a78bfa', cursor: 'pointer',
+            background: activePlanView === 'soils' ? '#a78bfa' : 'transparent',
+            color: activePlanView === 'soils' ? '#000' : '#a78bfa',
+            transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px'
+          }}>
+            <i className="fa-solid fa-mountain"></i> Soil Types Guide
           </button>
           <button type="button" onClick={() => setActivePlanView('rotation')} style={{
-            padding: '8px 16px', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 'bold',
-            border: '1.5px solid', cursor: 'pointer',
-            background: activePlanView === 'rotation' ? '#10b981' : 'transparent',
-            color: activePlanView === 'rotation' ? '#000' : '#10b981',
-            borderColor: '#10b981'
+            padding: '9px 16px', borderRadius: '10px', fontSize: '0.86rem', fontWeight: 'bold',
+            border: '1.5px solid #38bdf8', cursor: 'pointer',
+            background: activePlanView === 'rotation' ? '#38bdf8' : 'transparent',
+            color: activePlanView === 'rotation' ? '#000' : '#38bdf8',
+            transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px'
           }}>
-            <i className="fa-solid fa-arrows-rotate" style={{ marginRight: '6px' }}></i>Rotation Plan
+            <i className="fa-solid fa-arrows-rotate"></i> Rotation Engine
           </button>
         </div>
       </div>
 
+      {/* VIEW 1: SEASONAL CROPS CALENDAR */}
       {activePlanView === 'calendar' && (
         <>
-          {/* Season Tabs */}
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-            {SEASONS.map(s => (
-              <button key={s.id} type="button" onClick={() => { setSelectedSeason(s.id); setSelectedCrop(null); }}
+          {/* Season Switcher Tabs */}
+          <div style={{ display: 'flex', gap: '12px', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
+            {CROP_SEASONS_DATA.map(s => (
+              <button key={s.id} type="button"
+                onClick={() => { setSelectedSeason(s.id); setSelectedCropId(null); }}
                 style={{
-                  padding: '10px 20px', borderRadius: '12px', fontSize: '0.9rem', fontWeight: 'bold',
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
-                  background: selectedSeason === s.id ? s.color : 'rgba(255,255,255,0.05)',
-                  color: selectedSeason === s.id ? '#000' : s.color,
+                  padding: '12px 22px', borderRadius: '14px', fontSize: '0.95rem', fontWeight: 'bold',
+                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px',
+                  background: selectedSeason === s.id ? s.color : 'rgba(10, 24, 17, 0.7)',
+                  color: selectedSeason === s.id ? '#000000' : s.color,
                   border: `2px solid ${s.color}`,
-                  boxShadow: selectedSeason === s.id ? `0 4px 16px ${s.color}55` : 'none',
-                  transition: 'all 0.2s ease'
+                  boxShadow: selectedSeason === s.id ? `0 6px 22px ${s.color}66` : 'none',
+                  transform: selectedSeason === s.id ? 'translateY(-2px)' : 'none',
+                  transition: 'all 0.25s ease'
                 }}>
                 <i className={`fa-solid ${s.icon}`}></i> {s.name} ({s.crops.length} Crops)
               </button>
@@ -528,19 +571,130 @@ export function PlannerTab() {
 
           {/* Month Timeline Bar */}
           <div style={{
-            background: 'rgba(10, 24, 17, 0.9)', border: `1px solid ${season.border}`,
-            borderRadius: '14px', padding: '18px 20px', marginBottom: '1.5rem'
+            background: 'rgba(10, 24, 17, 0.95)', border: `1.5px solid ${season.border}`,
+            borderRadius: '16px', padding: '18px 22px', marginBottom: '1.5rem',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
           }}>
-            <h4 style={{ margin: '0 0 4px 0', color: season.color, fontWeight: 'bold' }}>
-              <i className={`fa-solid ${season.icon}`} style={{ marginRight: '8px' }}></i>
-              {season.name} — Sowing: {season.sowing} | Harvest: {season.harvest}
-            </h4>
-            <p style={{ margin: '0 0 8px 0', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-              <span style={{ background: season.color, color: '#000', padding: '2px 8px', borderRadius: '6px', marginRight: '6px', fontSize: '0.7rem', fontWeight: 'bold' }}>Sowing</span>
-              <span style={{ background: 'rgba(74,222,128,0.3)', color: 'var(--primary-light)', padding: '2px 8px', borderRadius: '6px', marginRight: '6px', fontSize: '0.7rem', fontWeight: 'bold' }}>Growing</span>
-              <span style={{ background: '#f97316', color: '#000', padding: '2px 8px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 'bold' }}>Harvest</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '6px' }}>
+              <h4 style={{ margin: 0, color: season.color, fontWeight: 'bold', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <i className={`fa-solid ${season.icon}`}></i>
+                {season.name} — Sowing: {season.sowing} | Harvest: {season.harvest}
+              </h4>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <span style={{ background: season.color, color: '#000', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>Sowing Window</span>
+                <span style={{ background: 'rgba(74,222,128,0.3)', color: 'var(--primary-light)', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>Active Growth</span>
+                <span style={{ background: '#f97316', color: '#000', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>Harvest Window</span>
+              </div>
+            </div>
+            <p style={{ margin: '0 0 10px 0', fontSize: '0.85rem', color: '#94a3b8' }}>
+              {season.description}
             </p>
             <MonthBar season={season} />
+          </div>
+
+          {/* Search & Filter Bar */}
+          <div style={{
+            background: 'rgba(15, 23, 42, 0.65)', border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '14px', padding: '14px 18px', marginBottom: '1.5rem',
+            display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center'
+          }}>
+            {/* Search input */}
+            <div style={{ flex: '2', minWidth: '220px', position: 'relative' }}>
+              <i className="fa-solid fa-magnifying-glass" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748b' }}></i>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search crop, soil (e.g. Clay, Sandy-Loam), or climate..."
+                style={{
+                  width: '100%', padding: '9px 12px 9px 36px', borderRadius: '8px',
+                  background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: 'white', fontSize: '0.88rem', outline: 'none'
+                }}
+              />
+            </div>
+
+            {/* Soil Filter */}
+            <div style={{ flex: '1', minWidth: '150px' }}>
+              <select
+                value={filterSoil}
+                onChange={e => setFilterSoil(e.target.value)}
+                style={{
+                  width: '100%', padding: '9px 12px', borderRadius: '8px',
+                  background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: 'white', fontSize: '0.85rem', outline: 'none', cursor: 'pointer'
+                }}>
+                <option value="all">🏔️ All Soil Types</option>
+                <option value="clay">Clay &amp; Clay-Loam</option>
+                <option value="loam">Loamy Soil</option>
+                <option value="sandy">Sandy &amp; Sandy-Loam</option>
+                <option value="black">Black Cotton Soil</option>
+                <option value="alluvial">Alluvial Soil</option>
+                <option value="red">Red Soil</option>
+              </select>
+            </div>
+
+            {/* Water Filter */}
+            <div style={{ flex: '1', minWidth: '140px' }}>
+              <select
+                value={filterWater}
+                onChange={e => setFilterWater(e.target.value)}
+                style={{
+                  width: '100%', padding: '9px 12px', borderRadius: '8px',
+                  background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: 'white', fontSize: '0.85rem', outline: 'none', cursor: 'pointer'
+                }}>
+                <option value="all">💧 All Water Levels</option>
+                <option value="low">Low Water</option>
+                <option value="medium">Medium Water</option>
+                <option value="high">High Water</option>
+                <option value="very high">Very High Water</option>
+              </select>
+            </div>
+
+            {/* Category Filter */}
+            <div style={{ flex: '1', minWidth: '140px' }}>
+              <select
+                value={filterCategory}
+                onChange={e => setFilterCategory(e.target.value)}
+                style={{
+                  width: '100%', padding: '9px 12px', borderRadius: '8px',
+                  background: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: 'white', fontSize: '0.85rem', outline: 'none', cursor: 'pointer'
+                }}>
+                <option value="all">🌾 All Crop Categories</option>
+                <option value="cereal">Cereals &amp; Millets</option>
+                <option value="pulse">Pulses &amp; Legumes</option>
+                <option value="oilseed">Oilseeds</option>
+                <option value="vegetable">Vegetables</option>
+                <option value="cucurbit">Gourds &amp; Melons</option>
+                <option value="spice">Spices</option>
+                <option value="cash">Cash &amp; Commercial</option>
+              </select>
+            </div>
+
+            {(searchQuery || filterSoil !== 'all' || filterWater !== 'all' || filterCategory !== 'all') && (
+              <button
+                type="button"
+                onClick={() => { setSearchQuery(''); setFilterSoil('all'); setFilterWater('all'); setFilterCategory('all'); }}
+                style={{
+                  padding: '9px 14px', borderRadius: '8px', background: 'rgba(239, 68, 68, 0.15)',
+                  color: '#f87171', border: '1px solid rgba(239, 68, 68, 0.3)', fontSize: '0.82rem',
+                  cursor: 'pointer', fontWeight: 'bold'
+                }}>
+                <i className="fa-solid fa-xmark"></i> Clear
+              </button>
+            )}
+          </div>
+
+          {/* Results Count */}
+          <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>
+              Showing <strong style={{ color: 'white' }}>{filteredCrops.length}</strong> crop(s) for <strong style={{ color: season.color }}>{season.name}</strong>
+            </span>
+            <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
+              💡 Click any crop card to view in-depth soil, climate, irrigation, NPK &amp; yield metrics
+            </span>
           </div>
 
           {/* Crop Cards Grid */}
@@ -548,21 +702,49 @@ export function PlannerTab() {
             {season.crops.map((crop, idx) => {
               const isSelected = selectedCrop === idx;
               return (
-                <div key={idx}
-                  onClick={() => setSelectedCrop(isSelected ? null : idx)}
+                <div key={crop.id}
+                  onClick={() => setSelectedCropId(isSelected ? null : crop.id)}
                   style={{
-                    background: isSelected ? season.bg : 'rgba(10, 24, 17, 0.85)',
-                    border: `1.5px solid ${isSelected ? season.color : 'rgba(255,255,255,0.1)'}`,
-                    borderRadius: '14px', padding: '18px',
-                    cursor: 'pointer', transition: 'all 0.25s ease',
-                    boxShadow: isSelected ? `0 6px 20px ${season.color}44` : 'none'
+                    background: isSelected ? 'rgba(15, 30, 22, 0.95)' : 'rgba(10, 24, 17, 0.85)',
+                    border: `1.5px solid ${isSelected ? season.color : 'rgba(255,255,255,0.12)'}`,
+                    borderRadius: '16px', padding: '20px',
+                    cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: isSelected ? `0 8px 30px ${season.color}33` : '0 4px 15px rgba(0,0,0,0.2)',
+                    position: 'relative', overflow: 'hidden'
                   }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                    <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 'bold', color: 'white' }}>
-                      <i className="fa-solid fa-seedling" style={{ color: season.color, marginRight: '8px' }}></i>
-                      {crop.name}
-                    </h3>
-                    <i className={`fa-solid fa-chevron-${isSelected ? 'up' : 'down'}`} style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}></i>
+
+                  {/* Category Pill */}
+                  {crop.category && (
+                    <div style={{
+                      position: 'absolute', top: '16px', right: '42px',
+                      background: 'rgba(255,255,255,0.08)', color: '#cbd5e1',
+                      padding: '2px 9px', borderRadius: '12px', fontSize: '0.68rem',
+                      fontWeight: '600', letterSpacing: '0.5px', textTransform: 'uppercase'
+                    }}>
+                      {crop.category}
+                    </div>
+                  )}
+
+                  {/* Top Row: Crop Name & Chevron */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <i className="fa-solid fa-seedling" style={{ color: season.color }}></i>
+                        {crop.name}
+                      </h3>
+                      <div style={{ fontSize: '0.82rem', color: '#a7f3d0', marginTop: '2px' }}>
+                        {crop.hindiName}
+                      </div>
+                    </div>
+                    <div style={{
+                      width: '28px', height: '28px', borderRadius: '50%',
+                      background: isSelected ? season.color : 'rgba(255,255,255,0.06)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: isSelected ? '#000' : 'var(--text-secondary)',
+                      fontSize: '0.8rem', transition: 'all 0.2s ease', flexShrink: 0
+                    }}>
+                      <i className={`fa-solid fa-chevron-${isSelected ? 'up' : 'down'}`}></i>
+                    </div>
                   </div>
 
                   {/* Summary Badges */}
@@ -570,8 +752,12 @@ export function PlannerTab() {
                     <span style={{ background: 'rgba(255,255,255,0.08)', padding: '3px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#94a3b8' }}>
                       <i className="fa-solid fa-clock" style={{ marginRight: '4px' }}></i>{crop.duration}
                     </span>
-                    <span style={{ background: 'rgba(56,189,248,0.15)', padding: '3px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#38bdf8' }}>
-                      <i className="fa-solid fa-droplet" style={{ marginRight: '4px' }}></i>Water: {crop.water}
+                    <span style={{
+                      background: crop.water === 'High' || crop.water === 'Very High' ? 'rgba(56,189,248,0.2)' : 'rgba(56,189,248,0.1)',
+                      padding: '4px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#38bdf8',
+                      display: 'flex', alignItems: 'center', gap: '5px'
+                    }}>
+                      <i className="fa-solid fa-droplet"></i> Water: {crop.water}
                     </span>
                     {crop.yieldBenchmark && (
                       <span style={{ background: 'rgba(168,85,247,0.15)', padding: '3px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#c084fc' }}>
@@ -588,7 +774,7 @@ export function PlannerTab() {
                   {/* Expanded 360 Agronomic Details */}
                   {isSelected && (
                     <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: `1px solid ${season.color}44`, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      
+
                       {/* Seed & Spacing Info */}
                       {(crop.seedRate || crop.spacing) && (
                         <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
@@ -668,6 +854,7 @@ export function PlannerTab() {
 
                     </div>
                   )}
+
                 </div>
               );
             })}
@@ -675,14 +862,96 @@ export function PlannerTab() {
         </>
       )}
 
-      {activePlanView === 'rotation' && (
-        <div>
-          {/* Rotation Plan View */}
+      {/* VIEW 2: SOIL TYPES GUIDE */}
+      {activePlanView === 'soils' && (
+        <div style={{ animation: 'fadeIn 0.3s ease' }}>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.3rem', color: 'white', margin: '0 0 6px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <i className="fa-solid fa-mountain" style={{ color: '#a78bfa' }}></i>
+              Comprehensive Soil Catalog: Best Soil for Every Indian Crop
+            </h3>
+            <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Understand soil texture, pH parameters, water retention capabilities, and which crops thrive most profitably in each soil type.
+            </p>
+          </div>
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
-            {/* Common Rotation Patterns */}
+            {SOIL_TYPES_CATALOG.map((soil, idx) => (
+              <div key={idx} style={{
+                background: 'rgba(10, 24, 17, 0.9)',
+                border: `1.5px solid ${soil.color}55`,
+                borderRadius: '16px', padding: '22px',
+                boxShadow: `0 6px 25px ${soil.color}22`
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                  <div>
+                    <h4 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}>
+                      {soil.name}
+                    </h4>
+                    <div style={{ color: soil.color, fontSize: '0.85rem', fontWeight: '600' }}>
+                      {soil.nameHi}
+                    </div>
+                  </div>
+                  <span style={{
+                    background: `${soil.color}22`, color: soil.color,
+                    border: `1px solid ${soil.color}55`, padding: '4px 10px',
+                    borderRadius: '20px', fontSize: '0.75rem', fontWeight: 'bold'
+                  }}>
+                    pH {soil.ph}
+                  </span>
+                </div>
+
+                <p style={{ margin: '0 0 14px 0', fontSize: '0.88rem', color: '#cbd5e1', lineHeight: '1.6' }}>
+                  {soil.description}
+                </p>
+
+                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '12px', marginBottom: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '4px' }}>
+                    <i className="fa-solid fa-droplet" style={{ color: '#38bdf8', marginRight: '6px' }}></i>
+                    <strong>Water Holding Capacity:</strong> <span style={{ color: '#e2e8f0' }}>{soil.waterRetention}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 'bold', color: soil.color, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <i className="fa-solid fa-wheat-awn"></i> Recommended High-Yield Crops:
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                    {soil.bestCrops.map((c, ci) => (
+                      <span key={ci} style={{
+                        background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.15)',
+                        color: '#f1f5f9', padding: '4px 10px', borderRadius: '8px', fontSize: '0.78rem',
+                        fontWeight: '500'
+                      }}>
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* VIEW 3: CROP ROTATION ENGINE */}
+      {activePlanView === 'rotation' && (
+        <div style={{ animation: 'fadeIn 0.3s ease' }}>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.3rem', color: 'white', margin: '0 0 6px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <i className="fa-solid fa-arrows-rotate" style={{ color: '#38bdf8' }}></i>
+              Proven Scientific Crop Rotation Blueprints
+            </h3>
+            <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Strategic rotations that naturally fix atmospheric nitrogen, disrupt pest life cycles, and maximize farm profitability.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
             {[
               {
-                title: 'North India — Wheat-Paddy Belt',
+                title: 'North India — Wheat-Paddy-Pulse Belt',
                 icon: 'fa-wheat-awn', color: '#fbbf24',
                 steps: [
                   { season: 'Kharif', crop: 'Paddy (Rice)', months: 'Jun – Oct', detail: 'Transplanting in puddled soil; requires 1200mm water & Zinc Sulphate application.', icon: 'fa-seedling', color: '#10b981' },
@@ -725,9 +994,10 @@ export function PlannerTab() {
               <div key={idx} style={{
                 background: 'rgba(10, 24, 17, 0.9)',
                 border: `1.5px solid rgba(255,255,255,0.12)`,
-                borderRadius: '16px', padding: '20px'
+                borderRadius: '16px', padding: '22px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
               }}>
-                <h3 style={{ margin: '0 0 16px 0', fontSize: '1.05rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <h3 style={{ margin: '0 0 16px 0', fontSize: '1.1rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <i className={`fa-solid ${plan.icon}`} style={{ color: plan.color }}></i>
                   {plan.title}
                 </h3>
@@ -748,8 +1018,8 @@ export function PlannerTab() {
                   ))}
                 </div>
 
-                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '12px', borderLeft: `3px solid ${plan.color}` }}>
-                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#cbd5e1', lineHeight: '1.5' }}>
+                <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '14px', borderLeft: `3px solid ${plan.color}` }}>
+                  <p style={{ margin: 0, fontSize: '0.84rem', color: '#cbd5e1', lineHeight: '1.5' }}>
                     <i className="fa-solid fa-circle-info" style={{ color: plan.color, marginRight: '6px' }}></i>
                     <strong>Agronomic Rotation Benefit:</strong> {plan.benefit}
                   </p>
@@ -759,6 +1029,7 @@ export function PlannerTab() {
           </div>
         </div>
       )}
+
     </div>
   );
 }

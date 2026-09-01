@@ -852,8 +852,29 @@ const DEFAULT_20_MACHINES = [
   }
 ];
 
+const REAL_MACHINES = [
+  { "id": "mach-01", "owner": "Emerging Farm Equipments (India) Pvt Ltd.", "name": "Farm equipment", "description": "Kolathur, Chennai, Tamil Nadu", "phone": "044-25561622", "website": "https://www.emergingfarm.com/?utm_source=chatgpt.com", "category": "tractors" },
+  { "id": "mach-02", "owner": "Aerial Drobotics - Agriculture Drone Sprayer in India", "name": "Agricultural drones / spraying", "description": "Namakkal, Tamil Nadu", "phone": "9952469739", "website": "https://aerialdrobotics.com/?utm_source=chatgpt.com", "category": "drone" },
+  { "id": "mach-03", "owner": "Agri drone sprayer-Rental", "name": "Drone spraying rental", "description": "Thenkurissi, Kerala", "phone": "9496294951", "website": "", "category": "drone" },
+  { "id": "mach-04", "owner": "DRONE RAJA HEAD OFFICE", "name": "Agricultural drones", "description": "Kankipadu, Vijayawada, Andhra Pradesh", "phone": "9989838337", "website": "https://droneraja.in/?utm_source=chatgpt.com", "category": "drone" },
+  { "id": "mach-05", "owner": "Marut Drones", "name": "Agricultural drones", "description": "Madhapur, Hyderabad, Telangana", "phone": "9052999365", "website": "https://marutdrones.com/?utm_source=chatgpt.com", "category": "drone" },
+  { "id": "mach-06", "owner": "Bushra Impex / X1 Power", "name": "Power weeders, harvesters, water pumps, sprayers, tea harvesters", "description": "Kalasipalya, Bengaluru, Karnataka", "phone": "7624869606", "website": "", "category": "harvester" },
+  { "id": "mach-07", "owner": "Kale Agri Tech", "name": "Tractors, harvesters, farm equipment, machinery hire", "description": "Shivamogga, Karnataka", "phone": "Contact through website", "website": "https://www.kaleagritech.com/", "category": "tractors" },
+  { "id": "mach-08", "owner": "WhiteOx Pvt Ltd", "name": "Tractor, drone spraying, well drilling, seed sowing", "description": "Sholinganallur, Chennai, Tamil Nadu", "phone": "8111015577", "website": "https://whiteox.in/", "category": "tractors" },
+  { "id": "mach-09", "owner": "Agrizone India", "name": "Agricultural machinery / dealer network", "description": "Puttur, Dakshina Kannada, Karnataka", "phone": "9108575757", "website": "https://www.agrizoneind.com/", "category": "tractors" },
+  { "id": "mach-10", "owner": "GreenRider Enterprises", "name": "Agricultural & dairy machinery", "description": "Bettahalli, Kunigal, Karnataka", "phone": "9844107053", "website": "https://www.greenriderskb.com/", "category": "tractors" },
+  { "id": "mach-11", "owner": "Sawbhumi Asha Agri India", "name": "Mini tractors, water pumps, power tillers, threshers, sprayers", "description": "Amta/Nowda, Murshidabad, West Bengal", "phone": "9733829216", "website": "https://www.ashaagriindia.com/", "category": "tractors" },
+  { "id": "mach-12", "owner": "JFarm Services / TAFE", "name": "Tractor & farm-equipment rental", "description": "Chennai, Tamil Nadu / multiple states", "phone": "1800-4200-100", "website": "https://www.jfarmservices.in/", "category": "tractors" },
+  { "id": "mach-13", "owner": "BhoomiHire", "name": "Tractor, harvester, rotavator, drone spraying", "description": "Hyderabad/Telangana", "phone": "7337291961", "website": "https://bhoomihire.in/", "category": "tractors" },
+  { "id": "mach-14", "owner": "Miraitu", "name": "Machinery, drone spraying, borewell, farm services", "description": "Parappana Agrahara, Bengaluru", "phone": "9380306475", "website": "https://www.miraitu.in/", "category": "drone" },
+  { "id": "mach-15", "owner": "SarvaGram Farm Services", "name": "Cultivator, rotavator, harvester and other equipment rental", "description": "India", "phone": "8101777555", "website": "https://www.sarvagram.com/farm-services/", "category": "harvester" },
+  { "id": "mach-16", "owner": "GROO Agri", "name": "Tractor, harvester, rotavator, drone, JCB, borewell", "description": "India", "phone": "Contact through website", "website": "https://grooagri.com/", "category": "tractors" },
+  { "id": "mach-17", "owner": "Desinganadu Farmer Producer Company", "name": "Custom hiring, agricultural drones, machinery rental", "description": "Kerala", "phone": "Contact through website", "website": "https://www.desinganadu.in/", "category": "drone" },
+  { "id": "mach-18", "owner": "KisanDepot / Kerblet", "name": "Tractor, rotavator, sprayer and farm equipment rental", "description": "India", "phone": "Booking through website/WhatsApp", "website": "https://www.kerblet.com/kisan-depot", "category": "tractors" }
+];
+
 export function RentalsTab({ onOpenBookingModal }) {
-  const [equipmentList, setEquipmentList] = useState(DEFAULT_20_MACHINES);
+  const [equipmentList, setEquipmentList] = useState(REAL_MACHINES);
 
   useEffect(() => {
     fetchEquipment().then(res => {
@@ -861,9 +882,10 @@ export function RentalsTab({ onOpenBookingModal }) {
         setEquipmentList(res.equipment);
       }
     }).catch(() => {
-      setEquipmentList(DEFAULT_20_MACHINES);
+      setEquipmentList(REAL_MACHINES);
     });
   }, []);
+
 
   const CATEGORY_ICONS = {
     tractor: "fa-tractor", harvester: "fa-wheat-awn", drone: "fa-plane-up",
@@ -884,9 +906,10 @@ export function RentalsTab({ onOpenBookingModal }) {
         {equipmentList.map((item) => {
           const icon = item.icon || CATEGORY_ICONS[item.category] || "fa-tractor";
           const rateHr = item.rate_hourly || item.rateHourly || 500;
-          const phoneStr = item.phone || "+91 98765 43210";
+          const phoneStr = item.phone || "";
           const rawPhone = phoneStr.replace(/\s/g, '');
           const wpNum = item.whatsapp || rawPhone.replace(/\D/g, '');
+          const hasPhone = wpNum.length >= 8;
           const wpLink = `https://wa.me/${wpNum.startsWith('91') ? wpNum : '91' + wpNum}?text=Hi,%20I%20want%20to%20rent%20${encodeURIComponent(item.name)}%20from%20your%20shop.`;
 
           return (
@@ -935,34 +958,50 @@ export function RentalsTab({ onOpenBookingModal }) {
               {/* Description */}
               <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>{item.description}</p>
 
-              {/* Price Row */}
+              {/* Contact / Links Row */}
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '10px', marginTop: 'auto' }}>
-                <div style={{ marginBottom: '10px' }}>
-                  <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-light)' }}>₹{rateHr}</span>
-                  <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginLeft: '4px' }}>/ hr</span>
-                </div>
+                {rateHr !== 500 && (
+                  <div style={{ marginBottom: '10px' }}>
+                    <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-light)' }}>₹{rateHr}</span>
+                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginLeft: '4px' }}>/ hr</span>
+                  </div>
+                )}
                 <div style={{ display: 'flex', gap: '8px' }}>
-                  <a href={`tel:${rawPhone}`} style={{
-                    flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                    background: 'rgba(56,189,248,0.2)', color: '#38bdf8', border: '1px solid rgba(56,189,248,0.4)',
-                    borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
-                  }}>
-                    <i className="fa-solid fa-phone"></i> Call
-                  </a>
-                  <a href={wpLink} target="_blank" rel="noopener noreferrer" style={{
-                    flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                    background: '#25D366', color: '#fff', border: 'none',
-                    borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
-                  }}>
-                    <i className="fa-brands fa-whatsapp"></i> Chat
-                  </a>
-                  <button onClick={() => onOpenBookingModal(item)} style={{
-                    flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                    background: '#10b981', color: '#fff', border: 'none',
-                    borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
-                  }}>
-                    <i className="fa-solid fa-handshake"></i> Rent
-                  </button>
+                  {hasPhone && (
+                    <>
+                      <a href={`tel:${rawPhone}`} style={{
+                        flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                        background: 'rgba(56,189,248,0.2)', color: '#38bdf8', border: '1px solid rgba(56,189,248,0.4)',
+                        borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
+                      }}>
+                        <i className="fa-solid fa-phone"></i> Call
+                      </a>
+                      <a href={wpLink} target="_blank" rel="noopener noreferrer" style={{
+                        flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                        background: '#25D366', color: '#fff', border: 'none',
+                        borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
+                      }}>
+                        <i className="fa-brands fa-whatsapp"></i> Chat
+                      </a>
+                    </>
+                  )}
+                  {item.website ? (
+                    <a href={item.website} target="_blank" rel="noopener noreferrer" style={{
+                      flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                      background: 'rgba(16,185,129,0.2)', color: 'var(--primary-light)', border: '1px solid rgba(16,185,129,0.4)',
+                      borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
+                    }}>
+                      <i className="fa-solid fa-globe"></i> Website
+                    </a>
+                  ) : (
+                    <button onClick={() => onOpenBookingModal(item)} style={{
+                      flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                      background: '#10b981', color: '#fff', border: 'none',
+                      borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
+                    }}>
+                      <i className="fa-solid fa-handshake"></i> Rent
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

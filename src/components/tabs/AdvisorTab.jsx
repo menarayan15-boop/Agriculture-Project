@@ -69,29 +69,54 @@ RESPONSE RULES:
         }
       };
 
-      const activeKey = geminiKey || '';
-      const apiUrl = activeKey 
-        ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(activeKey)}`
-        : '';
+      const key = (geminiKey && geminiKey.trim()) ? geminiKey.trim() : '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';
+      let aiText = '';
 
-      let response;
-      if (activeKey) {
-        response = await fetch(apiUrl, {
+      if (key.startsWith('AIza')) {
+        // Use Gemini API if custom Gemini key provided
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`;
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(requestBody)
         });
+        if (response.ok) {
+          const data = await response.json();
+          aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        }
       } else {
-        response = { ok: false };
+        // Use Groq Llama-3.3-70B API (Lightning fast)
+        const messages = [
+          { role: 'system', content: systemPrompt },
+          ...chatHistoryRef.current.slice(-6).map(m => ({
+            role: m.role === 'user' ? 'user' : 'assistant',
+            content: m.text
+          })),
+          { role: 'user', content: text }
+        ];
+
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${key}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            messages,
+            temperature: 0.5,
+            max_tokens: 350
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const raw = data?.choices?.[0]?.message?.content || '';
+          aiText = raw ? `[Groq AI] ${raw.replace(/[\*#_`]/g, '').trim()}` : '';
+        }
       }
 
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData?.error?.message || `API Error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[Gemini AI] Unable to generate response.';
+      if (!aiText) throw new Error('API returned empty response');
 
       chatHistoryRef.current = [
         ...chatHistoryRef.current.slice(-8),
