@@ -411,10 +411,6 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
   const [sprayHoursAgo, setSprayHoursAgo] = useState(24);
   const [sprayLoggedTime, setSprayLoggedTime] = useState('yesterday at 4:30 PM');
 
-  // Navigation & Directions Modal State
-  const [showDirectionsModal, setShowDirectionsModal] = useState(false);
-  const [copiedCoords, setCopiedCoords] = useState(false);
-
   // Auto-sync initial weather from live weather data if available
   useEffect(() => {
     if (liveWeatherData && liveWeatherData.temp !== undefined) {
@@ -462,25 +458,46 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
     );
   }, [location]);
 
-  // Direct Google Maps Directions URL
-  const googleMapsDirectionsUrl = useMemo(() => {
-    return `https://www.google.com/maps/dir/?api=1&destination=${hospital.lat},${hospital.lon}`;
-  }, [hospital]);
+  // Navigation & Directions State
+  const [showEmbeddedDirections, setShowEmbeddedDirections] = useState(false);
+  const [copiedCoords, setCopiedCoords] = useState(false);
 
-  const handleOpenGoogleMaps = useCallback(
+  // Origin & Destination for 100% Reliable Google Maps Navigation
+  const originCoord = useMemo(() => {
+    return location && location.lat ? `${location.lat},${location.lon}` : 'Current+Location';
+  }, [location]);
+
+  // Direct Google Maps Driving Directions URL (with explicit origin + destination)
+  const googleMapsDirectionsUrl = useMemo(() => {
+    return `https://www.google.com/maps/dir/?api=1&origin=${originCoord}&destination=${hospital.lat},${hospital.lon}&travelmode=driving`;
+  }, [originCoord, hospital]);
+
+  const handleToggleOrOpenDirections = useCallback(
     (e) => {
       if (e) {
         e.preventDefault();
         e.stopPropagation();
       }
-      const url = `https://www.google.com/maps/dir/?api=1&destination=${hospital.lat},${hospital.lon}`;
+      // Toggle embedded route panel on screen
+      setShowEmbeddedDirections((prev) => !prev);
+
+      // Also trigger direct Google Maps navigation in new tab
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${originCoord}&destination=${hospital.lat},${hospital.lon}&travelmode=driving`;
       const newTab = window.open(url, '_blank', 'noopener,noreferrer');
       if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
-        window.location.href = url;
+        // Pop-up blocker fallback
+        window.open(url, '_blank');
       }
     },
-    [hospital]
+    [originCoord, hospital]
   );
+
+  const handleCopyCoords = (e) => {
+    if (e) e.stopPropagation();
+    navigator.clipboard.writeText(`${hospital.lat}, ${hospital.lon}`);
+    setCopiedCoords(true);
+    setTimeout(() => setCopiedCoords(false), 2500);
+  };
 
   const handleRiskAssessment = useCallback(() => {
     setIsAssessing(true);
@@ -835,7 +852,7 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
             <div className="hospital-content-row">
               <div
                 className="hospital-info-box"
-                onClick={handleOpenGoogleMaps}
+                onClick={handleToggleOrOpenDirections}
                 style={{ cursor: 'pointer' }}
                 title={isHindi ? 'गूगल मैप्स में अस्पताल का मार्ग खोलें' : 'Open Hospital Route in Google Maps'}
               >
@@ -851,12 +868,12 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 </div>
               </div>
 
-              {/* Map Pin Button (Directly opens Google Maps) */}
+              {/* Map Pin Button (Directly opens Google Maps & toggles live map) */}
               <a
                 href={googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={handleOpenGoogleMaps}
+                onClick={handleToggleOrOpenDirections}
                 className="hospital-pin-btn"
                 title={isHindi ? 'गूगल मैप्स में अस्पताल का मार्ग खोलें' : 'Open Hospital Navigation in Google Maps'}
                 aria-label="Open Hospital Navigation in Google Maps"
@@ -882,7 +899,7 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 href={googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={handleOpenGoogleMaps}
+                onClick={handleToggleOrOpenDirections}
                 className="hospital-btn directions-btn"
                 title={isHindi ? 'गूगल मैप्स में दिशा-निर्देश खोलें' : 'Open Turn-by-Turn GPS Directions in Google Maps'}
               >
@@ -890,6 +907,78 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 <span>{isHindi ? 'दिशा-निर्देश' : 'Directions'}</span>
               </a>
             </div>
+
+            {/* Live Interactive Embedded Route & Navigation Panel */}
+            {showEmbeddedDirections && (
+              <div className="hospital-embedded-route-panel">
+                <div className="embedded-route-header">
+                  <div className="route-header-left">
+                    <i className="fa-solid fa-route" style={{ color: '#38bdf8' }}></i>
+                    <span className="route-header-title">
+                      {isHindi ? 'लाइव जीपीएस नेविगेशन मार्ग' : 'Live GPS Route Guidance'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="embedded-close-btn"
+                    onClick={() => setShowEmbeddedDirections(false)}
+                    title="Close"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Embedded Live Map Viewport */}
+                <div className="embedded-map-container">
+                  <iframe
+                    title="Hospital Navigation Map"
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${hospital.lon - 0.04}%2C${hospital.lat - 0.025}%2C${hospital.lon + 0.04}%2C${hospital.lat + 0.025}&layer=mapnik&marker=${hospital.lat}%2C${hospital.lon}`}
+                    className="embedded-map-iframe"
+                    loading="lazy"
+                  ></iframe>
+                  <div className="map-overlay-badge">
+                    <span>🏥 {hospital.name} ({hospital.distKm} km • ~{hospital.etaMins} mins)</span>
+                  </div>
+                </div>
+
+                {/* Turn-by-Turn GPS Navigation Steps */}
+                <div className="embedded-steps-list">
+                  {hospital.steps &&
+                    hospital.steps.map((step, idx) => (
+                      <div className="embedded-step-row" key={idx}>
+                        <span className="step-idx">{idx + 1}</span>
+                        <div className="step-desc">
+                          <span className="step-dist-tag">{step.dist}</span>
+                          <span className="step-text-val">{isHindi ? step.textHi : step.text}</span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+
+                {/* Bottom Launch & Copy Actions */}
+                <div className="embedded-actions-bar">
+                  <a
+                    href={googleMapsDirectionsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="launch-gmaps-btn"
+                  >
+                    <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                    <span>{isHindi ? 'गूगल मैप्स ऐप में खोलें' : 'Open in Google Maps App'}</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    className="copy-coords-btn"
+                    onClick={handleCopyCoords}
+                    title="Copy Hospital Coordinates"
+                  >
+                    <i className={`fa-solid ${copiedCoords ? 'fa-check' : 'fa-copy'}`}></i>
+                    <span>{copiedCoords ? (isHindi ? 'कॉपी हो गया!' : 'Copied!') : `${hospital.lat.toFixed(4)}, ${hospital.lon.toFixed(4)}`}</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Bottom Card: Chemical Exposure Safety */}
