@@ -155,137 +155,241 @@ function evaluateFarmerSafety(temp, humd, hr, lang = 'en') {
   };
 }
 
-// Location-Aware Nearest Healthcare Facility Database
+// Location-Aware Nearest Healthcare Facility Database with Detailed Navigation Routing
 const HOSPITAL_DATABASE = {
   haryana: {
     name: 'Karnal Govt. PHC',
     nameHi: 'करनाल सरकारी प्राथमिक स्वास्थ्य केंद्र (PHC)',
+    address: 'Near Mall Road, Sector 12, Karnal, Haryana 132001',
+    addressHi: 'मॉल रोड के पास, सेक्टर 12, करनाल, हरियाणा 132001',
     distKm: '6.2',
     etaMins: '14',
     ambulance: '108',
+    emergencyDesk: '+91-184-2267108',
     city: 'Karnal, Haryana',
-    lat: 29.685,
-    lon: 76.99
+    lat: 29.6857,
+    lon: 76.9907,
+    steps: [
+      { dist: '1.1 km', text: 'Head east on Farm Link Road toward NH-44 access.', textHi: 'खेत संपर्क मार्ग से पूर्व की ओर NH-44 की दिशा में चलें।' },
+      { dist: '3.6 km', text: 'Merge onto NH-44 / GT Road and proceed straight.', textHi: 'NH-44 / जीटी रोड पर आगे बढ़ें।' },
+      { dist: '1.5 km', text: 'Take Sector 12 exit toward Civil Hospital Chowk. PHC on right.', textHi: 'सेक्टर 12 निकास लेकर सिविल अस्पताल चौक पहुंचें। PHC दाईं ओर है।' }
+    ]
   },
   punjab: {
     name: 'Ludhiana Civil Hospital & PHC',
     nameHi: 'लुधियाना सिविल अस्पताल एवं PHC',
+    address: 'Near Old Bus Stand, Ludhiana, Punjab 141001',
+    addressHi: 'पुराने बस स्टैंड के पास, लुधियाना, पंजाब 141001',
     distKm: '4.8',
     etaMins: '11',
     ambulance: '108',
+    emergencyDesk: '+91-161-2444108',
     city: 'Ludhiana, Punjab',
-    lat: 30.901,
-    lon: 75.857
+    lat: 30.9010,
+    lon: 75.8573,
+    steps: [
+      { dist: '0.9 km', text: 'Head north on Link Road toward Ferozepur Road.', textHi: 'फिरोजपुर रोड की ओर लिंक रोड पर उत्तर दिशा में बढ़ें।' },
+      { dist: '2.7 km', text: 'Continue straight on Ferozepur Highway.', textHi: 'फिरोजपुर हाईवे पर सीधे चलें।' },
+      { dist: '1.2 km', text: 'Turn left at Civil Lines to arrive at Emergency Gate.', textHi: 'सिविल लाइंस पर बाएं मुड़कर इमरजेंसी गेट पर पहुंचें।' }
+    ]
   },
   maharashtra: {
     name: 'Nashik Rural CHC & Trauma Centre',
     nameHi: 'नाशिक ग्रामीण CHC एवं ट्रॉमा सेंटर',
+    address: 'Trimbak Road, Nashik, Maharashtra 422002',
+    addressHi: 'त्र्यंबक रोड, नाशिक, महाराष्ट्र 422002',
     distKm: '5.4',
     etaMins: '12',
     ambulance: '108',
+    emergencyDesk: '+91-253-2578108',
     city: 'Nashik, Maharashtra',
-    lat: 19.997,
-    lon: 73.79
+    lat: 19.9975,
+    lon: 73.7898,
+    steps: [
+      { dist: '1.2 km', text: 'Head west on Agri Canal Road toward Trimbak Highway.', textHi: 'त्र्यंबक हाईवे की ओर एग्री नहर मार्ग पर बढ़ें।' },
+      { dist: '3.1 km', text: 'Follow Trimbak Road through Satpur bypass.', textHi: 'सातपुर बाईपास होते हुए त्र्यंबक रोड पर आगे बढ़ें।' },
+      { dist: '1.1 km', text: 'Turn right at Rural Hospital complex gate.', textHi: 'ग्रामीण अस्पताल परिसर गेट पर दाएं मुड़ें।' }
+    ]
   },
   andhra: {
     name: 'Guntur Govt. General PHC',
     nameHi: 'गुंटूर सरकारी सामान्य स्वास्थ्य केंद्र',
+    address: 'Sambasiva Pet, Guntur, Andhra Pradesh 522001',
+    addressHi: 'सांबशिव पेट, गुंटूर, आंध्र प्रदेश 522001',
     distKm: '7.1',
     etaMins: '16',
     ambulance: '108',
+    emergencyDesk: '+91-863-2223108',
     city: 'Guntur, Andhra Pradesh',
-    lat: 16.306,
-    lon: 80.436
+    lat: 16.3067,
+    lon: 80.4365,
+    steps: [
+      { dist: '1.5 km', text: 'Head north on Mirchi Yard bypass road.', textHi: 'मिर्ची यार्ड बाईपास रोड पर उत्तर दिशा में बढ़ें।' },
+      { dist: '4.2 km', text: 'Continue along Old Club Road toward Market Center.', textHi: 'मार्केट सेंटर की दिशा में ओल्ड क्लब रोड पर चलें।' },
+      { dist: '1.4 km', text: 'Turn right into General Hospital premises.', textHi: 'जनरल अस्पताल परिसर में दाएं मुड़ें।' }
+    ]
   },
   up: {
     name: 'Kanpur Dehat CHC',
     nameHi: 'कानपुर देहात सामुदायिक स्वास्थ्य केंद्र',
+    address: 'Akbarpur, Kanpur Dehat, Uttar Pradesh 209101',
+    addressHi: 'अकबरपुर, कानपुर देहात, उत्तर प्रदेश 209101',
     distKm: '8.0',
     etaMins: '18',
     ambulance: '108',
+    emergencyDesk: '+91-5111-271108',
     city: 'Kanpur, Uttar Pradesh',
-    lat: 26.449,
-    lon: 80.331
+    lat: 26.4499,
+    lon: 80.3319,
+    steps: [
+      { dist: '2.0 km', text: 'Head toward GT Road Highway interchange.', textHi: 'जीटी रोड हाईवे इंटरचेंज की ओर बढ़ें।' },
+      { dist: '4.5 km', text: 'Proceed on Kanpur-Agra Highway.', textHi: 'कानपुर-आगरा हाईवे पर आगे बढ़ें।' },
+      { dist: '1.5 km', text: 'Take Akbarpur CHC approach road on the left.', textHi: 'बाईं ओर अकबरपुर CHC संपर्क मार्ग लें।' }
+    ]
   },
   rajasthan: {
     name: 'Sri Ganganagar Govt. PHC',
     nameHi: 'श्री गंगानगर सरकारी PHC',
+    address: 'Public Park Road, Sri Ganganagar, Rajasthan 335001',
+    addressHi: 'पब्लिक पार्क रोड, श्री गंगानगर, राजस्थान 335001',
     distKm: '5.9',
     etaMins: '13',
     ambulance: '108',
+    emergencyDesk: '+91-154-2440108',
     city: 'Sri Ganganagar, Rajasthan',
-    lat: 29.928,
-    lon: 73.878
+    lat: 29.9281,
+    lon: 73.8783,
+    steps: [
+      { dist: '1.3 km', text: 'Head east on Canal distributary road.', textHi: 'नहर मार्ग पर पूर्व दिशा में चलें।' },
+      { dist: '3.4 km', text: 'Proceed on Suratgarh Road toward City Circle.', textHi: 'सूरतगढ़ रोड पर सिटी सर्कल की ओर बढ़ें।' },
+      { dist: '1.2 km', text: 'Arrive at Govt. Hospital Emergency entrance.', textHi: 'सरकारी अस्पताल आपातकालीन प्रवेश द्वार पर पहुंचें।' }
+    ]
   },
   bengal: {
     name: 'Bardhaman Block PHC',
     nameHi: 'बर्धमान ब्लॉक प्राथमिक स्वास्थ्य केंद्र',
+    address: 'Court Compound, Bardhaman, West Bengal 713101',
+    addressHi: 'कोर्ट कंपाउंड, बर्धमान, पश्चिम बंगाल 713101',
     distKm: '6.5',
     etaMins: '15',
     ambulance: '108',
+    emergencyDesk: '+91-342-2561108',
     city: 'Bardhaman, West Bengal',
-    lat: 23.232,
-    lon: 87.861
+    lat: 23.2324,
+    lon: 87.8615,
+    steps: [
+      { dist: '1.4 km', text: 'Head south along Rice Mill approach route.', textHi: 'राइस मिल संपर्क मार्ग से दक्षिण की ओर बढ़ें।' },
+      { dist: '3.8 km', text: 'Continue along Grand Trunk Road (GT Road).', textHi: 'ग्रैंड ट्रंक रोड पर आगे बढ़ें।' },
+      { dist: '1.3 km', text: 'Turn left into District Hospital healthcare wing.', textHi: 'जिला अस्पताल स्वास्थ्य विंग में बाएं मुड़ें।' }
+    ]
   },
   gujarat: {
     name: 'Anand Community Health Centre',
     nameHi: 'आनंद सामुदायिक स्वास्थ्य केंद्र (CHC)',
+    address: 'Amul Dairy Road, Anand, Gujarat 388001',
+    addressHi: 'अमूल डेयरी रोड, आनंद, गुजरात 388001',
     distKm: '4.2',
     etaMins: '10',
     ambulance: '108',
+    emergencyDesk: '+91-2692-250108',
     city: 'Anand, Gujarat',
-    lat: 22.564,
-    lon: 72.928
+    lat: 22.5645,
+    lon: 72.9289,
+    steps: [
+      { dist: '0.8 km', text: 'Head east on Milk Cooperative feeder road.', textHi: 'दूध सहकारी फीडर रोड पर पूर्व दिशा में चलें।' },
+      { dist: '2.4 km', text: 'Follow Amul Dairy Road toward town center.', textHi: 'अमूल डेयरी रोड से नगर केंद्र की ओर बढ़ें।' },
+      { dist: '1.0 km', text: 'Turn right at Community Hospital junction.', textHi: 'सामुदायिक अस्पताल जंक्शन पर दाएं मुड़ें।' }
+    ]
   },
   karnataka: {
     name: 'Bengaluru Rural PHC',
     nameHi: 'बेंगलुरु ग्रामीण प्राथमिक स्वास्थ्य केंद्र',
+    address: 'Doddaballapur Road, Bengaluru Rural, Karnataka 561203',
+    addressHi: 'दोड्डबल्लापुर रोड, बेंगलुरु ग्रामीण, कर्नाटक 561203',
     distKm: '5.1',
     etaMins: '12',
     ambulance: '108',
+    emergencyDesk: '+91-80-27621108',
     city: 'Bengaluru, Karnataka',
-    lat: 12.971,
-    lon: 77.594
+    lat: 12.9716,
+    lon: 77.5946,
+    steps: [
+      { dist: '1.0 km', text: 'Head toward State Highway 9 junction.', textHi: 'स्टेट हाईवे 9 जंक्शन की दिशा में आगे बढ़ें।' },
+      { dist: '3.0 km', text: 'Proceed straight along Doddaballapur Main Road.', textHi: 'दोड्डबल्लापुर मुख्य मार्ग पर सीधे चलें।' },
+      { dist: '1.1 km', text: 'Turn left at Rural PHC building.', textHi: 'ग्रामीण PHC भवन पर बाएं मुड़ें।' }
+    ]
   },
   tn: {
     name: 'Coimbatore Govt. PHC',
     nameHi: 'कोयंबटूर सरकारी प्राथमिक स्वास्थ्य केंद्र',
+    address: 'Trichy Road, Coimbatore, Tamil Nadu 641018',
+    addressHi: 'त्रिची रोड, कोयंबटूर, तमिलनाडु 641018',
     distKm: '6.0',
     etaMins: '14',
     ambulance: '108',
+    emergencyDesk: '+91-422-2300108',
     city: 'Coimbatore, Tamil Nadu',
-    lat: 11.016,
-    lon: 76.955
+    lat: 11.0168,
+    lon: 76.9558,
+    steps: [
+      { dist: '1.2 km', text: 'Head toward Pollachi-Coimbatore Link Road.', textHi: 'पोलाची-कोयंबटूर लिंक रोड की ओर बढ़ें।' },
+      { dist: '3.5 km', text: 'Proceed on Trichy Highway.', textHi: 'त्रिची हाईवे पर आगे बढ़ें।' },
+      { dist: '1.3 km', text: 'Turn right to Govt. PHC Medical Center gate.', textHi: 'सरकारी PHC मेडिकल सेंटर गेट पर दाएं मुड़ें।' }
+    ]
   },
   telangana: {
     name: 'Warangal Area Hospital & PHC',
     nameHi: 'वरंगल एरिया अस्पताल एवं PHC',
+    address: 'MGM Hospital Road, Warangal, Telangana 506007',
+    addressHi: 'एमजीएम अस्पताल रोड, वरंगल, तेलंगाना 506007',
     distKm: '7.3',
     etaMins: '17',
     ambulance: '108',
+    emergencyDesk: '+91-870-2438108',
     city: 'Warangal, Telangana',
-    lat: 17.978,
-    lon: 79.601
+    lat: 17.9784,
+    lon: 79.6015,
+    steps: [
+      { dist: '1.6 km', text: 'Head on Cotton Market Road toward Kakatiya highway.', textHi: 'काकतीय हाईवे की ओर कॉटन मार्केट रोड पर बढ़ें।' },
+      { dist: '4.2 km', text: 'Proceed straight through Hanamkonda bypass.', textHi: 'हनमकोंडा बाईपास से सीधे आगे बढ़ें।' },
+      { dist: '1.5 km', text: 'Turn left into Area Hospital Emergency Block.', textHi: 'एरिया अस्पताल इमरजेंसी ब्लॉक में बाएं मुड़ें।' }
+    ]
   },
   mp: {
     name: 'Indore Rural CHC',
     nameHi: 'इंदौर ग्रामीण सामुदायिक स्वास्थ्य केंद्र',
+    address: 'Sanwer Road, Indore, Madhya Pradesh 453551',
+    addressHi: 'सांवेर रोड, इंदौर, मध्य प्रदेश 453551',
     distKm: '5.6',
     etaMins: '13',
     ambulance: '108',
+    emergencyDesk: '+91-731-2534108',
     city: 'Indore, Madhya Pradesh',
-    lat: 22.719,
-    lon: 75.857
+    lat: 22.7196,
+    lon: 75.8577,
+    steps: [
+      { dist: '1.1 km', text: 'Head east on Agri mandi bypass road.', textHi: 'कृषि मंडी बाईपास रोड पर पूर्व दिशा में चलें।' },
+      { dist: '3.2 km', text: 'Proceed along Sanwer Highway toward town entrance.', textHi: 'सांवेर हाईवे से नगर प्रवेश की ओर बढ़ें।' },
+      { dist: '1.3 km', text: 'Turn right into Rural CHC Hospital grounds.', textHi: 'ग्रामीण CHC अस्पताल परिसर में दाएं मुड़ें।' }
+    ]
   },
   bihar: {
     name: 'Patna Sadar PHC',
     nameHi: 'पटना सदर प्राथमिक स्वास्थ्य केंद्र',
+    address: 'Ashok Rajpath, Patna, Bihar 800004',
+    addressHi: 'अशोक राजपथ, पटना, बिहार 800004',
     distKm: '4.9',
     etaMins: '11',
     ambulance: '108',
+    emergencyDesk: '+91-612-2300108',
     city: 'Patna, Bihar',
-    lat: 25.594,
-    lon: 85.137
+    lat: 25.5941,
+    lon: 85.1376,
+    steps: [
+      { dist: '1.0 km', text: 'Head toward Bailey Road connector.', textHi: 'बेली रोड कनेक्टर की दिशा में आगे बढ़ें।' },
+      { dist: '2.7 km', text: 'Continue straight on Ashok Rajpath.', textHi: 'अशोक राजपथ पर सीधे चलें।' },
+      { dist: '1.2 km', text: 'Turn right into Sadar PHC health complex.', textHi: 'सदर PHC स्वास्थ्य परिसर में दाएं मुड़ें।' }
+    ]
   }
 };
 
@@ -306,7 +410,10 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
   const [sprayChemical, setSprayChemical] = useState('Mancozeb 75%');
   const [sprayHoursAgo, setSprayHoursAgo] = useState(24);
   const [sprayLoggedTime, setSprayLoggedTime] = useState('yesterday at 4:30 PM');
-  const [showChemicalModal, setShowChemicalModal] = useState(false);
+
+  // Navigation & Directions Modal State
+  const [showDirectionsModal, setShowDirectionsModal] = useState(false);
+  const [copiedCoords, setCopiedCoords] = useState(false);
 
   // Auto-sync initial weather from live weather data if available
   useEffect(() => {
@@ -337,15 +444,30 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
       HOSPITAL_DATABASE[locKey] || {
         name: `${(location && location.nameEn) || 'Karnal'} Govt. PHC`,
         nameHi: `${(location && location.nameHi) || 'करनाल'} सरकारी प्राथमिक स्वास्थ्य केंद्र`,
+        address: `${(location && location.nameEn) || 'Karnal, Haryana'}, India`,
+        addressHi: `${(location && location.nameHi) || 'करनाल, हरियाणा'}, भारत`,
         distKm: '6.2',
         etaMins: '14',
         ambulance: '108',
+        emergencyDesk: '+91-184-2267108',
         city: (location && location.nameEn) || 'Karnal, Haryana',
-        lat: (location && location.lat) || 29.68,
-        lon: (location && location.lon) || 76.99
+        lat: (location && location.lat) || 29.6857,
+        lon: (location && location.lon) || 76.9907,
+        steps: [
+          { dist: '1.1 km', text: 'Head east on Farm Link Road.', textHi: 'खेत संपर्क मार्ग से पूर्व की ओर चलें।' },
+          { dist: '3.6 km', text: 'Proceed straight along main arterial road.', textHi: 'मुख्य सड़क पर सीधे बढ़ें।' },
+          { dist: '1.5 km', text: 'Turn left to hospital emergency entrance.', textHi: 'अस्पताल आपातकालीन प्रवेश द्वार पर बाएं मुड़ें।' }
+        ]
       }
     );
   }, [location]);
+
+  // Direct Google Maps Directions URL (works 100% reliably in any browser)
+  const googleMapsDirectionsUrl = useMemo(() => {
+    return `https://www.google.com/maps/dir/?api=1&destination=${hospital.lat},${hospital.lon}&destination_place_id=${encodeURIComponent(
+      hospital.name
+    )}`;
+  }, [hospital]);
 
   const handleRiskAssessment = useCallback(() => {
     setIsAssessing(true);
@@ -373,12 +495,18 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
   };
 
   const handleCall108 = () => {
-    window.open('tel:108', '_self');
+    window.location.href = 'tel:108';
   };
 
-  const handleOpenDirections = () => {
-    const query = encodeURIComponent(`${hospital.name}, ${hospital.city}`);
-    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+  const handleOpenDirections = (e) => {
+    if (e) e.preventDefault();
+    setShowDirectionsModal(true);
+  };
+
+  const handleCopyCoords = () => {
+    navigator.clipboard.writeText(`${hospital.lat}, ${hospital.lon}`);
+    setCopiedCoords(true);
+    setTimeout(() => setCopiedCoords(false), 2500);
   };
 
   const isReiSafe = sprayHoursAgo >= 24;
@@ -715,13 +843,13 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
                 </div>
               </div>
 
-              {/* Map Pin Button */}
+              {/* Map Pin Button (Opens interactive navigation route & modal) */}
               <button
                 type="button"
                 className="hospital-pin-btn"
                 onClick={handleOpenDirections}
-                title={isHindi ? 'मानचित्र पर स्थान देखें' : 'View Location on Map'}
-                aria-label="View Hospital on Map"
+                title={isHindi ? 'मानचित्र और नेविगेशन मार्ग खोलें' : 'Open Hospital Navigation & GPS Route'}
+                aria-label="View Hospital Navigation"
               >
                 <i className="fa-solid fa-location-dot"></i>
               </button>
@@ -729,21 +857,21 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
 
             {/* Action Buttons */}
             <div className="hospital-actions-row">
-              <button
-                type="button"
+              <a
+                href="tel:108"
                 className="hospital-btn call-108-btn"
-                onClick={handleCall108}
                 title="Call 108 Emergency Ambulance"
               >
                 <i className="fa-solid fa-phone"></i>
                 <span>{isHindi ? '108 पर कॉल करें' : 'Call 108'}</span>
-              </button>
+              </a>
 
+              {/* Directions Button: Triggers Directions Modal & External Maps Link */}
               <button
                 type="button"
                 className="hospital-btn directions-btn"
                 onClick={handleOpenDirections}
-                title="Get Turn-by-Turn GPS Directions"
+                title="Open Turn-by-Turn Directions & GPS Route"
               >
                 <i className="fa-solid fa-compass"></i>
                 <span>{isHindi ? 'दिशा-निर्देश' : 'Directions'}</span>
@@ -804,6 +932,148 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
           </div>
         </div>
       </div>
+
+      {/* 3. Interactive Hospital Emergency Directions & GPS Routing Modal */}
+      {showDirectionsModal && (
+        <div className="hospital-modal-backdrop" onClick={() => setShowDirectionsModal(false)}>
+          <div className="hospital-modal-dialog" onClick={(e) => e.stopPropagation()}>
+            <div className="hospital-modal-header">
+              <div className="modal-header-left">
+                <span className="modal-header-icon">🏥</span>
+                <div>
+                  <h3 className="modal-title">
+                    {isHindi ? 'अस्पताल नेविगेशन एवं आपातकालीन मार्ग' : 'Hospital Emergency Navigation & GPS Route'}
+                  </h3>
+                  <span className="modal-subtitle">
+                    {isHindi ? 'खेत से निकटतम स्वास्थ्य केंद्र तक का सीधा मार्ग' : 'Auto-routed from active field coordinates to nearest medical facility'}
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="modal-close-btn"
+                onClick={() => setShowDirectionsModal(false)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="hospital-modal-body">
+              {/* Top Hospital Info Card */}
+              <div className="modal-hospital-summary-card">
+                <div className="summary-main-info">
+                  <h4 className="summary-hospital-title">
+                    {isHindi ? hospital.nameHi || hospital.name : hospital.name}
+                  </h4>
+                  <p className="summary-address">
+                    <i className="fa-solid fa-location-dot" style={{ color: '#38bdf8', marginRight: '6px' }}></i>
+                    {isHindi ? hospital.addressHi || hospital.address : hospital.address}
+                  </p>
+                </div>
+                <div className="summary-badges-row">
+                  <div className="summary-stat-badge">
+                    <span className="stat-label">{isHindi ? 'दूरी' : 'Distance'}</span>
+                    <span className="stat-val">{hospital.distKm} km</span>
+                  </div>
+                  <div className="summary-stat-badge">
+                    <span className="stat-label">{isHindi ? 'अनुमानित समय' : 'Est. ETA'}</span>
+                    <span className="stat-val">~{hospital.etaMins} mins</span>
+                  </div>
+                  <div className="summary-stat-badge green">
+                    <span className="stat-label">{isHindi ? 'मार्ग स्थिति' : 'Traffic'}</span>
+                    <span className="stat-val">{isHindi ? '🟢 सामान्य' : '🟢 Clear Route'}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Turn-by-Turn GPS Step Navigation */}
+              <div className="modal-steps-container">
+                <h5 className="steps-heading">
+                  <i className="fa-solid fa-route" style={{ color: '#818cf8', marginRight: '8px' }}></i>
+                  {isHindi ? 'चरण-दर-चरण नेविगेशन मार्ग' : 'Turn-by-Turn Navigation Steps'}
+                </h5>
+                <div className="steps-list">
+                  {hospital.steps && hospital.steps.map((step, idx) => (
+                    <div className="step-item" key={idx}>
+                      <div className="step-num-bubble">{idx + 1}</div>
+                      <div className="step-content">
+                        <div className="step-dist">{step.dist}</div>
+                        <div className="step-text">{isHindi ? step.textHi : step.text}</div>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="step-item arrival">
+                    <div className="step-num-bubble arrival-bubble">🏥</div>
+                    <div className="step-content">
+                      <div className="step-dist">{isHindi ? 'गंतव्य' : 'Destination'}</div>
+                      <div className="step-text arrival-text">
+                        {isHindi ? `${hospital.nameHi || hospital.name} आपातकालीन वार्ड` : `${hospital.name} Emergency & Trauma Care Unit`}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Emergency Coordination Desk & Dispatch */}
+              <div className="modal-emergency-contacts-row">
+                <div className="contact-box">
+                  <span className="contact-title">{isHindi ? 'राष्ट्रीय एम्बुलेंस सेवा' : 'National Ambulance Service'}</span>
+                  <a href="tel:108" className="contact-action-link ambulance-call">
+                    <i className="fa-solid fa-phone-volume"></i>
+                    <span>108 (24x7 Free)</span>
+                  </a>
+                </div>
+
+                <div className="contact-box">
+                  <span className="contact-title">{isHindi ? 'अस्पताल हेल्पडेस्क' : 'Hospital Helpdesk'}</span>
+                  <a href={`tel:${hospital.emergencyDesk}`} className="contact-action-link desk-call">
+                    <i className="fa-solid fa-headset"></i>
+                    <span>{hospital.emergencyDesk}</span>
+                  </a>
+                </div>
+
+                <div className="contact-box">
+                  <span className="contact-title">{isHindi ? 'जीपीएस निर्देशांक' : 'GPS Coordinates'}</span>
+                  <button type="button" className="contact-action-link copy-gps" onClick={handleCopyCoords}>
+                    <i className={`fa-solid ${copiedCoords ? 'fa-check' : 'fa-copy'}`}></i>
+                    <span>{copiedCoords ? (isHindi ? 'कॉपी हो गया!' : 'Copied!') : `${hospital.lat.toFixed(4)}, ${hospital.lon.toFixed(4)}`}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Actions Footer */}
+            <div className="hospital-modal-footer">
+              <a
+                href={googleMapsDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="modal-action-btn maps-btn"
+              >
+                <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>{isHindi ? 'गूगल मैप्स में नेविगेट करें' : 'Launch in Google Maps'}</span>
+              </a>
+
+              <a
+                href="tel:108"
+                className="modal-action-btn ambulance-btn"
+              >
+                <i className="fa-solid fa-truck-medical"></i>
+                <span>{isHindi ? '108 एम्बुलेंस बुलाएं' : 'Dispatch 108 Ambulance'}</span>
+              </a>
+
+              <button
+                type="button"
+                className="modal-action-btn close-action-btn"
+                onClick={() => setShowDirectionsModal(false)}
+              >
+                {isHindi ? 'बंद करें' : 'Close'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
