@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useApp } from '../context/AppContext';
 
-// Scientific NOAA Heat Index Calculation in Celsius
+// NOAA Heat Index Calculation in Celsius
 function calculateHeatIndexCelsius(tempC, humidity) {
-  if (tempC < 20) return tempC;
+  if (tempC < 20) return Math.round(tempC * 10) / 10;
   const tf = (tempC * 9) / 5 + 32;
   const rh = Math.min(Math.max(humidity, 0), 100);
 
@@ -33,68 +33,135 @@ function calculateHeatIndexCelsius(tempC, humidity) {
 }
 
 // Physiological & Heat Risk Evaluation Engine
-function evaluateFarmerSafety(temp, humd, hr) {
+function evaluateFarmerSafety(temp, humd, hr, lang = 'en') {
   const heatIndex = calculateHeatIndexCelsius(temp, humd);
+  const isHi = lang === 'hi';
 
-  // Severe / Extreme Danger threshold
-  if (heatIndex >= 41 || hr >= 140 || (heatIndex >= 34 && hr >= 125)) {
+  // 1. Extreme Critical Danger (Severe Heat Stroke / Cardiovascular Collapse risk)
+  if (heatIndex >= 41 || hr >= 135 || (heatIndex >= 36 && hr >= 115)) {
+    let whyText = '';
+    if (isHi) {
+      if (hr >= 135 && heatIndex >= 41) {
+        whyText = `अत्यधिक ताप सूचकांक (${heatIndex}°C) और बहुत तेज़ हृदय गति (${hr} bpm)। हीट स्ट्रोक का गंभीर खतरा है। तुरंत काम रोकें और ठंडी छाया में जाएं।`;
+      } else if (heatIndex >= 41) {
+        whyText = `खतरनाक ताप सूचकांक (${heatIndex}°C) शरीर की सहने की सीमा पार कर चुका है। तुरंत छायादार स्थान पर जाएं।`;
+      } else {
+        whyText = `गर्मी (${temp}°C) के दौरान हृदय गति (${hr} bpm) खतरनाक स्तर पर है। भारी शारीरिक श्रम तुरंत बंद करें।`;
+      }
+    } else {
+      if (hr >= 135 && heatIndex >= 41) {
+        whyText = `Critical heat index (${heatIndex}°C) combined with high cardiovascular strain (${hr} bpm). Heat stroke risk imminent. Cease work and rest in shade.`;
+      } else if (heatIndex >= 41) {
+        whyText = `Dangerous apparent heat index of ${heatIndex}°C exceeds physiological safety limits. Move to cool shelter immediately.`;
+      } else {
+        whyText = `Extreme cardiovascular load (${hr} bpm) detected under thermal stress (${temp}°C). Stop physical labor and cool down.`;
+      }
+    }
+
     return {
       level: 'danger',
-      status: 'DANGER: SEEK SHADE',
-      riskBadge: 'CRITICAL HEAT RISK',
+      status: isHi ? 'खतरा: तुरंत छाया में जाएं' : 'DANGER: SEEK SHADE',
+      riskBadge: isHi ? 'गंभीर गर्मी का खतरा' : 'CRITICAL HEAT RISK',
       badgeColor: '#ef4444',
-      badgeBg: '#2a1414',
+      badgeBg: '#2a1212',
       sphereClass: 'sphere-danger',
-      why: 'High thermal strain and cardiovascular load detected. Immediate rest in shade required.'
+      statusColor: '#ef4444',
+      why: whyText,
+      heatIndex
     };
   }
 
-  // High Heat Risk threshold (matches screenshot: 27°C, 92%, 72 bpm)
-  if (heatIndex >= 31 || (temp >= 26 && humd >= 85) || hr >= 115 || (heatIndex >= 28 && hr >= 95)) {
+  // 2. High Heat Risk (Heat exhaustion / High thermal strain)
+  if (heatIndex >= 33 || hr >= 110 || (heatIndex >= 30 && hr >= 95)) {
+    let whyText = '';
+    if (isHi) {
+      if (heatIndex >= 33 && hr >= 110) {
+        whyText = `उच्च ताप सूचकांक (${heatIndex}°C) और बढ़ी हुई हृदय गति (${hr} bpm)। लू और थकावट का उच्च जोखिम है। छाया में अनिवार्य आराम लें।`;
+      } else if (heatIndex >= 33) {
+        whyText = `उच्च आर्द्रता (${humd}%) के कारण तापमान ${heatIndex}°C महसूस हो रहा है। पसीना सूखने में रुकावट है। छाया में जाएं और पानी पिएं।`;
+      } else {
+        whyText = `शारीरिक श्रम के कारण हृदय गति (${hr} bpm) सामान्य से अधिक है। 15 मिनट का ब्रेक लें।`;
+      }
+    } else {
+      if (heatIndex >= 33 && hr >= 110) {
+        whyText = `Apparent heat index (${heatIndex}°C) and elevated heart rate (${hr} bpm) indicate heat exhaustion risk. Take a mandatory rest in shade.`;
+      } else if (heatIndex >= 33) {
+        whyText = `High relative humidity (${humd}%) elevates perceived heat to ${heatIndex}°C, impairing evaporative cooling. Seek shaded rest and hydrate.`;
+      } else {
+        whyText = `Cardiovascular load (${hr} bpm) is elevated under ${temp}°C ambient conditions. Take a 15-minute rest in shade.`;
+      }
+    }
+
     return {
       level: 'high',
-      status: 'DANGER: SEEK SHADE',
-      riskBadge: 'HIGH HEAT RISK',
-      badgeColor: '#ea580c',
-      badgeBg: '#281a14',
+      status: isHi ? 'खतरा: छाया में आराम करें' : 'DANGER: SEEK SHADE',
+      riskBadge: isHi ? 'उच्च गर्मी जोखिम' : 'HIGH HEAT RISK',
+      badgeColor: '#f97316',
+      badgeBg: '#28170e',
       sphereClass: 'sphere-high',
-      why: 'Values are stable.'
+      statusColor: '#f97316',
+      why: whyText,
+      heatIndex
     };
   }
 
-  // Caution / Moderate threshold
-  if (heatIndex >= 26 || (temp >= 24 && humd >= 70) || hr >= 90) {
+  // 3. Moderate Caution (Warm conditions / High humidity fatigue)
+  if (heatIndex >= 28 || hr >= 90 || (temp >= 26 && humd >= 80)) {
+    let whyText = '';
+    if (isHi) {
+      if (humd >= 80) {
+        whyText = `उच्च आर्द्रता (${humd}%) के कारण गर्मी का प्रभाव बढ़ रहा है (ताप सूचकांक: ${heatIndex}°C)। हृदय गति (${hr} bpm) स्थिर है। हर 20 मिनट में पानी पिएं।`;
+      } else {
+        whyText = `मध्यम ताप भार (ताप सूचकांक: ${heatIndex}°C, हृदय गति: ${hr} bpm)। नियमित रूप से पानी पीते रहें।`;
+      }
+    } else {
+      if (humd >= 80) {
+        whyText = `High humidity (${humd}%) at ${temp}°C elevates thermal index to ${heatIndex}°C. Heart rate is steady at ${hr} bpm. Maintain regular hydration.`;
+      } else {
+        whyText = `Moderate thermal stress (Heat Index: ${heatIndex}°C, HR: ${hr} bpm). Regular hydration recommended during farm work.`;
+      }
+    }
+
     return {
       level: 'caution',
-      status: 'CAUTION: HYDRATE FREQUENTLY',
-      riskBadge: 'MODERATE HEAT STRESS',
+      status: isHi ? 'सावधानी: पर्याप्त पानी पिएं' : 'CAUTION: HYDRATE FREQUENTLY',
+      riskBadge: isHi ? 'मध्यम गर्मी का तनाव' : 'MODERATE HEAT STRESS',
       badgeColor: '#eab308',
-      badgeBg: '#262214',
+      badgeBg: '#262010',
       sphereClass: 'sphere-caution',
-      why: 'Moderate heat load detected. Regular hydration recommended.'
+      statusColor: '#eab308',
+      why: whyText,
+      heatIndex
     };
   }
 
-  // Safe / Optimal threshold
+  // 4. Safe & Optimal (Comfortable conditions, relaxed vitals)
   return {
     level: 'safe',
-    status: 'SAFE: NORMAL FIELD CONDITIONS',
-    riskBadge: 'LOW RISK',
+    status: isHi ? 'सुरक्षित: सामान्य कार्य स्थिति' : 'SAFE: NORMAL FIELD CONDITIONS',
+    riskBadge: isHi ? 'कम जोखिम (सुरक्षित)' : 'LOW RISK',
     badgeColor: '#22c55e',
-    badgeBg: '#142618',
+    badgeBg: '#112517',
     sphereClass: 'sphere-safe',
-    why: 'Environment and vitals are within safe working limits.'
+    statusColor: '#22c55e',
+    why: isHi
+      ? `सभी मान स्थिर हैं। तापमान (${temp}°C) और हृदय गति (${hr} bpm) पूर्णतः सुरक्षित सीमा में हैं।`
+      : `Values are stable. Environmental temperature (${temp}°C) and heart rate (${hr} bpm) are within safe physiological limits.`,
+    heatIndex
   };
 }
 
 export function SmartFarmAiSafety({ liveWeatherData = null }) {
-  // Input States initialized to match user screenshot: 27°C, 92%, 72 bpm
+  const { lang } = useApp ? useApp() : { lang: 'en' };
+
+  // Sensor state initialized to match standard field demo values
   const [temp, setTemp] = useState(27);
   const [humd, setHumd] = useState(92);
   const [hr, setHr] = useState(72);
   const [isAssessing, setIsAssessing] = useState(false);
+  const [lastAssessedTime, setLastAssessedTime] = useState(null);
 
-  // Auto-sync initial weather if provided from location
+  // Auto-sync initial weather from live weather data if available
   useEffect(() => {
     if (liveWeatherData && liveWeatherData.temp !== undefined) {
       setTemp(Math.round(liveWeatherData.temp));
@@ -104,15 +171,33 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
     }
   }, [liveWeatherData]);
 
-  // Compute real-time decision
-  const decision = evaluateFarmerSafety(temp, humd, hr);
+  // Compute real-time AI decision
+  const decision = evaluateFarmerSafety(temp, humd, hr, lang);
 
   const handleRiskAssessment = useCallback(() => {
     setIsAssessing(true);
     setTimeout(() => {
       setIsAssessing(false);
-    }, 300);
+      const now = new Date();
+      setLastAssessedTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    }, 350);
   }, []);
+
+  const handleResetToLive = () => {
+    if (liveWeatherData && liveWeatherData.temp !== undefined) {
+      setTemp(Math.round(liveWeatherData.temp));
+      if (liveWeatherData.humidity !== undefined) {
+        setHumd(Math.round(liveWeatherData.humidity));
+      }
+    } else {
+      setTemp(27);
+      setHumd(92);
+    }
+    setHr(72);
+    handleRiskAssessment();
+  };
+
+  const isHindi = lang === 'hi';
 
   return (
     <div className="smartfarm-safety-container">
@@ -120,14 +205,17 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
       <div className="smartfarm-left-section">
         <div className="safety-header-label">
           <span className="farmer-icon">🧑‍🌾</span>
-          <span>YOUR CURRENT SAFETY</span>
+          <span>{isHindi ? 'आपकी वर्तमान सुरक्षा' : 'YOUR CURRENT SAFETY'}</span>
         </div>
 
         <div className="safety-status-display">
-          <div className={`safety-sphere ${decision.sphereClass}`}>
+          <div className={`safety-sphere ${decision.sphereClass}`} title={`Risk Level: ${decision.level}`}>
             <div className="sphere-glow"></div>
           </div>
-          <span className="safety-status-text">
+          <span
+            className="safety-status-text"
+            style={{ color: decision.statusColor }}
+          >
             {decision.status}
           </span>
         </div>
@@ -143,94 +231,112 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
         <div className="ai-decision-box">
           <div className="ai-decision-title">
             <span className="brain-emoji">🧠</span>
-            <span>SMARTFARM AI DECISION</span>
+            <span>{isHindi ? 'स्मार्टफार्म एआई निर्णय' : 'SMARTFARM AI DECISION'}</span>
           </div>
 
           <div className="sensor-rows">
-            {/* Temp */}
+            {/* Temp Control */}
             <div className="sensor-row">
               <div className="sensor-info">
                 <span className="sensor-icon">🌡️</span>
-                <span className="sensor-label">Temp: {temp}°C</span>
+                <span className="sensor-label">
+                  {isHindi ? 'तापमान' : 'Temp'}: {temp}°C
+                </span>
               </div>
               <div className="sensor-actions">
                 <button
+                  type="button"
                   className="adjust-btn minus"
                   onClick={() => {
                     setTemp((t) => Math.max(t - 1, 10));
                     handleRiskAssessment();
                   }}
-                  title="Decrease Temp"
+                  title={isHindi ? 'तापमान घटाएं' : 'Decrease Temp'}
+                  aria-label="Decrease Temperature"
                 >
-                  -
+                  −
                 </button>
                 <button
+                  type="button"
                   className="adjust-btn plus"
                   onClick={() => {
                     setTemp((t) => Math.min(t + 1, 55));
                     handleRiskAssessment();
                   }}
-                  title="Increase Temp"
+                  title={isHindi ? 'तापमान बढ़ाएं' : 'Increase Temp'}
+                  aria-label="Increase Temperature"
                 >
                   +
                 </button>
               </div>
             </div>
 
-            {/* Humd */}
+            {/* Humidity Control */}
             <div className="sensor-row">
               <div className="sensor-info">
                 <span className="sensor-icon">💧</span>
-                <span className="sensor-label">Humd: {humd}%</span>
+                <span className="sensor-label">
+                  {isHindi ? 'आर्द्रता' : 'Humd'}: {humd}%
+                </span>
               </div>
               <div className="sensor-actions">
                 <button
+                  type="button"
                   className="adjust-btn minus"
                   onClick={() => {
-                    setHumd((h) => Math.max(h - 1, 10));
+                    setHumd((h) => Math.max(h - 2, 10));
                     handleRiskAssessment();
                   }}
-                  title="Decrease Humidity"
+                  title={isHindi ? 'आर्द्रता घटाएं' : 'Decrease Humidity'}
+                  aria-label="Decrease Humidity"
                 >
-                  -
+                  −
                 </button>
                 <button
+                  type="button"
                   className="adjust-btn plus"
                   onClick={() => {
-                    setHumd((h) => Math.min(h + 1, 100));
+                    setHumd((h) => Math.min(h + 2, 100));
                     handleRiskAssessment();
                   }}
-                  title="Increase Humidity"
+                  title={isHindi ? 'आर्द्रता बढ़ाएं' : 'Increase Humidity'}
+                  aria-label="Increase Humidity"
                 >
                   +
                 </button>
               </div>
             </div>
 
-            {/* HR */}
+            {/* Heart Rate Control */}
             <div className="sensor-row">
               <div className="sensor-info">
                 <span className="sensor-icon">💖</span>
-                <span className="sensor-label">HR: {hr} bpm</span>
+                <span className="sensor-label">
+                  {isHindi ? 'हृदय गति' : 'HR'}: {hr} bpm
+                </span>
               </div>
               <div className="sensor-actions">
                 <button
+                  type="button"
                   className="adjust-btn minus"
                   onClick={() => {
-                    setHr((r) => Math.max(r - 2, 45));
+                    setHr((r) => Math.max(r - 3, 45));
                     handleRiskAssessment();
                   }}
-                  title="Decrease HR"
+                  title={isHindi ? 'हृदय गति घटाएं' : 'Decrease HR'}
+                  aria-label="Decrease Heart Rate"
                 >
-                  -
+                  −
                 </button>
                 <button
+                  type="button"
                   className="adjust-btn plus"
                   onClick={() => {
-                    setHr((r) => Math.min(r + 2, 180));
+                    setHr((r) => Math.min(r + 3, 190));
                     handleRiskAssessment();
                   }}
-                  title="Increase HR"
+                  title={isHindi ? 'हृदय गति बढ़ाएं' : 'Increase HR'}
+                  aria-label="Increase Heart Rate"
                 >
                   +
                 </button>
@@ -238,36 +344,66 @@ export function SmartFarmAiSafety({ liveWeatherData = null }) {
             </div>
           </div>
 
-          {/* RISK ASSESSMENT Button */}
+          {/* RISK ASSESSMENT Action Button */}
           <button
+            type="button"
             className={`risk-assess-action-btn ${isAssessing ? 'pulsing' : ''}`}
             onClick={handleRiskAssessment}
+            title={isHindi ? 'जोखिम विश्लेषण चलाएं' : 'Run AI Risk Assessment'}
           >
-            {isAssessing ? 'ASSESSING...' : 'RISK ASSESSMENT'}
+            {isAssessing
+              ? isHindi
+                ? 'मूल्यांकन जारी है...'
+                : 'ASSESSING...'
+              : isHindi
+              ? 'जोखिम मूल्यांकन'
+              : 'RISK ASSESSMENT'}
           </button>
 
-          {/* Down Arrow */}
-          <div className="flow-arrow-down">↓</div>
+          {/* Flow Direction Indicator */}
+          <div className="flow-arrow-down" aria-hidden="true">
+            ↓
+          </div>
 
           {/* Risk Badge Output */}
           <div
             className="risk-badge-output"
             style={{
               backgroundColor: decision.badgeBg,
-              borderColor: `${decision.badgeColor}44`,
+              borderColor: `${decision.badgeColor}55`,
             }}
             onClick={handleRiskAssessment}
+            role="status"
+            aria-live="polite"
           >
             <span
               className="badge-sphere-dot"
               style={{
                 background: decision.badgeColor,
-                boxShadow: `0 0 8px ${decision.badgeColor}`,
+                boxShadow: `0 0 10px ${decision.badgeColor}`,
               }}
             ></span>
             <span className="badge-name" style={{ color: decision.badgeColor }}>
               {decision.riskBadge}
             </span>
+          </div>
+
+          {/* Quick Reset / Live Sync Footer */}
+          <div className="ai-decision-footer">
+            <button
+              type="button"
+              className="live-sync-btn"
+              onClick={handleResetToLive}
+              title={isHindi ? 'डिफ़ॉल्ट मानों पर रीसेट करें' : 'Reset to default test values'}
+            >
+              <i className="fa-solid fa-arrows-rotate"></i>
+              <span>{isHindi ? 'मान रीसेट करें' : 'Reset / Live Sync'}</span>
+            </button>
+            {lastAssessedTime && (
+              <span className="last-assessed-label">
+                {isHindi ? `जांचा: ${lastAssessedTime}` : `Checked: ${lastAssessedTime}`}
+              </span>
+            )}
           </div>
         </div>
       </div>
