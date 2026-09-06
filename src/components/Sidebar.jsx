@@ -21,7 +21,7 @@ export function Sidebar() {
   const [locationInput, setLocationInput] = useState(location?.nameEn || '');
   const [soilInput, setSoilInput] = useState(soil ? (soil.name || soil.nameEn || getText(soil.nameKey, lang) || soil.id) : '');
   const [cropInput, setCropInput] = useState(crop ? (crop.name || crop.nameEn || getText(crop.nameKey, lang) || crop.id) : '');
-  const [stageInput, setStageInput] = useState(stage || 'Vegetative Growth');
+  const [stageInput, setStageInput] = useState(stage || '');
 
   // Sync state if context changes externally
   useEffect(() => {
@@ -93,7 +93,43 @@ export function Sidebar() {
     setStage(val);
   };
 
+  const onGenerateClick = (e) => {
+    if (e) e.preventDefault();
+    let activeLoc = location;
+    if (!activeLoc && locationInput) {
+      activeLoc = LOCATIONS.find(l => 
+        l.nameEn.toLowerCase() === locationInput.toLowerCase() || 
+        l.id.toLowerCase() === locationInput.toLowerCase() ||
+        (l.nameHi && l.nameHi.toLowerCase() === locationInput.toLowerCase())
+      );
+      if (activeLoc) setLocation(activeLoc);
+    }
+    let activeSoil = soil;
+    if (!activeSoil && soilInput) {
+      activeSoil = SOILS.find(s => 
+        (s.name && s.name.toLowerCase() === soilInput.toLowerCase()) ||
+        (s.nameEn && s.nameEn.toLowerCase() === soilInput.toLowerCase()) ||
+        getText(s.nameKey, lang).toLowerCase() === soilInput.toLowerCase() ||
+        s.id.toLowerCase() === soilInput.toLowerCase()
+      );
+      if (activeSoil) setSoil(activeSoil);
+    }
+    let activeCrop = crop;
+    if (!activeCrop && cropInput) {
+      activeCrop = CROPS.find(c => 
+        (c.name && c.name.toLowerCase() === cropInput.toLowerCase()) ||
+        (c.nameEn && c.nameEn.toLowerCase() === cropInput.toLowerCase()) ||
+        getText(c.nameKey, lang).toLowerCase() === cropInput.toLowerCase() ||
+        c.id.toLowerCase() === cropInput.toLowerCase()
+      );
+      if (activeCrop) setCrop(activeCrop);
+    }
+
+    handleGeneratePlan(activeCrop, activeSoil, activeLoc);
+  };
+
   const stageOptions = [
+    { value: "", label: lang === 'hi' ? "-- फसल विकास चरण चुनें --" : "-- Select Growth Stage --" },
     { value: "Initial / Germination", label: getText('stage-initial', lang) },
     { value: "Vegetative Growth", label: getText('stage-veg', lang) },
     { value: "Flowering & Yielding", label: getText('stage-flowering', lang) },
@@ -244,7 +280,7 @@ export function Sidebar() {
             fontFamily: 'monospace',
             letterSpacing: '0.02em'
           }}>
-            Lat: {location?.lat?.toFixed(2) || '30.90'} | Lon: {location?.lon?.toFixed(2) || '75.85'}
+            Lat: {location?.lat ? location.lat.toFixed(2) : '--'} | Lon: {location?.lon ? location.lon.toFixed(2) : '--'}
           </div>
         </div>
 
@@ -510,11 +546,12 @@ export function Sidebar() {
           <div style={{ position: 'relative' }}>
             <input
               type="number"
-              value={area}
+              value={area !== null && area !== undefined ? area : ''}
               min="0.1"
               max="1000"
               step="0.5"
-              onChange={(e) => setArea(parseFloat(e.target.value) || 1.0)}
+              placeholder={lang === 'hi' ? "एकड़ में भूमि का आकार दर्ज करें..." : "Enter farm area in acres..."}
+              onChange={(e) => setArea(e.target.value === '' ? '' : parseFloat(e.target.value))}
               style={{
                 width: '100%',
                 padding: '11px 14px',
@@ -598,7 +635,7 @@ export function Sidebar() {
         {/* Generate Plan Button */}
         <button
           type="button"
-          onClick={handleGeneratePlan}
+          onClick={onGenerateClick}
           disabled={loading}
           style={{
             marginTop: '8px',

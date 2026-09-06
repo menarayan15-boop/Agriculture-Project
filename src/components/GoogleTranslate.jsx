@@ -16,7 +16,7 @@ export default function GoogleTranslate() {
         containerRef.current.innerHTML = '';
         new window.google.translate.TranslateElement({
           pageLanguage: 'en',
-          includedLanguages: 'en,hi,te,ta,kn,pa,bn',
+          includedLanguages: 'en,hi,te,ta,kn,pa,mr,bn,gu,or',
           autoDisplay: false
         }, containerRef.current.id);
       }

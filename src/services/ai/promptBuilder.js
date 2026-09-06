@@ -19,11 +19,11 @@ const LANGUAGE_NAMES = {
  * @returns {string} System prompt string
  */
 export function buildAgronomyPrompt(context = {}) {
-  const cropName = context.crop?.nameEn || context.cropName || 'Wheat';
-  const soilName = context.soil?.nameEn || context.soilName || 'Sandy Loam';
-  const locationName = context.location?.nameEn || context.locationName || 'Punjab, India';
-  const fieldArea = context.area || 1.0;
-  const stageName = context.stage || 'Vegetative';
+  const cropName = context.crop?.nameEn || context.cropName || 'Not specified';
+  const soilName = context.soil?.nameEn || context.soilName || 'Not specified';
+  const locationName = context.location?.nameEn || context.locationName || 'Not specified';
+  const fieldArea = context.area || 'Not specified';
+  const stageName = context.stage || 'Not specified';
   const langCode = context.langCode || 'en-IN';
   const targetLanguage = LANGUAGE_NAMES[langCode] || 'English';
 

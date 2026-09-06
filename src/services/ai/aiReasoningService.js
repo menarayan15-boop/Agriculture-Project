@@ -17,22 +17,45 @@ const DEFAULT_GROQ_KEY = 'gsk_9cuq50VfgOrffTqZmJesWGdyb3FYV81YY1dnRL26Ni9mpH1vgG
 export async function getAiAnswer(query, context = {}) {
   if (!query || !query.trim()) return '';
 
-  const apiKey = context.apiKey && context.apiKey.trim() ? context.apiKey.trim() : DEFAULT_GROQ_KEY;
+  const userKey = context.apiKey && context.apiKey.trim() ? context.apiKey.trim() : '';
   const langCode = context.langCode || 'en-IN';
-
-  // Build system prompt with farmer's field context
   const systemPrompt = buildAgronomyPrompt({ ...context, langCode });
 
-  // Sanitize chat history for strict role alternation
-  const sanitizedHistory = sanitizeChatHistory(context.chatHistory || []);
+  // If key is a Gemini API key (starts with AIza)
+  if (userKey.startsWith('AIza')) {
+    try {
+      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(userKey)}`;
+      const response = await fetch(geminiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ role: 'user', parts: [{ text: query.trim() }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 600 }
+        })
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (text && text.trim()) {
+          return cleanAiResponse(text);
+        }
+      }
+    } catch (err) {
+      console.warn('Gemini fetch error:', err.message);
+    }
+  }
+
+  // Use Groq key (either user's gsk_ key or default DEFAULT_GROQ_KEY)
+  const groqKey = userKey.startsWith('gsk_') ? userKey : DEFAULT_GROQ_KEY;
+  const sanitizedHistory = sanitizeChatHistory(context.chatHistory || []);
   const messages = [
     { role: 'system', content: systemPrompt },
     ...sanitizedHistory,
     { role: 'user', content: query.trim() }
   ];
 
-  // Direct browser fetch to Groq API with multi-model fallback
   const modelsToTry = [
     'llama-3.3-70b-versatile',
     'llama-3.1-8b-instant',
@@ -44,7 +67,7 @@ export async function getAiAnswer(query, context = {}) {
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${groqKey}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -106,12 +129,23 @@ function sanitizeChatHistory(chatHistory = []) {
  * 15-Category Offline Agricultural Precision Engine
  */
 export function getOfflineAgronomyResponse(query, context = {}) {
-  const q = query.toLowerCase();
-  const crop = context.crop?.nameEn || context.cropName || 'Wheat';
-  const soil = context.soil?.nameEn || context.soilName || 'Sandy Loam';
-  const area = context.area || 1.0;
-  const location = context.location?.nameEn || context.locationName || 'Punjab';
+  const q = query.toLowerCase().trim();
+  const crop = context.crop?.nameEn || context.cropName || (typeof context.crop === 'string' ? context.crop : '') || '';
+  const soil = context.soil?.nameEn || context.soilName || (typeof context.soil === 'string' ? context.soil : '') || '';
+  const area = context.area ? Number(context.area) : null;
+  const location = context.location?.nameEn || context.locationName || (typeof context.location === 'string' ? context.location : '') || '';
   const langKey = (context.langCode || 'en-IN').slice(0, 2);
+
+  // 0. Greetings
+  if (q.match(/\b(hi|hello|hey|namaste|greetings|नमस्कार|नमस्ते|ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ|வணக்கம்|నమస్కారం|নমস্কার)\b/i) || q === 'hi' || q === 'hello' || q === 'hey' || q === 'namaste') {
+    if (langKey === 'hi') return `नमस्ते! 🙏 मैं आपका कृषी AI सहायक हूँ। आज मैं आपकी ${crop} फसल के लिए क्या सहायता कर सकता हूँ?`;
+    if (langKey === 'pa') return `ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ ${crop} ਫਸਲ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?`;
+    if (langKey === 'mr') return `नमस्कार! 🙏 मी कृषी AI सहाय्यक आहे. आज तुमच्या ${crop} पिकासाठी मी कशी मदत करू शकेन?`;
+    if (langKey === 'te') return `నమస్కారం! 🙏 నేను కృషి AI సహాయకుడిని. ఈ రోజు మీ ${crop} పంటకు నేను ఎలా సహాయపడగలను?`;
+    if (langKey === 'ta') return `வணக்கம்! 🙏 நான் கிருஷ் AI உதவி. உங்கள் ${crop} பயிருக்கு இன்று எவ்வாறு உதவ முடியும்?`;
+    if (langKey === 'bn') return `নমস্কার! 🙏 আমি কৃষি AI সহকারী। আপনার ${crop} ফসলের জন্য আমি আজ কীভাবে সাহায্য করতে পারি?`;
+    return `Hello! 👋 I am Krishi AI, your personal farming assistant. How can I help you with your ${crop} crop today?`;
+  }
 
   // 1. Pests & Diseases
   if (q.includes('pest') || q.includes('disease') || q.includes('rust') || q.includes('worm') || q.includes('fungus') || q.includes('blight') || q.includes('rot') || q.includes('aphid') || q.includes('रोग') || q.includes('कीट') || q.includes('इल्ली') || q.includes('रतुआ') || q.includes('ਸੁੰਡੀ') || q.includes('ਰਤੂਆ')) {
@@ -139,8 +173,8 @@ export function getOfflineAgronomyResponse(query, context = {}) {
     const calcDap = Math.round(50 * area);
     const calcUrea = Math.round(90 * area);
     const calcMop = Math.round(25 * area);
-    if (langKey === 'hi') return `${area} एकड़ ${crop} के लिए कुल खाद: बुवाई पर ${calcDap} kg DAP + ${calcMop} kg पोटाश (MOP) तथा ${Math.round(10*area)} kg जिंक सल्फेट दें। पहली सिंचाई (21-25 दिन) के बाद ${Math.round(calcUrea/2)} kg यूरिया, दूसरी सिंचाई पर शेष ${Math.round(calcUrea/2)} kg यूरिया की टॉप ड्रेसिंग करें।`;
-    return `For ${area} acre(s) of ${crop}: Basal dose = ${calcDap} kg DAP + ${calcMop} kg MOP + ${Math.round(10*area)} kg Zinc Sulphate at sowing. Top-dress ${Math.round(calcUrea/2)} kg Urea after first irrigation (21 days) and remaining ${Math.round(calcUrea/2)} kg after second irrigation.`;
+    if (langKey === 'hi') return `${area} एकड़ ${crop} के लिए कुल खाद: बुवाई पर ${calcDap} kg DAP + ${calcMop} kg पोटाश (MOP) तथा ${Math.round(10 * area)} kg जिंक सल्फेट दें। पहली सिंचाई (21-25 दिन) के बाद ${Math.round(calcUrea / 2)} kg यूरिया, दूसरी सिंचाई पर शेष ${Math.round(calcUrea / 2)} kg यूरिया की टॉप ड्रेसिंग करें।`;
+    return `For ${area} acre(s) of ${crop}: Basal dose = ${calcDap} kg DAP + ${calcMop} kg MOP + ${Math.round(10 * area)} kg Zinc Sulphate at sowing. Top-dress ${Math.round(calcUrea / 2)} kg Urea after first irrigation (21 days) and remaining ${Math.round(calcUrea / 2)} kg after second irrigation.`;
   }
 
   // 4. Irrigation Schedule
@@ -174,7 +208,10 @@ export function getOfflineAgronomyResponse(query, context = {}) {
   }
 
   // 9. General catchall
-  if (langKey === 'hi') return `आपकी ${crop} फसल (${area} एकड़, ${soil} मिट्टी, ${location}) के संबंध में: खेत का नियमित निरीक्षण करें, संतुलित NPK पोषक तत्व (Urea+DAP+MOP) दें, समय पर सिंचाई एवं कीट निगरानी करें। किसी विशेष विषय (कीट, खाद, पानी, मंडी) के लिए दोबारा पूछें।`;
-  if (langKey === 'pa') return `ਤੁਹਾਡੀ ${crop} ਫਸਲ (${area} ਏਕੜ, ${location}) ਲਈ: ਖੇਤ ਦਾ ਨਿਯਮਿਤ ਨਿਰੀਖਣ ਕਰੋ, ਸੰਤੁਲਿਤ ਖਾਦ ਪਾਓ, ਸਮੇਂ ਸਿਰ ਪਾਣੀ ਦਿਓ ਅਤੇ ਕੀੜੇ-ਮਕੌੜਿਆਂ ਦੀ ਨਿਗਰਾਨੀ ਕਰੋ।`;
-  return `For your ${crop} crop (${area} acres on ${soil} soil in ${location}): Maintain regular field scouting, apply balanced NPK nutrients (Urea+DAP+MOP), ensure timely irrigation, and monitor for pest activity. Ask me about a specific topic like pests, fertilizers, irrigation, or market prices for detailed advice.`;
+  const cropStr = crop ? `${crop} ` : '';
+  const locStr = location ? ` in ${location}` : '';
+
+  if (langKey === 'hi') return `आपकी ${cropStr}फसल के संबंध में: खेत का नियमित निरीक्षण करें, संतुलित NPK पोषक तत्व दें, समय पर सिंचाई एवं कीट निगरानी करें। किसी विशेष विषय (कीट, खाद, पानी, मंडी) के लिए दोबारा पूछें।`;
+  if (langKey === 'pa') return `ਤੁਹਾਡੀ ${cropStr}ਫਸਲ ਲਈ: ਖੇਤ ਦਾ ਨਿਯਮਿਤ ਨਿਰੀਖਣ ਕਰੋ, ਸੰਤੁਲਿਤ ਖਾਦ ਪਾਓ, ਸਮੇਂ ਸਿਰ ਪਾਣੀ ਦਿਓ ਅਤੇ ਕੀੜੇ-ਮਕੌੜਿਆਂ ਦੀ ਨਿਗਰਾਨੀ ਕਰੋ।`;
+  return `For your ${cropStr}crop${locStr}: Maintain regular field scouting, apply balanced NPK nutrients, ensure timely irrigation, and monitor for pest activity. Ask me about a specific topic like pests, fertilizers, irrigation, or market prices for detailed advice.`;
 }

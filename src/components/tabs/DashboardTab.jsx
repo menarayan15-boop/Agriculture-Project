@@ -102,7 +102,7 @@ export function DashboardTab() {
                   <span style={{ fontSize: '2rem' }}>{farmerInsights.profile.icon}</span>
                   <div>
                     <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700, color: '#ffffff' }}>
-                      {lang === 'hi' ? farmerInsights.profile.labelHi : farmerInsights.profile.label}
+                      {farmerInsights.profile.label}
                     </h3>
                     <span style={{
                       display: 'inline-block',
@@ -115,12 +115,12 @@ export function DashboardTab() {
                       color: farmerInsights.profile.color,
                       border: `1px solid ${farmerInsights.profile.color}44`
                     }}>
-                      {farmerInsights.profile.confidence}% {lang === 'hi' ? 'सटीकता' : 'Confidence'}
+                      {farmerInsights.profile.confidence}% {getText('confidence', lang) || 'Confidence'}
                     </span>
                   </div>
                 </div>
                 <p style={{ margin: '0 0 16px 0', fontSize: '0.88rem', color: '#94a3b8', lineHeight: '1.5' }}>
-                  {lang === 'hi' ? farmerInsights.profile.descHi : farmerInsights.profile.description}
+                  {farmerInsights.profile.description}
                 </p>
 
                 {/* Health Score */}
@@ -146,10 +146,10 @@ export function DashboardTab() {
                   </div>
                   <div>
                     <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#e2e8f0' }}>
-                      {lang === 'hi' ? 'खेत स्वास्थ्य स्कोर' : 'Farm Health Score'}
+                      {getText('farm-health-score', lang) || 'Farm Health Score'}
                     </div>
                     <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
-                      {lang === 'hi' ? 'जोखिम विश्लेषण पर आधारित' : 'Based on risk analysis'}
+                      {getText('based-on-risk', lang) || 'Based on risk analysis'}
                     </div>
                   </div>
                 </div>
@@ -159,12 +159,12 @@ export function DashboardTab() {
               <div style={{ flex: '1', minWidth: '220px' }}>
                 <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 600, color: '#94a3b8' }}>
                   <i className="fa-solid fa-triangle-exclamation" style={{ marginRight: '6px', color: '#f59e0b' }}></i>
-                  {lang === 'hi' ? 'जोखिम मूल्यांकन' : 'Risk Assessment'}
+                  {getText('risk-assessment', lang) || 'Risk Assessment'}
                 </h4>
                 {farmerInsights.risks.length === 0 ? (
                   <div style={{ padding: '12px', borderRadius: 'var(--border-radius-sm)', background: 'rgba(21, 128, 61, 0.15)', border: '1px solid var(--primary)', color: 'var(--primary-light)', fontSize: '0.85rem' }}>
                     <i className="fa-solid fa-shield-check" style={{ marginRight: '6px' }}></i>
-                    {lang === 'hi' ? 'कोई बड़ा खतरा नहीं' : 'No significant risks detected'}
+                    {getText('no-risks', lang) || 'No significant risks detected'}
                   </div>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -178,7 +178,7 @@ export function DashboardTab() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                           <span>{risk.icon}</span>
                           <span style={{ fontWeight: 600, color: '#e2e8f0' }}>
-                            {lang === 'hi' ? risk.labelHi : risk.label}
+                            {risk.label}
                           </span>
                           <span style={{
                             marginLeft: 'auto',
@@ -191,7 +191,7 @@ export function DashboardTab() {
                           </span>
                         </div>
                         <div style={{ color: '#94a3b8', fontSize: '0.78rem' }}>
-                          {lang === 'hi' ? risk.tipHi : risk.tip}
+                          {risk.tip}
                         </div>
                       </div>
                     ))}
@@ -203,7 +203,7 @@ export function DashboardTab() {
               <div style={{ flex: '1', minWidth: '220px' }}>
                 <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <i className="fa-solid fa-lightbulb" style={{ color: 'var(--primary-light)' }}></i>
-                  {lang === 'hi' ? 'व्यक्तिगत सुझाव' : 'Personalized Tips'}
+                  {getText('personalized-tips', lang) || 'Personalized Tips'}
                   {farmerInsights.isExplicitlyPersonalized && (
                     <span style={{
                       background: 'var(--primary)', color: '#fff', 
@@ -211,7 +211,7 @@ export function DashboardTab() {
                       fontWeight: 600
                     }}>
                       <i className="fa-solid fa-wand-magic-sparkles" style={{marginRight: '4px'}}></i>
-                      {lang === 'hi' ? 'आपके लिए' : 'For You'}
+                      {getText('for-you', lang) || 'For You'}
                     </span>
                   )}
                 </h4>

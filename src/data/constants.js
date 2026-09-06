@@ -1857,7 +1857,14 @@ export const TRANSLATIONS = {
     "sidebar-pref-org": "100% Organic & Bio-Inputs",
     "sidebar-pref-syn": "High-Yield Commercial",
     "sidebar-btn": "Generate Irrigation Plan",
-    "sidebar-btn-loading": "Calculating Plan..."
+    "sidebar-btn-loading": "Calculating Plan...",
+    "confidence": "Confidence",
+    "farm-health-score": "Farm Health Score",
+    "based-on-risk": "Based on risk analysis",
+    "risk-assessment": "Risk Assessment",
+    "no-risks": "No significant risks detected",
+    "personalized-tips": "Personalized Tips",
+    "for-you": "For You"
   },
   hi: {
     "dashboard-title": "कृषि जल — एआई स्मार्ट सिंचाई और फसल सलाहकार",
@@ -1898,7 +1905,14 @@ export const TRANSLATIONS = {
     "sidebar-pref-org": "100% जैविक",
     "sidebar-pref-syn": "उच्च उपज (व्यावसायिक)",
     "sidebar-btn": "सिंचाई योजना बनाएं",
-    "sidebar-btn-loading": "योजना बनाई जा रही है..."
+    "sidebar-btn-loading": "योजना बनाई जा रही है...",
+    "confidence": "सटीकता",
+    "farm-health-score": "खेत स्वास्थ्य स्कोर",
+    "based-on-risk": "जोखिम विश्लेषण पर आधारित",
+    "risk-assessment": "जोखिम मूल्यांकन",
+    "no-risks": "कोई बड़ा खतरा नहीं",
+    "personalized-tips": "व्यक्तिगत सुझाव",
+    "for-you": "आपके लिए"
   },
   te: {
     "dashboard-title": "కృషి జల్ — AI స్మార్ట్ ఇరిగేషన్ & క్రాప్ అడ్వైజర్",

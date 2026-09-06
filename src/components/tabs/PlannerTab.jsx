@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
 import { CROP_SEASONS_DATA, SOIL_TYPES_CATALOG } from '../../data/cropDetailsData';
+import { getText } from '../../data/constants';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -329,9 +330,11 @@ export function PlannerTab() {
                     <div>
                       <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <i className="fa-solid fa-seedling" style={{ color: season.color }}></i>
-                        {crop.name}
+                        {getText(crop.nameKey || `crop-${crop.id}`, lang) !== `crop-${crop.id}`
+                          ? getText(crop.nameKey || `crop-${crop.id}`, lang)
+                          : (lang === 'hi' && crop.hindiName ? crop.hindiName : crop.name)}
                       </h3>
-                      {crop.hindiName && (
+                      {crop.hindiName && lang === 'en' && (
                         <div style={{ fontSize: '0.82rem', color: '#a7f3d0', marginTop: '2px' }}>
                           {crop.hindiName}
                         </div>

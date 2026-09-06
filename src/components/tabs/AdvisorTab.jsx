@@ -5,15 +5,15 @@ import { getText } from '../../data/constants';
 export function AdvisorTab() {
   const { location, crop, soil, stage, area, preference, lang, geminiKey } = useApp();
 
-  const cropName = crop ? getText(crop.nameKey, lang) : 'Wheat';
-  const soilName = soil ? getText(soil.nameKey, lang) : 'Clayey Loam';
-  const locationName = location ? location.nameEn : 'Punjab (Ludhiana), India';
+  const cropName = crop ? (getText(crop.nameKey, lang) || crop.nameEn || crop.name) : 'Not specified';
+  const soilName = soil ? (getText(soil.nameKey, lang) || soil.nameEn || soil.name) : 'Not specified';
+  const locationName = location ? (location.nameEn || location.name) : 'Not specified';
 
   const [inputQuery, setInputQuery] = useState('');
   const [consoleLogs, setConsoleLogs] = useState([
     { type: 'muted', text: '> Ready for input parameter generation...' },
-    { type: 'info', text: `> Connected to Gemini AI Advisor node for ${locationName}.` },
-    { type: 'success', text: `> Target crop: ${cropName} (${area} acres) on ${soilName} soil.` }
+    { type: 'info', text: `> Connected to Gemini AI Advisor node (${locationName}).` },
+    { type: 'success', text: `> Target crop: ${cropName} (${area ? area + ' acres' : 'Area not set'}) on ${soilName} soil.` }
   ]);
 
   const [isThinking, setIsThinking] = useState(false);

@@ -2105,31 +2105,21 @@ Please analyze the soil and return a JSON response with EXACTLY this structure (
                         completed=excluded.completed
                 ''', (name, state, district, village, primary_crop, farm_size, farming_type, completed))
                 conn.commit()
-                
-                # Fetch updated profile to return
-                conn.row_factory = sqlite3.Row
-                c = conn.cursor()
-                c.execute("SELECT * FROM farmer_profiles WHERE user_id = 'default_farmer'")
-                updated_row = dict(c.fetchone())
                 conn.close()
 
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(json.dumps({
-                    "success": True,
-                    "message": "Farming profile updated successfully!",
-                    "profile": updated_row
-                }).encode('utf-8'))
+                self.wfile.write(json.dumps({"success": True, "message": "Profile saved"}).encode('utf-8'))
                 return
 
             # 4. API: Groq Agricultural AI Chat Endpoint
             if path == "/api/groq/chat":
                 query = data.get("query", "").strip()
-                crop = data.get("crop", "Wheat")
-                soil = data.get("soil", "Sandy Loam")
-                area = data.get("area", 1.0)
-                location = data.get("location", "Punjab, India")
+                crop = data.get("crop", "").strip() or "Not specified"
+                soil = data.get("soil", "").strip() or "Not specified"
+                area = data.get("area", "") or "Not specified"
+                location = data.get("location", "").strip() or "Not specified"
                 lang = data.get("lang", "en-IN")
                 api_key = data.get("apiKey", "").strip() or "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"
 
@@ -2138,6 +2128,33 @@ Please analyze the soil and return a JSON response with EXACTLY this structure (
                     self.send_header("Content-Type", "application/json")
                     self.end_headers()
                     self.wfile.write(json.dumps({"error": "Query string is required"}).encode('utf-8'))
+                    return
+
+                # Intercept Greetings (hi, hello, hey, namaste, etc.) immediately
+                q_lower = query.lower().strip()
+                greetings = ["hi", "hello", "hey", "namaste", "namaskar", "greetings", "good morning", "good afternoon", "good evening", "नमस्कार", "नमस्ते", "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "வணக்கம்", "నమస్కారం", "নমস্কার"]
+                if q_lower in greetings or any(q_lower.startswith(g + " ") for g in ["hi", "hello", "hey", "namaste"]):
+                    crop_hi = f" {crop}" if crop and crop != "Not specified" else ""
+                    crop_en = f" with your {crop} crop" if crop and crop != "Not specified" else ""
+                    if lang == "hi-IN" or "hi" in lang.lower():
+                        greet_ans = f"नमस्ते! 🙏 मैं आपका कृषी AI सहायक हूँ। आज मैं आपकी{crop_hi} फसल के लिए क्या सहायता कर सकता हूँ?"
+                    elif lang == "pa-IN" or "pa" in lang.lower():
+                        greet_ans = f"ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ{crop_hi} ਫਸਲ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?"
+                    elif lang == "mr-IN" or "mr" in lang.lower():
+                        greet_ans = f"नमस्कार! 🙏 मी कृषी AI सहाय्यक आहे. आज तुमच्या{crop_hi} पिकासाठी मी कशी मदत करू शकेन?"
+                    elif lang == "te-IN" or "te" in lang.lower():
+                        greet_ans = f"నమస్కారం! 🙏 నేను కృషి AI సహాయకుడిని. ఈ రోజు మీ{crop_hi} పంటకు నేను ఎలా సహాయపడగలను?"
+                    elif lang == "ta-IN" or "ta" in lang.lower():
+                        greet_ans = f"வணக்கம்! 🙏 நான் கிருஷ் AI உதவி. உங்கள்{crop_hi} பயிருக்கு இன்று எவ்வாறு உதவ முடியும்?"
+                    elif lang == "bn-IN" or "bn" in lang.lower():
+                        greet_ans = f"নমস্কার! 🙏 আমি কৃষি AI সহকারী। আপনার{crop_hi} ফসলের জন্য আমি আজ কীভাবে সাহায্য করতে পারি?"
+                    else:
+                        greet_ans = f"Hello! 👋 I am Krishi AI, your personal farming assistant. How can I help you{crop_en} today?"
+
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"success": True, "answer": greet_ans}).encode('utf-8'))
                     return
 
                 lang_map = {
@@ -2167,63 +2184,102 @@ KNOWLEDGE & BEHAVIOR MANDATE:
 5. CONCISE & ACTIONABLE: Deliver 3-5 high-impact, actionable sentences. Avoid generic boilerplate filler.
 6. NO MARKDOWN: Output pure clean plain text without *, **, #, or bullet symbols for seamless text-to-speech audio."""
 
-                models = ["qwen/qwen3.8-27b", "openai/gpt-oss-120b", "qwen/qwen3.6-27b"]
+                models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768", "gemma2-9b-it"]
                 ai_answer = None
 
-                for model in models:
+                # Check if key is Gemini key
+                if api_key.startswith("AIza"):
                     try:
-                        req_body = json.dumps({
-                            "model": model,
-                            "messages": [
-                                {"role": "system", "content": system_prompt},
-                                {"role": "user", "content": query}
-                            ],
-                            "temperature": 0.7,
-                            "max_tokens": 550,
-                            "top_p": 0.95
+                        gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+                        g_body = json.dumps({
+                            "system_instruction": {"parts": [{"text": system_prompt}]},
+                            "contents": [{"role": "user", "parts": [{"text": query}]}],
+                            "generationConfig": {"temperature": 0.7, "maxOutputTokens": 500}
                         }).encode('utf-8')
-
-                        req = urllib.request.Request(
-                            "https://api.groq.com/openai/v1/chat/completions",
-                            data=req_body,
-                            headers={
-                                "Authorization": f"Bearer {api_key}",
-                                "Content-Type": "application/json",
-                                "User-Agent": "KrishiJal/3.8"
-                            }
-                        )
-
+                        req = urllib.request.Request(gemini_url, data=g_body, headers={"Content-Type": "application/json"})
                         ssl_ctx = ssl.create_default_context()
                         ssl_ctx.check_hostname = False
                         ssl_ctx.verify_mode = ssl.CERT_NONE
-                        with urllib.request.urlopen(req, timeout=15, context=ssl_ctx) as res:
+                        with urllib.request.urlopen(req, timeout=12, context=ssl_ctx) as res:
                             if res.status == 200:
-                                res_data = json.loads(res.read().decode('utf-8'))
-                                raw_text = res_data.get("choices", [{}])[0].get("message", {}).get("content", "")
-                                if raw_text:
-                                    clean_text = raw_text.replace("*", "").replace("#", "").replace("`", "").strip()
-                                    ai_answer = clean_text
-                                    break
-                    except Exception as err:
-                        import traceback
-                        print(f"[Groq AI Model {model} Error]: {type(err).__name__}: {err}", flush=True)
-                        traceback.print_exc()
+                                g_data = json.loads(res.read().decode('utf-8'))
+                                raw = g_data.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                                if raw:
+                                    ai_answer = raw.replace("*", "").replace("#", "").replace("`", "").strip()
+                    except Exception as g_err:
+                        print(f"[Gemini API Error]: {g_err}", flush=True)
 
-                if ai_answer:
-                    self.send_response(200)
-                    self.send_header("Content-Type", "application/json")
-                    self.end_headers()
-                    self.wfile.write(json.dumps({
-                        "success": True,
-                        "answer": ai_answer
-                    }).encode('utf-8'))
-                    return
-                else:
-                    self.send_response(502)
-                    self.send_header("Content-Type", "application/json")
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"error": "Failed to generate AI response from Groq models."}).encode('utf-8'))
-                    return
+                if not ai_answer:
+                    # Fallback to Groq API using default or provided Groq key
+                    groq_key = api_key if api_key.startswith("gsk_") else "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"
+                    for model in models:
+                        try:
+                            req_body = json.dumps({
+                                "model": model,
+                                "messages": [
+                                    {"role": "system", "content": system_prompt},
+                                    {"role": "user", "content": query}
+                                ],
+                                "temperature": 0.7,
+                                "max_tokens": 550,
+                                "top_p": 0.95
+                            }).encode('utf-8')
+
+                            req = urllib.request.Request(
+                                "https://api.groq.com/openai/v1/chat/completions",
+                                data=req_body,
+                                headers={
+                                    "Authorization": f"Bearer {groq_key}",
+                                    "Content-Type": "application/json",
+                                    "User-Agent": "KrishiJal/3.8"
+                                }
+                            )
+
+                            ssl_ctx = ssl.create_default_context()
+                            ssl_ctx.check_hostname = False
+                            ssl_ctx.verify_mode = ssl.CERT_NONE
+                            with urllib.request.urlopen(req, timeout=15, context=ssl_ctx) as res:
+                                if res.status == 200:
+                                    res_data = json.loads(res.read().decode('utf-8'))
+                                    raw_text = res_data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                                    if raw_text:
+                                        clean_text = raw_text.replace("*", "").replace("#", "").replace("`", "").strip()
+                                        ai_answer = clean_text
+                                        break
+                        except Exception as err:
+                            print(f"[Groq AI Model {model} Error]: {type(err).__name__}: {err}", flush=True)
+
+                if not ai_answer:
+                    # Dynamic Fallback if all AI APIs fail
+                    q_lower = query.lower()
+                    try:
+                        area_num = float(area)
+                    except Exception:
+                        area_num = 1.0
+
+                    if any(g in q_lower for g in ["hi", "hello", "hey", "namaste", "namaskar", "greetings", "नमस्कार", "नमस्ते"]):
+                        if lang.lower().startswith("hi") or "hindi" in target_lang.lower().replace("english", ""):
+                            ai_answer = f"नमस्ते! 🙏 मैं आपका कृषी AI सहायक हूँ। आज मैं आपकी {crop} फसल के लिए क्या सहायता कर सकता हूँ?"
+                        elif lang.lower().startswith("pa") or "punjabi" in target_lang.lower():
+                            ai_answer = f"ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ {crop} ਫਸਲ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?"
+                        else:
+                            ai_answer = f"Hello! 👋 I am Krishi AI, your personal farming assistant. How can I help you with your {crop} crop today?"
+                    elif "sunflower" in q_lower or "सूरजमुखी" in q_lower or "ਸੂਰਜਮੁਖੀ" in q_lower:
+                        ai_answer = f"For Sunflower cultivation ({area_num} acres, {soil}): Use 2.5-3 kg seed/acre. Sow at 60x30 cm spacing. Apply 30kg Urea + 40kg DAP + 25kg Potash/acre. Irrigate at critical germination, flowering, and seed filling stages."
+                    elif "pest" in q_lower or "disease" in q_lower or "कीट" in q_lower or "रोग" in q_lower:
+                        ai_answer = f"For pest and disease control in {crop}: Spray Imidacloprid 17.8% SL (50ml/acre) for sucking pests or Propiconazole 25% EC (200ml/acre) for fungal infection in 150L water/acre."
+                    elif "fertilizer" in q_lower or "urea" in q_lower or "dap" in q_lower or "खाद" in q_lower:
+                        calc_d = int(50 * area_num)
+                        calc_u = int(90 * area_num)
+                        ai_answer = f"For {area_num} acre {crop} fertilizer dose: Apply {calc_d}kg DAP + {int(25*area_num)}kg MOP at sowing. Top dress {calc_u}kg Urea after 1st irrigation."
+                    else:
+                        ai_answer = f"Regarding '{query}' for {crop} ({area_num} acre, {soil} soil in {location}): Sow certified treated seeds, ensure balanced NPK fertilization, maintain 5-6 timely irrigations, and spray recommended active ingredients at first pest detection."
+
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({"success": True, "answer": ai_answer}).encode('utf-8'))
+                return
 
             self.send_response(404)
             self.end_headers()

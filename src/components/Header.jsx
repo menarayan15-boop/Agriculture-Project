@@ -166,6 +166,26 @@ export function Header({ onOpenAiModal, onNavigate }) {
               >
                 <i className="fa-solid fa-pen-to-square"></i> Edit Farm Profile
               </button>
+
+              <button 
+                onClick={() => {
+                  setProfileOpen(false);
+                  const key = prompt("Enter your Google Translate API Key (optional for Cloud Translation API):", localStorage.getItem('krishi_translate_key') || '');
+                  if (key !== null) {
+                    localStorage.setItem('krishi_translate_key', key.trim());
+                    alert("Google Translate API Key saved successfully!");
+                  }
+                }}
+                style={{
+                  width: '100%', background: 'transparent', border: 'none', textAlign: 'left',
+                  color: 'var(--text-primary)', padding: '8px 12px', cursor: 'pointer',
+                  borderRadius: '4px', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+              >
+                <i className="fa-solid fa-key"></i> Translation API Key
+              </button>
             </div>
           )}
         </div>

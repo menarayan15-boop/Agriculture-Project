@@ -206,3 +206,131 @@ export function calcROI(investment, revenue) {
   const roi    = investment > 0 ? (profit / investment) * 100 : 0;
   return { profit, roi: +roi.toFixed(1) };
 }
+
+/** Solar Water Pump & KUSUM Subsidy Calculation */
+export function calcSolarPump(hp, depthFt = 150, dieselPrice = 90, customSubsidyPct = 60) {
+  const hpVal = parseFloat(hp) || 5;
+  const kwRequired = hpVal * 0.746 * 1.25;
+  const solarCapacityKw = Math.ceil(kwRequired * 10) / 10;
+  const systemBenchmarkCost = hpVal * 55000;
+  const subsidyPct = parseFloat(customSubsidyPct) || 60;
+  const subsidyAmount = (systemBenchmarkCost * subsidyPct) / 100;
+  const farmerShare = systemBenchmarkCost - subsidyAmount;
+  const dieselPerHr = hpVal * 0.4;
+  const dailyHours = 5;
+  const dailyDieselLit = dieselPerHr * dailyHours;
+  const monthlyDieselLit = dailyDieselLit * 25;
+  const monthlyDieselSavedRs = monthlyDieselLit * (parseFloat(dieselPrice) || 90);
+  const annualSavingsRs = monthlyDieselSavedRs * 12;
+  const paybackMonths = annualSavingsRs > 0 ? Math.round((farmerShare / annualSavingsRs) * 12) : 0;
+
+  return {
+    solarCapacityKw: +solarCapacityKw.toFixed(1),
+    systemBenchmarkCost: Math.round(systemBenchmarkCost),
+    subsidyAmount: Math.round(subsidyAmount),
+    farmerShare: Math.round(farmerShare),
+    monthlyDieselSavedRs: Math.round(monthlyDieselSavedRs),
+    annualSavingsRs: Math.round(annualSavingsRs),
+    paybackMonths,
+    dailyWaterDischargeLit: Math.round(hpVal * 25000)
+  };
+}
+
+/** Cattle & Dairy Fodder Requirement Calculation */
+export function calcCattleFodder(cows = 2, buffaloes = 2, avgMilkPerHead = 10, milkPrice = 50) {
+  const totalHeads = (parseFloat(cows) || 0) + (parseFloat(buffaloes) || 0);
+  const totalDailyMilk = totalHeads * (parseFloat(avgMilkPerHead) || 10);
+  const dailyGreenFodderKg = totalHeads * 25;
+  const dailyDryFodderKg = totalHeads * 6;
+  const dailyConcentrateKg = (totalHeads * 1.5) + (totalDailyMilk * 0.4);
+  const monthlyFeedCost = (dailyGreenFodderKg * 1.5 + dailyDryFodderKg * 5 + dailyConcentrateKg * 24) * 30;
+  const monthlyRevenue = totalDailyMilk * (parseFloat(milkPrice) || 50) * 30;
+  const monthlyNetMargin = monthlyRevenue - monthlyFeedCost;
+
+  return {
+    totalHeads,
+    totalDailyMilk: Math.round(totalDailyMilk),
+    dailyGreenFodderKg: Math.round(dailyGreenFodderKg),
+    dailyDryFodderKg: Math.round(dailyDryFodderKg),
+    dailyConcentrateKg: Math.round(dailyConcentrateKg),
+    monthlyFeedCost: Math.round(monthlyFeedCost),
+    monthlyRevenue: Math.round(monthlyRevenue),
+    monthlyNetMargin: Math.round(monthlyNetMargin)
+  };
+}
+
+/** Drip Irrigation & Lateral Pipe Calculation */
+export function calcDripIrrigation(acres, rowSpacingFt = 5, emitterSpacingFt = 1.5, subsidyPct = 60) {
+  const acresVal = parseFloat(acres) || 1;
+  const sqFt = acresVal * 43560;
+  const lateralLenFt = sqFt / (parseFloat(rowSpacingFt) || 5);
+  const lateralLenMeters = lateralLenFt * 0.3048;
+  const emitterCount = Math.ceil(lateralLenFt / (parseFloat(emitterSpacingFt) || 1.5));
+  const grossCost = acresVal * 45000;
+  const subsidyAmount = (grossCost * (parseFloat(subsidyPct) || 60)) / 100;
+  const farmerShare = grossCost - subsidyAmount;
+  const waterSavedPercent = 55;
+
+  return {
+    lateralLenMeters: Math.round(lateralLenMeters),
+    emitterCount,
+    grossCost: Math.round(grossCost),
+    subsidyAmount: Math.round(subsidyAmount),
+    farmerShare: Math.round(farmerShare),
+    waterSavedPercent
+  };
+}
+
+/** Polyhouse & Protected Cultivation Calculator */
+export function calcPolyhouse(areaSqMeters = 1000, cropType = 'capsicum', subsidyPct = 50) {
+  const area = parseFloat(areaSqMeters) || 1000;
+  const polyhouseCostSqM = 950;
+  const grossStructureCost = area * polyhouseCostSqM;
+  const subsidyAmount = (grossStructureCost * (parseFloat(subsidyPct) || 50)) / 100;
+  const farmerShare = grossStructureCost - subsidyAmount;
+
+  const cropYields = {
+    capsicum:  { yieldKgSqM: 10, priceKg: 45, name: 'Color Capsicum (शिमला मिर्च)' },
+    cucumber:  { yieldKgSqM: 15, priceKg: 25, name: 'Dutch Cucumber (खीरा)' },
+    rose:      { yieldKgSqM: 150, priceKg: 4, name: 'Dutch Roses (गुलाब कट फ्लावर)' },
+    tomato:    { yieldKgSqM: 12, priceKg: 30, name: 'Polyhouse Tomato (टमाटर)' }
+  };
+
+  const selected = cropYields[cropType] || cropYields.capsicum;
+  const annualYieldTotal = area * selected.yieldKgSqM;
+  const annualGrossRevenue = annualYieldTotal * selected.priceKg;
+  const annualOperatingCost = area * 250;
+  const annualNetProfit = annualGrossRevenue - annualOperatingCost;
+
+  return {
+    grossStructureCost: Math.round(grossStructureCost),
+    subsidyAmount: Math.round(subsidyAmount),
+    farmerShare: Math.round(farmerShare),
+    cropName: selected.name,
+    annualYieldTotal: Math.round(annualYieldTotal),
+    annualGrossRevenue: Math.round(annualGrossRevenue),
+    annualOperatingCost: Math.round(annualOperatingCost),
+    annualNetProfit: Math.round(annualNetProfit)
+  };
+}
+
+/** Organic & Bio-Input Requirement Calculator */
+export function calcOrganicInputs(acres = 1) {
+  const acresVal = parseFloat(acres) || 1;
+  const vermicompostTonnes = acresVal * 2;
+  const neemCakeKg = acresVal * 100;
+  const bioNpkLiters = acresVal * 2;
+  const jeevamrutLiters = acresVal * 800;
+  const trichodermaKg = acresVal * 2;
+  const totalOrganicCost = (vermicompostTonnes * 4000) + (neemCakeKg * 25) + (bioNpkLiters * 350) + (trichodermaKg * 180);
+
+  return {
+    vermicompostTonnes: +vermicompostTonnes.toFixed(1),
+    neemCakeKg: Math.round(neemCakeKg),
+    bioNpkLiters: Math.round(bioNpkLiters),
+    jeevamrutLiters: Math.round(jeevamrutLiters),
+    trichodermaKg: Math.round(trichodermaKg),
+    totalOrganicCost: Math.round(totalOrganicCost)
+  };
+}
+
