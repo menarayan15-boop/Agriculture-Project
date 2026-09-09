@@ -25,19 +25,20 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
   if (!report || !report.cropRoadmap) {
     return (
       <div id="crop-roadmap-section" className="dash-card span-all" style={{
-        background: 'rgba(14, 31, 23, 0.95)',
-        border: '1.5px solid rgba(40, 199, 111, 0.3)',
+        background: '#FFFFFF',
+        border: '1.5px solid #E5E7EB',
         borderRadius: '16px',
-        padding: '24px',
+        padding: '32px 24px',
         textAlign: 'center',
-        marginTop: '20px'
+        marginTop: '20px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)'
       }}>
         <div style={{
           width: '56px',
           height: '56px',
           borderRadius: '50%',
-          background: 'rgba(40, 199, 111, 0.15)',
-          color: '#28c76f',
+          background: '#DCFCE7',
+          color: '#15803D',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -46,10 +47,10 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
         }}>
           <i className="fa-solid fa-seedling"></i>
         </div>
-        <h3 style={{ color: '#ffffff', margin: '0 0 8px 0', fontSize: '1.25rem', fontWeight: 700 }}>
+        <h3 style={{ color: '#17211B', margin: '0 0 8px 0', fontSize: '1.25rem', fontWeight: 800 }}>
           {getRoadmapText('cardTitle', activeLang)}
         </h3>
-        <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.92rem', maxWidth: '520px', margin: '0 auto 16px auto', lineHeight: '1.5' }}>
+        <p style={{ color: '#4B5563', fontSize: '0.92rem', maxWidth: '520px', margin: '0 auto 16px auto', lineHeight: '1.5' }}>
           {getRoadmapText('placeholderDesc', activeLang)}
         </p>
       </div>
@@ -83,13 +84,13 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
 
   return (
     <div id="crop-roadmap-section" className="dash-card span-all" style={{
-      background: 'linear-gradient(145deg, rgba(10, 24, 17, 0.98) 0%, rgba(16, 38, 27, 0.95) 100%)',
-      border: '2px solid rgba(40, 199, 111, 0.45)',
+      background: '#FFFFFF',
+      border: '1.5px solid #E5E7EB',
       borderRadius: '20px',
       padding: '28px',
-      boxShadow: '0 12px 35px -8px rgba(0, 0, 0, 0.5), 0 0 25px 0 rgba(40, 199, 111, 0.15)',
+      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.04)',
       marginTop: '24px',
-      color: '#e6f3ec'
+      color: '#17211B'
     }}>
       {/* ─── HEADER BANNER ─── */}
       <div style={{
@@ -99,32 +100,32 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
         flexWrap: 'wrap',
         gap: '16px',
         paddingBottom: '20px',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.12)'
+        borderBottom: '1px solid #E5E7EB'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <div style={{
             width: '56px',
             height: '56px',
             borderRadius: '16px',
-            background: 'linear-gradient(135deg, #28c76f 0%, #108543 100%)',
+            background: '#15803D',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             color: '#ffffff',
             fontSize: '26px',
-            boxShadow: '0 8px 20px rgba(40, 199, 111, 0.35)'
+            boxShadow: '0 4px 12px rgba(21, 128, 61, 0.25)'
           }}>
             <i className="fa-solid fa-wheat-awn"></i>
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-              <h2 style={{ margin: 0, fontSize: '1.45rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em' }}>
+              <h2 style={{ margin: 0, fontSize: '1.35rem', fontWeight: 800, color: '#17211B', letterSpacing: '-0.02em' }}>
                 {getRoadmapText('cardTitle', activeLang)}
               </h2>
               <span style={{
-                background: 'rgba(40, 199, 111, 0.2)',
-                border: '1px solid #28c76f',
-                color: '#28c76f',
+                background: '#DCFCE7',
+                border: '1px solid #86EFAC',
+                color: '#166534',
                 padding: '4px 12px',
                 borderRadius: '20px',
                 fontSize: '0.8rem',
@@ -134,9 +135,9 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
               </span>
               {sowingDate && (
                 <span style={{
-                  background: 'rgba(56, 189, 248, 0.2)',
-                  border: '1px solid #38bdf8',
-                  color: '#38bdf8',
+                  background: '#E0F2FE',
+                  border: '1px solid #BAE6FD',
+                  color: '#0369A1',
                   padding: '4px 12px',
                   borderRadius: '20px',
                   fontSize: '0.8rem',
@@ -147,7 +148,7 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
                 </span>
               )}
             </div>
-            <p style={{ margin: '4px 0 0 0', fontSize: '0.92rem', color: 'rgba(255, 255, 255, 0.75)' }}>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.9rem', color: '#4B5563' }}>
               {getRoadmapText('planSubtitle', activeLang, { crop: cropName, area: farmArea, loc: locationName })}
             </p>
           </div>
@@ -159,15 +160,15 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
         margin: '22px 0',
         padding: '22px',
         borderRadius: '16px',
-        background: 'rgba(8, 20, 14, 0.85)',
-        border: '1.5px solid rgba(40, 199, 111, 0.3)',
+        background: '#F0FDF4',
+        border: '1.5px solid #BBF7D0',
         display: 'flex',
         flexDirection: 'column',
         gap: '16px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span style={{ fontSize: '1.4rem' }}>🌱</span>
-          <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#28c76f', fontWeight: 800 }}>
+          <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#15803D', fontWeight: 800 }}>
             {getRoadmapText('sec1Title', activeLang)}
           </h3>
         </div>
@@ -178,24 +179,24 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
           gap: '16px'
         }}>
           {/* Ideal Soil & pH */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', padding: '14px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <span style={{ fontSize: '0.72rem', color: '#28c76f', fontWeight: 700, textTransform: 'uppercase' }}>
+          <div style={{ background: '#FFFFFF', padding: '14px 16px', borderRadius: '12px', border: '1px solid #E5E7EB', boxShadow: '0 2px 6px rgba(0,0,0,0.02)' }}>
+            <span style={{ fontSize: '0.72rem', color: '#15803D', fontWeight: 700, textTransform: 'uppercase' }}>
               {getRoadmapText('idealSoilLabel', activeLang)}
             </span>
-            <h4 style={{ margin: '4px 0 2px 0', fontSize: '0.95rem', color: '#ffffff', fontWeight: 700 }}>
+            <h4 style={{ margin: '4px 0 2px 0', fontSize: '0.95rem', color: '#17211B', fontWeight: 700 }}>
               {idealSoil}
             </h4>
-            <span style={{ fontSize: '0.82rem', color: '#38bdf8', fontWeight: 600 }}>
+            <span style={{ fontSize: '0.82rem', color: '#0284C7', fontWeight: 600 }}>
               {getRoadmapText('targetPhLabel', activeLang)}: {targetPh}
             </span>
           </div>
 
           {/* Drainage Requirements */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', padding: '14px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <span style={{ fontSize: '0.72rem', color: '#38bdf8', fontWeight: 700, textTransform: 'uppercase' }}>
+          <div style={{ background: '#FFFFFF', padding: '14px 16px', borderRadius: '12px', border: '1px solid #E5E7EB', boxShadow: '0 2px 6px rgba(0,0,0,0.02)' }}>
+            <span style={{ fontSize: '0.72rem', color: '#0284C7', fontWeight: 700, textTransform: 'uppercase' }}>
               {getRoadmapText('drainageLabel', activeLang)}
             </span>
-            <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.4' }}>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: '#374151', lineHeight: '1.4' }}>
               {drainageReq}
             </p>
           </div>
@@ -203,11 +204,11 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
 
         {/* Soil Amendment Tips */}
         {amendmentTips && amendmentTips.length > 0 && (
-          <div style={{ background: 'rgba(251, 191, 36, 0.08)', padding: '14px 16px', borderRadius: '12px', border: '1px solid rgba(251, 191, 36, 0.25)' }}>
-            <span style={{ fontSize: '0.78rem', color: '#fbbf24', fontWeight: 700, textTransform: 'uppercase' }}>
+          <div style={{ background: '#FEF3C7', padding: '14px 16px', borderRadius: '12px', border: '1px solid #FDE68A' }}>
+            <span style={{ fontSize: '0.78rem', color: '#B45309', fontWeight: 700, textTransform: 'uppercase' }}>
               {getRoadmapText('amendmentLabel', activeLang)}
             </span>
-            <ul style={{ margin: '6px 0 0 0', paddingLeft: '20px', fontSize: '0.85rem', color: '#e6f3ec', lineHeight: '1.45' }}>
+            <ul style={{ margin: '6px 0 0 0', paddingLeft: '20px', fontSize: '0.85rem', color: '#92400E', lineHeight: '1.45' }}>
               {amendmentTips.map((tip, idx) => (
                 <li key={idx} style={{ marginBottom: '4px' }}>{tip}</li>
               ))}
@@ -220,7 +221,7 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
       <div style={{ margin: '24px 0' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
           <span style={{ fontSize: '1.4rem' }}>🗺️</span>
-          <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#ffffff', fontWeight: 800 }}>
+          <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#17211B', fontWeight: 800 }}>
             {getRoadmapText('sec2Title', activeLang)}
           </h3>
         </div>
@@ -245,11 +246,9 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
                   minWidth: '180px',
                   padding: '14px 16px',
                   borderRadius: '14px',
-                  background: isSelected 
-                    ? 'linear-gradient(135deg, rgba(40, 199, 111, 0.35) 0%, rgba(16, 133, 67, 0.25) 100%)' 
-                    : 'rgba(255, 255, 255, 0.04)',
-                  border: isSelected ? '2px solid #28c76f' : '1px solid rgba(255, 255, 255, 0.1)',
-                  color: isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.7)',
+                  background: isSelected ? '#F0FDF4' : '#F8FAF9',
+                  border: isSelected ? '2px solid #15803D' : '1px solid #E5E7EB',
+                  color: isSelected ? '#15803D' : '#4B5563',
                   textAlign: 'left',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
@@ -259,14 +258,14 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: isSelected ? '#28c76f' : 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: isSelected ? '#15803D' : '#6B7280', textTransform: 'uppercase' }}>
                     {getRoadmapText('stageLabel', activeLang)} {stg.stageNum || idx + 1}
                   </span>
-                  <span style={{ fontSize: '0.7rem', background: 'rgba(0,0,0,0.4)', padding: '2px 8px', borderRadius: '8px', color: '#38bdf8', fontWeight: 600 }}>
+                  <span style={{ fontSize: '0.7rem', background: isSelected ? '#DCFCE7' : '#E5E7EB', padding: '2px 8px', borderRadius: '8px', color: isSelected ? '#166534' : '#374151', fontWeight: 700 }}>
                     {stg.daysRange}
                   </span>
                 </div>
-                <strong style={{ fontSize: '0.88rem', lineHeight: '1.3' }}>
+                <strong style={{ fontSize: '0.88rem', lineHeight: '1.3', color: '#17211B' }}>
                   {stg.title}
                 </strong>
               </button>
@@ -279,33 +278,33 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
           const curr = stages[activeStage];
           return (
             <div style={{
-              background: 'rgba(8, 20, 14, 0.95)',
-              border: '1.5px solid rgba(40, 199, 111, 0.35)',
+              background: '#F8FAF9',
+              border: '1.5px solid #E5E7EB',
               borderRadius: '18px',
               padding: '24px',
               display: 'flex',
               flexDirection: 'column',
               gap: '18px'
             }}>
-              <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.12)', paddingBottom: '14px' }}>
-                <span style={{ fontSize: '0.78rem', color: '#28c76f', fontWeight: 800, textTransform: 'uppercase' }}>
+              <div style={{ borderBottom: '1px solid #E5E7EB', paddingBottom: '14px' }}>
+                <span style={{ fontSize: '0.78rem', color: '#15803D', fontWeight: 800, textTransform: 'uppercase' }}>
                   {getRoadmapText('timeFrameLabel', activeLang)}: {curr.daysRange}
                 </span>
-                <h4 style={{ margin: '4px 0 0 0', fontSize: '1.2rem', color: '#ffffff', fontWeight: 800 }}>
+                <h4 style={{ margin: '4px 0 0 0', fontSize: '1.15rem', color: '#17211B', fontWeight: 800 }}>
                   {curr.title}
                 </h4>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
                 {/* Irrigation Schedule & Visual Checks */}
-                <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '14px', padding: '16px' }}>
+                <div style={{ background: '#FFFFFF', border: '1px solid #BAE6FD', borderRadius: '14px', padding: '16px', boxShadow: '0 2px 6px rgba(0,0,0,0.02)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                    <i className="fa-solid fa-droplet" style={{ color: '#38bdf8', fontSize: '18px' }}></i>
-                    <h5 style={{ margin: 0, fontSize: '0.95rem', color: '#38bdf8', fontWeight: 800 }}>
+                    <i className="fa-solid fa-droplet" style={{ color: '#0284C7', fontSize: '18px' }}></i>
+                    <h5 style={{ margin: 0, fontSize: '0.95rem', color: '#0284C7', fontWeight: 800 }}>
                       {getRoadmapText('irrigationScheduleLabel', activeLang)}
                     </h5>
                   </div>
-                  <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#e6f3ec', lineHeight: '1.5' }}>
+                  <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#374151', lineHeight: '1.5' }}>
                     <li><strong>{getRoadmapText('frequencyLabel', activeLang)}</strong> {curr.waterFrequency}</li>
                     <li><strong>{getRoadmapText('timingLabel', activeLang)}</strong> {curr.exactTiming}</li>
                     <li><strong>{getRoadmapText('visualCheckLabel', activeLang)}</strong> {curr.visualCheck}</li>
@@ -313,14 +312,14 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
                 </div>
 
                 {/* Critical Action Items */}
-                <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(40, 199, 111, 0.3)', borderRadius: '14px', padding: '16px' }}>
+                <div style={{ background: '#FFFFFF', border: '1px solid #BBF7D0', borderRadius: '14px', padding: '16px', boxShadow: '0 2px 6px rgba(0,0,0,0.02)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                    <i className="fa-solid fa-list-check" style={{ color: '#28c76f', fontSize: '18px' }}></i>
-                    <h5 style={{ margin: 0, fontSize: '0.95rem', color: '#28c76f', fontWeight: 800 }}>
+                    <i className="fa-solid fa-list-check" style={{ color: '#15803D', fontSize: '18px' }}></i>
+                    <h5 style={{ margin: 0, fontSize: '0.95rem', color: '#15803D', fontWeight: 800 }}>
                       {getRoadmapText('actionItemsLabel', activeLang)}
                     </h5>
                   </div>
-                  <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#e6f3ec', lineHeight: '1.5' }}>
+                  <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#374151', lineHeight: '1.5' }}>
                     {curr.actionItems && curr.actionItems.map((act, i) => (
                       <li key={i} style={{ marginBottom: '6px' }}>{act}</li>
                     ))}
@@ -337,16 +336,16 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
         margin: '24px 0',
         padding: '22px',
         borderRadius: '16px',
-        background: 'rgba(10, 30, 20, 0.8)',
-        border: '1.5px solid rgba(56, 189, 248, 0.3)'
+        background: '#EFF6FF',
+        border: '1.5px solid #BFDBFE'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
           <span style={{ fontSize: '1.4rem' }}>🌟</span>
-          <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#38bdf8', fontWeight: 800 }}>
+          <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#1D4ED8', fontWeight: 800 }}>
             {getRoadmapText('sec3Title', activeLang)}
           </h3>
         </div>
-        <ul style={{ margin: 0, paddingLeft: '22px', fontSize: '0.88rem', color: '#e6f3ec', lineHeight: '1.6' }}>
+        <ul style={{ margin: 0, paddingLeft: '22px', fontSize: '0.88rem', color: '#1E3A8A', lineHeight: '1.6' }}>
           {goldenRules.map((rule, idx) => (
             <li key={idx} style={{ marginBottom: '8px' }}>{rule}</li>
           ))}
@@ -358,23 +357,23 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
         margin: '24px 0 0 0',
         padding: '22px',
         borderRadius: '16px',
-        background: 'rgba(20, 15, 10, 0.85)',
-        border: '1.5px solid rgba(251, 191, 36, 0.3)'
+        background: '#FFFBEB',
+        border: '1.5px solid #FDE68A'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
           <span style={{ fontSize: '1.4rem' }}>⚠️</span>
-          <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#fbbf24', fontWeight: 800 }}>
+          <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#B45309', fontWeight: 800 }}>
             {getRoadmapText('sec4Title', activeLang)}
           </h3>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
           {/* Underwatering Warning */}
-          <div style={{ background: 'rgba(251, 191, 36, 0.08)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(251, 191, 36, 0.25)' }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: '#fbbf24', fontWeight: 800 }}>
+          <div style={{ background: '#FFFFFF', padding: '16px', borderRadius: '12px', border: '1px solid #FDE68A' }}>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: '#B45309', fontWeight: 800 }}>
               {getRoadmapText('underwateringLabel', activeLang)}
             </h4>
-            <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#e6f3ec', lineHeight: '1.5' }}>
+            <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#78350F', lineHeight: '1.5' }}>
               {warningFlags.underwatering && warningFlags.underwatering.map((flag, idx) => (
                 <li key={idx} style={{ marginBottom: '4px' }}>{flag}</li>
               ))}
@@ -382,11 +381,11 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
           </div>
 
           {/* Overwatering Warning */}
-          <div style={{ background: 'rgba(248, 113, 113, 0.08)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(248, 113, 113, 0.25)' }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: '#f87171', fontWeight: 800 }}>
+          <div style={{ background: '#FFFFFF', padding: '16px', borderRadius: '12px', border: '1px solid #FECACA' }}>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: '0.95rem', color: '#B91C1C', fontWeight: 800 }}>
               {getRoadmapText('overwateringLabel', activeLang)}
             </h4>
-            <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#e6f3ec', lineHeight: '1.5' }}>
+            <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', color: '#7F1D1D', lineHeight: '1.5' }}>
               {warningFlags.overwatering && warningFlags.overwatering.map((flag, idx) => (
                 <li key={idx} style={{ marginBottom: '4px' }}>{flag}</li>
               ))}
@@ -402,19 +401,19 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
         alignItems: 'center',
         marginTop: '24px',
         paddingTop: '16px',
-        borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+        borderTop: '1px solid #E5E7EB',
         flexWrap: 'wrap',
         gap: '12px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)' }}>
-          <i className="fa-solid fa-circle-check" style={{ color: '#28c76f' }}></i>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: '#4B5563' }}>
+          <i className="fa-solid fa-circle-check" style={{ color: '#15803D' }}></i>
           <span>ICAR & KVK Package of Practices • Tailored for {cropName}</span>
         </div>
 
         <button
           onClick={() => window.print()}
           style={{
-            background: 'linear-gradient(135deg, #28c76f 0%, #16964f 100%)',
+            background: '#15803D',
             border: 'none',
             color: '#ffffff',
             padding: '10px 18px',
@@ -425,7 +424,7 @@ export function CropRoadmapCard({ report, crop, location, area, soil, lang = 'en
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            boxShadow: '0 4px 14px rgba(40, 199, 111, 0.3)'
+            boxShadow: '0 4px 12px rgba(21, 128, 61, 0.25)'
           }}
         >
           <i className="fa-solid fa-print"></i>

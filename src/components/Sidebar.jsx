@@ -141,21 +141,18 @@ export function Sidebar() {
       width: '320px',
       minWidth: '300px',
       maxWidth: '340px',
-      height: 'calc(100vh - 80px)',
+      height: 'calc(100vh - 76px)',
       position: 'sticky',
-      top: '80px',
+      top: '76px',
       overflowY: 'auto',
-      background: 'rgba(14, 31, 23, 0.88)',
-      backdropFilter: 'blur(16px)',
-      WebkitBackdropFilter: 'blur(16px)',
-      borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+      background: '#FFFFFF',
+      borderRight: '1px solid var(--border-color)',
       padding: '24px 20px',
       display: 'flex',
       flexDirection: 'column',
       gap: '20px',
-      color: '#e6f3ec',
-      scrollbarWidth: 'thin',
-      scrollbarColor: 'rgba(40, 199, 111, 0.4) transparent',
+      color: 'var(--text-primary)',
+      boxShadow: 'var(--shadow-xs)',
       zIndex: 80
     }}>
       {/* Sidebar Header */}
@@ -165,29 +162,30 @@ export function Sidebar() {
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '32px',
-            height: '32px',
+            width: '34px',
+            height: '34px',
             borderRadius: '8px',
-            background: 'rgba(40, 199, 111, 0.15)',
-            color: '#28c76f',
-            fontSize: '16px'
+            background: 'var(--very-light-green)',
+            color: 'var(--primary)',
+            fontSize: '15px',
+            border: '1px solid var(--border-green)'
           }}>
             <i className="fa-solid fa-sliders"></i>
           </span>
           <h2 style={{
-            fontSize: '1.25rem',
-            fontWeight: 700,
+            fontSize: '1.2rem',
+            fontWeight: 800,
             margin: 0,
-            color: '#ffffff',
+            color: 'var(--primary-dark)',
             letterSpacing: '-0.02em',
-            fontFamily: "'Outfit', sans-serif"
+            fontFamily: "'Inter', sans-serif"
           }}>
             {getText('sidebar-title', lang)}
           </h2>
         </div>
         <p style={{
-          fontSize: '0.85rem',
-          color: '#a3c2b2',
+          fontSize: '0.82rem',
+          color: 'var(--text-secondary)',
           margin: '2px 0 0 0',
           lineHeight: '1.4'
         }}>
@@ -195,10 +193,10 @@ export function Sidebar() {
         </p>
       </div>
 
-      <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.08)' }} />
+      <div style={{ height: '1px', background: 'var(--border-color)' }} />
 
       {/* Form Fields */}
-      <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+      <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         
         {/* Location / Region */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -206,11 +204,11 @@ export function Sidebar() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.88rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}>
-            <i className="fa-solid fa-map-location-dot" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <i className="fa-solid fa-map-location-dot" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
             <span>{getText('sidebar-location', lang)}</span>
           </label>
           <div style={{ position: 'relative' }}>
@@ -222,24 +220,24 @@ export function Sidebar() {
               placeholder={getText('sidebar-location-ph', lang)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
+                padding: '10px 14px',
                 borderRadius: '10px',
-                background: 'rgba(10, 24, 18, 0.75)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                fontSize: '0.92rem',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontSize: '0.9rem',
                 fontWeight: 500,
                 outline: 'none',
                 transition: 'all 0.2s ease',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+                boxShadow: 'var(--shadow-xs)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#28c76f';
-                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+                e.target.style.borderColor = 'var(--primary)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(21, 128, 61, 0.15)';
               }}
               onBlur={async (e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.boxShadow = 'var(--shadow-xs)';
                 const val = e.target.value;
                 const found = LOCATIONS.find(l => 
                   l.nameEn.toLowerCase() === val.toLowerCase() || 
@@ -274,8 +272,8 @@ export function Sidebar() {
             </datalist>
           </div>
           <div style={{
-            fontSize: '0.78rem',
-            color: '#6e9481',
+            fontSize: '0.74rem',
+            color: 'var(--text-secondary)',
             paddingLeft: '2px',
             fontFamily: 'monospace',
             letterSpacing: '0.02em'
@@ -290,11 +288,11 @@ export function Sidebar() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.88rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}>
-            <i className="fa-solid fa-mountain" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <i className="fa-solid fa-mountain" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
             <span>{getText('sidebar-soil', lang)}</span>
           </label>
           <div style={{ position: 'relative' }}>
@@ -306,24 +304,24 @@ export function Sidebar() {
               placeholder={getText('sidebar-soil-ph', lang)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
+                padding: '10px 14px',
                 borderRadius: '10px',
-                background: 'rgba(10, 24, 18, 0.75)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                fontSize: '0.92rem',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontSize: '0.9rem',
                 fontWeight: 500,
                 outline: 'none',
                 transition: 'all 0.2s ease',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+                boxShadow: 'var(--shadow-xs)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#28c76f';
-                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+                e.target.style.borderColor = 'var(--primary)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(21, 128, 61, 0.15)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.boxShadow = 'var(--shadow-xs)';
                 const val = e.target.value;
                 const found = SOILS.find(s => 
                   (s.nameEn && s.nameEn.toLowerCase() === val.toLowerCase()) ||
@@ -354,8 +352,8 @@ export function Sidebar() {
             </datalist>
           </div>
           <div style={{
-            fontSize: '0.78rem',
-            color: '#6e9481',
+            fontSize: '0.74rem',
+            color: 'var(--text-secondary)',
             paddingLeft: '2px',
             lineHeight: '1.3'
           }}>
@@ -369,11 +367,11 @@ export function Sidebar() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.88rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}>
-            <i className="fa-solid fa-seedling" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <i className="fa-solid fa-seedling" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
             <span>{getText('sidebar-crop', lang)}</span>
           </label>
           <div style={{ position: 'relative' }}>
@@ -385,24 +383,24 @@ export function Sidebar() {
               placeholder={getText('sidebar-crop-ph', lang)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
+                padding: '10px 14px',
                 borderRadius: '10px',
-                background: 'rgba(10, 24, 18, 0.75)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                fontSize: '0.92rem',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontSize: '0.9rem',
                 fontWeight: 500,
                 outline: 'none',
                 transition: 'all 0.2s ease',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+                boxShadow: 'var(--shadow-xs)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#28c76f';
-                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+                e.target.style.borderColor = 'var(--primary)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(21, 128, 61, 0.15)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.boxShadow = 'var(--shadow-xs)';
                 const val = e.target.value;
                 const found = CROPS.find(c => 
                   (c.nameEn && c.nameEn.toLowerCase() === val.toLowerCase()) ||
@@ -444,11 +442,11 @@ export function Sidebar() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.88rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}>
-            <i className="fa-solid fa-chart-line" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <i className="fa-solid fa-chart-line" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
             <span>{getText('sidebar-stage', lang)}</span>
           </label>
           <div style={{ position: 'relative' }}>
@@ -457,29 +455,29 @@ export function Sidebar() {
               onChange={(e) => handleStageChange(e.target.value)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
+                padding: '10px 14px',
                 borderRadius: '10px',
-                background: 'rgba(10, 24, 18, 0.95)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                fontSize: '0.92rem',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontSize: '0.9rem',
                 fontWeight: 500,
                 outline: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+                boxShadow: 'var(--shadow-xs)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#28c76f';
-                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+                e.target.style.borderColor = 'var(--primary)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(21, 128, 61, 0.15)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.boxShadow = 'var(--shadow-xs)';
               }}
             >
               {stageOptions.map(opt => (
-                <option key={opt.value} value={opt.value} style={{ background: '#0d1e15', color: '#ffffff' }}>
+                <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>
               ))}
@@ -493,11 +491,11 @@ export function Sidebar() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.88rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}>
-            <i className="fa-solid fa-calendar-days" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <i className="fa-solid fa-calendar-days" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
             <span>{lang === 'hi' ? 'बुआई की तारीख (Sowing Date)' : 'Sowing Date'}</span>
           </label>
           <div style={{ position: 'relative' }}>
@@ -507,24 +505,24 @@ export function Sidebar() {
               onChange={(e) => setSowingDate(e.target.value)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
+                padding: '10px 14px',
                 borderRadius: '10px',
-                background: 'rgba(10, 24, 18, 0.75)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                fontSize: '0.92rem',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontSize: '0.9rem',
                 fontWeight: 500,
                 outline: 'none',
                 transition: 'all 0.2s ease',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+                boxShadow: 'var(--shadow-xs)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#28c76f';
-                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+                e.target.style.borderColor = 'var(--primary)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(21, 128, 61, 0.15)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.boxShadow = 'var(--shadow-xs)';
               }}
             />
           </div>
@@ -536,11 +534,11 @@ export function Sidebar() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.88rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}>
-            <i className="fa-solid fa-ruler-combined" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <i className="fa-solid fa-ruler-combined" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
             <span>{getText('sidebar-area', lang)}</span>
           </label>
           <div style={{ position: 'relative' }}>
@@ -554,30 +552,30 @@ export function Sidebar() {
               onChange={(e) => setArea(e.target.value === '' ? '' : parseFloat(e.target.value))}
               style={{
                 width: '100%',
-                padding: '11px 14px',
+                padding: '10px 14px',
                 borderRadius: '10px',
-                background: 'rgba(10, 24, 18, 0.75)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                fontSize: '0.92rem',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontSize: '0.9rem',
                 fontWeight: 500,
                 outline: 'none',
                 transition: 'all 0.2s ease',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+                boxShadow: 'var(--shadow-xs)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#28c76f';
-                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+                e.target.style.borderColor = 'var(--primary)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(21, 128, 61, 0.15)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.boxShadow = 'var(--shadow-xs)';
               }}
             />
           </div>
           <div style={{
-            fontSize: '0.78rem',
-            color: '#6e9481',
+            fontSize: '0.74rem',
+            color: 'var(--text-secondary)',
             paddingLeft: '2px',
             lineHeight: '1.3'
           }}>
@@ -591,11 +589,11 @@ export function Sidebar() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.88rem',
+            fontSize: '0.84rem',
             fontWeight: 600,
-            color: '#ffffff'
+            color: 'var(--text-primary)'
           }}>
-            <i className="fa-solid fa-sliders" style={{ color: '#28c76f', fontSize: '14px' }}></i>
+            <i className="fa-solid fa-sliders" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
             <span>{getText('sidebar-pref', lang)}</span>
           </label>
           <div style={{ position: 'relative' }}>
@@ -604,30 +602,30 @@ export function Sidebar() {
               onChange={(e) => setPreference(e.target.value)}
               style={{
                 width: '100%',
-                padding: '11px 14px',
+                padding: '10px 14px',
                 borderRadius: '10px',
-                background: 'rgba(10, 24, 18, 0.95)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: '#ffffff',
-                fontSize: '0.92rem',
+                background: '#FFFFFF',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontSize: '0.9rem',
                 fontWeight: 500,
                 outline: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)'
+                boxShadow: 'var(--shadow-xs)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#28c76f';
-                e.target.style.boxShadow = '0 0 10px rgba(40, 199, 111, 0.25)';
+                e.target.style.borderColor = 'var(--primary)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(21, 128, 61, 0.15)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.2)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.boxShadow = 'var(--shadow-xs)';
               }}
             >
-              <option value="balanced" style={{ background: '#0d1e15', color: '#ffffff' }}>{getText('sidebar-pref-bal', lang)}</option>
-              <option value="organic" style={{ background: '#0d1e15', color: '#ffffff' }}>{getText('sidebar-pref-org', lang)}</option>
-              <option value="synthetic" style={{ background: '#0d1e15', color: '#ffffff' }}>{getText('sidebar-pref-syn', lang)}</option>
+              <option value="balanced">{getText('sidebar-pref-bal', lang)}</option>
+              <option value="organic">{getText('sidebar-pref-org', lang)}</option>
+              <option value="synthetic">{getText('sidebar-pref-syn', lang)}</option>
             </select>
           </div>
         </div>
@@ -640,75 +638,91 @@ export function Sidebar() {
           style={{
             marginTop: '8px',
             width: '100%',
-            padding: '13px 18px',
+            padding: '12px 18px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #28c76f 0%, #1a9e52 100%)',
+            background: 'var(--primary)',
             border: 'none',
-            color: '#ffffff',
-            fontSize: '0.95rem',
+            color: '#FFFFFF',
+            fontSize: '0.92rem',
             fontWeight: 700,
             cursor: loading ? 'not-allowed' : 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '10px',
-            boxShadow: '0 8px 20px -4px rgba(40, 199, 111, 0.45)',
-            transition: 'all 0.25s ease',
+            boxShadow: 'var(--shadow-green)',
+            transition: 'all 0.2s ease',
             opacity: loading ? 0.7 : 1,
             transform: 'translateY(0)'
           }}
           onMouseEnter={(e) => {
             if (!loading) {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 12px 24px -4px rgba(40, 199, 111, 0.6)';
+              e.currentTarget.style.background = 'var(--primary-dark)';
+              e.currentTarget.style.transform = 'translateY(-1px)';
             }
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 8px 20px -4px rgba(40, 199, 111, 0.45)';
+            if (!loading) {
+              e.currentTarget.style.background = 'var(--primary)';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }
           }}
         >
-          <i className={`fa-solid ${loading ? 'fa-spinner fa-spin' : 'fa-wand-magic-sparkles'}`}></i>
-          <span>{loading ? getText('sidebar-btn-loading', lang) : getText('sidebar-btn', lang)}</span>
+          {loading ? (
+            <>
+              <i className="fa-solid fa-circle-notch fa-spin" style={{ fontSize: '15px' }}></i>
+              <span>{lang === 'hi' ? 'सलाह तैयार हो रही है...' : 'Generating Advisory...'}</span>
+            </>
+          ) : (
+            <>
+              <i className="fa-solid fa-wand-magic-sparkles" style={{ fontSize: '15px' }}></i>
+              <span>{getText('sidebar-generate', lang)}</span>
+            </>
+          )}
         </button>
-      </form>
 
-      {/* Explicit Farmer Profile Summary */}
-      {explicitProfile && (
-        <>
-          <div style={{ height: '1px', background: 'var(--border-color)', margin: '16px 0' }} />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ fontSize: '0.9rem', margin: 0, color: 'var(--primary)', fontWeight: 600, fontFamily: "'Fraunces', serif" }}>Farmer Profile</h3>
-              <button 
-                onClick={() => setShowOnboarding(true)}
-                style={{ 
-                  background: 'none', border: 'none', color: 'var(--highlight)', 
-                  cursor: 'pointer', fontSize: '0.8rem', textDecoration: 'underline',
-                  fontWeight: 600
-                }}
-              >
-                Retake Profiling
-              </button>
-            </div>
-            <div style={{ 
-              background: 'var(--card-bg)', border: '1px solid var(--border-color)', 
-              borderLeft: '3px solid var(--secondary)',
-              borderRadius: 'var(--border-radius-sm)', padding: '12px', fontSize: '0.85rem', color: 'var(--text-primary)',
-              lineHeight: '1.5'
-            }}>
-              <div style={{ fontWeight: 'bold', textTransform: 'capitalize', color: '#fff', marginBottom: '4px' }}>
-                {explicitProfile.farmScale} Farmer
-              </div>
-              <div style={{ color: 'var(--text-secondary)' }}>
-                📍 {explicitProfile.state}<br/>
-                💼 {explicitProfile.experienceLevel} (Exp)<br/>
-                🎯 {explicitProfile.goals?.length || 0} Goals Focus
-              </div>
-            </div>
+        {/* Onboarding / Setup Trigger */}
+        <div style={{
+          marginTop: '6px',
+          padding: '12px 14px',
+          borderRadius: '10px',
+          background: 'var(--very-light-green)',
+          border: '1px solid var(--border-green)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', fontWeight: 600, color: 'var(--primary-dark)' }}>
+            <i className="fa-solid fa-user-check" style={{ color: 'var(--primary)' }}></i>
+            <span>{explicitProfile ? (lang === 'hi' ? 'प्रोफ़ाइल सक्रिय है' : 'Profile Active') : (lang === 'hi' ? 'त्वरित सेटअप' : 'Quick Setup')}</span>
           </div>
-        </>
-      )}
+          <button
+            type="button"
+            onClick={() => setShowOnboarding(true)}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid var(--border-color)',
+              borderRadius: '8px',
+              padding: '7px 10px',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              color: 'var(--primary)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--primary)'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+            <span>{lang === 'hi' ? 'फार्म प्रोफ़ाइल अपडेट करें' : 'Edit Farm Profile'}</span>
+          </button>
+        </div>
+
+      </form>
     </aside>
   );
 }

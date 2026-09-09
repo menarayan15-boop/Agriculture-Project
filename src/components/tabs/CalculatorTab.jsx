@@ -641,8 +641,8 @@ function t(key, lang = 'en') {
 }
 
 const C = {
-  green: 'var(--primary-light)', blue: '#60a5fa', amber: '#f59e0b',
-  red: '#ef4444', purple: '#a855f7', cyan: '#06b6d4', rose: '#f43f5e'
+  green: '#15803D', blue: '#2563EB', amber: '#D97706',
+  red: '#DC2626', purple: '#7C3AED', cyan: '#0891B2', rose: '#E11D48'
 };
 
 const NAV = [
@@ -673,8 +673,8 @@ const GROUP_LABELS = {
   resources:{ label: '💧 Resources', color: C.blue },
   operations:{ label: '⚙️ Operations', color: C.amber },
   advanced: { label: '📊 Advanced', color: C.rose },
-  settings: { label: '⚙️ Config', color: '#94a3b8' },
-  history:  { label: '🕐 History', color: '#64748b' },
+  settings: { label: '⚙️ Config', color: '#64748B' },
+  history:  { label: '🕐 History', color: '#64748B' },
 };
 
 // ── Shared UI Components ──────────────────────────────────────────────────────
@@ -682,8 +682,8 @@ const GROUP_LABELS = {
 function Label({ children, hint, lang = 'en' }) {
   return (
     <div style={{ marginBottom: 4 }}>
-      <span style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>{children}</span>
-      {hint && <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)', marginLeft: 6 }}>({hint})</span>}
+      <span style={{ fontSize: '0.82rem', color: '#374151', fontWeight: 600 }}>{children}</span>
+      {hint && <span style={{ fontSize: '0.72rem', color: '#6B7280', marginLeft: 6 }}>({hint})</span>}
     </div>
   );
 }
@@ -735,7 +735,7 @@ function InputWithVoice({ value, onChange, type = 'number', min = '0', step = '0
             <button 
               onClick={() => onChange(resetValue)} 
               title={CALC_LANG[lang].reset} 
-              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', fontSize: '0.72rem' }}
+              style={{ background: 'none', border: 'none', color: '#9CA3AF', cursor: 'pointer', fontSize: '0.72rem' }}
             >
               🔄
             </button>
@@ -744,10 +744,10 @@ function InputWithVoice({ value, onChange, type = 'number', min = '0', step = '0
             onClick={startVoiceInput}
             title={listening ? CALC_LANG[lang].voiceActive : CALC_LANG[lang].voiceHint}
             style={{
-              background: listening ? C.red : 'rgba(255,255,255,0.06)',
-              border: listening ? 'none' : '1px solid rgba(255,255,255,0.12)',
+              background: listening ? C.red : '#F3F4F6',
+              border: listening ? 'none' : '1px solid #E5E7EB',
               borderRadius: 6, width: 22, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', color: '#fff', fontSize: '0.7rem'
+              cursor: 'pointer', color: listening ? '#fff' : '#4B5563', fontSize: '0.7rem'
             }}
           >
             🎙️
@@ -763,9 +763,9 @@ function InputWithVoice({ value, onChange, type = 'number', min = '0', step = '0
           min={min} step={step} placeholder={placeholder}
           style={{
             width: '100%', padding: '10px 12px', borderRadius: 10,
-            background: 'rgba(255,255,255,0.06)', 
-            border: `1px solid ${warnClass !== 'transparent' ? warnClass : 'rgba(255,255,255,0.12)'}`,
-            color: '#fff', fontSize: '0.92rem', boxSizing: 'border-box', ...style
+            background: '#FFFFFF', 
+            border: `1px solid ${warnClass !== 'transparent' ? warnClass : '#E5E7EB'}`,
+            color: '#17211B', fontSize: '0.92rem', boxSizing: 'border-box', boxShadow: '0 1px 2px rgba(0,0,0,0.03)', ...style
           }}
         />
         {listening && (
@@ -786,8 +786,9 @@ function Select({ value, onChange, children, style }) {
     <select value={value} onChange={e => onChange(e.target.value)}
       style={{
         width: '100%', padding: '10px 12px', borderRadius: 10,
-        background: 'rgba(20,28,22,0.98)', border: '1px solid rgba(255,255,255,0.12)',
-        color: '#fff', fontSize: '0.92rem', boxSizing: 'border-box', cursor: 'pointer', ...style
+        background: '#FFFFFF', border: '1px solid #E5E7EB',
+        color: '#17211B', fontSize: '0.92rem', boxSizing: 'border-box', cursor: 'pointer',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.03)', ...style
       }}>
       {children}
     </select>
@@ -846,12 +847,10 @@ function getGroupLabels(lang) {
     resources:  { label: t('group_resources', lang), color: C.blue },
     operations: { label: t('group_operations', lang), color: C.amber },
     advanced:   { label: t('group_advanced', lang), color: C.rose },
-    settings:   { label: t('group_settings', lang), color: '#94a3b8' },
-    history:    { label: t('group_history', lang), color: '#64748b' },
+    settings:   { label: t('group_settings', lang), color: '#64748B' },
+    history:    { label: t('group_history', lang), color: '#64748B' },
   };
 }
-
-
 
 function FormRow({ label, hint, children, onReset }) {
   return (
@@ -859,7 +858,7 @@ function FormRow({ label, hint, children, onReset }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Label hint={hint}>{label}</Label>
         {onReset && (
-          <button onClick={onReset} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', fontSize: '0.72rem' }}>
+          <button onClick={onReset} style={{ background: 'none', border: 'none', color: '#9CA3AF', cursor: 'pointer', fontSize: '0.72rem' }}>
             🔄
           </button>
         )}
@@ -872,15 +871,16 @@ function FormRow({ label, hint, children, onReset }) {
 function ResultCard({ label, value, sub, color = C.green, icon }) {
   return (
     <div style={{
-      background: `${color}12`, border: `1px solid ${color}28`,
-      borderRadius: 12, padding: '12px 16px', textAlign: 'center',
-      transition: 'transform 0.2s', position: 'relative', overflow: 'hidden'
+      background: '#FFFFFF', border: '1px solid #E5E7EB',
+      borderRadius: 12, padding: '14px 16px', textAlign: 'center',
+      transition: 'all 0.2s', position: 'relative', overflow: 'hidden',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
     }}>
       <div style={{ position: 'absolute', right: -6, top: -6, fontSize: '2.5rem', opacity: 0.05 }}>{icon}</div>
       {icon && <div style={{ fontSize: '1.4rem', marginBottom: 2 }}>{icon}</div>}
-      <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.5)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{label}</div>
+      <div style={{ fontSize: '0.72rem', color: '#6B7280', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>{label}</div>
       <div style={{ fontSize: '1.25rem', fontWeight: 800, color }}>{value}</div>
-      {sub && <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)', marginTop: 3 }}>{sub}</div>}
+      {sub && <div style={{ fontSize: '0.72rem', color: '#6B7280', marginTop: 3 }}>{sub}</div>}
     </div>
   );
 }
@@ -888,31 +888,32 @@ function ResultCard({ label, value, sub, color = C.green, icon }) {
 function BigResult({ label, value, color = C.green, sub }) {
   return (
     <div style={{
-      background: `${color}12`, border: `1px solid ${color}30`,
-      borderRadius: 14, padding: '16px 20px', marginBottom: 12
+      background: '#FFFFFF', border: `1px solid #E5E7EB`, borderLeft: `4px solid ${color}`,
+      borderRadius: 14, padding: '16px 20px', marginBottom: 12,
+      boxShadow: '0 2px 4px rgba(0,0,0,0.03)'
     }}>
-      <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.45)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{label}</div>
+      <div style={{ fontSize: '0.75rem', color: '#6B7280', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>{label}</div>
       <div style={{ fontSize: '2rem', fontWeight: 900, color }}>{value}</div>
-      {sub && <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>{sub}</div>}
+      {sub && <div style={{ fontSize: '0.8rem', color: '#4B5563', marginTop: 4 }}>{sub}</div>}
     </div>
   );
 }
 
 function PanelHeader({ icon, title, subtitle }) {
   return (
-    <div style={{ marginBottom: '1.2rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.8rem' }}>
-      <h3 style={{ margin: 0, fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+    <div style={{ marginBottom: '1.2rem', borderBottom: '1px solid #E5E7EB', paddingBottom: '0.8rem' }}>
+      <h3 style={{ margin: 0, fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: 8, color: '#17211B' }}>
         <span style={{ fontSize: '1.4rem' }}>{icon}</span> {title}
       </h3>
-      {subtitle && <p style={{ margin: '4px 0 0', fontSize: '0.82rem', color: 'rgba(255,255,255,0.45)' }}>{subtitle}</p>}
+      {subtitle && <p style={{ margin: '4px 0 0', fontSize: '0.82rem', color: '#6B7280' }}>{subtitle}</p>}
     </div>
   );
 }
 
 function Disclaimer({ text, lang = 'en' }) {
   return (
-    <div style={{ background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: 10, padding: '8px 12px', marginTop: 12 }}>
-      <p style={{ margin: 0, fontSize: '0.72rem', color: '#fbbf24', lineHeight: 1.6 }}>
+    <div style={{ background: '#FEF3C7', border: '1px solid #FCD34D', borderRadius: 10, padding: '8px 12px', marginTop: 12 }}>
+      <p style={{ margin: 0, fontSize: '0.75rem', color: '#92400E', lineHeight: 1.6, fontWeight: 500 }}>
         ⚠️ {text || t('disclaimer', lang)}
       </p>
     </div>
@@ -3014,16 +3015,17 @@ export function CalculatorTab() {
     <div className="tab-panel active" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
       {/* ── Global Header Info Bar ── */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(34,197,94,0.12), rgba(96,165,250,0.08))',
-        border: '1px solid rgba(34,197,94,0.25)', borderRadius: 16, padding: '16px 20px',
-        marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12
+        background: '#FFFFFF',
+        border: '1px solid #E5E7EB', borderRadius: 16, padding: '16px 20px',
+        marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12,
+        boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
       }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ fontSize: '1.8rem' }}>🧮</span>
             <div>
-              <h2 style={{ margin: 0, fontSize: '1.2rem', color: '#fff' }}>{t('title', lang)}</h2>
-              <p style={{ margin: '2px 0 0', fontSize: '0.78rem', color: 'rgba(255,255,255,0.6)' }}>
+              <h2 style={{ margin: 0, fontSize: '1.2rem', color: '#17211B', fontWeight: 800 }}>{t('title', lang)}</h2>
+              <p style={{ margin: '2px 0 0', fontSize: '0.78rem', color: '#6B7280' }}>
                 {t('subtitle', lang)}
               </p>
             </div>
@@ -3031,28 +3033,28 @@ export function CalculatorTab() {
 
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
             <button onClick={() => window.print()} style={{
-              padding: '8px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.2)',
-              background: 'rgba(255,255,255,0.08)', color: '#fff', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,
+              padding: '8px 14px', borderRadius: 10, border: '1px solid #E5E7EB',
+              background: '#F9FAFB', color: '#374151', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600,
               display: 'flex', alignItems: 'center', gap: 6
             }}>
               {t('printSheet', lang)}
             </button>
             <button onClick={() => setSaveModal(true)} style={{
-              padding: '8px 14px', borderRadius: 10, border: '1px solid rgba(96,165,250,0.3)',
-              background: 'rgba(96,165,250,0.15)', color: C.blue, cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600
+              padding: '8px 14px', borderRadius: 10, border: '1px solid #BFDBFE',
+              background: '#EFF6FF', color: '#2563EB', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600
             }}>{t('save', lang)}</button>
             <button onClick={() => setActiveCalcRaw('history')} style={{
-              padding: '8px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.12)',
-              background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.7)', cursor: 'pointer', fontSize: '0.82rem'
+              padding: '8px 14px', borderRadius: 10, border: '1px solid #E5E7EB',
+              background: '#F9FAFB', color: '#4B5563', cursor: 'pointer', fontSize: '0.82rem'
             }}>{t('history', lang)}</button>
           </div>
         </div>
 
         {/* Quick Presets Ribbon */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', background: 'rgba(0,0,0,0.2)', padding: '10px 14px', borderRadius: 12 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', background: '#F8FAF9', border: '1px solid #E5E7EB', padding: '10px 14px', borderRadius: 12 }}>
           {/* Quick Land Size Presets */}
           <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', fontWeight: 600 }}>{t('quickLand', lang)}</span>
+            <span style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>{t('quickLand', lang)}</span>
             {[
               { label: '1 Acre', area: 1, unit: 'acre' },
               { label: '2 Acres', area: 2, unit: 'acre' },
@@ -3065,9 +3067,10 @@ export function CalculatorTab() {
                 key={p.label}
                 onClick={() => setGs(prev => ({ ...prev, area: p.area, unit: p.unit }))}
                 style={{
-                  padding: '4px 10px', borderRadius: 20, border: gs.area === p.area && gs.unit === p.unit ? `1px solid ${C.green}` : '1px solid rgba(255,255,255,0.15)',
-                  background: gs.area === p.area && gs.unit === p.unit ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.05)',
-                  color: gs.area === p.area && gs.unit === p.unit ? C.green : 'rgba(255,255,255,0.8)',
+                  padding: '5px 12px', borderRadius: 20, 
+                  border: gs.area === p.area && gs.unit === p.unit ? '1px solid #15803D' : '1px solid #E5E7EB',
+                  background: gs.area === p.area && gs.unit === p.unit ? '#DCFCE7' : '#FFFFFF',
+                  color: gs.area === p.area && gs.unit === p.unit ? '#15803D' : '#4B5563',
                   cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600
                 }}
               >
@@ -3076,11 +3079,11 @@ export function CalculatorTab() {
             ))}
           </div>
 
-          <div style={{ height: 16, width: 1, background: 'rgba(255,255,255,0.15)' }} />
+          <div style={{ height: 16, width: 1, background: '#E5E7EB' }} />
 
           {/* Quick Crop Selector */}
           <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', fontWeight: 600 }}>{t('selectCrop', lang)}</span>
+            <span style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>{t('selectCrop', lang)}</span>
             <CropSelect cropData={cropData} value={gs.crop} onChange={v => setGs(p => ({ ...p, crop: v }))} lang={lang} />
           </div>
         </div>
@@ -3093,11 +3096,12 @@ export function CalculatorTab() {
               onClick={() => setActiveCalc(c.id)}
               style={{
                 flexShrink: 0, padding: '8px 14px', borderRadius: 10,
-                border: activeCalc === c.id ? `1px solid ${C.green}` : '1px solid rgba(255,255,255,0.1)',
-                background: activeCalc === c.id ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.04)',
-                color: activeCalc === c.id ? '#fff' : 'rgba(255,255,255,0.7)',
+                border: activeCalc === c.id ? '1px solid #15803D' : '1px solid #E5E7EB',
+                background: activeCalc === c.id ? '#15803D' : '#FFFFFF',
+                color: activeCalc === c.id ? '#FFFFFF' : '#4B5563',
                 cursor: 'pointer', fontSize: '0.8rem', fontWeight: activeCalc === c.id ? 700 : 500,
-                display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap'
+                display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap',
+                boxShadow: activeCalc === c.id ? '0 2px 6px rgba(21,128,61,0.25)' : 'none'
               }}
             >
               <span>{c.icon}</span>
@@ -3112,14 +3116,15 @@ export function CalculatorTab() {
         {/* Sidebar Nav */}
         <div style={{
           width: sidebarOpen ? 210 : 52, flexShrink: 0, transition: 'width 0.2s',
-          background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: 14, padding: '8px 6px', overflowY: 'auto', overflowX: 'hidden'
+          background: '#FFFFFF', border: '1px solid #E5E7EB',
+          borderRadius: 14, padding: '8px 6px', overflowY: 'auto', overflowX: 'hidden',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
         }}>
           <button onClick={() => setSidebarOpen(v => !v)} style={{
-            width: '100%', padding: '6px 8px', borderRadius: 8, border: 'none',
-            background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)',
+            width: '100%', padding: '6px 8px', borderRadius: 8, border: '1px solid #E5E7EB',
+            background: '#F9FAFB', color: '#4B5563',
             cursor: 'pointer', marginBottom: 10, fontSize: '0.8rem',
-            display: 'flex', alignItems: 'center', gap: 6
+            display: 'flex', alignItems: 'center', gap: 6, fontWeight: 600
           }}>
             {sidebarOpen ? '◀' : '▶'}
             {sidebarOpen && <span>{t('allCalculators', lang)}</span>}
@@ -3131,7 +3136,7 @@ export function CalculatorTab() {
             return (
               <div key={group} style={{ marginBottom: 8 }}>
                 {sidebarOpen && (
-                  <div style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', color: gl.color, textTransform: 'uppercase', padding: '4px 8px', marginBottom: 2 }}>
+                  <div style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.08em', color: gl.color, textTransform: 'uppercase', padding: '4px 8px', marginBottom: 2 }}>
                     {gl.label}
                   </div>
                 )}
@@ -3139,11 +3144,11 @@ export function CalculatorTab() {
                   <button key={item.id} onClick={() => setActiveCalc(item.id)} style={{
                     width: '100%', padding: sidebarOpen ? '8px 10px' : '8px',
                     borderRadius: 8, border: 'none', marginBottom: 2, cursor: 'pointer',
-                    background: activeCalc === item.id ? `${gl.color}20` : 'transparent',
-                    borderLeft: activeCalc === item.id ? `3px solid ${gl.color}` : '3px solid transparent',
+                    background: activeCalc === item.id ? '#F0FDF4' : 'transparent',
+                    borderLeft: activeCalc === item.id ? `3px solid #15803D` : '3px solid transparent',
                     display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.15s',
-                    color: activeCalc === item.id ? gl.color : 'rgba(255,255,255,0.5)',
-                    fontSize: '0.82rem', fontWeight: activeCalc === item.id ? 700 : 400,
+                    color: activeCalc === item.id ? '#15803D' : '#4B5563',
+                    fontSize: '0.82rem', fontWeight: activeCalc === item.id ? 700 : 500,
                     textAlign: 'left', whiteSpace: 'nowrap'
                   }}>
                     <span style={{ fontSize: '1rem', flexShrink: 0 }}>{item.icon}</span>
@@ -3156,7 +3161,7 @@ export function CalculatorTab() {
         </div>
 
         {/* Workspace Display */}
-        <div style={{ flex: 1, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 14, padding: '1.2rem', overflowY: 'auto' }}>
+        <div style={{ flex: 1, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.4rem', overflowY: 'auto', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           {activeCalc === 'dashboard'    && <DashboardPanel gs={gs} cropData={cropData} lang={lang} />}
           {activeCalc === 'area'         && <AreaPanel gs={gs} setGs={setGs} lang={lang} />}
           {activeCalc === 'seed'         && <SeedPanel gs={gs} setGs={setGs} cropData={cropData} lang={lang} />}
@@ -3181,23 +3186,23 @@ export function CalculatorTab() {
 
       {/* Save Modal */}
       {saveModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}
           onClick={e => e.target === e.currentTarget && setSaveModal(false)}>
-          <div style={{ background: 'linear-gradient(135deg,#1a1a2e,#16213e)', border: '1px solid rgba(96,165,250,0.3)', borderRadius: 18, padding: '1.8rem', maxWidth: 400, width: '90%' }}>
-            <h3 style={{ margin: '0 0 16px', color: C.blue }}>💾 Save Calculation</h3>
+          <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 18, padding: '1.8rem', maxWidth: 400, width: '90%', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}>
+            <h3 style={{ margin: '0 0 16px', color: '#17211B', fontWeight: 800 }}>💾 Save Calculation</h3>
             <Label>Give this calculation a name</Label>
             <input 
               type="text" value={saveName} onChange={e => setSaveName(e.target.value)} 
               placeholder={`e.g. Wheat Kharif 2026`} 
               style={{
                 width: '100%', padding: '10px 12px', borderRadius: 10,
-                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
-                color: '#fff', fontSize: '0.92rem', boxSizing: 'border-box', marginBottom: 16
+                background: '#FFFFFF', border: '1px solid #E5E7EB',
+                color: '#17211B', fontSize: '0.92rem', boxSizing: 'border-box', marginBottom: 16
               }}
             />
             <div style={{ display: 'flex', gap: 10 }}>
-              <button onClick={() => setSaveModal(false)} style={{ flex: 1, padding: '10px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.15)', background: 'transparent', color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>Cancel</button>
-              <button onClick={saveCalc} style={{ flex: 1, padding: '10px', borderRadius: 10, border: 'none', background: `linear-gradient(135deg, ${C.blue}, #2563eb)`, color: '#fff', fontWeight: 700, cursor: 'pointer' }}>Save</button>
+              <button onClick={() => setSaveModal(false)} style={{ flex: 1, padding: '10px', borderRadius: 10, border: '1px solid #E5E7EB', background: '#F3F4F6', color: '#4B5563', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+              <button onClick={saveCalc} style={{ flex: 1, padding: '10px', borderRadius: 10, border: 'none', background: '#15803D', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>Save</button>
             </div>
           </div>
         </div>

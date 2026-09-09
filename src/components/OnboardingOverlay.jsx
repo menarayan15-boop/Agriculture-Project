@@ -172,23 +172,23 @@ export function OnboardingOverlay() {
           left: 0;
           right: 0;
           bottom: 0;
-          background: radial-gradient(circle at center, rgba(16, 36, 26, 0.98) 0%, rgba(6, 12, 9, 0.99) 100%);
+          background: rgba(17, 24, 39, 0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           z-index: 99999;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 1.5rem;
-          color: #f8fafc;
+          color: #17211B;
           font-family: 'Inter', sans-serif;
           overflow-y: auto;
         }
         .onboarding-card {
-          background: rgba(22, 48, 35, 0.85);
-          backdrop-filter: blur(25px);
-          -webkit-backdrop-filter: blur(25px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(40, 199, 111, 0.15);
-          border-radius: 24px;
+          background: #FFFFFF;
+          border: 1px solid #E5E7EB;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+          border-radius: 20px;
           width: 100%;
           max-width: 580px;
           padding: 2.5rem;
@@ -199,17 +199,14 @@ export function OnboardingOverlay() {
           margin-bottom: 2rem;
         }
         .onboarding-title {
-          font-size: 2rem;
-          font-family: 'Outfit', sans-serif;
-          background: linear-gradient(135deg, #ffffff 0%, #a3e635 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
+          font-size: 1.85rem;
+          font-family: 'Inter', sans-serif;
+          color: #17211B;
           margin-bottom: 0.5rem;
           font-weight: 800;
         }
         .onboarding-subtitle {
-          color: #cbd5e1;
+          color: #4B5563;
           font-size: 1rem;
         }
         .onboarding-progress {
@@ -222,7 +219,7 @@ export function OnboardingOverlay() {
         .progress-line {
           position: absolute;
           height: 2px;
-          background: rgba(255, 255, 255, 0.1);
+          background: #E5E7EB;
           top: 50%;
           left: 10%;
           right: 10%;
@@ -231,32 +228,32 @@ export function OnboardingOverlay() {
         .progress-line-active {
           position: absolute;
           height: 2px;
-          background: #4ade80;
+          background: #15803D;
           top: 50%;
           left: 10%;
           z-index: 1;
           transition: width 0.3s ease;
         }
         .progress-step {
-          background: #1e293b;
-          border: 2px solid rgba(255, 255, 255, 0.1);
+          background: #F3F4F6;
+          border: 1px solid #E5E7EB;
           padding: 0.5rem 1rem;
           border-radius: 20px;
           font-size: 0.85rem;
           z-index: 2;
           font-weight: 600;
-          color: #94a3b8;
+          color: #6B7280;
           transition: all 0.3s ease;
         }
         .progress-step.active {
-          background: #16a34a;
-          border-color: #4ade80;
+          background: #15803D;
+          border-color: #15803D;
           color: #ffffff;
-          box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+          box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
         }
         .progress-step.done {
-          background: #15803d;
-          border-color: #22c55e;
+          background: #166534;
+          border-color: #166534;
           color: #ffffff;
         }
         .lang-selector-card {
@@ -264,12 +261,12 @@ export function OnboardingOverlay() {
           text-align: right;
         }
         .lang-select-onboarding {
-          background: rgba(30, 41, 59, 0.7);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          color: #ffffff;
+          background: #F9FAFB;
+          border: 1px solid #E5E7EB;
+          color: #17211B;
           padding: 0.5rem 1rem;
-          border-radius: 12px;
-          font-size: 0.9rem;
+          border-radius: 10px;
+          font-size: 0.88rem;
           outline: none;
           cursor: pointer;
         }
@@ -279,23 +276,23 @@ export function OnboardingOverlay() {
         .form-label-ob {
           display: block;
           margin-bottom: 0.5rem;
-          font-size: 1rem;
+          font-size: 0.95rem;
           font-weight: 600;
-          color: #f1f5f9;
+          color: #374151;
         }
         .searchable-select {
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          background: rgba(15, 23, 42, 0.6);
+          border: 1px solid #E5E7EB;
+          background: #FFFFFF;
           border-radius: 12px;
           overflow: hidden;
         }
         .search-input {
           width: 100%;
           padding: 0.75rem 1rem;
-          background: transparent;
+          background: #F9FAFB;
           border: none;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          color: #ffffff;
+          border-bottom: 1px solid #E5E7EB;
+          color: #17211B;
           outline: none;
         }
         .options-list {
@@ -307,23 +304,25 @@ export function OnboardingOverlay() {
           padding: 0.6rem 1.2rem;
           cursor: pointer;
           font-size: 0.95rem;
+          color: #374151;
           transition: background 0.2s ease;
         }
         .option-item:hover {
-          background: rgba(40, 199, 111, 0.15);
+          background: #F0FDF4;
+          color: #15803D;
         }
         .option-item.selected {
-          background: rgba(40, 199, 111, 0.3);
-          color: #4ade80;
-          font-weight: 600;
+          background: #DCFCE7;
+          color: #15803D;
+          font-weight: 700;
         }
         .form-control-ob {
           width: 100%;
           padding: 0.75rem 1rem;
-          background: rgba(15, 23, 42, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.15);
+          background: #FFFFFF;
+          border: 1px solid #E5E7EB;
           border-radius: 12px;
-          color: #ffffff;
+          color: #17211B;
           font-size: 0.95rem;
           outline: none;
         }
@@ -336,35 +335,34 @@ export function OnboardingOverlay() {
         }
         .btn-ob {
           padding: 0.85rem 1.75rem;
-          border-radius: 14px;
+          border-radius: 12px;
           font-weight: 700;
-          font-size: 1rem;
+          font-size: 0.95rem;
           border: none;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.2s ease;
         }
         .btn-ob-primary {
-          background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+          background: #15803D;
           color: #ffffff;
-          box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+          box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
           flex: 1;
         }
         .btn-ob-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+          background: #166534;
         }
         .btn-ob-secondary {
-          background: rgba(255, 255, 255, 0.08);
-          color: #cbd5e1;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: #F3F4F6;
+          color: #4B5563;
+          border: 1px solid #E5E7EB;
         }
         .btn-ob-secondary:hover {
-          background: rgba(255, 255, 255, 0.15);
+          background: #E5E7EB;
         }
         .summary-box {
-          background: rgba(15, 23, 42, 0.4);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
+          background: #F8FAF9;
+          border: 1px solid #E5E7EB;
+          border-radius: 14px;
           padding: 1.5rem;
           margin-bottom: 2rem;
         }
@@ -372,17 +370,17 @@ export function OnboardingOverlay() {
           display: flex;
           justify-content: space-between;
           margin-bottom: 0.75rem;
-          font-size: 1rem;
+          font-size: 0.95rem;
         }
         .summary-item:last-child {
           margin-bottom: 0;
         }
         .summary-label {
-          color: #94a3b8;
+          color: #6B7280;
         }
         .summary-value {
-          font-weight: 600;
-          color: #ffffff;
+          font-weight: 700;
+          color: #17211B;
         }
         /* Mobile Adaptations */
         @media (max-width: 600px) {
@@ -390,7 +388,7 @@ export function OnboardingOverlay() {
             padding: 1.5rem;
           }
           .onboarding-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
           }
           .progress-step {
             padding: 0.4rem 0.8rem;

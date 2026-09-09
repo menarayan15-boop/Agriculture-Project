@@ -4,7 +4,7 @@ import { saveSoilReport, analyzeSoilImage, validateSoilImage } from '../../servi
 
 // ─── Score Gauge ──────────────────────────────────────────────────────────────
 function ScoreGauge({ score }) {
-  const color = score >= 80 ? '#2e7d32' : score >= 60 ? '#f59e0b' : score >= 40 ? '#f97316' : '#c62828';
+  const color = score >= 80 ? '#15803D' : score >= 60 ? '#D97706' : score >= 40 ? '#EA580C' : '#DC2626';
   const label = score >= 80 ? 'उत्कृष्ट / Excellent' : score >= 60 ? 'अच्छा / Good' : score >= 40 ? 'सामान्य / Fair' : 'कमजोर / Poor';
   const dashArray = 2 * Math.PI * 54;
   const dashOffset = dashArray - (score / 100) * dashArray;
@@ -12,7 +12,7 @@ function ScoreGauge({ score }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
       <svg width="120" height="120" viewBox="0 0 130 130">
-        <circle cx="65" cy="65" r="54" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="12" />
+        <circle cx="65" cy="65" r="54" fill="none" stroke="#E5E7EB" strokeWidth="12" />
         <circle
           cx="65" cy="65" r="54" fill="none" stroke={color} strokeWidth="12"
           strokeDasharray={dashArray} strokeDashoffset={dashOffset}
@@ -20,9 +20,9 @@ function ScoreGauge({ score }) {
           style={{ transition: 'stroke-dashoffset 1.2s ease, stroke 0.4s' }}
         />
         <text x="65" y="62" textAnchor="middle" fill={color} fontSize="28" fontWeight="bold">{score}</text>
-        <text x="65" y="80" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="12">/ 100</text>
+        <text x="65" y="80" textAnchor="middle" fill="#6B7280" fontSize="12">/ 100</text>
       </svg>
-      <span style={{ fontSize: '16px', fontWeight: 700, color }}>{label}</span>
+      <span style={{ fontSize: '16px', fontWeight: 800, color }}>{label}</span>
     </div>
   );
 }
@@ -30,17 +30,17 @@ function ScoreGauge({ score }) {
 // ─── Nutrient Badge ───────────────────────────────────────────────────────────
 function NutrientBadge({ label, value }) {
   const status = (value || '').toLowerCase();
-  const color = status.includes('high') || status.includes('adequate') || status.includes('अच्छा') || status.includes('पर्याप्त') ? '#2e7d32'
-    : status.includes('low') || status.includes('कम') ? '#f59e0b'
-    : status.includes('deficient') || status.includes('कमी') ? '#c62828' : '#7c3aed';
+  const color = status.includes('high') || status.includes('adequate') || status.includes('अच्छा') || status.includes('पर्याप्त') ? '#15803D'
+    : status.includes('low') || status.includes('कम') ? '#D97706'
+    : status.includes('deficient') || status.includes('कमी') ? '#DC2626' : '#7C3AED';
 
   return (
     <div style={{
-      background: `${color}10`, border: `2px solid ${color}`,
+      background: `${color}10`, border: `1.5px solid ${color}40`,
       borderRadius: '12px', padding: '12px 14px', textAlign: 'center'
     }}>
-      <div style={{ fontSize: '13px', color: '#cbd5e1', marginBottom: '3px', fontWeight: 600 }}>{label}</div>
-      <div style={{ fontSize: '16px', color, fontWeight: 700 }}>{value || '—'}</div>
+      <div style={{ fontSize: '13px', color: '#4B5563', marginBottom: '3px', fontWeight: 600 }}>{label}</div>
+      <div style={{ fontSize: '16px', color, fontWeight: 800 }}>{value || '—'}</div>
     </div>
   );
 }
@@ -48,26 +48,26 @@ function NutrientBadge({ label, value }) {
 // ─── Info Row ─────────────────────────────────────────────────────────────────
 function InfoRow({ icon, label, value }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderBottom: '1px solid #E5E7EB' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <span style={{ fontSize: '20px' }}>{icon}</span>
-        <span style={{ fontSize: '14px', color: '#cbd5e1', fontWeight: 600 }}>{label}</span>
+        <span style={{ fontSize: '14px', color: '#4B5563', fontWeight: 600 }}>{label}</span>
       </div>
-      <span style={{ fontSize: '14px', color: '#fff', fontWeight: 700 }}>{value || '—'}</span>
+      <span style={{ fontSize: '14px', color: '#17211B', fontWeight: 700 }}>{value || '—'}</span>
     </div>
   );
 }
 
 // ─── Tag List ─────────────────────────────────────────────────────────────────
-function TagList({ items, color = '#7c3aed' }) {
-  if (!items || items.length === 0) return <span style={{ color: '#999', fontSize: '14px' }}>None detected</span>;
+function TagList({ items, color = '#15803D' }) {
+  if (!items || items.length === 0) return <span style={{ color: '#9CA3AF', fontSize: '14px' }}>None detected</span>;
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '6px' }}>
       {items.map((item, i) => (
         <span key={i} style={{
-          background: `${color}12`, border: `1px solid ${color}`,
+          background: `${color}12`, border: `1px solid ${color}40`,
           borderRadius: '20px', padding: '5px 12px',
-          fontSize: '13px', color, fontWeight: 600
+          fontSize: '13px', color, fontWeight: 700
         }}>{item}</span>
       ))}
     </div>
@@ -767,25 +767,25 @@ export function SoilLabTab() {
   /* ─── STYLES ─── */
   const containerStyle = {
     padding: '16px',
-    maxWidth: '800px',
+    maxWidth: '840px',
     margin: '0 auto',
-    fontFamily: "'Segoe UI', Tahoma, sans-serif",
+    fontFamily: "'Inter', sans-serif",
   };
 
   const headerCardStyle = {
-    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)',
-    border: '1px solid rgba(16, 185, 129, 0.3)',
-    color: '#fff',
-    borderRadius: '16px',
-    padding: '20px 24px',
+    background: '#FFFFFF',
+    border: '1.5px solid #E5E7EB',
+    color: '#17211B',
+    borderRadius: '18px',
+    padding: '24px 26px',
     textAlign: 'center',
     marginBottom: '16px',
-    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)',
   };
 
   const tabContainerStyle = {
     display: 'flex',
-    gap: '8px',
+    gap: '10px',
     marginBottom: '16px',
   };
 
@@ -793,35 +793,36 @@ export function SoilLabTab() {
     flex: 1,
     padding: '14px 18px',
     borderRadius: '12px',
-    border: active ? '1px solid #10b981' : '1px solid rgba(255, 255, 255, 0.1)',
-    fontSize: '15px',
+    border: active ? '1.5px solid #15803D' : '1px solid #E5E7EB',
+    fontSize: '14px',
     fontWeight: 700,
     cursor: 'pointer',
-    background: active ? '#10b981' : 'rgba(255,255,255,0.06)',
-    color: active ? 'black' : 'white',
-    boxShadow: active ? '0 4px 12px rgba(16, 185, 129, 0.3)' : 'none',
+    background: active ? '#15803D' : '#FFFFFF',
+    color: active ? '#FFFFFF' : '#374151',
+    boxShadow: active ? '0 4px 12px rgba(21, 128, 61, 0.25)' : 'none',
     transition: 'all 0.2s',
   });
 
   const uploadAreaStyle = {
-    background: 'rgba(10, 25, 16, 0.95)',
-    border: '3px dashed rgba(16, 185, 129, 0.4)',
+    background: '#FFFFFF',
+    border: '2px dashed #86EFAC',
     borderRadius: '16px',
     padding: '40px 20px',
     textAlign: 'center',
     cursor: 'pointer',
     marginBottom: '16px',
     transition: 'all 0.2s',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
   };
 
   const cardStyle = {
-    background: 'rgba(10, 25, 16, 0.95)',
-    border: '1px solid rgba(255, 255, 255, 0.12)',
+    background: '#FFFFFF',
+    border: '1.5px solid #E5E7EB',
     borderRadius: '16px',
-    padding: '20px',
-    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)',
+    padding: '22px',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)',
     marginBottom: '16px',
-    color: '#fff',
+    color: '#17211B',
   };
 
   return (
@@ -830,13 +831,13 @@ export function SoilLabTab() {
 
         {/* ─── HEADER BANNER ─── */}
         <div style={headerCardStyle}>
-          <div style={{ fontSize: '14px', opacity: 0.9, marginBottom: '6px' }}>
+          <div style={{ fontSize: '13px', color: '#166534', fontWeight: 700, marginBottom: '6px', background: '#DCFCE7', display: 'inline-block', padding: '3px 12px', borderRadius: '20px' }}>
             <i className="fa-solid fa-flask-vial"></i> डिजिटल सॉइल लैब / Digital Soil Lab
           </div>
-          <h2 style={{ margin: '0 0 6px', fontSize: '22px', fontWeight: 800 }}>
+          <h2 style={{ margin: '8px 0 6px', fontSize: '22px', fontWeight: 900, color: '#17211B' }}>
             🧪 अपनी मिट्टी की जांच करें — Test Your Soil
           </h2>
-          <p style={{ margin: 0, fontSize: '14px', opacity: 0.85, lineHeight: 1.5 }}>
+          <p style={{ margin: 0, fontSize: '14px', color: '#4B5563', lineHeight: 1.5 }}>
             मिट्टी की फोटो अपलोड करें और तुरंत स्वास्थ्य रिपोर्ट, खाद की सही मात्रा और फसल सुझाव प्राप्त करें।<br />
             Upload a photo of your soil to get NPK levels, health report & fertilizer advice.
           </p>
@@ -865,21 +866,21 @@ export function SoilLabTab() {
           <div>
             {/* Instruction Banner */}
             <div style={{
-              background: 'rgba(16, 185, 129, 0.08)',
-              border: '1px solid rgba(16, 185, 129, 0.25)',
+              background: '#F0FDF4',
+              border: '1px solid #BBF7D0',
               borderRadius: '14px',
-              padding: '14px 18px',
+              padding: '16px 20px',
               marginBottom: '16px',
               fontSize: '13px',
-              color: '#cbd5e1',
+              color: '#374151',
               lineHeight: 1.5
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, color: 'var(--primary-light)', fontSize: '14px', marginBottom: '6px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, color: '#15803D', fontSize: '14px', marginBottom: '6px' }}>
                 <span>📸</span>
                 <span>मिट्टी की साफ़ फोटो अपलोड करें / Upload a clear photo of your soil sample</span>
               </div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>
-                <strong style={{ color: '#e2e8f0' }}>Tips:</strong><br />
+              <div style={{ fontSize: '12px', color: '#4B5563' }}>
+                <strong style={{ color: '#17211B' }}>Tips:</strong><br />
                 • खेत या गमले से मिट्टी का क्लोज़-अप फोटो लें (Take a close-up photo of the soil)<br />
                 • मिट्टी को साफ़ और प्रमुखता से दिखने दें (Keep the soil clearly visible)<br />
                 • पौधे, पत्ती, वाहन, इमारत या अन्य वस्तुओं की फोटो न डालें (Avoid photos of plants, machinery, vehicles or objects)<br />
@@ -891,20 +892,26 @@ export function SoilLabTab() {
               <div
                 style={uploadAreaStyle}
                 onClick={() => fileInputRef.current?.click()}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(16, 185, 129, 0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(10, 25, 16, 0.95)'}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#F0FDF4';
+                  e.currentTarget.style.borderColor = '#15803D';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#FFFFFF';
+                  e.currentTarget.style.borderColor = '#86EFAC';
+                }}
               >
                 <div style={{ fontSize: '56px', marginBottom: '14px' }}>📸</div>
-                <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: 'var(--primary-light)', fontWeight: 700 }}>
+                <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: '#15803D', fontWeight: 800 }}>
                   मिट्टी की फोटो खींचें या चुनें
                 </h3>
-                <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#cbd5e1' }}>
+                <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#4B5563' }}>
                   Tap here to Take Photo / Choose Soil Photo
                 </p>
                 <div style={{
                   display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', padding: '12px 24px', borderRadius: '30px',
-                  color: 'black', fontWeight: 700, fontSize: '14px'
+                  background: '#15803D', padding: '12px 26px', borderRadius: '30px',
+                  color: 'white', fontWeight: 700, fontSize: '14px', boxShadow: '0 4px 12px rgba(21, 128, 61, 0.25)'
                 }}>
                   <i className="fa-solid fa-camera"></i> कैमरा / गैलरी खोलें
                 </div>
@@ -918,21 +925,21 @@ export function SoilLabTab() {
               </div>
             ) : (
               <div style={cardStyle}>
-                <div style={{ borderRadius: '12px', overflow: 'hidden', border: '3px solid rgba(16, 185, 129, 0.4)', position: 'relative' }}>
+                <div style={{ borderRadius: '12px', overflow: 'hidden', border: '2px solid #86EFAC', position: 'relative' }}>
                   <img src={imagePreview} alt="Soil sample" style={{ width: '100%', maxHeight: '300px', objectFit: 'cover', display: 'block' }} />
                 </div>
-                <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '14px' }}>
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    style={{ flex: 1, padding: '12px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.06)', color: '#fff', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}
+                    style={{ flex: 1, padding: '12px', borderRadius: '10px', border: '1px solid #E5E7EB', background: '#F8FAF9', color: '#374151', fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}
                   >
                     🔄 दूसरी फोटो लें / Change Photo
                   </button>
                   <button
                     type="button"
                     onClick={handleClearImage}
-                    style={{ padding: '12px 18px', borderRadius: '10px', border: 'none', background: 'rgba(239, 68, 68, 0.15)', color: '#f87171', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}
+                    style={{ padding: '12px 18px', borderRadius: '10px', border: '1px solid #FECACA', background: '#FEF2F2', color: '#DC2626', fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}
                   >
                     🗑️ हटाएं / Remove
                   </button>
@@ -952,9 +959,9 @@ export function SoilLabTab() {
                   disabled={analyzing}
                   style={{
                     marginTop: '16px', width: '100%', padding: '16px', borderRadius: '12px', border: 'none',
-                    background: analyzing ? 'rgba(16, 185, 129, 0.2)' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                    color: analyzing ? '#cbd5e1' : 'black', fontSize: '16px', fontWeight: 700, cursor: analyzing ? 'not-allowed' : 'pointer',
-                    boxShadow: analyzing ? 'none' : '0 4px 14px rgba(16, 185, 129, 0.3)',
+                    background: analyzing ? '#E5E7EB' : '#15803D',
+                    color: analyzing ? '#9CA3AF' : '#FFFFFF', fontSize: '16px', fontWeight: 800, cursor: analyzing ? 'not-allowed' : 'pointer',
+                    boxShadow: analyzing ? 'none' : '0 4px 14px rgba(21, 128, 61, 0.25)',
                   }}
                 >
                   {analyzing ? '🔍 जांच हो रही है... / Analyzing...' : '🔍 मिट्टी की जांच शुरू करें / Start Soil Test'}
@@ -963,8 +970,8 @@ export function SoilLabTab() {
                 {soilWarning && !analysisError && (
                   <div style={{
                     marginTop: '12px', padding: '12px 16px', borderRadius: '12px',
-                    background: 'rgba(245, 158, 11, 0.15)', border: '1px solid #f59e0b',
-                    color: '#fbbf24', fontSize: '13px', fontWeight: 600, lineHeight: 1.5
+                    background: '#FFFBEB', border: '1px solid #FDE68A',
+                    color: '#B45309', fontSize: '13px', fontWeight: 600, lineHeight: 1.5
                   }}>
                     {soilWarning}
                   </div>
@@ -973,10 +980,10 @@ export function SoilLabTab() {
                 {analysisError && (
                   <div style={{
                     marginTop: '16px', padding: '16px 20px', borderRadius: '14px',
-                    background: 'rgba(239, 68, 68, 0.18)', border: '2px solid #ef4444',
-                    color: '#f87171', fontSize: '15px', fontWeight: 700, lineHeight: 1.5,
+                    background: '#FEF2F2', border: '1.5px solid #FECACA',
+                    color: '#DC2626', fontSize: '15px', fontWeight: 700, lineHeight: 1.5,
                     display: 'flex', alignItems: 'center', gap: '12px',
-                    boxShadow: '0 4px 14px rgba(239, 68, 68, 0.2)'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
                   }}>
                     <span style={{ fontSize: '24px' }}>🚫</span>
                     <div>{analysisError}</div>
@@ -987,20 +994,20 @@ export function SoilLabTab() {
 
             {/* Analysis Progress Overlay */}
             {analyzing && (
-              <div style={{ ...cardStyle, background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-                <h4 style={{ margin: '0 0 12px', color: 'var(--primary-light)', fontSize: '16px', fontWeight: 700 }}>
+              <div style={{ ...cardStyle, background: '#F0FDF4', border: '1.5px solid #86EFAC' }}>
+                <h4 style={{ margin: '0 0 12px', color: '#15803D', fontSize: '16px', fontWeight: 800 }}>
                   ⚡ AI मिट्टी परीक्षण प्रोग्रेस / AI Soil Test Progress:
                 </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', color: '#cbd5e1' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', color: '#374151' }}>
                   {analysisSteps.map((step, idx) => (
                     <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <i className="fa-solid fa-circle-check" style={{ color: '#10b981' }}></i>
+                      <i className="fa-solid fa-circle-check" style={{ color: '#15803D' }}></i>
                       <span>{step}</span>
                     </div>
                   ))}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
-                    <i className="fa-solid fa-spinner fa-spin" style={{ color: '#10b981' }}></i>
-                    <span style={{ fontWeight: 600, color: 'var(--primary-light)' }}>कुछ ही सेकंड शेष हैं... Just a moment...</span>
+                    <i className="fa-solid fa-spinner fa-spin" style={{ color: '#15803D' }}></i>
+                    <span style={{ fontWeight: 700, color: '#15803D' }}>कुछ ही सेकंड शेष हैं... Just a moment...</span>
                   </div>
                 </div>
               </div>
@@ -1011,30 +1018,30 @@ export function SoilLabTab() {
               <div style={{ marginTop: '16px' }}>
 
                 {/* Score Gauge card with Disclaimer */}
-                <div style={{ ...cardStyle, background: 'linear-gradient(135deg, rgba(21, 128, 61, 0.15) 0%, rgba(10, 25, 16, 0.95) 100%)', textAlign: 'center' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '20px', padding: '4px 12px', fontSize: '12px', color: '#10b981', fontWeight: 700, marginBottom: '10px' }}>
+                <div style={{ ...cardStyle, background: '#FFFFFF', textAlign: 'center' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#DCFCE7', border: '1px solid #86EFAC', borderRadius: '20px', padding: '4px 14px', fontSize: '12px', color: '#166534', fontWeight: 700, marginBottom: '10px' }}>
                     <i className="fa-solid fa-wand-magic-sparkles"></i> AI-Generated Soil Health Estimate — For Guidance Only
                   </div>
-                  <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: 'var(--primary-light)', fontWeight: 700 }}>
+                  <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: '#17211B', fontWeight: 800 }}>
                     🌱 एआई आधारित मिट्टी स्वास्थ्य अनुमान (केवल मार्गदर्शन हेतु)
                   </h3>
-                  <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '12px', color: '#6B7280', marginBottom: '12px' }}>
                     ⚠️ Note: This is an estimated visual AI analysis for educational & farming guidance. For certified laboratory measurements, please refer to government Soil Health Card laboratory testing.
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'center', margin: '14px 0' }}>
                     <ScoreGauge score={analysisResult.overall_health_score || 75} />
                   </div>
-                  <p style={{ margin: 0, fontSize: '14px', color: '#cbd5e1', fontWeight: 600, lineHeight: 1.5 }}>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#374151', fontWeight: 600, lineHeight: 1.5 }}>
                     {analysisResult.summary}
                   </p>
                 </div>
 
                 {/* NPK Nutrients Status */}
                 <div style={cardStyle}>
-                  <h3 style={{ margin: '0 0 14px', fontSize: '16px', fontWeight: 700, color: '#fff' }}>
+                  <h3 style={{ margin: '0 0 14px', fontSize: '16px', fontWeight: 800, color: '#17211B' }}>
                     🧬 पोषक तत्व मात्रा / Nutrient Status (NPK)
                   </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                     <NutrientBadge label="नाइट्रोजन / Nitrogen" value={analysisResult.nitrogen_status} />
                     <NutrientBadge label="फास्फोरस / Phosphorus" value={analysisResult.phosphorus_status} />
                     <NutrientBadge label="पोटाश / Potassium" value={analysisResult.potassium_status} />
@@ -1043,7 +1050,7 @@ export function SoilLabTab() {
 
                 {/* Soil properties */}
                 <div style={cardStyle}>
-                  <h3 style={{ margin: '0 0 14px', fontSize: '16px', fontWeight: 700, color: '#fff' }}>
+                  <h3 style={{ margin: '0 0 14px', fontSize: '16px', fontWeight: 800, color: '#17211B' }}>
                     🔬 मिट्टी के गुण / Soil Properties
                   </h3>
                   <InfoRow icon="🪨" label="मिट्टी का प्रकार / Soil Type" value={analysisResult.soil_type} />
@@ -1054,20 +1061,20 @@ export function SoilLabTab() {
 
                 {/* Recommendations */}
                 <div style={cardStyle}>
-                  <h3 style={{ margin: '0 0 8px', fontSize: '16px', fontWeight: 700, color: '#fff' }}>
+                  <h3 style={{ margin: '0 0 8px', fontSize: '16px', fontWeight: 800, color: '#17211B' }}>
                     🌾 उपयुक्त फसलें / Suitable Crops
                   </h3>
-                  <TagList items={analysisResult.suitable_crops} color="#10b981" />
+                  <TagList items={analysisResult.suitable_crops} color="#15803D" />
                 </div>
 
                 <div style={cardStyle}>
-                  <h3 style={{ margin: '0 0 8px', fontSize: '16px', fontWeight: 700, color: '#fff' }}>
+                  <h3 style={{ margin: '0 0 8px', fontSize: '16px', fontWeight: 800, color: '#17211B' }}>
                     ⚠️ कमियां और सुधार / Improvements Needed
                   </h3>
-                  <TagList items={analysisResult.visible_deficiencies} color="#f87171" />
+                  <TagList items={analysisResult.visible_deficiencies} color="#DC2626" />
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
                     {(analysisResult.improvements_needed || []).map((step, idx) => (
-                      <div key={idx} style={{ fontSize: '14px', color: '#cbd5e1', lineHeight: 1.5, display: 'flex', gap: '8px' }}>
+                      <div key={idx} style={{ fontSize: '14px', color: '#374151', lineHeight: 1.5, display: 'flex', gap: '8px' }}>
                         <span>👉</span>
                         <span>{step}</span>
                       </div>
@@ -1076,17 +1083,17 @@ export function SoilLabTab() {
                 </div>
 
                 {/* Advice Card */}
-                <div style={{ ...cardStyle, background: 'rgba(56, 189, 248, 0.08)', borderLeft: '4px solid #38bdf8' }}>
-                  <h4 style={{ margin: '0 0 6px', fontSize: '15px', color: '#38bdf8', fontWeight: 700 }}>
+                <div style={{ ...cardStyle, background: '#EFF6FF', borderLeft: '4px solid #0284C7', borderTop: '1px solid #BFDBFE', borderRight: '1px solid #BFDBFE', borderBottom: '1px solid #BFDBFE' }}>
+                  <h4 style={{ margin: '0 0 6px', fontSize: '15px', color: '#0369A1', fontWeight: 800 }}>
                     🧪 खाद सलाह / Fertilizer Dose:
                   </h4>
-                  <p style={{ margin: '0 0 10px', fontSize: '14px', color: '#cbd5e1', lineHeight: 1.5 }}>
+                  <p style={{ margin: '0 0 10px', fontSize: '14px', color: '#1E3A8A', lineHeight: 1.5 }}>
                     {analysisResult.fertilizer_advice}
                   </p>
-                  <h4 style={{ margin: '0 0 6px', fontSize: '15px', color: '#38bdf8', fontWeight: 700 }}>
+                  <h4 style={{ margin: '0 0 6px', fontSize: '15px', color: '#0369A1', fontWeight: 800 }}>
                     💧 सिंचाई सलाह / Irrigation Advice:
                   </h4>
-                  <p style={{ margin: 0, fontSize: '14px', color: '#cbd5e1', lineHeight: 1.5 }}>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#1E3A8A', lineHeight: 1.5 }}>
                     {analysisResult.irrigation_advice}
                   </p>
                 </div>
@@ -1099,22 +1106,22 @@ export function SoilLabTab() {
         {/* ─── MANUAL SLIDERS SECTION ─── */}
         {activeSection === 'manual' && (
           <div style={cardStyle}>
-            <h2 style={{ fontSize: '18px', color: '#fff', fontWeight: 700, margin: '0 0 6px 0' }}>
+            <h2 style={{ fontSize: '18px', color: '#17211B', fontWeight: 800, margin: '0 0 6px 0' }}>
               📊 मिट्टी परीक्षण रिपोर्ट दर्ज करें
             </h2>
-            <p style={{ margin: '0 0 20px', fontSize: '13px', color: '#94a3b8' }}>
+            <p style={{ margin: '0 0 20px', fontSize: '13px', color: '#6B7280' }}>
               अपनी सरकारी सॉइल हेल्थ कार्ड रिपोर्ट के अनुसार मान सेट करें:
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {[
-                { label: 'Nitrogen (N) - नाइट्रोजन', unit: 'ppm', val: nStatus, set: setNStatus, min: 10, max: 120, step: 1, color: '#10b981' },
-                { label: 'Phosphorus (P) - फास्फोरस', unit: 'ppm', val: pStatus, set: setPStatus, min: 10, max: 120, step: 1, color: '#38bdf8' },
-                { label: 'Potassium (K) - पोटाश', unit: 'ppm', val: kStatus, set: setKStatus, min: 10, max: 120, step: 1, color: '#fbbf24' },
-                { label: 'Soil pH Value - पीएच मान', unit: '', val: phVal, set: setPhVal, min: 4.5, max: 9.0, step: 0.1, color: '#a78bfa' }
+                { label: 'Nitrogen (N) - नाइट्रोजन', unit: 'ppm', val: nStatus, set: setNStatus, min: 10, max: 120, step: 1, color: '#15803D' },
+                { label: 'Phosphorus (P) - फास्फोरस', unit: 'ppm', val: pStatus, set: setPStatus, min: 10, max: 120, step: 1, color: '#0284C7' },
+                { label: 'Potassium (K) - पोटाश', unit: 'ppm', val: kStatus, set: setKStatus, min: 10, max: 120, step: 1, color: '#D97706' },
+                { label: 'Soil pH Value - पीएच मान', unit: '', val: phVal, set: setPhVal, min: 4.5, max: 9.0, step: 0.1, color: '#7C3AED' }
               ].map(({ label, unit, val, set, min, max, step, color }) => (
-                <div key={label} style={{ background: 'rgba(255,255,255,0.03)', padding: '12px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 700, color: '#fff', marginBottom: '8px' }}>
+                <div key={label} style={{ background: '#F8FAF9', padding: '14px 18px', borderRadius: '12px', border: '1px solid #E5E7EB' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 800, color: '#17211B', marginBottom: '8px' }}>
                     <span>{label}</span>
                     <span style={{ color, fontSize: '16px' }}>{val}{unit ? ` ${unit}` : ''}</span>
                   </div>
@@ -1127,7 +1134,7 @@ export function SoilLabTab() {
                     onChange={e => set(step < 1 ? parseFloat(e.target.value) : parseInt(e.target.value))}
                     style={{ width: '100%', height: '8px', borderRadius: '4px', outline: 'none', accentColor: color }}
                   />
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#6B7280', marginTop: '4px', fontWeight: 600 }}>
                     <span>न्यूनतम / {min}</span>
                     <span>अधिकतम / {max}</span>
                   </div>
@@ -1136,15 +1143,15 @@ export function SoilLabTab() {
             </div>
 
             {/* Health Score Output */}
-            <div style={{ marginTop: '20px', padding: '16px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.2)', textAlign: 'center' }}>
-              <h3 style={{ margin: '0 0 10px', fontSize: '16px', color: 'var(--primary-light)', fontWeight: 700 }}>
+            <div style={{ marginTop: '20px', padding: '18px', background: '#F0FDF4', borderRadius: '14px', border: '1px solid #BBF7D0', textAlign: 'center' }}>
+              <h3 style={{ margin: '0 0 10px', fontSize: '16px', color: '#15803D', fontWeight: 800 }}>
                 Calculated Soil Health Index
               </h3>
               <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
                 <ScoreGauge score={calculateHealthScore()} />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginTop: '12px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginTop: '12px' }}>
                 <NutrientBadge label="Nitrogen" value={nStatus > 80 ? 'High' : nStatus > 50 ? 'Adequate' : nStatus > 30 ? 'Low' : 'Deficient'} />
                 <NutrientBadge label="Phosphorus" value={pStatus > 80 ? 'High' : pStatus > 50 ? 'Adequate' : pStatus > 30 ? 'Low' : 'Deficient'} />
                 <NutrientBadge label="Potassium" value={kStatus > 80 ? 'High' : kStatus > 50 ? 'Adequate' : kStatus > 30 ? 'Low' : 'Deficient'} />
@@ -1156,15 +1163,16 @@ export function SoilLabTab() {
                 onClick={handleSaveReport}
                 disabled={saving}
                 style={{
-                  marginTop: '16px', width: '100%', padding: '12px 18px', borderRadius: '10px', border: 'none',
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'black', fontSize: '14px', fontWeight: 700, cursor: 'pointer'
+                  marginTop: '16px', width: '100%', padding: '14px 18px', borderRadius: '10px', border: 'none',
+                  background: '#15803D', color: '#FFFFFF', fontSize: '14px', fontWeight: 800, cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(21, 128, 61, 0.25)'
                 }}
               >
                 <i className={`fa-solid ${saving ? 'fa-spinner fa-spin' : 'fa-floppy-disk'}`} style={{ marginRight: '6px' }} />
                 {saving ? 'सहेज रहे हैं...' : 'सुरक्षित करें / Save Report'}
               </button>
               {saveMsg && (
-                <div style={{ marginTop: '10px', color: 'var(--primary-light)', fontSize: '14px', fontWeight: 700 }}>
+                <div style={{ marginTop: '10px', color: '#15803D', fontSize: '14px', fontWeight: 800 }}>
                   ✅ {saveMsg}
                 </div>
               )}

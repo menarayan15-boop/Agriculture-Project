@@ -31,7 +31,6 @@ export function Header({ onOpenAiModal }) {
   // Handle Play/Listen Toggle
   const handleListenClick = () => {
     if (readerState.isReading) {
-      // If currently speaking, re-read or pause
       pageReader.readPage(activeTab, lang, { crop, soil, location, area, report });
     } else {
       pageReader.unmuteAndRead(activeTab, lang, { crop, soil, location, area, report });
@@ -46,7 +45,7 @@ export function Header({ onOpenAiModal }) {
   // Localized button text for Farmer Voice Guide
   const LISTEN_LABELS = {
     en: { play: 'Farmer Guide', reading: 'Assisting...' },
-    hi: { play: 'किसान साथी', reading: 'मदद कर रहा है...' },
+    hi: { play: 'किसान साथी', reading: 'मार्गदर्शन जारी...' },
     te: { play: 'రైతు మార్గదర్శి', reading: 'సహాయం చేస్తోంది...' },
     ta: { play: 'விவசாய வழிகாட்டி', reading: 'வழிகாட்டுகிறது...' },
     kn: { play: 'ರೈತ ಮಾರ್ಗದರ್ಶಿ', reading: 'ಸಹಾಯ ಮಾಡುತ್ತಿದೆ...' },
@@ -79,7 +78,7 @@ export function Header({ onOpenAiModal }) {
         <img 
           src="/logo.svg" 
           alt="Krishi Jal Logo" 
-          style={{ width: '44px', height: '44px', objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(16, 185, 129, 0.4))' }} 
+          style={{ width: '40px', height: '40px', objectFit: 'contain' }} 
         />
         <div className="logo-text">
           <h1 className="logo-title">{getText('logo-title', lang)}</h1>
@@ -101,49 +100,29 @@ export function Header({ onOpenAiModal }) {
 
       <div className="header-actions">
         {/* Language Selector Dropdown */}
-        <div 
-          className="lang-selector-wrapper"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: '1px solid var(--border-color)',
-            borderRadius: 'var(--border-radius-sm)',
-            padding: '5px 10px'
-          }}
-        >
-          <i className="fa-solid fa-language lang-icon" style={{ color: 'var(--highlight)', fontSize: '1rem' }}></i>
+        <div className="lang-selector-wrapper">
+          <i className="fa-solid fa-language lang-icon"></i>
           <select
             id="krishi-lang-select"
+            className="lang-select"
             value={lang}
             onChange={(e) => setLang(e.target.value)}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--text-primary)',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-              outline: 'none',
-              fontFamily: 'inherit'
-            }}
           >
-            <option value="en" style={{ background: '#0d1e15', color: '#ffffff' }}>English</option>
-            <option value="hi" style={{ background: '#0d1e15', color: '#ffffff' }}>हिन्दी (Hindi)</option>
-            <option value="te" style={{ background: '#0d1e15', color: '#ffffff' }}>తెలుగు (Telugu)</option>
-            <option value="ta" style={{ background: '#0d1e15', color: '#ffffff' }}>தமிழ் (Tamil)</option>
-            <option value="kn" style={{ background: '#0d1e15', color: '#ffffff' }}>ಕನ್ನಡ (Kannada)</option>
-            <option value="pa" style={{ background: '#0d1e15', color: '#ffffff' }}>ਪੰਜਾਬੀ (Punjabi)</option>
-            <option value="mr" style={{ background: '#0d1e15', color: '#ffffff' }}>मराठी (Marathi)</option>
-            <option value="bn" style={{ background: '#0d1e15', color: '#ffffff' }}>বাংলা (Bengali)</option>
-            <option value="gu" style={{ background: '#0d1e15', color: '#ffffff' }}>ગુજરાતી (Gujarati)</option>
-            <option value="or" style={{ background: '#0d1e15', color: '#ffffff' }}>ଓଡ଼ିଆ (Odia)</option>
+            <option value="en">English</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+            <option value="or">ଓଡ଼ିଆ (Odia)</option>
           </select>
         </div>
 
-        {/* ── AUDIO PAGE READER & MUTE BUTTONS (BESIDE LANGUAGE SELECTOR) ── */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        {/* ── AUDIO PAGE READER & MUTE BUTTONS ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           {/* 1. Listen / Read Page Button */}
           <button
             id="btn-page-reader-play"
@@ -152,43 +131,42 @@ export function Header({ onOpenAiModal }) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '6px 12px',
-              borderRadius: 'var(--border-radius-sm)',
-              fontSize: '0.83rem',
+              gap: '7px',
+              padding: '8px 14px',
+              borderRadius: 'var(--border-radius-md)',
+              fontSize: '0.86rem',
               fontWeight: 700,
               cursor: 'pointer',
               border: readerState.isReading 
-                ? '1.5px solid #22c55e' 
-                : '1px solid rgba(255, 255, 255, 0.15)',
+                ? '1px solid #15803D' 
+                : '1px solid var(--border-color)',
               background: readerState.isReading
-                ? 'linear-gradient(135deg, rgba(21, 128, 61, 0.85) 0%, rgba(34, 197, 94, 0.95) 100%)'
-                : 'rgba(255, 255, 255, 0.07)',
-              color: '#ffffff',
+                ? 'var(--primary)'
+                : '#FFFFFF',
+              color: readerState.isReading ? '#FFFFFF' : 'var(--text-primary)',
               boxShadow: readerState.isReading 
-                ? '0 0 14px rgba(34, 197, 94, 0.5)' 
-                : 'none',
+                ? '0 4px 14px rgba(21, 128, 61, 0.3)' 
+                : 'var(--shadow-xs)',
               transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
               if (!readerState.isReading) {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.14)';
-                e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.5)';
+                e.currentTarget.style.background = 'var(--very-light-green)';
+                e.currentTarget.style.borderColor = 'var(--primary)';
               }
             }}
             onMouseLeave={(e) => {
               if (!readerState.isReading) {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.07)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.background = '#FFFFFF';
+                e.currentTarget.style.borderColor = 'var(--border-color)';
               }
             }}
           >
             <i 
               className={`fa-solid ${readerState.isReading ? 'fa-volume-high' : 'fa-volume-low'}`}
               style={{
-                color: readerState.isReading ? '#ffffff' : 'var(--highlight)',
-                fontSize: '0.9rem',
-                animation: readerState.isReading ? 'pulse 1.2s infinite' : 'none'
+                color: readerState.isReading ? '#FFFFFF' : 'var(--primary)',
+                fontSize: '0.92rem'
               }}
             ></i>
             <span>
@@ -199,9 +177,9 @@ export function Header({ onOpenAiModal }) {
                 width: '6px',
                 height: '6px',
                 borderRadius: '50%',
-                background: '#ffffff',
+                background: '#FFFFFF',
                 display: 'inline-block',
-                boxShadow: '0 0 6px #ffffff'
+                boxShadow: '0 0 6px #FFFFFF'
               }} />
             )}
           </button>
@@ -214,35 +192,36 @@ export function Header({ onOpenAiModal }) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '5px',
-              padding: '6px 10px',
-              borderRadius: 'var(--border-radius-sm)',
-              fontSize: '0.83rem',
+              gap: '6px',
+              padding: '8px 12px',
+              borderRadius: 'var(--border-radius-md)',
+              fontSize: '0.84rem',
               fontWeight: 600,
               cursor: 'pointer',
               border: readerState.isMuted
-                ? '1px solid rgba(239, 68, 68, 0.4)'
-                : '1px solid rgba(255, 255, 255, 0.15)',
+                ? '1px solid #FECACA'
+                : '1px solid var(--border-color)',
               background: readerState.isMuted
-                ? 'rgba(239, 68, 68, 0.12)'
-                : 'rgba(255, 255, 255, 0.05)',
-              color: readerState.isMuted ? '#fca5a5' : 'var(--text-secondary)',
+                ? '#FEF2F2'
+                : '#FFFFFF',
+              color: readerState.isMuted ? '#DC2626' : 'var(--text-secondary)',
+              boxShadow: 'var(--shadow-xs)',
               transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)';
-              e.currentTarget.style.color = '#ffffff';
-              e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.7)';
+              e.currentTarget.style.background = '#FEE2E2';
+              e.currentTarget.style.color = '#DC2626';
+              e.currentTarget.style.borderColor = '#FCA5A5';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = readerState.isMuted ? 'rgba(239, 68, 68, 0.12)' : 'rgba(255, 255, 255, 0.05)';
-              e.currentTarget.style.color = readerState.isMuted ? '#fca5a5' : 'var(--text-secondary)';
-              e.currentTarget.style.borderColor = readerState.isMuted ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 255, 255, 0.15)';
+              e.currentTarget.style.background = readerState.isMuted ? '#FEF2F2' : '#FFFFFF';
+              e.currentTarget.style.color = readerState.isMuted ? '#DC2626' : 'var(--text-secondary)';
+              e.currentTarget.style.borderColor = readerState.isMuted ? '#FECACA' : 'var(--border-color)';
             }}
           >
             <i 
               className="fa-solid fa-volume-xmark" 
-              style={{ color: readerState.isMuted ? '#ef4444' : 'inherit' }}
+              style={{ color: readerState.isMuted ? '#DC2626' : 'inherit' }}
             ></i>
             <span>{currentMuteLabel}</span>
           </button>
@@ -253,21 +232,39 @@ export function Header({ onOpenAiModal }) {
           <button 
             onClick={() => setProfileOpen(!profileOpen)}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--border-color)',
-              color: 'var(--text-primary)', padding: '8px 12px', borderRadius: 'var(--border-radius-sm)',
-              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem'
+              background: '#FFFFFF',
+              border: '1px solid var(--border-color)',
+              color: 'var(--text-primary)',
+              padding: '7px 12px',
+              borderRadius: 'var(--border-radius-md)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '0.88rem',
+              fontWeight: 600,
+              boxShadow: 'var(--shadow-xs)',
+              transition: 'all 0.2s ease'
             }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--primary)'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
           >
-            <i className="fa-solid fa-user-circle" style={{color: 'var(--highlight)', fontSize: '1.2rem'}}></i>
-            <i className="fa-solid fa-chevron-down" style={{fontSize: '0.7rem', color: 'var(--text-secondary)'}}></i>
+            <i className="fa-solid fa-user-circle" style={{ color: 'var(--primary)', fontSize: '1.2rem' }}></i>
+            <i className="fa-solid fa-chevron-down" style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}></i>
           </button>
           
           {profileOpen && (
             <div style={{
-              position: 'absolute', top: 'calc(100% + 8px)', right: 0,
-              background: 'var(--monsoon-green)', border: '1px solid var(--border-color)',
-              borderRadius: 'var(--border-radius-sm)', padding: '8px', minWidth: '180px',
-              boxShadow: 'var(--shadow-md)', zIndex: 100
+              position: 'absolute',
+              top: 'calc(100% + 8px)',
+              right: 0,
+              background: '#FFFFFF',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--border-radius-md)',
+              padding: '6px',
+              minWidth: '190px',
+              boxShadow: 'var(--shadow-md)',
+              zIndex: 100
             }}>
               <button 
                 onClick={() => {
@@ -275,14 +272,24 @@ export function Header({ onOpenAiModal }) {
                   setShowOnboarding(true);
                 }}
                 style={{
-                  width: '100%', background: 'transparent', border: 'none', textAlign: 'left',
-                  color: 'var(--text-primary)', padding: '8px 12px', cursor: 'pointer',
-                  borderRadius: '4px', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px'
+                  width: '100%',
+                  background: 'transparent',
+                  border: 'none',
+                  textAlign: 'left',
+                  color: 'var(--text-primary)',
+                  padding: '9px 12px',
+                  cursor: 'pointer',
+                  borderRadius: '6px',
+                  fontSize: '0.88rem',
+                  fontWeight: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--very-light-green)'}
                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <i className="fa-solid fa-pen-to-square"></i> Edit Farm Profile
+                <i className="fa-solid fa-pen-to-square" style={{ color: 'var(--primary)' }}></i> Edit Farm Profile
               </button>
 
               <button 
@@ -295,14 +302,24 @@ export function Header({ onOpenAiModal }) {
                   }
                 }}
                 style={{
-                  width: '100%', background: 'transparent', border: 'none', textAlign: 'left',
-                  color: 'var(--text-primary)', padding: '8px 12px', cursor: 'pointer',
-                  borderRadius: '4px', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px'
+                  width: '100%',
+                  background: 'transparent',
+                  border: 'none',
+                  textAlign: 'left',
+                  color: 'var(--text-primary)',
+                  padding: '9px 12px',
+                  cursor: 'pointer',
+                  borderRadius: '6px',
+                  fontSize: '0.88rem',
+                  fontWeight: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--very-light-green)'}
                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <i className="fa-solid fa-key"></i> Gemini API Key
+                <i className="fa-solid fa-key" style={{ color: 'var(--primary)' }}></i> Gemini API Key
               </button>
             </div>
           )}

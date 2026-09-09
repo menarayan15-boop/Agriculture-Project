@@ -8,22 +8,12 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
 
   const isHindi = lang === 'hi';
 
-  const colors = {
-    bg: '#0a0f0d',
-    text: '#f8fafc',
-    subtext: '#94a3b8',
-    border: '#166534',
-    shadow: '#042f1b',
-    itemBg: 'rgba(255, 255, 255, 0.04)',
-    itemBorder: 'rgba(255, 255, 255, 0.08)'
-  };
-
   return (
     <div
       style={{
         minHeight: '100vh',
         width: '100vw',
-        background: 'linear-gradient(135deg, #0d1e15 0%, #111827 50%, #0d1e15 100%)',
+        background: 'linear-gradient(180deg, #F8FAF9 0%, #F0FDF4 100%)',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -52,9 +42,9 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
           <img 
             src="/logo.svg" 
             alt="Krishi Jal" 
-            style={{ width: '40px', height: '40px', filter: 'drop-shadow(0 2px 8px rgba(34, 197, 94, 0.4))' }} 
+            style={{ width: '40px', height: '40px', filter: 'drop-shadow(0 2px 6px rgba(21, 128, 61, 0.25))' }} 
           />
-          <span style={{ fontSize: '1.25rem', fontWeight: 900, color: '#22c55e', letterSpacing: '-0.02em' }}>
+          <span style={{ fontSize: '1.25rem', fontWeight: 900, color: '#15803D', letterSpacing: '-0.02em' }}>
             KRISHI JAL
           </span>
         </div>
@@ -65,10 +55,11 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            backgroundColor: 'rgba(255, 255, 255, 0.06)',
-            border: '1.5px solid rgba(34, 197, 94, 0.3)',
-            borderRadius: '8px',
-            padding: '4px 10px'
+            backgroundColor: '#FFFFFF',
+            border: '1.5px solid #E5E7EB',
+            borderRadius: '10px',
+            padding: '6px 12px',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
           }}
         >
           <span style={{ fontSize: '1rem' }}>🌐</span>
@@ -78,7 +69,7 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#ffffff',
+              color: '#17211B',
               fontSize: '0.85rem',
               fontWeight: 700,
               cursor: 'pointer',
@@ -86,14 +77,16 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
               fontFamily: 'inherit'
             }}
           >
-            <option value="en" style={{ background: '#0d1e15', color: '#fff' }}>English</option>
-            <option value="hi" style={{ background: '#0d1e15', color: '#fff' }}>हिन्दी (Hindi)</option>
-            <option value="te" style={{ background: '#0d1e15', color: '#fff' }}>తెలుగు (Telugu)</option>
-            <option value="ta" style={{ background: '#0d1e15', color: '#fff' }}>தமிழ் (Tamil)</option>
-            <option value="kn" style={{ background: '#0d1e15', color: '#fff' }}>ಕನ್ನಡ (Kannada)</option>
-            <option value="pa" style={{ background: '#0d1e15', color: '#fff' }}>ਪੰਜਾਬੀ (Punjabi)</option>
-            <option value="mr" style={{ background: '#0d1e15', color: '#fff' }}>मराठी (Marathi)</option>
-            <option value="bn" style={{ background: '#0d1e15', color: '#fff' }}>বাংলা (Bengali)</option>
+            <option value="en">English</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+            <option value="or">ଓଡ଼ିଆ (Odia)</option>
           </select>
         </div>
       </div>
@@ -102,7 +95,7 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
       <div
         style={{
           textAlign: 'center',
-          maxWidth: '780px',
+          maxWidth: '820px',
           marginTop: '60px',
           marginBottom: '36px'
         }}
@@ -112,18 +105,19 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            backgroundColor: 'rgba(34, 197, 94, 0.15)',
-            border: '1.5px solid #22c55e',
-            color: '#4ade80',
+            backgroundColor: '#DCFCE7',
+            border: '1.5px solid #86EFAC',
+            color: '#166534',
             fontSize: '0.85rem',
             fontWeight: 800,
             padding: '6px 16px',
             borderRadius: '20px',
-            marginBottom: '18px'
+            marginBottom: '18px',
+            boxShadow: '0 2px 6px rgba(21, 128, 61, 0.08)'
           }}
         >
           <span>🌱</span>
-          <span>{isHindi ? 'स्मार्ट एआई कृषि सलाहकार व किसान मंच' : 'SMART AI FARMING PLATFORM'}</span>
+          <span>{isHindi ? 'स्मार्ट एआई कृषि सलाहकार व किसान मंच' : 'SMART AI PRECISION AGRICULTURE PLATFORM'}</span>
         </div>
 
         <h1
@@ -133,7 +127,7 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
             lineHeight: '1.15',
             letterSpacing: '-0.03em',
             margin: '0 0 16px 0',
-            color: '#ffffff'
+            color: '#17211B'
           }}
         >
           {isHindi 
@@ -145,15 +139,15 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
           style={{
             fontSize: 'clamp(1rem, 1.8vw, 1.15rem)',
             fontWeight: 500,
-            color: colors.subtext,
-            maxWidth: '650px',
+            color: '#4B5563',
+            maxWidth: '680px',
             lineHeight: '1.6',
             margin: '0 auto'
           }}
         >
           {isHindi 
             ? 'जेमिनी एआई फसल सलाहकार, डिजिटल सॉइल लैब, ट्रैक्टर व कृषि मशीनरी रेंटल, लाइव मंडी भाव व मौसम आधारित सिंचाई।'
-            : 'Real-time AI crop diagnostics, digital soil laboratory, farm machinery rental marketplace, live mandi commodity prices & custom irrigation roadmaps.'}
+            : 'Real-time AI crop diagnostics, digital soil laboratory, farm machinery rental marketplace, live mandi commodity prices & custom precision irrigation roadmaps.'}
         </p>
       </div>
 
@@ -161,16 +155,16 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
       <div
         style={{
           width: '100%',
-          maxWidth: '720px',
-          backgroundColor: 'rgba(18, 26, 21, 0.95)',
-          border: '2px solid rgba(34, 197, 94, 0.4)',
+          maxWidth: '760px',
+          backgroundColor: '#FFFFFF',
+          border: '1.5px solid #E5E7EB',
           borderRadius: '20px',
           padding: '32px',
-          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.15)',
+          boxShadow: '0 20px 40px -15px rgba(21, 128, 61, 0.1), 0 0 1px rgba(0,0,0,0.1)',
           marginBottom: '36px'
         }}
       >
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '14px', marginBottom: '28px' }}>
           {[
             { icon: '🤖', title: isHindi ? 'जेमिनी एआई वॉयस डॉक्टर' : 'Gemini AI Voice Doctor', tab: 'voice-ai' },
             { icon: '🧪', title: isHindi ? 'सॉइल डायग्नोस्टिक लैब' : 'Soil Diagnostic Lab', tab: 'soillab' },
@@ -185,25 +179,29 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '10px',
-                padding: '12px 14px',
-                backgroundColor: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: '12px',
+                gap: '12px',
+                padding: '14px 16px',
+                backgroundColor: '#F8FAF9',
+                border: '1px solid #E5E7EB',
+                borderRadius: '14px',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease'
+                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.12)';
-                e.currentTarget.style.borderColor = '#22c55e';
+                e.currentTarget.style.backgroundColor = '#F0FDF4';
+                e.currentTarget.style.borderColor = '#86EFAC';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(21, 128, 61, 0.08)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                e.currentTarget.style.backgroundColor = '#F8FAF9';
+                e.currentTarget.style.borderColor = '#E5E7EB';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
-              <span style={{ fontSize: '1.4rem' }}>{f.icon}</span>
-              <span style={{ fontSize: '0.88rem', fontWeight: 600, color: '#e2e8f0' }}>{f.title}</span>
+              <span style={{ fontSize: '1.5rem' }}>{f.icon}</span>
+              <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#17211B' }}>{f.title}</span>
             </div>
           ))}
         </div>
@@ -213,15 +211,15 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
           onClick={onStartKrishiJal}
           style={{
             width: '100%',
-            background: 'linear-gradient(135deg, #15803d 0%, #22c55e 100%)',
+            background: '#15803D',
             color: '#ffffff',
             border: 'none',
             borderRadius: '14px',
             padding: '18px 24px',
-            fontSize: '1.2rem',
+            fontSize: '1.15rem',
             fontWeight: 800,
             cursor: 'pointer',
-            boxShadow: '0 10px 25px rgba(34, 197, 94, 0.4)',
+            boxShadow: '0 8px 20px rgba(21, 128, 61, 0.3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -229,12 +227,14 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
             transition: 'all 0.2s ease'
           }}
           onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#166534';
             e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 15px 30px rgba(34, 197, 94, 0.6)';
+            e.currentTarget.style.boxShadow = '0 12px 26px rgba(21, 128, 61, 0.4)';
           }}
           onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#15803D';
             e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 10px 25px rgba(34, 197, 94, 0.4)';
+            e.currentTarget.style.boxShadow = '0 8px 20px rgba(21, 128, 61, 0.3)';
           }}
         >
           <span>{isHindi ? 'खेत डैशबोर्ड में प्रवेश करें' : 'ENTER KRISHI JAL DASHBOARD'}</span>
@@ -243,7 +243,7 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
       </div>
 
       {/* Direct Module Shortcuts */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', maxWidth: '720px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', maxWidth: '760px' }}>
         {[
           { label: '🤖 AI Voice Advisor', tab: 'voice-ai' },
           { label: '🚜 Equipment Rentals', tab: 'rentals' },
@@ -256,25 +256,26 @@ export function LandingPage({ onStartKrishiJal, onOpenDirectTab }) {
             key={idx}
             onClick={() => onOpenDirectTab && onOpenDirectTab('app', item.tab)}
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.06)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              color: '#e2e8f0',
-              padding: '8px 16px',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #E5E7EB',
+              color: '#374151',
+              padding: '8px 18px',
               borderRadius: '20px',
-              fontSize: '0.82rem',
+              fontSize: '0.84rem',
               fontWeight: 600,
               cursor: 'pointer',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
               transition: 'all 0.15s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.2)';
-              e.currentTarget.style.borderColor = '#22c55e';
-              e.currentTarget.style.color = '#4ade80';
+              e.currentTarget.style.backgroundColor = '#F0FDF4';
+              e.currentTarget.style.borderColor = '#86EFAC';
+              e.currentTarget.style.color = '#15803D';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.06)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-              e.currentTarget.style.color = '#e2e8f0';
+              e.currentTarget.style.backgroundColor = '#FFFFFF';
+              e.currentTarget.style.borderColor = '#E5E7EB';
+              e.currentTarget.style.color = '#374151';
             }}
           >
             {item.label}

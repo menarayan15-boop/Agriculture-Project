@@ -92,8 +92,9 @@ export function DashboardTab() {
         {/* AI Farmer Profile Card */}
         {farmerInsights && farmerInsights.profile && (
           <div className="dash-card span-all" style={{
-            background: 'var(--bg-gradient)',
-            borderTop: '4px solid var(--secondary)'
+            background: '#FFFFFF',
+            borderTop: '4px solid #15803D',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.04)'
           }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>
               {/* Left: Profile Info */}
@@ -101,7 +102,7 @@ export function DashboardTab() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                   <span style={{ fontSize: '2rem' }}>{farmerInsights.profile.icon}</span>
                   <div>
-                    <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700, color: '#ffffff' }}>
+                    <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, color: '#17211B' }}>
                       {farmerInsights.profile.label}
                     </h3>
                     <span style={{
@@ -110,16 +111,16 @@ export function DashboardTab() {
                       padding: '2px 10px',
                       borderRadius: '20px',
                       fontSize: '0.75rem',
-                      fontWeight: 600,
-                      background: `${farmerInsights.profile.color}22`,
-                      color: farmerInsights.profile.color,
-                      border: `1px solid ${farmerInsights.profile.color}44`
+                      fontWeight: 700,
+                      background: '#DCFCE7',
+                      color: '#15803D',
+                      border: '1px solid #86EFAC'
                     }}>
                       {farmerInsights.profile.confidence}% {getText('confidence', lang) || 'Confidence'}
                     </span>
                   </div>
                 </div>
-                <p style={{ margin: '0 0 16px 0', fontSize: '0.88rem', color: '#94a3b8', lineHeight: '1.5' }}>
+                <p style={{ margin: '0 0 16px 0', fontSize: '0.88rem', color: '#4B5563', lineHeight: '1.5' }}>
                   {farmerInsights.profile.description}
                 </p>
 
@@ -127,28 +128,28 @@ export function DashboardTab() {
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: '12px',
                   padding: '12px 16px', borderRadius: '12px',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                  background: '#F8FAF9',
+                  border: '1px solid #E5E7EB'
                 }}>
                   <div style={{
                     width: '48px', height: '48px', borderRadius: '50%',
-                    background: `conic-gradient(${farmerInsights.healthScore > 70 ? 'var(--primary-light)' : farmerInsights.healthScore > 40 ? 'var(--highlight)' : 'var(--error)'} ${farmerInsights.healthScore * 3.6}deg, rgba(255,255,255,0.1) 0deg)`,
+                    background: `conic-gradient(${farmerInsights.healthScore > 70 ? '#15803D' : farmerInsights.healthScore > 40 ? '#F59E0B' : '#EF4444'} ${farmerInsights.healthScore * 3.6}deg, #E5E7EB 0deg)`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center'
                   }}>
                     <div style={{
                       width: '38px', height: '38px', borderRadius: '50%',
-                      background: 'var(--card-bg)',
+                      background: '#FFFFFF',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '0.85rem', fontWeight: 700, color: '#fff'
+                      fontSize: '0.85rem', fontWeight: 800, color: '#17211B'
                     }}>
                       {farmerInsights.healthScore}
                     </div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#e2e8f0' }}>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#17211B' }}>
                       {getText('farm-health-score', lang) || 'Farm Health Score'}
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#6B7280' }}>
                       {getText('based-on-risk', lang) || 'Based on risk analysis'}
                     </div>
                   </div>
@@ -157,12 +158,12 @@ export function DashboardTab() {
 
               {/* Middle: Risks */}
               <div style={{ flex: '1', minWidth: '220px' }}>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 600, color: '#94a3b8' }}>
-                  <i className="fa-solid fa-triangle-exclamation" style={{ marginRight: '6px', color: '#f59e0b' }}></i>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 700, color: '#17211B' }}>
+                  <i className="fa-solid fa-triangle-exclamation" style={{ marginRight: '6px', color: '#D97706' }}></i>
                   {getText('risk-assessment', lang) || 'Risk Assessment'}
                 </h4>
                 {farmerInsights.risks.length === 0 ? (
-                  <div style={{ padding: '12px', borderRadius: 'var(--border-radius-sm)', background: 'rgba(21, 128, 61, 0.15)', border: '1px solid var(--primary)', color: 'var(--primary-light)', fontSize: '0.85rem' }}>
+                  <div style={{ padding: '12px', borderRadius: '12px', background: '#F0FDF4', border: '1px solid #86EFAC', color: '#15803D', fontSize: '0.85rem', fontWeight: 600 }}>
                     <i className="fa-solid fa-shield-check" style={{ marginRight: '6px' }}></i>
                     {getText('no-risks', lang) || 'No significant risks detected'}
                   </div>
@@ -171,26 +172,26 @@ export function DashboardTab() {
                     {farmerInsights.risks.map((risk, i) => (
                       <div key={i} style={{
                         padding: '10px 14px', borderRadius: '10px',
-                        background: risk.severity === 'high' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
-                        border: `1px solid ${risk.severity === 'high' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.2)'}`,
+                        background: risk.severity === 'high' ? '#FEF2F2' : '#FFFBEB',
+                        border: `1px solid ${risk.severity === 'high' ? '#FECACA' : '#FDE68A'}`,
                         fontSize: '0.82rem'
                       }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                           <span>{risk.icon}</span>
-                          <span style={{ fontWeight: 600, color: '#e2e8f0' }}>
+                          <span style={{ fontWeight: 700, color: '#17211B' }}>
                             {risk.label}
                           </span>
                           <span style={{
                             marginLeft: 'auto',
                             padding: '1px 8px', borderRadius: '10px',
-                            fontSize: '0.7rem', fontWeight: 700,
-                            background: risk.severity === 'high' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(245, 158, 11, 0.3)',
-                            color: risk.severity === 'high' ? '#fca5a5' : '#fcd34d'
+                            fontSize: '0.7rem', fontWeight: 800,
+                            background: risk.severity === 'high' ? '#FEE2E2' : '#FEF3C7',
+                            color: risk.severity === 'high' ? '#DC2626' : '#B45309'
                           }}>
                             {risk.score}%
                           </span>
                         </div>
-                        <div style={{ color: '#94a3b8', fontSize: '0.78rem' }}>
+                        <div style={{ color: '#4B5563', fontSize: '0.78rem' }}>
                           {risk.tip}
                         </div>
                       </div>
@@ -201,14 +202,14 @@ export function DashboardTab() {
 
               {/* Right: Tips */}
               <div style={{ flex: '1', minWidth: '220px' }}>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <i className="fa-solid fa-lightbulb" style={{ color: 'var(--primary-light)' }}></i>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '0.9rem', fontWeight: 700, color: '#17211B', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <i className="fa-solid fa-lightbulb" style={{ color: '#15803D' }}></i>
                   {getText('personalized-tips', lang) || 'Personalized Tips'}
                   {farmerInsights.isExplicitlyPersonalized && (
                     <span style={{
-                      background: 'var(--primary)', color: '#fff', 
+                      background: '#15803D', color: '#fff', 
                       fontSize: '0.65rem', padding: '2px 8px', borderRadius: '12px', marginLeft: 'auto',
-                      fontWeight: 600
+                      fontWeight: 700
                     }}>
                       <i className="fa-solid fa-wand-magic-sparkles" style={{marginRight: '4px'}}></i>
                       {getText('for-you', lang) || 'For You'}
@@ -219,9 +220,9 @@ export function DashboardTab() {
                   {farmerInsights.tips.map((tip, i) => (
                     <div key={i} style={{
                       padding: '10px 14px', borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      fontSize: '0.82rem', color: '#cbd5e1',
+                      background: '#F8FAF9',
+                      border: '1px solid #E5E7EB',
+                      fontSize: '0.82rem', color: '#374151',
                       display: 'flex', alignItems: 'flex-start', gap: '8px'
                     }}>
                       <span style={{ flexShrink: 0 }}>{tip.icon}</span>
@@ -233,6 +234,7 @@ export function DashboardTab() {
             </div>
           </div>
         )}
+
         {/* Growth Suitability Score Card */}
         <div className="dash-card card-highlight">
           <h3 className="card-title">Growth Suitability Score</h3>
@@ -259,8 +261,6 @@ export function DashboardTab() {
           </div>
         </div>
 
-
-
         {/* Soil Retention & Properties Card */}
         <div className="dash-card">
           <h3 className="card-title">Soil Retention & Properties</h3>
@@ -270,30 +270,30 @@ export function DashboardTab() {
               <div className="soil-particle clay" style={{ position: 'absolute', width: '4px', height: '4px', background: 'rgba(255,255,255,0.2)' }}></div>
             </div>
             <div className="soil-profile-details">
-              <h4 className="soil-name-heading" style={{ fontSize: '1.1rem', fontWeight: 'bold', margin: '0' }}>
+              <h4 className="soil-name-heading" style={{ fontSize: '1.1rem', fontWeight: 'bold', margin: '0', color: '#17211B' }}>
                 {soil ? getText(soil.nameKey, lang) : '--'}
               </h4>
-              <p className="soil-desc" style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
+              <p className="soil-desc" style={{ fontSize: '0.8rem', color: '#4B5563', margin: '4px 0 0 0' }}>
                 {soil ? getText(soil.descKey, lang) : 'Select location to check soil retention capacity.'}
               </p>
             </div>
           </div>
           <div className="soil-bars" style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <div className="bar-group">
-              <span className="bar-label" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Water Retention</span>
-              <div className="progress-track" style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '10px', height: '8px', marginTop: '4px', overflow: 'hidden' }}>
+              <span className="bar-label" style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>Water Retention</span>
+              <div className="progress-track" style={{ background: '#E5E7EB', borderRadius: '10px', height: '8px', marginTop: '4px', overflow: 'hidden' }}>
                 <div 
                   className="progress-bar" 
-                  style={{ width: soil ? `${soil.retention}%` : '0%', background: 'var(--accent-green)', height: '100%' }}
+                  style={{ width: soil ? `${soil.retention}%` : '0%', background: '#15803D', height: '100%' }}
                 ></div>
               </div>
             </div>
             <div className="bar-group">
-              <span className="bar-label" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Drainage Speed</span>
-              <div className="progress-track" style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '10px', height: '8px', marginTop: '4px', overflow: 'hidden' }}>
+              <span className="bar-label" style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>Drainage Speed</span>
+              <div className="progress-track" style={{ background: '#E5E7EB', borderRadius: '10px', height: '8px', marginTop: '4px', overflow: 'hidden' }}>
                 <div 
                   className="progress-bar progress-orange" 
-                  style={{ width: soil ? `${soil.drainage}%` : '0%', background: 'var(--accent-orange)', height: '100%' }}
+                  style={{ width: soil ? `${soil.drainage}%` : '0%', background: '#F59E0B', height: '100%' }}
                 ></div>
               </div>
             </div>
@@ -305,40 +305,40 @@ export function DashboardTab() {
           <h3 className="card-title">Growth Suitability Diagnostics</h3>
           <ul className="diagnostic-list" style={{ listStyle: 'none', padding: '0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {!report ? (
-              <li className="diagnostic-item info" style={{ display: 'flex', gap: '12px', background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.2)', padding: '15px', borderRadius: '12px' }}>
-                <span className="diag-icon" style={{ color: 'var(--accent-blue)', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-info"></i></span>
+              <li className="diagnostic-item info" style={{ display: 'flex', gap: '12px', background: '#F0F9FF', border: '1px solid #BAE6FD', padding: '16px', borderRadius: '12px' }}>
+                <span className="diag-icon" style={{ color: '#0284C7', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-info"></i></span>
                 <div className="diag-body">
-                  <h4 className="diag-title" style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Awaiting Input Data</h4>
-                  <p className="diag-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0' }}>
+                  <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#0369A1' }}>Awaiting Input Data</h4>
+                  <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#0C4A6E', margin: '0' }}>
                     Please choose your Region, Soil Type, and Crop in the Farm Settings panel and click "Generate Irrigation Plan" to start analysis.
                   </p>
                 </div>
               </li>
             ) : (
               <>
-                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: 'rgba(21, 128, 61, 0.05)', border: '1px solid rgba(21, 128, 61, 0.2)', padding: '15px', borderRadius: '12px' }}>
-                  <span className="diag-icon" style={{ color: 'var(--accent-green)', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
+                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: '#F0FDF4', border: '1px solid #BBF7D0', padding: '16px', borderRadius: '12px' }}>
+                  <span className="diag-icon" style={{ color: '#15803D', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
                   <div className="diag-body">
-                    <h4 className="diag-title" style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Soil Moisture Levels</h4>
-                    <p className="diag-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0' }}>
+                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#166534' }}>Soil Moisture Levels</h4>
+                    <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#14532D', margin: '0' }}>
                       Current soil type retention capacity ({soil ? soil.retention : 80}%) is ideal for {crop ? getText(crop.nameKey, lang) : 'crop'} root networks.
                     </p>
                   </div>
                 </li>
-                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: 'rgba(21, 128, 61, 0.05)', border: '1px solid rgba(21, 128, 61, 0.2)', padding: '15px', borderRadius: '12px' }}>
-                  <span className="diag-icon" style={{ color: 'var(--accent-green)', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
+                <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: '#F0FDF4', border: '1px solid #BBF7D0', padding: '16px', borderRadius: '12px' }}>
+                  <span className="diag-icon" style={{ color: '#15803D', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
                   <div className="diag-body">
-                    <h4 className="diag-title" style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Thermal Suitability</h4>
-                    <p className="diag-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0' }}>
+                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#166534' }}>Thermal Suitability</h4>
+                    <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#14532D', margin: '0' }}>
                       Average ambient temperature ({weather ? `${weather.temp}°C` : '22°C'}) matches {crop ? getText(crop.nameKey, lang) : 'crop'} growth requirements.
                     </p>
                   </div>
                 </li>
-                <li className="diagnostic-item warning" style={{ display: 'flex', gap: '12px', background: 'rgba(245, 158, 11, 0.05)', border: '1px solid rgba(245, 158, 11, 0.2)', padding: '15px', borderRadius: '12px' }}>
-                  <span className="diag-icon" style={{ color: 'var(--accent-orange)', fontSize: '1.2rem' }}><i className="fa-solid fa-triangle-exclamation"></i></span>
+                <li className="diagnostic-item warning" style={{ display: 'flex', gap: '12px', background: '#FFFBEB', border: '1px solid #FDE68A', padding: '16px', borderRadius: '12px' }}>
+                  <span className="diag-icon" style={{ color: '#D97706', fontSize: '1.2rem' }}><i className="fa-solid fa-triangle-exclamation"></i></span>
                   <div className="diag-body">
-                    <h4 className="diag-title" style={{ fontWeight: 'bold', margin: '0 0 4px 0', fontSize: '0.95rem' }}>Upcoming Precipitation</h4>
-                    <p className="diag-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '0' }}>
+                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#B45309' }}>Upcoming Precipitation</h4>
+                    <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#78350F', margin: '0' }}>
                       Rain probability is {weather ? weather.precipProb : 59}%. Reduce irrigation dosage to avoid root saturation.
                     </p>
                   </div>
@@ -363,3 +363,5 @@ export function DashboardTab() {
     </div>
   );
 }
+
+export default DashboardTab;

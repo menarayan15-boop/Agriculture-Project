@@ -897,8 +897,12 @@ export function RentalsTab({ onOpenBookingModal }) {
     <div className="tab-panel active">
       <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <div>
-          <h2><i className="fa-solid fa-tractor" style={{ color: '#f97316', marginRight: '8px' }}></i> Tool &amp; Machinery Rental Marketplace (20+ Local Machines)</h2>
-          <p className="section-sub">Rent high-capacity tractors, harvesters, power tillers, pumps, seeders &amp; spraying drones directly from nearest verified owners on an hourly basis.</p>
+          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#17211B', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <i className="fa-solid fa-tractor" style={{ color: '#15803D' }}></i> Tool &amp; Machinery Rental Marketplace (20+ Local Machines)
+          </h2>
+          <p className="section-sub" style={{ color: '#4B5563', fontSize: '0.9rem', marginTop: '4px' }}>
+            Rent high-capacity tractors, harvesters, power tillers, pumps, seeders &amp; spraying drones directly from nearest verified owners on an hourly basis.
+          </p>
         </div>
       </div>
 
@@ -914,31 +918,33 @@ export function RentalsTab({ onOpenBookingModal }) {
 
           return (
             <div key={item.id} style={{
-              background: 'rgba(20,40,30,0.85)',
-              border: '1px solid rgba(16,185,129,0.3)',
+              background: '#FFFFFF',
+              border: '1.5px solid #E5E7EB',
               borderRadius: '16px',
-              padding: '18px',
+              padding: '20px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '10px',
+              gap: '12px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
+              transition: 'all 0.2s ease'
             }}>
               {/* Top Row: Icon + Name + Badges */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                 <div style={{
-                  width: '44px', height: '44px', minWidth: '44px',
-                  background: 'rgba(16,185,129,0.18)', border: '1px solid rgba(16,185,129,0.35)',
+                  width: '46px', height: '46px', minWidth: '46px',
+                  background: '#DCFCE7', border: '1px solid #86EFAC',
                   borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1.3rem', color: 'var(--primary-light)',
+                  fontSize: '1.3rem', color: '#15803D',
                 }}>
                   <i className={`fa-solid ${icon}`}></i>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', margin: '0 0 6px 0', lineHeight: 1.3 }}>{item.name}</h3>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#17211B', margin: '0 0 6px 0', lineHeight: 1.3 }}>{item.name}</h3>
                   <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                    <span style={{ background: 'rgba(59,130,246,0.2)', color: '#60a5fa', border: '1px solid rgba(59,130,246,0.4)', borderRadius: '20px', fontSize: '0.72rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
+                    <span style={{ background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', borderRadius: '20px', fontSize: '0.72rem', fontWeight: 700, padding: '2px 8px', whiteSpace: 'nowrap' }}>
                       <i className="fa-solid fa-location-dot"></i> {item.distance_km || item.distanceKm || 1.5} km away
                     </span>
-                    <span style={{ background: 'rgba(16,185,129,0.2)', color: 'var(--primary-light)', border: '1px solid rgba(16,185,129,0.4)', borderRadius: '20px', fontSize: '0.72rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
+                    <span style={{ background: '#DCFCE7', color: '#166534', border: '1px solid #86EFAC', borderRadius: '20px', fontSize: '0.72rem', fontWeight: 700, padding: '2px 8px', whiteSpace: 'nowrap' }}>
                       <i className="fa-solid fa-circle-check"></i> Verified
                     </span>
                   </div>
@@ -947,23 +953,23 @@ export function RentalsTab({ onOpenBookingModal }) {
 
               {/* Owner Info */}
               <div>
-                <div style={{ fontSize: '0.84rem', color: '#cbd5e1', fontWeight: 600 }}>
-                  <i className="fa-solid fa-store" style={{ color: 'var(--primary-light)', marginRight: '6px' }}></i> {item.owner}
+                <div style={{ fontSize: '0.86rem', color: '#374151', fontWeight: 700 }}>
+                  <i className="fa-solid fa-store" style={{ color: '#15803D', marginRight: '6px' }}></i> {item.owner}
                 </div>
-                <div style={{ fontSize: '0.78rem', color: '#38bdf8', fontWeight: 700, marginTop: '2px' }}>
+                <div style={{ fontSize: '0.8rem', color: '#0284C7', fontWeight: 700, marginTop: '2px' }}>
                   <i className="fa-solid fa-phone" style={{ marginRight: '4px' }}></i> {phoneStr}
                 </div>
               </div>
 
               {/* Description */}
-              <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0, lineHeight: 1.4 }}>{item.description}</p>
+              <p style={{ fontSize: '0.84rem', color: '#4B5563', margin: 0, lineHeight: 1.45 }}>{item.description}</p>
 
               {/* Contact / Links Row */}
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '10px', marginTop: 'auto' }}>
+              <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '12px', marginTop: 'auto' }}>
                 {rateHr !== 500 && (
                   <div style={{ marginBottom: '10px' }}>
-                    <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-light)' }}>₹{rateHr}</span>
-                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginLeft: '4px' }}>/ hr</span>
+                    <span style={{ fontSize: '1.4rem', fontWeight: 900, color: '#15803D' }}>₹{rateHr}</span>
+                    <span style={{ fontSize: '0.78rem', color: '#6B7280', marginLeft: '4px', fontWeight: 600 }}>/ hr</span>
                   </div>
                 )}
                 <div style={{ display: 'flex', gap: '8px' }}>
@@ -971,7 +977,7 @@ export function RentalsTab({ onOpenBookingModal }) {
                     <>
                       <a href={`tel:${rawPhone}`} style={{
                         flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                        background: 'rgba(56,189,248,0.2)', color: '#38bdf8', border: '1px solid rgba(56,189,248,0.4)',
+                        background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE',
                         borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
                       }}>
                         <i className="fa-solid fa-phone"></i> Call
@@ -988,7 +994,7 @@ export function RentalsTab({ onOpenBookingModal }) {
                   {item.website ? (
                     <a href={item.website} target="_blank" rel="noopener noreferrer" style={{
                       flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                      background: 'rgba(16,185,129,0.2)', color: 'var(--primary-light)', border: '1px solid rgba(16,185,129,0.4)',
+                      background: '#F0FDF4', color: '#15803D', border: '1px solid #86EFAC',
                       borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
                     }}>
                       <i className="fa-solid fa-globe"></i> Website
@@ -996,7 +1002,7 @@ export function RentalsTab({ onOpenBookingModal }) {
                   ) : (
                     <button onClick={() => onOpenBookingModal(item)} style={{
                       flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                      background: '#10b981', color: '#fff', border: 'none',
+                      background: '#15803D', color: '#fff', border: 'none',
                       borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
                     }}>
                       <i className="fa-solid fa-handshake"></i> Rent

@@ -561,22 +561,22 @@ export function VoiceAiTab() {
 
   /* ── Styles ── */
   const S = {
-    wrap: { padding: '14px', maxWidth: '880px', margin: '0 auto', fontFamily: "'Segoe UI',sans-serif" },
-    banner: { background: 'linear-gradient(135deg,rgba(16,185,129,.18),rgba(10,25,16,.96))', border: '1px solid rgba(16,185,129,.35)', borderRadius: '16px', padding: '20px 24px', color: '#fff', marginBottom: '14px', textAlign: 'center', position: 'relative' },
-    keyBadge: { position: 'absolute', top: 10, right: 14, background: 'rgba(59,130,246,.2)', border: '1px solid #60a5fa', color: '#93c5fd', fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 20, cursor: 'pointer' },
+    wrap: { padding: '14px', maxWidth: '880px', margin: '0 auto', fontFamily: "'Inter', sans-serif" },
+    banner: { background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)', border: '1.5px solid #86EFAC', borderRadius: '16px', padding: '24px', color: '#17211B', marginBottom: '16px', textAlign: 'center', position: 'relative', boxShadow: '0 4px 16px rgba(21, 128, 61, 0.06)' },
+    keyBadge: { position: 'absolute', top: 12, right: 14, background: '#EFF6FF', border: '1px solid #BFDBFE', color: '#1D4ED8', fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 20, cursor: 'pointer' },
     langBar: { display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginTop: 14 },
-    langBtn: (active) => ({ padding: '7px 16px', borderRadius: 22, border: active ? '1px solid #10b981' : '1px solid rgba(255,255,255,.15)', background: active ? '#10b981' : 'rgba(255,255,255,.06)', color: active ? '#000' : '#e2e8f0', fontSize: 13, fontWeight: active ? 700 : 600, cursor: 'pointer', transition: 'all .2s', transform: active ? 'scale(1.05)' : 'none' }),
-    micZone: { position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '28px 16px', background: isRec ? 'rgba(239,68,68,.15)' : thinking ? 'rgba(56,189,248,.12)' : 'rgba(10,25,16,.96)', border: `1.5px solid ${isRec ? 'rgba(239,68,68,.6)' : thinking ? 'rgba(56,189,248,.5)' : 'rgba(255,255,255,.12)'}`, borderRadius: 16, marginBottom: 14, transition: 'all .3s' },
-    micBtn: { width: 110, height: 110, borderRadius: '50%', border: 'none', cursor: thinking ? 'wait' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 44, color: '#fff', background: isRec ? 'linear-gradient(135deg,#ef4444,#dc2626)' : thinking ? 'linear-gradient(135deg,#0ea5e9,#0284c7)' : 'linear-gradient(135deg,#10b981,#059669)', boxShadow: isRec ? '0 0 0 12px rgba(239,68,68,.25),0 6px 20px rgba(239,68,68,.5)' : '0 0 0 8px rgba(16,185,129,.18),0 6px 18px rgba(16,185,129,.3)', transition: 'all .3s' },
-    status: { marginTop: 14, fontSize: 16, fontWeight: 700, color: isRec ? '#f87171' : thinking ? '#38bdf8' : speaking ? '#34d399' : '#10b981', textAlign: 'center' },
-    inputBar: { display: 'flex', gap: 8, marginBottom: 14 },
-    inputField: { flex: 1, padding: '13px 16px', borderRadius: 12, border: '1px solid rgba(255,255,255,.18)', background: 'rgba(10,25,16,.96)', color: '#fff', fontSize: 14, outline: 'none' },
-    sendBtn: { padding: '13px 22px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#10b981,#059669)', color: '#000', fontSize: 14, fontWeight: 700, cursor: 'pointer' },
-    grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 10, marginBottom: 16 },
-    card: (c) => ({ background: 'rgba(10,25,16,.9)', border: `1px solid ${c}33`, borderLeft: `4px solid ${c}`, borderRadius: 12, padding: '12px 14px', cursor: 'pointer', transition: 'all .2s' }),
-    chatWrap: { background: 'rgba(10,25,16,.96)', borderRadius: 16, padding: 18, marginBottom: 14, border: '1px solid rgba(255,255,255,.1)' },
-    msgBubble: (isUser) => ({ background: isUser ? 'rgba(16,185,129,.1)' : 'rgba(56,189,248,.1)', borderRadius: isUser ? '14px 14px 14px 2px' : '14px 14px 2px 14px', padding: '12px 16px', marginBottom: 10, borderLeft: `4px solid ${isUser ? '#10b981' : '#38bdf8'}`, color: '#fff', fontSize: 14, lineHeight: 1.6 }),
-    replayBtn: { marginTop: 6, padding: '5px 10px', borderRadius: 6, border: '1px solid rgba(56,189,248,.35)', background: 'rgba(56,189,248,.12)', color: '#38bdf8', fontSize: 11, fontWeight: 600, cursor: 'pointer' },
+    langBtn: (active) => ({ padding: '7px 16px', borderRadius: 22, border: active ? '1.5px solid #15803D' : '1px solid #E5E7EB', background: active ? '#15803D' : '#FFFFFF', color: active ? '#FFFFFF' : '#374151', fontSize: 13, fontWeight: active ? 700 : 600, cursor: 'pointer', transition: 'all .2s', transform: active ? 'scale(1.03)' : 'none', boxShadow: active ? '0 2px 8px rgba(21, 128, 61, 0.25)' : '0 1px 3px rgba(0,0,0,0.03)' }),
+    micZone: { position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '32px 16px', background: isRec ? '#FEF2F2' : thinking ? '#F0F9FF' : '#FFFFFF', border: `1.5px solid ${isRec ? '#FCA5A5' : thinking ? '#BAE6FD' : '#E5E7EB'}`, borderRadius: 16, marginBottom: 16, transition: 'all .3s', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' },
+    micBtn: { width: 110, height: 110, borderRadius: '50%', border: 'none', cursor: thinking ? 'wait' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 44, color: '#fff', background: isRec ? 'linear-gradient(135deg,#EF4444,#DC2626)' : thinking ? 'linear-gradient(135deg,#0284C7,#0369A1)' : 'linear-gradient(135deg,#15803D,#166534)', boxShadow: isRec ? '0 0 0 12px rgba(239,68,68,.18),0 6px 20px rgba(239,68,68,.35)' : '0 0 0 10px rgba(21,128,61,.15),0 6px 18px rgba(21,128,61,.25)', transition: 'all .3s' },
+    status: { marginTop: 16, fontSize: 16, fontWeight: 800, color: isRec ? '#DC2626' : thinking ? '#0284C7' : speaking ? '#15803D' : '#15803D', textAlign: 'center' },
+    inputBar: { display: 'flex', gap: 8, marginBottom: 16 },
+    inputField: { flex: 1, padding: '14px 18px', borderRadius: 12, border: '1.5px solid #E5E7EB', background: '#FFFFFF', color: '#17211B', fontSize: 14, outline: 'none', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' },
+    sendBtn: { padding: '14px 24px', borderRadius: 12, border: 'none', background: '#15803D', color: '#FFFFFF', fontSize: 14, fontWeight: 800, cursor: 'pointer', boxShadow: '0 2px 8px rgba(21, 128, 61, 0.25)' },
+    grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 12, marginBottom: 16 },
+    card: (c) => ({ background: '#FFFFFF', border: `1px solid #E5E7EB`, borderLeft: `4px solid ${c}`, borderRadius: 12, padding: '14px 16px', cursor: 'pointer', transition: 'all .2s', boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }),
+    chatWrap: { background: '#FFFFFF', borderRadius: 16, padding: 20, marginBottom: 16, border: '1.5px solid #E5E7EB', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' },
+    msgBubble: (isUser) => ({ background: isUser ? '#F0FDF4' : '#F0F9FF', borderRadius: isUser ? '14px 14px 14px 2px' : '14px 14px 2px 14px', padding: '14px 18px', marginBottom: 12, borderLeft: `4px solid ${isUser ? '#15803D' : '#0284C7'}`, color: '#17211B', fontSize: 14, lineHeight: 1.6, borderTop: '1px solid #E5E7EB', borderRight: '1px solid #E5E7EB', borderBottom: '1px solid #E5E7EB' }),
+    replayBtn: { marginTop: 8, padding: '6px 12px', borderRadius: 8, border: '1px solid #BAE6FD', background: '#E0F2FE', color: '#0369A1', fontSize: 12, fontWeight: 700, cursor: 'pointer' },
   };
 
   return (
@@ -588,13 +588,13 @@ export function VoiceAiTab() {
           <button type="button" style={S.keyBadge} onClick={() => setShowKey(!showKey)}>
             <i className="fa-solid fa-bolt" /> {geminiKey ? 'Custom Key' : 'Groq AI'}
           </button>
-          <div style={{ fontSize: 12, opacity: .85, marginBottom: 5 }}>
+          <div style={{ fontSize: 12, color: '#166534', fontWeight: 600, marginBottom: 5 }}>
             <i className="fa-solid fa-microchip" /> Groq Whisper + Llama-3.3-70B
           </div>
-          <h2 style={{ margin: '0 0 6px', fontSize: 21, fontWeight: 800 }}>
+          <h2 style={{ margin: '0 0 6px', fontSize: 22, fontWeight: 900, color: '#17211B' }}>
             🎙️ {voiceLang === 'hi-IN' ? 'किसान AI साथी व वेबसाइट मार्गदर्शक' : 'Farmer AI Companion & Website Guide'}
           </h2>
-          <p style={{ margin: 0, fontSize: 13, opacity: .8 }}>
+          <p style={{ margin: 0, fontSize: 14, color: '#4B5563', lineHeight: 1.5 }}>
             {voiceLang === 'hi-IN' ? 'वेबसाइट के किसी भी पेज पर जाने, खाद, पानी, मंडी भाव और सरकारी योजनाओं की सीधी सहायता पाएं' : 'Get step-by-step assistance through the website, fertilizers, mandi rates, and government schemes'}
           </p>
           <div style={S.langBar}>
@@ -610,11 +610,11 @@ export function VoiceAiTab() {
         {/* API Key */}
         {showKey && (
           <form onSubmit={e => { e.preventDefault(); saveAiKey(tmpKey.trim()); setShowKey(false); }}
-            style={{ background: 'rgba(10,25,16,.96)', border: '1px solid rgba(16,185,129,.35)', borderRadius: 14, padding: '14px 18px', marginBottom: 14, color: '#fff' }}>
-            <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6, color: '#10b981' }}>🔑 Groq API Key:</div>
+            style={{ background: '#FFFFFF', border: '1.5px solid #86EFAC', borderRadius: 14, padding: '16px 20px', marginBottom: 16, color: '#17211B', boxShadow: '0 4px 12px rgba(0,0,0,0.04)' }}>
+            <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 8, color: '#15803D' }}>🔑 Groq API Key:</div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <input type="password" value={tmpKey} onChange={e => setTmpKey(e.target.value)} placeholder="gsk_..." style={{ flex: 1, padding: '9px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,.18)', background: '#000', color: '#fff', fontSize: 13 }} />
-              <button type="submit" style={{ padding: '9px 18px', borderRadius: 8, border: 'none', background: '#10b981', color: '#000', fontWeight: 700, cursor: 'pointer' }}>Save</button>
+              <input type="password" value={tmpKey} onChange={e => setTmpKey(e.target.value)} placeholder="gsk_..." style={{ flex: 1, padding: '10px 14px', borderRadius: 8, border: '1.5px solid #E5E7EB', background: '#F8FAF9', color: '#17211B', fontSize: 13 }} />
+              <button type="submit" style={{ padding: '10px 20px', borderRadius: 8, border: 'none', background: '#15803D', color: '#FFFFFF', fontWeight: 700, cursor: 'pointer' }}>Save</button>
             </div>
           </form>
         )}
@@ -626,10 +626,10 @@ export function VoiceAiTab() {
               type="button"
               onClick={stopSpeaking}
               style={{
-                position: 'absolute', top: 12, right: 12,
-                background: 'rgba(239,68,68,.15)', border: '1px solid rgba(239,68,68,.5)',
-                color: '#fca5a5', padding: '6px 12px', borderRadius: 8, fontSize: 12,
-                fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6
+                position: 'absolute', top: 14, right: 14,
+                background: '#FEE2E2', border: '1px solid #FCA5A5',
+                color: '#DC2626', padding: '6px 14px', borderRadius: 8, fontSize: 12,
+                fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6
               }}>
               <i className="fa-solid fa-stop" /> Stop AI
             </button>
@@ -644,16 +644,16 @@ export function VoiceAiTab() {
                   : '🟢 Tap mic to speak your question'}
           </div>
           {transcript && (
-            <div style={{ background: 'rgba(59,130,246,.12)', border: '1px solid rgba(59,130,246,.35)', color: '#93c5fd', padding: '8px 16px', borderRadius: 10, marginTop: 10, fontSize: 13, fontWeight: 600, textAlign: 'center' }}>
+            <div style={{ background: '#EFF6FF', border: '1.5px solid #BFDBFE', color: '#1D4ED8', padding: '10px 20px', borderRadius: 12, marginTop: 12, fontSize: 14, fontWeight: 700, textAlign: 'center' }}>
               🗣️ "{transcript}"
             </div>
           )}
           {micErr && (
-            <div style={{ background: 'rgba(239,68,68,.12)', border: '1px solid rgba(239,68,68,.35)', color: '#fca5a5', padding: '8px 16px', borderRadius: 10, marginTop: 10, fontSize: 13, textAlign: 'center' }}>
+            <div style={{ background: '#FEF2F2', border: '1.5px solid #FECACA', color: '#DC2626', padding: '10px 20px', borderRadius: 12, marginTop: 12, fontSize: 13, fontWeight: 600, textAlign: 'center' }}>
               {micErr}
             </div>
           )}
-          <p style={{ margin: '6px 0 0', fontSize: 12, color: '#777', textAlign: 'center' }}>
+          <p style={{ margin: '8px 0 0', fontSize: 12, color: '#6B7280', textAlign: 'center', fontWeight: 500 }}>
             {cropEn || 'Crop Not Set'} | {areaVal ? `${areaVal} Acre` : 'Area Not Set'} | {soilEn || 'Soil Not Set'} | {LANGS.find(l => l.code === voiceLang)?.label}
           </p>
         </div>
@@ -672,9 +672,18 @@ export function VoiceAiTab() {
         {/* Quick Cards */}
         <div style={S.grid}>
           {cards.map((c, i) => (
-            <div key={i} style={S.card(c.c)} onClick={() => processQuery(c.q)}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 3 }}>{c.icon} {c.t}</div>
-              <div style={{ fontSize: 12, color: '#94a3b8', lineHeight: 1.4 }}>"{c.q}"</div>
+            <div key={i} style={S.card(c.c)} onClick={() => processQuery(c.q)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
+              }}
+            >
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#17211B', marginBottom: 4 }}>{c.icon} {c.t}</div>
+              <div style={{ fontSize: 12, color: '#4B5563', lineHeight: 1.4 }}>"{c.q}"</div>
             </div>
           ))}
         </div>
@@ -682,17 +691,17 @@ export function VoiceAiTab() {
         {/* Chat History */}
         {msgs.length > 0 && (
           <div style={S.chatWrap}>
-            <h3 style={{ margin: '0 0 12px', fontSize: 15, color: '#10b981' }}>
+            <h3 style={{ margin: '0 0 14px', fontSize: 16, fontWeight: 800, color: '#15803D' }}>
               <i className="fa-solid fa-comments" /> Conversation
             </h3>
             {msgs.map((m, i) => (
               <div key={i} style={S.msgBubble(m.role === 'user')}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: m.role === 'user' ? '#34d399' : '#38bdf8', marginBottom: 3 }}>
+                <div style={{ fontSize: 12, fontWeight: 800, color: m.role === 'user' ? '#15803D' : '#0284C7', marginBottom: 4 }}>
                   {m.role === 'user' ? '👤 You:' : '🤖 Krishi AI:'}
                 </div>
                 {m.text}
                 {m.role === 'ai' && (
-                  <div style={{ marginTop: 6 }}>
+                  <div style={{ marginTop: 8 }}>
                     <button type="button" style={S.replayBtn}
                       onClick={() => speak(m.text, voiceLang, () => setSpeaking(true), () => setSpeaking(false))}>
                       <i className="fa-solid fa-volume-high" /> Listen

@@ -7,11 +7,11 @@ const STATES = ['All States', 'Punjab', 'Haryana', 'Uttar Pradesh', 'Madhya Prad
   'Tamil Nadu', 'Bihar', 'Himachal Pradesh'];
 
 const CAT_COLORS = {
-  'Cereal': '#f59e0b', 'Pulses': 'var(--primary-light)', 'Oilseeds': '#f97316',
-  'Cash Crop': '#3b82f6', 'Vegetable': '#a855f7', 'Fruit': '#ec4899'
+  'Cereal': '#D97706', 'Pulses': '#15803D', 'Oilseeds': '#EA580C',
+  'Cash Crop': '#0284C7', 'Vegetable': '#7C3AED', 'Fruit': '#DB2777'
 };
 
-function catColor(c) { return CAT_COLORS[c] || '#60a5fa'; }
+function catColor(c) { return CAT_COLORS[c] || '#0284C7'; }
 
 // ── Price Change Badge ────────────────────────────────────────────────────────
 function ChangeBadge({ pct }) {
@@ -20,9 +20,9 @@ function ChangeBadge({ pct }) {
   return (
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: '3px',
-      padding: '2px 7px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 700,
-      background: up ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)',
-      color: up ? 'var(--primary-light)' : '#f87171'
+      padding: '2px 8px', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 800,
+      background: up ? '#DCFCE7' : '#FEE2E2',
+      color: up ? '#166534' : '#DC2626'
     }}>
       <i className={`fa-solid fa-arrow-${up ? 'up' : 'down'}`} style={{ fontSize: '0.65rem' }} />
       {Math.abs(pct).toFixed(2)}%
@@ -36,17 +36,17 @@ function MspBar({ modal, msp }) {
   const pct = ((modal - msp) / msp * 100).toFixed(1);
   const above = modal >= msp;
   return (
-    <div style={{ marginTop: '6px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', marginBottom: '3px', color: 'rgba(255,255,255,0.45)' }}>
+    <div style={{ marginTop: '8px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', marginBottom: '4px', color: '#6B7280', fontWeight: 600 }}>
         <span>vs MSP ₹{msp.toLocaleString()}</span>
-        <span style={{ color: above ? 'var(--primary-light)' : '#f87171', fontWeight: 700 }}>
+        <span style={{ color: above ? '#15803D' : '#DC2626', fontWeight: 800 }}>
           {above ? '+' : ''}{pct}%
         </span>
       </div>
-      <div style={{ height: '4px', borderRadius: '4px', background: 'rgba(255,255,255,0.1)', overflow: 'hidden' }}>
+      <div style={{ height: '5px', borderRadius: '4px', background: '#E5E7EB', overflow: 'hidden' }}>
         <div style={{
           height: '100%', width: `${Math.min(100, Math.max(5, (modal / msp) * 50))}%`,
-          background: above ? 'linear-gradient(90deg,var(--primary-light),var(--primary-light))' : 'linear-gradient(90deg,#ef4444,#f87171)',
+          background: above ? '#15803D' : '#EF4444',
           borderRadius: '4px', transition: 'width 0.8s ease'
         }} />
       </div>
@@ -59,63 +59,71 @@ function MandiCard({ rate, onSell }) {
   const color = catColor(rate.category);
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.03)', border: `1px solid rgba(255,255,255,0.08)`,
-      borderTop: `3px solid ${color}`, borderRadius: '14px', padding: '1rem',
-      transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '6px'
+      background: '#FFFFFF', border: `1px solid #E5E7EB`,
+      borderTop: `3px solid ${color}`, borderRadius: '16px', padding: '1.2rem',
+      transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '8px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
     }}
-      onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
-      onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
+      }}
     >
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '6px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '1.5rem' }}>{rate.icon}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ fontSize: '1.6rem' }}>{rate.icon}</span>
           <div>
-            <div style={{ fontWeight: 700, fontSize: '0.92rem', color: '#fff' }}>{rate.crop}</div>
-            <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)' }}>{rate.crop_hi}</div>
+            <div style={{ fontWeight: 800, fontSize: '0.96rem', color: '#17211B' }}>{rate.crop}</div>
+            <div style={{ fontSize: '0.75rem', color: '#6B7280', fontWeight: 600 }}>{rate.crop_hi}</div>
           </div>
         </div>
         <ChangeBadge pct={rate.change_pct} />
       </div>
 
       {/* Mandi Name */}
-      <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-        <i className="fa-solid fa-location-dot" style={{ color, fontSize: '0.7rem' }} />
-        {rate.mandi}, <span style={{ color: 'rgba(255,255,255,0.35)' }}>{rate.state}</span>
+      <div style={{ fontSize: '0.78rem', color: '#4B5563', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+        <i className="fa-solid fa-location-dot" style={{ color, fontSize: '0.75rem' }} />
+        {rate.mandi}, <span style={{ color: '#6B7280' }}>{rate.state}</span>
       </div>
 
       {/* Prices */}
       <div style={{ display: 'flex', gap: '6px', marginTop: '4px' }}>
-        <div style={{ flex: 1, background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '6px 8px', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.35)', marginBottom: '1px' }}>MIN</div>
-          <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#94a3b8' }}>₹{rate.min_price.toLocaleString()}</div>
+        <div style={{ flex: 1, background: '#F8FAF9', borderRadius: '10px', padding: '8px 10px', textAlign: 'center', border: '1px solid #E5E7EB' }}>
+          <div style={{ fontSize: '0.65rem', color: '#6B7280', fontWeight: 700, marginBottom: '2px' }}>MIN</div>
+          <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#374151' }}>₹{rate.min_price.toLocaleString()}</div>
         </div>
-        <div style={{ flex: 1.3, background: `${color}18`, border: `1px solid ${color}30`, borderRadius: '8px', padding: '6px 8px', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '1px' }}>MODAL ★</div>
-          <div style={{ fontSize: '1rem', fontWeight: 800, color }}> ₹{rate.modal_price.toLocaleString()}</div>
+        <div style={{ flex: 1.3, background: `${color}12`, border: `1px solid ${color}35`, borderRadius: '10px', padding: '8px 10px', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.65rem', color: color, fontWeight: 800, marginBottom: '2px' }}>MODAL ★</div>
+          <div style={{ fontSize: '1.05rem', fontWeight: 900, color }}> ₹{rate.modal_price.toLocaleString()}</div>
         </div>
-        <div style={{ flex: 1, background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '6px 8px', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.35)', marginBottom: '1px' }}>MAX</div>
-          <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#94a3b8' }}>₹{rate.max_price.toLocaleString()}</div>
+        <div style={{ flex: 1, background: '#F8FAF9', borderRadius: '10px', padding: '8px 10px', textAlign: 'center', border: '1px solid #E5E7EB' }}>
+          <div style={{ fontSize: '0.65rem', color: '#6B7280', fontWeight: 700, marginBottom: '2px' }}>MAX</div>
+          <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#374151' }}>₹{rate.max_price.toLocaleString()}</div>
         </div>
       </div>
 
       {/* Unit */}
-      <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', textAlign: 'right' }}>{rate.unit}</div>
+      <div style={{ fontSize: '0.72rem', color: '#9CA3AF', textAlign: 'right', fontWeight: 500 }}>{rate.unit}</div>
 
       {/* MSP Bar */}
       <MspBar modal={rate.modal_price} msp={rate.msp} />
 
       {/* Sell Button */}
       <button onClick={() => onSell(rate)} style={{
-        marginTop: '6px', width: '100%', padding: '8px', borderRadius: '8px', border: 'none',
-        background: `linear-gradient(135deg, ${color}cc, ${color}88)`,
-        color: '#fff', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer',
+        marginTop: '8px', width: '100%', padding: '10px', borderRadius: '10px', border: 'none',
+        background: '#15803D',
+        color: '#fff', fontWeight: 700, fontSize: '0.84rem', cursor: 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-        transition: 'opacity 0.2s'
+        transition: 'all 0.2s',
+        boxShadow: '0 2px 6px rgba(21, 128, 61, 0.2)'
       }}
-        onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+        onMouseEnter={e => e.currentTarget.style.background = '#166534'}
+        onMouseLeave={e => e.currentTarget.style.background = '#15803D'}
       >
         <i className="fa-solid fa-handshake" /> Sell My Produce Here
       </button>
@@ -138,103 +146,84 @@ function SellModal({ rate, onClose }) {
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex',
-      alignItems: 'center', justifyContent: 'center', zIndex: 2000, padding: '1rem'
+      position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex',
+      alignItems: 'center', justifyContent: 'center', zIndex: 2000, padding: '1rem',
+      backdropFilter: 'blur(4px)'
     }} onClick={e => e.target === e.currentTarget && onClose()}>
       <div style={{
-        background: 'linear-gradient(135deg,#1a1a2e,#16213e)', border: `1px solid ${color}33`,
-        borderRadius: '20px', padding: '1.8rem', maxWidth: '440px', width: '100%',
-        boxShadow: `0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px ${color}22`
+        background: '#FFFFFF', border: `1px solid #E5E7EB`,
+        borderRadius: '20px', padding: '2rem', maxWidth: '460px', width: '100%',
+        boxShadow: `0 20px 40px rgba(0,0,0,0.15)`
       }}>
         {submitted ? (
           <div style={{ textAlign: 'center', padding: '1rem 0' }}>
             <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>✅</div>
-            <h3 style={{ color: 'var(--primary-light)', marginBottom: '8px' }}>Request Submitted!</h3>
-            <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.88rem', lineHeight: 1.6 }}>
+            <h3 style={{ color: '#15803D', marginBottom: '8px', fontWeight: 800 }}>Request Submitted!</h3>
+            <p style={{ color: '#4B5563', fontSize: '0.9rem', lineHeight: 1.6 }}>
               Your produce enquiry for <strong style={{ color }}>{rate.crop}</strong> at <strong>{rate.mandi}</strong> has been logged.<br />
               The mandi officer / trader will contact you on your registered number.
             </p>
-            <div style={{ marginTop: '1rem', background: `${color}15`, border: `1px solid ${color}30`, borderRadius: '12px', padding: '12px' }}>
-              <div style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)', marginBottom: '4px' }}>Today's Modal Rate</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color }}>₹{rate.modal_price.toLocaleString()} / qtl</div>
+            <div style={{ marginTop: '1.2rem', background: '#F0FDF4', border: `1px solid #86EFAC`, borderRadius: '12px', padding: '14px' }}>
+              <div style={{ fontSize: '0.78rem', color: '#166534', fontWeight: 700, marginBottom: '4px' }}>Today's Modal Rate</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#15803D' }}>₹{rate.modal_price.toLocaleString()} / qtl</div>
             </div>
-            <button onClick={onClose} style={{ marginTop: '1.2rem', width: '100%', padding: '11px', borderRadius: '10px', border: 'none', background: `linear-gradient(135deg,${color},${color}88)`, color: '#fff', fontWeight: 700, cursor: 'pointer' }}>
-              Done
-            </button>
+            <button onClick={onClose} style={{
+              marginTop: '1.2rem', width: '100%', padding: '10px', borderRadius: '10px',
+              background: '#15803D', color: '#fff', border: 'none', fontWeight: 700, cursor: 'pointer'
+            }}>Done</button>
           </div>
         ) : (
-          <>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.2rem' }}>
-              <span style={{ fontSize: '2rem' }}>{rate.icon}</span>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <h3 style={{ margin: 0 }}>Sell {rate.crop}</h3>
-                <p style={{ margin: 0, fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)' }}>
-                  📍 {rate.mandi}, {rate.state}
-                </p>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, color: '#17211B' }}>Sell Produce at Mandi</h3>
+                <div style={{ fontSize: '0.82rem', color: '#6B7280', marginTop: '2px' }}>{rate.crop} · {rate.mandi}, {rate.state}</div>
               </div>
-              <button onClick={onClose} style={{ marginLeft: 'auto', background: 'rgba(255,255,255,0.08)', border: 'none', color: 'rgba(255,255,255,0.5)', borderRadius: '8px', padding: '6px 10px', cursor: 'pointer' }}>✕</button>
+              <button type="button" onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.3rem', cursor: 'pointer', color: '#9CA3AF' }}>&times;</button>
             </div>
 
-            {/* Live Price Info */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '1.2rem' }}>
-              {[
-                { label: 'Min', val: rate.min_price, c: '#94a3b8' },
-                { label: 'Modal', val: rate.modal_price, c: color },
-                { label: 'Max', val: rate.max_price, c: '#94a3b8' }
-              ].map(p => (
-                <div key={p.label} style={{ flex: 1, textAlign: 'center', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', padding: '8px' }}>
-                  <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>{p.label}</div>
-                  <div style={{ fontWeight: 700, color: p.c, fontSize: '0.9rem' }}>₹{p.val.toLocaleString()}</div>
-                </div>
-              ))}
+            <div style={{ background: `${color}12`, border: `1px solid ${color}35`, borderRadius: '10px', padding: '10px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#374151' }}>Modal Rate Today:</span>
+              <span style={{ fontSize: '1.1rem', fontWeight: 900, color }}>₹{rate.modal_price.toLocaleString()} / {rate.unit}</span>
             </div>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <div>
-                <label style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: '4px' }}>Your Name (किसान का नाम)</label>
-                <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                  placeholder="e.g. Rajesh Kumar"
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: '0.88rem', boxSizing: 'border-box' }} />
-              </div>
-              <div>
-                <label style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: '4px' }}>Phone Number (फोन नंबर)</label>
-                <input required type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
-                  placeholder="+91 98765 43210"
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: '0.88rem', boxSizing: 'border-box' }} />
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                <div>
-                  <label style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: '4px' }}>Quantity (Quintals)</label>
-                  <input type="number" min="1" max="10000" value={form.quantity} onChange={e => setForm({ ...form, quantity: parseInt(e.target.value) })}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: '0.88rem', boxSizing: 'border-box' }} />
-                </div>
-                <div>
-                  <label style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: '4px' }}>Quality Grade</label>
-                  <select value={form.quality} onChange={e => setForm({ ...form, quality: e.target.value })}
-                    style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', background: 'rgba(30,30,50,0.95)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: '0.88rem', boxSizing: 'border-box' }}>
-                    <option>FAQ</option><option>Grade A</option><option>Premium</option><option>Organic</option>
-                  </select>
-                </div>
-              </div>
+            <div>
+              <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#374151', display: 'block', marginBottom: '4px' }}>Farmer Name / किसान का नाम</label>
+              <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                placeholder="e.g. Ramesh Kumar"
+                style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1.5px solid #E5E7EB', background: '#F8FAF9', color: '#17211B', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+            </div>
 
-              {/* Estimated Value */}
-              <div style={{ background: `${color}12`, border: `1px solid ${color}30`, borderRadius: '10px', padding: '10px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.55)' }}>Estimated Revenue</span>
-                <span style={{ fontWeight: 800, color, fontSize: '1.05rem' }}>
-                  ₹{(rate.modal_price * (form.quantity || 0)).toLocaleString()}
-                </span>
-              </div>
+            <div>
+              <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#374151', display: 'block', marginBottom: '4px' }}>Mobile Number / फोन नंबर</label>
+              <input required type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+                placeholder="10-digit mobile number"
+                style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1.5px solid #E5E7EB', background: '#F8FAF9', color: '#17211B', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+            </div>
 
-              <button type="submit" style={{
-                padding: '12px', borderRadius: '10px', border: 'none',
-                background: `linear-gradient(135deg, ${color}, ${color}99)`,
-                color: '#fff', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
-              }}>
-                <i className="fa-solid fa-handshake" /> Submit Sell Enquiry
-              </button>
-            </form>
-          </>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <div>
+                <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#374151', display: 'block', marginBottom: '4px' }}>Quantity (Quintals)</label>
+                <input required type="number" min="1" max="1000" value={form.quantity} onChange={e => setForm({ ...form, quantity: e.target.value })}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1.5px solid #E5E7EB', background: '#F8FAF9', color: '#17211B', fontSize: '0.9rem', boxSizing: 'border-box' }} />
+              </div>
+              <div>
+                <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#374151', display: 'block', marginBottom: '4px' }}>Quality Grade</label>
+                <select value={form.quality} onChange={e => setForm({ ...form, quality: e.target.value })}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1.5px solid #E5E7EB', background: '#F8FAF9', color: '#17211B', fontSize: '0.9rem', boxSizing: 'border-box' }}>
+                  <option value="FAQ">FAQ (Standard)</option>
+                  <option value="Grade A">Grade A (Premium)</option>
+                  <option value="Below FAQ">Below FAQ</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" style={{
+              width: '100%', padding: '12px', borderRadius: '10px', border: 'none',
+              background: '#15803D', color: '#fff', fontWeight: 800, fontSize: '0.95rem',
+              cursor: 'pointer', marginTop: '6px', boxShadow: '0 4px 12px rgba(21, 128, 61, 0.25)'
+            }}>Submit Produce Enquiry</button>
+          </form>
         )}
       </div>
     </div>
@@ -310,23 +299,24 @@ export function MandiTab() {
 
       {/* ── Header Banner ──────────────────────────────────────────────── */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(34,197,94,0.12), rgba(59,130,246,0.08))',
-        border: '1px solid rgba(34,197,94,0.2)', borderRadius: '18px', padding: '1.4rem'
+        background: '#FFFFFF',
+        border: '1.5px solid #E5E7EB', borderRadius: '18px', padding: '1.5rem',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
       }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
           <div>
-            <h2 style={{ margin: '0 0 4px' }}>
-              <i className="fa-solid fa-chart-line" style={{ color: 'var(--primary-light)', marginRight: '10px' }} />
+            <h2 style={{ margin: '0 0 4px', fontSize: '1.4rem', fontWeight: 800, color: '#17211B' }}>
+              <i className="fa-solid fa-chart-line" style={{ color: '#15803D', marginRight: '10px' }} />
               Live Mandi Rates — भाव देखें
             </h2>
-            <p style={{ margin: 0, color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
+            <p style={{ margin: 0, color: '#4B5563', fontSize: '0.88rem' }}>
               Today's wholesale prices from 30+ APMC Mandis across India · Updated: {asOf || '—'}
             </p>
           </div>
           <button onClick={fetchRates} style={{
             display: 'flex', alignItems: 'center', gap: '6px',
-            background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)',
-            color: 'var(--primary-light)', borderRadius: '10px', padding: '8px 14px', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600
+            background: '#F0FDF4', border: '1px solid #86EFAC',
+            color: '#15803D', borderRadius: '10px', padding: '8px 14px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 700
           }}>
             <i className={`fa-solid fa-rotate${loading ? ' fa-spin' : ''}`} />
             {loading ? 'Refreshing...' : 'Refresh Rates'}
@@ -335,26 +325,26 @@ export function MandiTab() {
 
         {/* Summary Pills */}
         {!loading && rates.length > 0 && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '1rem' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '1.2rem' }}>
             {[
-              { icon: '📊', label: 'Mandis Listed', val: rates.length, c: '#60a5fa' },
-              { icon: '📈', label: 'Gainers Today', val: gainers, c: 'var(--primary-light)' },
-              { icon: '📉', label: 'Losers Today', val: losers, c: '#f87171' },
-              { icon: '✅', label: 'Above MSP', val: aboveMsp, c: '#fbbf24' },
+              { icon: '📊', label: 'Mandis Listed', val: rates.length, c: '#0284C7', bg: '#EFF6FF', border: '#BFDBFE' },
+              { icon: '📈', label: 'Gainers Today', val: gainers, c: '#15803D', bg: '#F0FDF4', border: '#86EFAC' },
+              { icon: '📉', label: 'Losers Today', val: losers, c: '#DC2626', bg: '#FEF2F2', border: '#FECACA' },
+              { icon: '✅', label: 'Above MSP', val: aboveMsp, c: '#D97706', bg: '#FFFBEB', border: '#FDE68A' },
             ].map(s => (
               <div key={s.label} style={{
-                background: `${s.c}12`, border: `1px solid ${s.c}25`, borderRadius: '10px',
-                padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '8px'
+                background: s.bg, border: `1px solid ${s.border}`, borderRadius: '12px',
+                padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '10px'
               }}>
-                <span style={{ fontSize: '1rem' }}>{s.icon}</span>
+                <span style={{ fontSize: '1.2rem' }}>{s.icon}</span>
                 <div>
-                  <div style={{ fontSize: '1rem', fontWeight: 800, color: s.c, lineHeight: 1 }}>{s.val}</div>
-                  <div style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.4)' }}>{s.label}</div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 900, color: s.c, lineHeight: 1 }}>{s.val}</div>
+                  <div style={{ fontSize: '0.72rem', color: '#4B5563', fontWeight: 600 }}>{s.label}</div>
                 </div>
               </div>
             ))}
             {lastRefresh && (
-              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)' }}>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.75rem', color: '#6B7280', fontWeight: 500 }}>
                 <i className="fa-solid fa-clock" /> Last refreshed: {lastRefresh}
               </div>
             )}
@@ -363,23 +353,23 @@ export function MandiTab() {
       </div>
 
       {/* ── Filters ────────────────────────────────────────────────────── */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
         {/* Search */}
-        <div style={{ position: 'relative', flex: '0 0 200px' }}>
-          <i className="fa-solid fa-search" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)', fontSize: '0.8rem' }} />
+        <div style={{ position: 'relative', flex: '1', minWidth: '220px' }}>
+          <i className="fa-solid fa-search" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF', fontSize: '0.85rem' }} />
           <input placeholder="Search crop / mandi..." value={search} onChange={e => setSearch(e.target.value)}
-            style={{ paddingLeft: '30px', padding: '8px 12px 8px 30px', borderRadius: '10px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.85rem', width: '100%', boxSizing: 'border-box' }} />
+            style={{ paddingLeft: '34px', padding: '10px 14px 10px 34px', borderRadius: '10px', background: '#FFFFFF', border: '1.5px solid #E5E7EB', color: '#17211B', fontSize: '0.88rem', width: '100%', boxSizing: 'border-box' }} />
         </div>
 
         {/* State dropdown */}
         <select value={state} onChange={e => setState(e.target.value)}
-          style={{ padding: '8px 12px', borderRadius: '10px', background: 'rgba(30,30,50,0.95)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.85rem', cursor: 'pointer' }}>
+          style={{ padding: '10px 14px', borderRadius: '10px', background: '#FFFFFF', border: '1.5px solid #E5E7EB', color: '#17211B', fontSize: '0.88rem', cursor: 'pointer', fontWeight: 600 }}>
           {STATES.map(s => <option key={s}>{s}</option>)}
         </select>
 
         {/* Sort */}
         <select value={sortBy} onChange={e => setSortBy(e.target.value)}
-          style={{ padding: '8px 12px', borderRadius: '10px', background: 'rgba(30,30,50,0.95)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.85rem', cursor: 'pointer' }}>
+          style={{ padding: '10px 14px', borderRadius: '10px', background: '#FFFFFF', border: '1.5px solid #E5E7EB', color: '#17211B', fontSize: '0.88rem', cursor: 'pointer', fontWeight: 600 }}>
           <option value="default">Sort: Default</option>
           <option value="price_high">Price: High → Low</option>
           <option value="price_low">Price: Low → High</option>
@@ -390,64 +380,60 @@ export function MandiTab() {
       </div>
 
       {/* Category Pills */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
         {CATEGORIES.map(cat => {
-          const color = cat === 'All' ? '#60a5fa' : catColor(cat);
+          const color = cat === 'All' ? '#15803D' : catColor(cat);
           const active = category === cat;
           return (
             <button key={cat} onClick={() => setCategory(cat)} style={{
-              padding: '5px 14px', borderRadius: '20px', border: `1px solid ${active ? color : 'rgba(255,255,255,0.1)'}`,
-              background: active ? `${color}22` : 'transparent',
-              color: active ? color : 'rgba(255,255,255,0.45)',
-              fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s'
-            }}>{cat}</button>
+              padding: '6px 16px', borderRadius: '20px', border: `1.5px solid ${active ? color : '#E5E7EB'}`,
+              background: active ? (cat === 'All' ? '#15803D' : color) : '#FFFFFF',
+              color: active ? '#FFFFFF' : '#374151',
+              fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
+              transition: 'all 0.15s',
+              boxShadow: active ? '0 2px 6px rgba(0,0,0,0.1)' : 'none'
+            }}>
+              {cat}
+            </button>
           );
         })}
       </div>
 
-      {/* ── Content ────────────────────────────────────────────────────── */}
-      {error ? (
-        <div style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '14px', padding: '2rem', textAlign: 'center' }}>
-          <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>⚠️</div>
-          <p style={{ color: '#fca5a5', margin: 0 }}>{error}</p>
+      {/* ── Rates Grid ─────────────────────────────────────────────────── */}
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#15803D' }}>
+          <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: '2rem', marginBottom: '12px' }} />
+          <div style={{ color: '#4B5563', fontSize: '0.9rem' }}>Fetching live mandi rates...</div>
         </div>
-      ) : loading ? (
-        <div style={{ textAlign: 'center', padding: '4rem', color: 'rgba(255,255,255,0.4)' }}>
-          <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: '2rem', color: 'var(--primary-light)', marginBottom: '12px' }} />
-          <p>Loading live mandi rates...</p>
+      ) : error ? (
+        <div style={{
+          background: '#FEF2F2', border: '1px solid #FECACA',
+          borderRadius: '14px', padding: '1.5rem', textAlign: 'center', color: '#DC2626'
+        }}>
+          <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: '1.5rem', marginBottom: '8px' }} />
+          <div>{error}</div>
         </div>
       ) : sortedRates.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '3rem', color: 'rgba(255,255,255,0.35)' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '12px' }}>🔍</div>
-          <p>No mandi rates found for your filters.</p>
-          <button onClick={() => { setSearch(''); setCategory('All'); setState('All States'); }}
-            style={{ marginTop: '10px', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: 'var(--primary-light)', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem' }}>
-            Clear All Filters
-          </button>
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#6B7280', background: '#FFFFFF', borderRadius: '16px', border: '1.5px solid #E5E7EB' }}>
+          <i className="fa-solid fa-store-slash" style={{ fontSize: '2rem', marginBottom: '8px' }} />
+          <div>No mandi rates match your filters. Try selecting a different category or state.</div>
         </div>
       ) : (
-        <>
-          <div style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.35)', marginBottom: '-4px' }}>
-            Showing <strong style={{ color: '#60a5fa' }}>{sortedRates.length}</strong> mandi rates
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: '0.9rem' }}>
-            {sortedRates.map(rate => (
-              <MandiCard key={rate.id} rate={rate} onSell={setSellRate} />
-            ))}
-          </div>
-        </>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gap: '14px'
+        }}>
+          {sortedRates.map(rate => (
+            <MandiCard key={rate.id} rate={rate} onSell={r => setSellRate(r)} />
+          ))}
+        </div>
       )}
-
-      {/* Disclaimer */}
-      <div style={{ background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.15)', borderRadius: '12px', padding: '10px 14px' }}>
-        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>
-          <i className="fa-solid fa-triangle-exclamation" style={{ color: '#fbbf24', marginRight: '6px' }} />
-          <strong style={{ color: '#fbbf24' }}>Disclaimer:</strong> Prices shown are indicative and are based on Agmarknet/APMC historical data with daily simulation. Actual market prices may vary. Always confirm with your local mandi officer before transacting. Modal price (★) is the most traded price of the day.
-        </p>
-      </div>
 
       {/* Sell Modal */}
       {sellRate && <SellModal rate={sellRate} onClose={() => setSellRate(null)} />}
     </div>
   );
 }
+
+export default MandiTab;

@@ -50,7 +50,7 @@ export function Tabs() {
     const groupName = TAB_GROUPS[tab.id] || 'Other';
     if (!groupMap.has(groupName)) {
       groupMap.set(groupName, []);
-      groups.push(groupName); // This preserves the priority order of the groups!
+      groups.push(groupName); // Preserves priority order
     }
     groupMap.get(groupName).push(tab);
   });
@@ -60,19 +60,22 @@ export function Tabs() {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        gap: '24px', // Space between groups
-        padding: '16px 20px',
-        background: 'var(--card-bg)',
+        flexWrap: 'nowrap',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '10px 14px',
+        background: '#FFFFFF',
         borderRadius: 'var(--border-radius-lg)',
         border: '1px solid var(--border-color)',
-        boxShadow: 'var(--shadow-md)',
+        boxShadow: 'var(--shadow-xs)',
+        overflowX: 'auto',
+        scrollbarWidth: 'none',
+        WebkitOverflowScrolling: 'touch'
       }}
     >
       {groups.map((groupName, groupIndex) => (
         <React.Fragment key={groupName}>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexShrink: 0 }}>
             {groupMap.get(groupName).map((tab) => {
               const isActive = activeTab === tab.id;
               const isRecommended = recommendedSet.has(tab.id);
@@ -85,27 +88,27 @@ export function Tabs() {
                     position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '10px',
+                    gap: '8px',
                     flexShrink: 0,
                     whiteSpace: 'nowrap',
                     background: isActive ? 'var(--primary)' : 'transparent',
-                    border: isActive ? '1px solid var(--primary-light)' : '1px solid transparent',
+                    border: isActive ? '1px solid var(--primary)' : '1px solid transparent',
                     borderRadius: 'var(--border-radius-md)',
-                    color: isActive ? '#ffffff' : 'var(--text-secondary)',
-                    padding: '12px 16px',
-                    fontSize: '1rem',
-                    fontWeight: isActive ? '600' : '500',
+                    color: isActive ? '#FFFFFF' : 'var(--text-secondary)',
+                    padding: '9px 15px',
+                    fontSize: '0.9rem',
+                    fontWeight: isActive ? '700' : '500',
                     fontFamily: "'Inter', sans-serif",
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
+                    boxShadow: isActive ? 'var(--shadow-green)' : 'none',
                     outline: 'none',
-                    minHeight: '48px',
+                    minHeight: '42px',
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                      e.currentTarget.style.color = 'var(--text-primary)';
+                      e.currentTarget.style.background = 'var(--very-light-green)';
+                      e.currentTarget.style.color = 'var(--primary)';
                     }
                   }}
                   onMouseLeave={(e) => {
@@ -118,27 +121,26 @@ export function Tabs() {
                   {isRecommended && (
                     <span style={{
                       position: 'absolute',
-                      top: '-6px',
-                      right: '-6px',
+                      top: '-5px',
+                      right: '-5px',
                       background: 'var(--highlight)',
-                      color: '#111827',
-                      fontSize: '0.65rem',
+                      color: '#FFFFFF',
+                      fontSize: '0.62rem',
                       fontWeight: 700,
-                      padding: '2px 8px',
-                      borderRadius: '12px',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                      padding: '2px 6px',
+                      borderRadius: '10px',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
                       zIndex: 1,
-                      border: '1px solid rgba(255,255,255,0.2)'
                     }}>
-                      <i className="fa-solid fa-star" style={{ marginRight: '4px', fontSize: '0.55rem' }}></i>
-                      {lang === 'hi' ? 'सुझावित' : 'Recommended'}
+                      <i className="fa-solid fa-star" style={{ marginRight: '3px', fontSize: '0.55rem' }}></i>
+                      {lang === 'hi' ? 'सुझावित' : 'Top'}
                     </span>
                   )}
                   <i
                     className={`fa-solid ${tab.icon}`}
                     style={{
-                      fontSize: '1.1rem',
-                      color: isActive ? '#fff' : 'var(--text-muted)',
+                      fontSize: '0.95rem',
+                      color: isActive ? '#FFFFFF' : 'var(--text-muted)',
                       flexShrink: 0,
                     }}
                   />
@@ -149,10 +151,12 @@ export function Tabs() {
           </div>
           {/* Subtle Visual Separator between groups */}
           {groupIndex < groups.length - 1 && (
-            <div style={{ width: '1px', background: 'var(--border-color)', margin: '4px 0' }} />
+            <div style={{ width: '1px', height: '24px', background: 'var(--border-color)', flexShrink: 0, margin: '0 4px' }} />
           )}
         </React.Fragment>
       ))}
     </nav>
   );
 }
+
+export default Tabs;

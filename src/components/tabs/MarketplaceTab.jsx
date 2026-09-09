@@ -284,24 +284,25 @@ export function MarketplaceTab() {
     <div className="tab-panel active" style={{ animation: 'fadeIn 0.3s ease' }}>
       {/* Top Banner Card */}
       <div style={{ 
-        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(10, 25, 16, 0.95) 100%)', 
-        border: '1px solid rgba(16, 185, 129, 0.35)', borderRadius: '18px', 
+        background: '#FFFFFF', 
+        border: '1.5px solid #E5E7EB', borderRadius: '18px', 
         padding: '24px 26px', marginBottom: '1.5rem', 
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px',
-        boxShadow: '0 8px 30px rgba(0,0,0,0.3)'
+        boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
       }}>
         <div>
           <span style={{ 
-            background: 'rgba(16, 185, 129, 0.25)', color: '#34d399', 
+            background: '#DCFCE7', color: '#166534', 
             padding: '4px 14px', borderRadius: '20px', fontSize: '0.82rem', 
-            fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' 
+            fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px',
+            border: '1px solid #86EFAC'
           }}>
             <i className="fa-solid fa-building-wheat"></i> Verified Farmer Producer Organizations (FPOs)
           </span>
-          <h2 style={{ fontSize: '1.65rem', fontWeight: 'bold', margin: '0 0 6px 0', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <i className="fa-solid fa-store" style={{ color: '#34d399' }}></i> Direct Farmer &amp; FPO Producer Directory
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 6px 0', color: '#17211B', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <i className="fa-solid fa-store" style={{ color: '#15803D' }}></i> Direct Farmer &amp; FPO Producer Directory
           </h2>
-          <p style={{ color: 'var(--text-secondary)', margin: '0', fontSize: '0.94rem', lineHeight: '1.5' }}>
+          <p style={{ color: '#4B5563', margin: '0', fontSize: '0.92rem', lineHeight: '1.5' }}>
             Connect directly with verified Indian Farmer Producer Companies (FPOs) and agricultural producers with complete official addresses &amp; public contacts.
           </p>
         </div>
@@ -310,12 +311,14 @@ export function MarketplaceTab() {
           type="button" 
           onClick={() => setModalOpen(true)}
           style={{ 
-            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
+            background: '#15803D', 
             color: 'white', padding: '12px 22px', borderRadius: '12px', 
-            fontSize: '0.96rem', fontWeight: 'bold', border: 'none', 
+            fontSize: '0.94rem', fontWeight: 'bold', border: 'none', 
             cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', 
-            boxShadow: '0 6px 20px rgba(16, 185, 129, 0.45)', transition: 'all 0.2s ease'
+            boxShadow: '0 4px 12px rgba(21, 128, 61, 0.25)', transition: 'all 0.2s ease'
           }}
+          onMouseEnter={e => e.currentTarget.style.background = '#166534'}
+          onMouseLeave={e => e.currentTarget.style.background = '#15803D'}
         >
           <i className="fa-solid fa-circle-plus" style={{ fontSize: '1.1rem' }}></i>
           <span>+ Add Producer / FPO Directory Listing</span>
@@ -325,7 +328,7 @@ export function MarketplaceTab() {
       {/* Filter and Search Bar */}
       <div style={{ display: 'flex', gap: '12px', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ position: 'relative', minWidth: '280px', flex: 1 }}>
-          <i className="fa-solid fa-magnifying-glass" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }}></i>
+          <i className="fa-solid fa-magnifying-glass" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#9CA3AF' }}></i>
           <input
             type="text"
             className="form-control"
@@ -333,9 +336,9 @@ export function MarketplaceTab() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{ 
-              paddingLeft: '40px', background: 'rgba(10, 24, 17, 0.9)', 
-              border: '1px solid rgba(255,255,255,0.15)', borderRadius: '10px', 
-              color: 'white', height: '44px', width: '100%', outline: 'none' 
+              paddingLeft: '40px', background: '#FFFFFF', 
+              border: '1.5px solid #E5E7EB', borderRadius: '10px', 
+              color: '#17211B', height: '44px', width: '100%', outline: 'none' 
             }}
           />
         </div>
@@ -353,15 +356,16 @@ export function MarketplaceTab() {
               type="button"
               onClick={() => setSelectedCategory(cat.id)}
               style={{
-                background: selectedCategory === cat.id ? '#10b981' : 'rgba(255,255,255,0.06)',
-                color: selectedCategory === cat.id ? '#000000' : 'white',
-                border: selectedCategory === cat.id ? '1.5px solid #10b981' : '1px solid rgba(255,255,255,0.12)',
+                background: selectedCategory === cat.id ? '#15803D' : '#FFFFFF',
+                color: selectedCategory === cat.id ? '#FFFFFF' : '#374151',
+                border: selectedCategory === cat.id ? '1.5px solid #15803D' : '1px solid #E5E7EB',
                 padding: '8px 16px',
                 borderRadius: '20px',
                 fontSize: '0.85rem',
-                fontWeight: 'bold',
+                fontWeight: 700,
                 cursor: 'pointer',
-                transition: 'all 0.2s ease'
+                transition: 'all 0.2s ease',
+                boxShadow: selectedCategory === cat.id ? '0 2px 8px rgba(21,128,61,0.25)' : 'none'
               }}
             >
               {cat.label}
@@ -371,9 +375,9 @@ export function MarketplaceTab() {
       </div>
 
       {/* Directory Count Header */}
-      <div style={{ marginBottom: '1rem', color: '#94a3b8', fontSize: '0.88rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span>Showing <strong style={{ color: 'white' }}>{filteredProduce.length}</strong> verified Farmer Producer Companies &amp; Collectives</span>
-        <span style={{ fontSize: '0.8rem', color: '#64748b' }}>✅ Direct Official Contacts with Registered Addresses</span>
+      <div style={{ marginBottom: '1rem', color: '#6B7280', fontSize: '0.88rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span>Showing <strong style={{ color: '#17211B' }}>{filteredProduce.length}</strong> verified Farmer Producer Companies &amp; Collectives</span>
+        <span style={{ fontSize: '0.8rem', color: '#15803D', fontWeight: 600 }}>✅ Direct Official Contacts with Registered Addresses</span>
       </div>
 
       {/* FPO & Producer Cards Grid */}
@@ -383,15 +387,14 @@ export function MarketplaceTab() {
             <div 
               key={item.id} 
               style={{
-                background: 'rgba(10, 25, 16, 0.95)',
-                border: '1.5px solid rgba(255, 255, 255, 0.12)',
+                background: '#FFFFFF',
+                border: '1.5px solid #E5E7EB',
                 borderRadius: '16px',
                 padding: '22px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.4)',
-                backdropFilter: 'blur(10px)',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)',
                 position: 'relative',
                 transition: 'all 0.25s ease'
               }}
@@ -399,46 +402,46 @@ export function MarketplaceTab() {
               <div>
                 {/* Header: FPO Name + Verified Badge */}
                 <div style={{ marginBottom: '14px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <span style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '2px 8px', borderRadius: '10px', fontSize: '0.72rem', fontWeight: 'bold' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                    <span style={{ background: '#DCFCE7', color: '#166534', border: '1px solid #86EFAC', padding: '2px 8px', borderRadius: '10px', fontSize: '0.72rem', fontWeight: 700 }}>
                       <i className="fa-solid fa-circle-check" style={{ marginRight: '4px' }}></i> Verified FPO / Producer
                     </span>
                   </div>
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 'bold', color: 'white', margin: 0, lineHeight: '1.4' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#17211B', margin: 0, lineHeight: '1.4' }}>
                     {item.name}
                   </h3>
                 </div>
 
                 {/* Details Section */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '18px', fontSize: '0.9rem', color: '#cbd5e1' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '18px', fontSize: '0.9rem', color: '#374151' }}>
                   {/* Products */}
-                  <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '10px', padding: '10px 12px' }}>
-                    <div style={{ fontSize: '0.78rem', color: 'var(--primary-light)', fontWeight: 'bold', marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <div style={{ background: '#F0FDF4', borderRadius: '10px', padding: '10px 12px', border: '1px solid #BBF7D0' }}>
+                    <div style={{ fontSize: '0.78rem', color: '#15803D', fontWeight: 800, marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <i className="fa-solid fa-wheat-awn"></i> Agricultural Commodities &amp; Products:
                     </div>
-                    <div style={{ color: 'white', fontWeight: '600', fontSize: '0.92rem' }}>
+                    <div style={{ color: '#14532D', fontWeight: 700, fontSize: '0.92rem' }}>
                       {item.products}
                     </div>
                   </div>
 
                   {/* Registered Location */}
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginTop: '2px' }}>
-                    <i className="fa-solid fa-location-dot" style={{ color: '#f87171', marginTop: '3px', flexShrink: 0 }}></i>
+                    <i className="fa-solid fa-location-dot" style={{ color: '#EF4444', marginTop: '3px', flexShrink: 0 }}></i>
                     <div>
-                      <strong style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Registered Address:</strong>
-                      <div style={{ color: '#e2e8f0', fontSize: '0.86rem', lineHeight: '1.4' }}>{item.location}</div>
+                      <strong style={{ color: '#4B5563', fontSize: '0.8rem' }}>Registered Address:</strong>
+                      <div style={{ color: '#17211B', fontSize: '0.86rem', lineHeight: '1.4', fontWeight: 500 }}>{item.location}</div>
                     </div>
                   </div>
 
                   {/* Official Website Link if available */}
                   {item.website && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '2px' }}>
-                      <i className="fa-solid fa-globe" style={{ color: '#38bdf8', width: '16px' }}></i>
+                      <i className="fa-solid fa-globe" style={{ color: '#0284C7', width: '16px' }}></i>
                       <a 
                         href={item.website} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        style={{ color: '#38bdf8', fontSize: '0.82rem', textDecoration: 'underline', wordBreak: 'break-all' }}
+                        style={{ color: '#0284C7', fontSize: '0.82rem', textDecoration: 'underline', wordBreak: 'break-all', fontWeight: 600 }}
                       >
                         Official Verification Portal
                       </a>
@@ -456,14 +459,14 @@ export function MarketplaceTab() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '10px',
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    background: '#15803D',
                     color: 'white',
                     padding: '11px 16px',
                     borderRadius: '12px',
                     textDecoration: 'none',
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                     fontSize: '0.92rem',
-                    boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
+                    boxShadow: '0 4px 12px rgba(21, 128, 61, 0.25)',
                     textAlign: 'center'
                   }}
                 >
@@ -480,13 +483,13 @@ export function MarketplaceTab() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '8px',
-                    background: 'rgba(37, 211, 102, 0.15)',
-                    color: '#25D366',
-                    border: '1px solid rgba(37, 211, 102, 0.35)',
+                    background: '#DCFCE7',
+                    color: '#166534',
+                    border: '1px solid #86EFAC',
                     padding: '10px 16px',
                     borderRadius: '12px',
                     textDecoration: 'none',
-                    fontWeight: 'bold',
+                    fontWeight: 700,
                     fontSize: '0.86rem',
                     textAlign: 'center'
                   }}
@@ -498,28 +501,28 @@ export function MarketplaceTab() {
             </div>
           ))
         ) : (
-          <div style={{ gridColumn: '1 / -1', padding: '40px', textAlign: 'center', background: 'rgba(10, 24, 17, 0.8)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-            <i className="fa-solid fa-store-slash" style={{ fontSize: '2.5rem', color: 'var(--text-muted)', marginBottom: '12px' }}></i>
-            <h3>No FPO listings found</h3>
-            <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search query or clear the filter.</p>
+          <div style={{ gridColumn: '1 / -1', padding: '40px', textAlign: 'center', background: '#FFFFFF', borderRadius: '16px', border: '1.5px solid #E5E7EB' }}>
+            <i className="fa-solid fa-store-slash" style={{ fontSize: '2.5rem', color: '#9CA3AF', marginBottom: '12px' }}></i>
+            <h3 style={{ color: '#17211B', fontWeight: 800 }}>No FPO listings found</h3>
+            <p style={{ color: '#6B7280' }}>Try adjusting your search query or clear the filter.</p>
           </div>
         )}
       </div>
 
       {/* Post New Producer Listing Modal */}
       {modalOpen && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '16px' }}>
-          <div style={{ background: '#0a1910', border: '1px solid rgba(16, 185, 129, 0.4)', borderRadius: '16px', maxWidth: '540px', width: '100%', padding: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.8)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px' }}>
-              <h3 style={{ margin: '0', fontSize: '1.25rem', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <i className="fa-solid fa-building-wheat" style={{ color: '#34d399' }}></i> Add Producer / FPO Directory Listing
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '16px', backdropFilter: 'blur(4px)' }}>
+          <div style={{ background: '#FFFFFF', border: '1.5px solid #E5E7EB', borderRadius: '18px', maxWidth: '540px', width: '100%', padding: '26px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid #E5E7EB', paddingBottom: '12px' }}>
+              <h3 style={{ margin: '0', fontSize: '1.25rem', color: '#17211B', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800 }}>
+                <i className="fa-solid fa-building-wheat" style={{ color: '#15803D' }}></i> Add Producer / FPO Directory Listing
               </h3>
-              <button type="button" onClick={() => setModalOpen(false)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>&times;</button>
+              <button type="button" onClick={() => setModalOpen(false)} style={{ background: 'none', border: 'none', color: '#9CA3AF', fontSize: '1.5rem', cursor: 'pointer' }}>&times;</button>
             </div>
 
             <form onSubmit={handleAddProduce} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div className="form-group">
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>FPO / Producer Organization Name:</label>
+                <label style={{ fontSize: '0.85rem', color: '#374151', fontWeight: 700, marginBottom: '4px', display: 'block' }}>FPO / Producer Organization Name:</label>
                 <input 
                   type="text" 
                   required 
@@ -527,12 +530,12 @@ export function MarketplaceTab() {
                   onChange={e => setFormData({...formData, name: e.target.value})} 
                   className="form-control" 
                   placeholder="e.g. Kisan Samriddhi Farmer Producer Co. Ltd." 
-                  style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                  style={{ background: '#F8FAF9', color: '#17211B', border: '1.5px solid #E5E7EB', borderRadius: '8px', padding: '10px 14px', width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
 
               <div className="form-group">
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Agricultural Commodities / Products Offered:</label>
+                <label style={{ fontSize: '0.85rem', color: '#374151', fontWeight: 700, marginBottom: '4px', display: 'block' }}>Agricultural Commodities / Products Offered:</label>
                 <input 
                   type="text" 
                   required 
@@ -540,17 +543,17 @@ export function MarketplaceTab() {
                   onChange={e => setFormData({...formData, products: e.target.value})} 
                   className="form-control" 
                   placeholder="e.g. Wheat, Gram, Soybean, Millets" 
-                  style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                  style={{ background: '#F8FAF9', color: '#17211B', border: '1.5px solid #E5E7EB', borderRadius: '8px', padding: '10px 14px', width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Primary Category:</label>
+                  <label style={{ fontSize: '0.85rem', color: '#374151', fontWeight: 700, marginBottom: '4px', display: 'block' }}>Primary Category:</label>
                   <select
                     value={formData.category}
                     onChange={e => setFormData({...formData, category: e.target.value})}
-                    style={{ background: '#0a1910', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                    style={{ background: '#F8FAF9', color: '#17211B', border: '1.5px solid #E5E7EB', borderRadius: '8px', padding: '10px 14px', width: '100%', boxSizing: 'border-box', fontWeight: 600 }}
                   >
                     <option value="cereal">Wheat &amp; Cereals</option>
                     <option value="pulse">Pulses &amp; Dals</option>
@@ -560,7 +563,7 @@ export function MarketplaceTab() {
                 </div>
 
                 <div className="form-group">
-                  <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Public Phone Contact:</label>
+                  <label style={{ fontSize: '0.85rem', color: '#374151', fontWeight: 700, marginBottom: '4px', display: 'block' }}>Public Phone Contact:</label>
                   <input 
                     type="text" 
                     required 
@@ -568,13 +571,13 @@ export function MarketplaceTab() {
                     onChange={e => setFormData({...formData, phone: e.target.value})} 
                     className="form-control" 
                     placeholder="e.g. 9923233776" 
-                    style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                    style={{ background: '#F8FAF9', color: '#17211B', border: '1.5px solid #E5E7EB', borderRadius: '8px', padding: '10px 14px', width: '100%', boxSizing: 'border-box' }}
                   />
                 </div>
               </div>
 
               <div className="form-group">
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Registered Address &amp; Pincode:</label>
+                <label style={{ fontSize: '0.85rem', color: '#374151', fontWeight: 700, marginBottom: '4px', display: 'block' }}>Registered Address &amp; Pincode:</label>
                 <input 
                   type="text" 
                   required 
@@ -582,19 +585,19 @@ export function MarketplaceTab() {
                   onChange={e => setFormData({...formData, location: e.target.value})} 
                   className="form-control" 
                   placeholder="e.g. Shelud, Chikhli, Maharashtra – 443207" 
-                  style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                  style={{ background: '#F8FAF9', color: '#17211B', border: '1.5px solid #E5E7EB', borderRadius: '8px', padding: '10px 14px', width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
 
               <div className="form-group">
-                <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>Official Website / Portal Link (Optional):</label>
+                <label style={{ fontSize: '0.85rem', color: '#374151', fontWeight: 700, marginBottom: '4px', display: 'block' }}>Official Website / Portal Link (Optional):</label>
                 <input 
                   type="text" 
                   value={formData.website} 
                   onChange={e => setFormData({...formData, website: e.target.value})} 
                   className="form-control" 
                   placeholder="e.g. https://richerseeds.com" 
-                  style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '10px 14px', width: '100%' }}
+                  style={{ background: '#F8FAF9', color: '#17211B', border: '1.5px solid #E5E7EB', borderRadius: '8px', padding: '10px 14px', width: '100%', boxSizing: 'border-box' }}
                 />
               </div>
 
@@ -602,14 +605,14 @@ export function MarketplaceTab() {
                 <button 
                   type="button" 
                   onClick={() => setModalOpen(false)}
-                  style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'rgba(255,255,255,0.08)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', fontWeight: 'bold', cursor: 'pointer' }}
+                  style={{ flex: 1, padding: '12px', borderRadius: '10px', background: '#F8FAF9', color: '#374151', border: '1px solid #E5E7EB', fontWeight: 'bold', cursor: 'pointer' }}
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
                   disabled={saving}
-                  style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', border: 'none', fontWeight: 'bold', cursor: 'pointer' }}
+                  style={{ flex: 1, padding: '12px', borderRadius: '10px', background: '#15803D', color: 'white', border: 'none', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 12px rgba(21,128,61,0.25)' }}
                 >
                   {saving ? 'Publishing...' : 'Publish Listing'}
                 </button>
