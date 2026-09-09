@@ -602,6 +602,56 @@ export function PlannerTab() {
                   { season: 'Zaid', crop: 'Watermelon / Cucumber', months: 'Mar – Jun', detail: 'Silver mulch cucurbits yielding high Brix sugar melons in summer.', icon: 'fa-seedling', color: '#fbbf24' }
                 ],
                 benefit: 'High-yield commercial rotation for peri-urban farmers. Multi-family crop switching prevents host-specific pest outbreaks.'
+              },
+              {
+                title: 'Western Semi-Arid — Arid Cereal & Cash Spice Belt',
+                icon: 'fa-sun', color: '#f59e0b',
+                steps: [
+                  { season: 'Kharif', crop: 'Pearl Millet (Bajra) / Guar', months: 'Jul – Oct', detail: 'Drought-hardy coarse cereal with Guar fixing atmospheric nitrogen in sandy soil.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Mustard / Cumin (Jeera) / Methi', months: 'Oct – Mar', detail: 'High-value export spice and oilseed demanding low water and dry sunny winter.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'Summer Moong / Tinda / Fallow', months: 'Mar – Jun', detail: 'Short 60-day summer pulse conserving subsoil moisture and adding humus.', icon: 'fa-seedling', color: '#fbbf24' }
+                ],
+                benefit: 'Ideal for Rajasthan, Gujarat & Southern Haryana. Minimizes irrigation water requirement while generating ₹80,000–₹1,20,000 net profit per acre through Cumin & Mustard.'
+              },
+              {
+                title: 'Eastern India — Rice-Potato-Jute / Sweet Corn System',
+                icon: 'fa-water', color: '#06b6d4',
+                steps: [
+                  { season: 'Kharif', crop: 'Aman Paddy (Rice)', months: 'Jun – Nov', detail: 'Rainfed and canal irrigated monsoon paddy on rich alluvial Gangetic loam.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Potato / Masoor (Lentil)', months: 'Nov – Feb', detail: 'High-yielding tuber or pink lentil grown on residual soil moisture after paddy harvest.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'Sweet Corn / Jute / Summer Moong', months: 'Mar – Jun', detail: 'Fast 75-day commercial Sweet Corn or Jute fibre before next monsoon flood arrival.', icon: 'fa-seedling', color: '#fbbf24' }
+                ],
+                benefit: 'Common in Bihar, Bengal, Assam & Eastern UP. 300% cropping intensity maximizes annual gross revenue and generates steady cash flow across all 3 seasons.'
+              },
+              {
+                title: 'Sugar Belt — Sugarcane Ratoon & Green Manure Cycle',
+                icon: 'fa-cubes-stacked', color: '#10b981',
+                steps: [
+                  { season: 'Year 1–2', crop: 'Sugarcane (Plant + 1 Ratoon)', months: 'Feb – Next Feb', detail: 'High biomass cash crop with intercropped potato/onion in first 60 days.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi Year 2', crop: 'Wheat / Mustard', months: 'Nov – Apr', detail: 'Sown immediately after ratoon cane clearing; breaks monoculture fatigue.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Pre-Kharif', crop: 'Daincha (Green Manure)', months: 'Apr – Jun', detail: 'Incorporate 10 tonnes fresh green biomass to restore organic carbon before next cane planting.', icon: 'fa-seedling', color: '#fbbf24' }
+                ],
+                benefit: 'Restores soil physical structure in intensive sugarcane zones. Green manuring with Daincha saves 40% chemical nitrogen fertilizer and prevents ratoon decline.'
+              },
+              {
+                title: 'Dairy Integrated — High-Protein Year-Round Green Fodder',
+                icon: 'fa-cow', color: '#84cc16',
+                steps: [
+                  { season: 'Kharif', crop: 'Maize + Cowpea (Mixed)', months: 'Jun – Sep', detail: 'Balanced carbohydrate and protein ratio; succulent green fodder for high milk fat.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Oats (Jai) + Berseem (Multi-cut)', months: 'Oct – Mar', detail: 'Provides 4–5 continuous winter green forage cuttings high in calcium and vitamins.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'Multi-cut Fodder Sorghum / Napier', months: 'Apr – Jun', detail: 'Drought-tolerant summer green chop sustaining dairy cattle in 40°C+ heat.', icon: 'fa-seedling', color: '#fbbf24' }
+                ],
+                benefit: 'Provides 365 days continuous nutritious green fodder for livestock farmers, boosting average daily milk yield by 2.0–2.5 litres per milch animal while reducing commercial feed cost by 35%.'
+              },
+              {
+                title: 'Commercial Horticulture & Nematode Purge Cycle',
+                icon: 'fa-disease', color: '#ec4899',
+                steps: [
+                  { season: 'Kharif', crop: 'Staked Tomato / Chilli', months: 'Jun – Oct', detail: 'High-density trellis vegetables with drip fertigation and silver mulch.', icon: 'fa-seedling', color: '#10b981' },
+                  { season: 'Rabi', crop: 'Cauliflower / Garlic / Radish', months: 'Nov – Feb', detail: 'Brassica & Allium root exudates naturally fumigate soil against soil-borne fungi.', icon: 'fa-seedling', color: '#38bdf8' },
+                  { season: 'Zaid', crop: 'African Marigold / Bitter Gourd', months: 'Mar – Jun', detail: 'Marigold root α-terthienyl compounds kill 95%+ parasitic root-knot nematodes in soil!', icon: 'fa-seedling', color: '#fbbf24' }
+                ],
+                benefit: 'Natural biological soil sterilization. Rotating Solanaceous vegetables with Alliums, Brassicas, and Marigold purges nematode populations without dangerous synthetic chemicals.'
               }
             ].map((plan, idx) => (
               <div key={idx} style={{

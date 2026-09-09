@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '../../context/AppContext';
+import { ttsEngine } from '../../services/ai/ttsService';
 
 /* ═══════════════════════════════════════════════════════════════════
  *  CONSTANTS
@@ -12,34 +13,38 @@ const LANGS = [
   { code: 'en-IN', label: '🇬🇧 English', iso: 'en' },
   { code: 'hi-IN', label: '🇮🇳 हिन्दी', iso: 'hi' },
   { code: 'pa-IN', label: '🌾 ਪੰਜਾਬੀ', iso: 'pa' },
-  { code: 'mr-IN', label: '🌿 मराठी', iso: 'mr' },
   { code: 'te-IN', label: '🍃 తెలుగు', iso: 'te' },
   { code: 'ta-IN', label: '🪷 தமிழ்', iso: 'ta' },
+  { code: 'kn-IN', label: '🌱 ಕನ್ನಡ', iso: 'kn' },
+  { code: 'mr-IN', label: '🌿 मराठी', iso: 'mr' },
   { code: 'bn-IN', label: '🌾 বাংলা', iso: 'bn' },
+  { code: 'gu-IN', label: '🪴 ગુજરાતી', iso: 'gu' },
+  { code: 'or-IN', label: '🌾 ଓଡ଼ିଆ', iso: 'or' },
 ];
 
 const LANG_NAME = {
   'en': 'English', 'hi': 'Hindi (हिन्दी)', 'pa': 'Punjabi (ਪੰਜਾਬੀ)',
-  'mr': 'Marathi (मराठी)', 'te': 'Telugu (తెలుగు)', 'ta': 'Tamil (தமிழ்)',
-  'bn': 'Bengali (বাংলা)',
+  'te': 'Telugu (తెలుగు)', 'ta': 'Tamil (தமிழ்)', 'kn': 'Kannada (ಕನ್ನಡ)',
+  'mr': 'Marathi (मराठी)', 'bn': 'Bengali (বাংলা)', 'gu': 'Gujarati (ગુજરાતી)',
+  'or': 'Odia (ଓଡ଼ିଆ)',
 };
 
 const CARDS = {
   'en-IN': [
-    { icon: '🐛', t: 'Pest & Disease', q: 'How to control yellow rust and armyworm in wheat?', c: '#ef4444' },
-    { icon: '🧪', t: 'Fertilizer Dose', q: 'Urea and DAP dose for 1 acre wheat?', c: '#10b981' },
-    { icon: '💧', t: 'Irrigation', q: 'When should I give first irrigation in wheat?', c: '#38bdf8' },
-    { icon: '💰', t: 'Mandi Rates', q: 'Today\'s wheat and paddy mandi prices?', c: '#f59e0b' },
-    { icon: '🌿', t: 'Weed Control', q: 'How to control Phalaris minor weeds in wheat?', c: '#a855f7' },
-    { icon: '🏛️', t: 'Govt Schemes', q: 'PM-KISAN and PM-KUSUM solar subsidy details', c: '#8b5cf6' },
+    { icon: '🧭', t: 'Website Guide', q: 'How can this website assist me with my daily farming?', c: '#6366f1' },
+    { icon: '🧪', t: 'Fertilizer Calculator', q: 'Open fertilizer calculator to calculate exact bags', c: '#10b981' },
+    { icon: '🚜', t: 'Rent Machinery', q: 'Open equipment rentals to book a tractor', c: '#f59e0b' },
+    { icon: '🌦️', t: 'Weather Forecast', q: 'Show me weather forecast and rain alert', c: '#38bdf8' },
+    { icon: '💰', t: 'Mandi Rates', q: 'Show me today\'s wholesale mandi rates', c: '#eab308' },
+    { icon: '🏛️', t: 'Govt Schemes', q: 'Open government schemes for PM-KISAN and solar subsidy', c: '#8b5cf6' },
   ],
   'hi-IN': [
-    { icon: '🐛', t: 'रोग व कीट', q: 'गेहूं में पीला रतुआ और इल्ली नियंत्रण कैसे करें?', c: '#ef4444' },
-    { icon: '🧪', t: 'खाद मात्रा', q: '1 एकड़ गेहूं के लिए यूरिया और DAP की मात्रा बताओ', c: '#10b981' },
-    { icon: '💧', t: 'सिंचाई समय', q: 'गेहूं में पहला पानी कब लगाएं?', c: '#38bdf8' },
-    { icon: '💰', t: 'मंडी भाव', q: 'गेहूं और धान का आज का मंडी भाव बताओ', c: '#f59e0b' },
-    { icon: '🌿', t: 'खरपतवार', q: 'गेहूं में गुल्ली डंडा और बथुआ का इलाज बताओ', c: '#a855f7' },
-    { icon: '🏛️', t: 'सरकारी योजना', q: 'PM किसान और सोलर पंप सब्सिडी की जानकारी दो', c: '#8b5cf6' },
+    { icon: '🧭', t: 'वेबसाइट गाइड', q: 'यह वेबसाइट मेरी खेती और खेत के काम में कैसे मदद करेगी?', c: '#6366f1' },
+    { icon: '🧪', t: 'खाद कैलकुलेटर', q: 'खाद कैलकुलेटर खोलो, यूरिया और डीएपी का हिसाब लगाना है', c: '#10b981' },
+    { icon: '🚜', t: 'मशीन किराया', q: 'ट्रैक्टर और कंबाइन किराए पर लेने वाला पेज खोलो', c: '#f59e0b' },
+    { icon: '🌦️', t: 'मौसम पूर्वानुमान', q: 'मौसम वाला पेज दिखाओ, बारिश का हाल जानना है', c: '#38bdf8' },
+    { icon: '💰', t: 'मंडी भाव', q: 'ताज़ा मंडी भाव और सरकारी एमएसपी वाला पेज खोलो', c: '#eab308' },
+    { icon: '🏛️', t: 'सरकारी योजना', q: 'सरकारी योजना वाला पेज दिखाओ, सोलर पंप सब्सिडी चाहिए', c: '#8b5cf6' },
   ],
 };
 
@@ -49,7 +54,8 @@ const CARDS = {
 
 function buildPrompt(crop, soil, loc, area, isoLang) {
   const langFull = LANG_NAME[isoLang] || 'English';
-  return `You are "Krishi Jal AI" — a friendly senior Indian agricultural scientist and voice assistant.
+  return `You are "Krishi Jal AI" — a warm, respectful digital companion and agricultural assistant for Indian farmers.
+Your goal is to assist the farmer through the website and help solve their daily farming problems.
 
 FARMER CONTEXT:
 - Crop: ${crop}
@@ -57,13 +63,26 @@ FARMER CONTEXT:
 - Location: ${loc}
 - Farm: ${area} acres
 
+WEBSITE TOOLS YOU CAN GUIDE THEM TO:
+- Farm Dashboard: Today's crop health and irrigation advice.
+- Crop Doctor (Advisor): Pests, fungi, and chemical spray remedies.
+- Weather: 7-day rainfall & temperature forecast.
+- Soil Testing Lab: Photo-based soil nutrient analysis.
+- Crop Planner: Weekly farming calendar from sowing to harvest.
+- Fertilizer Calculator: Exact bags of Urea, DAP, Potash for their field.
+- Machinery Rentals: Rent tractors and harvesters from nearby farmers.
+- Mandi Live Rates: Today's commodity prices and government MSP.
+- Farmers Market: Sell harvested produce directly without middlemen.
+- Government Schemes: PM-KISAN, PM-KUSUM solar pump subsidy, crop insurance.
+- Video School: Practical farming videos and natural organic methods.
+
 RULES:
-1. GREETING RULE: If the farmer says "hi", "hello", "hey", "namaste", "sat sri akal", or similar greetings, reply with a warm, friendly greeting in ${langFull} introducing yourself as Krishi AI and asking how you can help their ${crop} crop today.
-2. Answer ONLY what is asked. No generic filler.
-3. Give exact chemical names, dosages per acre, water volume when asked agricultural questions.
+1. GREETING & TONE: Greet warmly in ${langFull} (e.g., "राम राम किसान भाई!", "నమస్కారం రైతు సోదరా!"). Speak like a trusted village agricultural friend.
+2. ASSIST THROUGH THE WEBSITE: If the farmer asks how to use this website, where to find things, or wants to check weather, rent a tractor, calculate fertilizer, check mandi prices, or test soil, guide them clearly on where to go.
+3. PRACTICAL FARMING ADVICE: Give exact dosages per acre and practical, easy-to-follow steps.
 4. Respond strictly in ${langFull}.
-5. Keep it 1-3 sentences. Concise and actionable.
-6. NO markdown symbols. Pure plain text.`;
+5. Keep answers to 2-3 short, clear, spoken sentences.
+6. NO markdown symbols (*, #, _, -). Pure plain conversational text.`;
 }
 
 async function groqChat(query, systemPrompt, apiKey, cropEn, soilEn, locEn, areaVal, voiceLang) {
@@ -164,6 +183,58 @@ async function groqWhisper(blob, apiKey, iso) {
   return d?.text?.trim() || '';
 }
 
+export function detectNavigationTab(text) {
+  if (!text) return null;
+  const q = text.toLowerCase();
+
+  // Weather
+  if (q.match(/मौसम|weather|rain|barsat|barish|बारिश|तापमान|forecast/)) {
+    if (q.match(/open|show|go to|take me|खोलो|दिखाओ|जाना|ले चलो|चलो|बताओ|देखो|पेज/)) return 'weather';
+  }
+  // Rentals / Machinery
+  if (q.match(/किराए|किराया|tractor|ट्रैक्टर|rent|machinery|rental|मशीन|harvest|कंबाइन/)) {
+    if (q.match(/open|show|go to|book|rent|खोलो|दिखाओ|चाहिए|लेना|बुक|जाना|ले चलो|पेज/)) return 'rentals';
+  }
+  // Calculator
+  if (q.match(/calculator|कैलकुलेटर|खाद का हिसाब|fertilizer calc|कैलकुलेट/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|हिसाब|पेज/)) return 'calculator';
+  }
+  // Soil Lab
+  if (q.match(/soil lab|soil test|मिट्टी जांच|मिट्टी परीक्षण|lab|लैब/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|पेज/)) return 'soillab';
+  }
+  // Mandi
+  if (q.match(/mandi|मंडी भाव|मंडी रेट|bhav|market rate/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|दिखा|पेज/)) return 'mandi';
+  }
+  // Schemes
+  if (q.match(/scheme|योजना|सब्सिडी|pm kisan|pm-kusum|kusum|बीमा/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|देखनी|पेज/)) return 'schemes';
+  }
+  // Advisor / Doctor
+  if (q.match(/doctor|advisor|डॉक्टर|सलाहकार|दवाई|स्प्रे/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|पेज/)) return 'advisor';
+  }
+  // Marketplace
+  if (q.match(/marketplace|मार्केट|फसल बेचना|बाजार|direct sell|खरीदार/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|पेज/)) return 'marketplace';
+  }
+  // Education
+  if (q.match(/education|school|पाठशाला|वीडियो|video|खेती सीखें|ट्रेनिंग/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|पेज/)) return 'education';
+  }
+  // Planner
+  if (q.match(/planner|प्लानर|कैलेंडर|roadmap/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|पेज/)) return 'planner';
+  }
+  // Dashboard
+  if (q.match(/dashboard|डैशबोर्ड|होम|home|मुख्य पेज/)) {
+    if (q.match(/open|show|go to|खोलो|दिखाओ|जाना|ले चलो|पेज/)) return 'dashboard';
+  }
+
+  return null;
+}
+
 function offlineAnswer(q, crop, soil, area, isoLang) {
   const lo = q.toLowerCase().trim();
   const hi = isoLang === 'hi';
@@ -171,17 +242,64 @@ function offlineAnswer(q, crop, soil, area, isoLang) {
   const mr = isoLang === 'mr';
   const te = isoLang === 'te';
   const ta = isoLang === 'ta';
+  const kn = isoLang === 'kn';
   const bn = isoLang === 'bn';
+  const gu = isoLang === 'gu';
+  const or = isoLang === 'or';
 
-  // 0. Greetings (hi, hello, hey, namaste, sat sri akal, etc.)
-  if (lo.match(/^(hi|hello|hey|namaste|greetings|नमस्कार|नमस्ते|ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ|வணக்கம்|నమస్కారం|নমস্কার)$/i) || lo === 'hi' || lo === 'hello' || lo === 'hey' || lo === 'namaste') {
-    if (hi) return `नमस्ते! 🙏 मैं आपका कृषी AI सहायक हूँ। आज मैं आपकी ${crop} फसल के लिए क्या सहायता कर सकता हूँ?`;
-    if (pa) return `ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ ${crop} ਫਸਲ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?`;
-    if (mr) return `नमस्कार! 🙏 मी कृषी AI सहाय्यक आहे. आज तुमच्या ${crop} पिकासाठी मी कशी मदत करू शकेन?`;
-    if (te) return `నమస్కారం! 🙏 నేను కృషి AI సహాయకుడిని. ఈ రోజు మీ ${crop} పంటకు నేను ఎలా సహాయపడగలను?`;
+  // 0. Navigation Request Direct Response
+  const navTab = detectNavigationTab(lo);
+  if (navTab) {
+    const tabNamesHi = {
+      weather: 'मौसम पूर्वानुमान',
+      rentals: 'मशीनरी किराया',
+      calculator: 'खाद कैलकुलेटर',
+      soillab: 'मिट्टी जांच लैब',
+      mandi: 'मंडी भाव',
+      schemes: 'सरकारी योजनाएं',
+      advisor: 'फसल डॉक्टर',
+      marketplace: 'किसान बाजार',
+      education: 'वीडियो पाठशाला',
+      planner: 'फसल कैलेंडर',
+      dashboard: 'मुख्य डैशबोर्ड'
+    };
+    if (hi) {
+      return `जी किसान भाई, मैं आपको ${tabNamesHi[navTab] || 'पेज'} पर ले जा रहा हूँ। स्क्रीन पर दिए गए निर्देशों को देखें या ऊपर किसान साथी ऑडियो बटन दबाकर पूरी सहायता सुनें!`;
+    }
+    const tabNamesEn = {
+      weather: 'Weather Forecast',
+      rentals: 'Machinery Rentals',
+      calculator: 'Fertilizer Calculator',
+      soillab: 'Soil Testing Lab',
+      mandi: 'Live Mandi Rates',
+      schemes: 'Government Schemes',
+      advisor: 'Crop Doctor',
+      marketplace: 'Farmers Marketplace',
+      education: 'Farm Video School',
+      planner: 'Crop Planner',
+      dashboard: 'Farm Dashboard'
+    };
+    return `Sure farmer friend! Taking you to ${tabNamesEn[navTab] || 'the page'}. Follow the simple steps on screen or tap the Farmer Guide audio button at the top for step-by-step voice guidance!`;
+  }
+
+  // 0.1 Greetings (hi, hello, hey, namaste, sat sri akal, etc.)
+  if (lo.match(/^(hi|hello|hey|namaste|greetings|नमस्कार|नमस्ते|ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ|வணக்கம்|నమస్కారం|ನಮಸ್ಕಾರ|নমস্কার|નમસ્તે|ନମସ୍କାର)$/i) || lo === 'hi' || lo === 'hello' || lo === 'hey' || lo === 'namaste') {
+    if (hi) return `राम राम किसान भाई! 🙏 मैं आपका कृषि साथी सहायक हूँ। आज इस वेबसाइट पर या आपकी ${crop} फसल के लिए मैं क्या सहायता कर सकता हूँ?`;
+    if (pa) return `ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ ${crop} ਫਸਲ ਜਾਂ ਇਸ ਵੈੱਬਸਾਈਟ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?`;
+    if (mr) return `नमस्कार! 🙏 मी कृषी AI सहाय्यक आहे. आज तुमच्या ${crop} पिकासाठी किंवा या वेबसाईटवर मी कशी मदत करू शकेन?`;
+    if (te) return `నమస్కారం! 🙏 నేను కృషి AI సహాయకుడిని. ఈ రోజు మీ ${crop} పంటకు లేదా వెబ్‌సైట్‌లో నేను ఎలా సహాయపಡగలను?`;
     if (ta) return `வணக்கம்! 🙏 நான் கிருஷ் AI உதவி. உங்கள் ${crop} பயிருக்கு இன்று எவ்வாறு உதவ முடியும்?`;
+    if (kn) return `ನಮಸ್ಕಾರ! 🙏 ನಾನು ಕೃಷಿ AI ಸಹಾಯಕ. ಇಂದು ನಿಮ್ಮ ${crop} ಬೆಳೆಗೆ ಅಥವಾ ಈ ವೆಬ್‌ಸೈಟ್‌ನಲ್ಲಿ ನಾನು ಹೇಗೆ ಸಹಾಯ ಮಾಡಲಿ?`;
     if (bn) return `নমস্কার! 🙏 আমি কৃষি AI সহকারী। আপনার ${crop} ফসলের জন্য আমি আজ কীভাবে সাহায্য করতে পারি?`;
-    return `Hello! 👋 I am Krishi AI, your personal farming assistant. How can I help you with your ${crop} crop today?`;
+    if (gu) return `નમસ્તે! 🙏 હું કૃષિ AI સહાયક છું. આજે તમારા ${crop} પાક માટે અથવા આ વેબસાઇટ પર હું શું મદદ કરી શકું?`;
+    if (or) return `ନମସ୍କାର! 🙏 ମୁଁ କୃଷି AI ସହାୟକ। ଆଜି ଆପଣଙ୍କ ${crop} ଫସଲ ପାଇଁ କି ସାହାଯ୍ୟ କରିପାରିବି?`;
+    return `Hello farmer friend! 👋 I am Krishi AI, your personal farming and website assistant. How can I help you today?`;
+  }
+
+  // 0.2 Website Help & Navigation Guidance
+  if (lo.match(/website|वेबसाइट|सहायता|मदद|फीचर|सुविधा|काम|help|guide|navigate/)) {
+    if (hi) return `किसान भाई, इस वेबसाइट पर आपको खेती की पूरी सहायता मिलेगी: 1. मुख्य डैशबोर्ड पर आज का पानी और मौसम देखें, 2. खाद कैलकुलेटर से यूरिया और डीएपी का हिसाब लगाएं, 3. ताज़ा मंडी भाव जानें, और 4. किराए पर ट्रैक्टर या कंबाइन बुक करें। आप जिस पेज पर जाना चाहते हैं, मुझे बताइए या ऊपर मेन्यू से चुनिए!`;
+    return `Farmer friend, on this website you have full assistance: 1. Farm Dashboard for irrigation alerts, 2. Fertilizer Calculator for exact bags, 3. Live Mandi Rates for wholesale prices, and 4. Equipment Rentals to book machinery. Let me know which page you would like to explore!`;
   }
 
   // Specific crop cultivation (e.g., Sunflower, Maize, Sugarcane, Cotton, Paddy, Wheat, etc.)
@@ -247,28 +365,20 @@ function offlineAnswer(q, crop, soil, area, isoLang) {
 }
 
 function speak(text, langCode, onStart, onEnd) {
-  if (!window.speechSynthesis || !text) return;
-  window.speechSynthesis.cancel();
-  const clean = text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}]/gu, '').replace(/[\*\#\`\_\[\]\(\)]/g, '').trim();
-  const u = new SpeechSynthesisUtterance(clean);
-  u.lang = langCode;
-  u.rate = 1.0;
-  const voices = window.speechSynthesis.getVoices();
-  const match = voices.find(v => v.lang.startsWith(langCode.slice(0, 2)));
-  if (match) u.voice = match;
-  u.onstart = onStart;
-  u.onend = onEnd;
-  u.onerror = onEnd;
-  window.speechSynthesis.speak(u);
+  if (!text) return;
+  ttsEngine.speak(text, langCode, { onStart, onEnd });
 }
 
 /* ═══════════════════════════════════════════════════════════════════
  *  COMPONENT
  * ═══════════════════════════════════════════════════════════════════ */
 export function VoiceAiTab() {
-  const { crop, soil, location, area, geminiKey, saveAiKey } = useApp();
+  const { lang, crop, soil, location, area, geminiKey, saveAiKey, setActiveTab } = useApp();
 
-  const [voiceLang, setVoiceLang] = useState('en-IN');
+  const [voiceLang, setVoiceLang] = useState(() => {
+    const match = LANGS.find(l => l.iso === lang);
+    return match ? match.code : 'en-IN';
+  });
   const [isRec, setIsRec] = useState(false);
   const [recSec, setRecSec] = useState(0);
   const [thinking, setThinking] = useState(false);
@@ -292,19 +402,32 @@ export function VoiceAiTab() {
   useEffect(() => { setTmpKey(geminiKey || ''); }, [geminiKey]);
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth' }); }, [msgs]);
 
+  // Keep Voice AI language synchronized with header language selector
+  useEffect(() => {
+    const match = LANGS.find(l => l.iso === lang);
+    if (match) setVoiceLang(match.code);
+  }, [lang]);
+
+  // Cleanup speech synthesis on component unmount
+  useEffect(() => {
+    return () => {
+      ttsEngine.stop();
+    };
+  }, []);
+
   const key = (geminiKey && geminiKey.trim()) || GROQ_KEY;
   const iso = LANGS.find(l => l.code === voiceLang)?.iso || 'en';
   const cropEn = crop?.nameEn || crop?.name || '';
   const soilEn = soil?.nameEn || soil?.name || '';
   const locEn = location?.nameEn || location?.name || '';
   const areaVal = area || '';
-  const cards = CARDS[voiceLang] || CARDS['en-IN'];
+  const cards = CARDS[voiceLang] || CARDS['hi-IN'] || CARDS['en-IN'];
 
   /* ── Mic ── */
   const startRec = useCallback(async () => {
     setMicErr(''); setTranscript(''); setRecSec(0);
     liveTranscriptRef.current = '';
-    window.speechSynthesis?.cancel(); setSpeaking(false);
+    ttsEngine.stop(); setSpeaking(false);
 
     // 1. Start browser SpeechRecognition in parallel for instant client-side transcription
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -384,7 +507,15 @@ export function VoiceAiTab() {
     setThinking(false);
     setMsgs(prev => [...prev.slice(-10), { role: 'user', text: text.trim() }, { role: 'ai', text: answer }]);
     speak(answer, voiceLang, () => setSpeaking(true), () => setSpeaking(false));
-  }, [cropEn, soilEn, locEn, areaVal, iso, key, voiceLang]);
+
+    // If user's spoken request asks to open or navigate to a website tool, guide them directly there
+    const navTab = detectNavigationTab(text.trim());
+    if (navTab && setActiveTab) {
+      setTimeout(() => {
+        setActiveTab(navTab);
+      }, 2500);
+    }
+  }, [cropEn, soilEn, locEn, areaVal, iso, key, voiceLang, setActiveTab]);
 
   const handleMic = useCallback(async () => {
     if (isRec) {
@@ -424,7 +555,7 @@ export function VoiceAiTab() {
   }, [input, processQuery]);
 
   const stopSpeaking = useCallback(() => {
-    window.speechSynthesis?.cancel();
+    ttsEngine.stop();
     setSpeaking(false);
   }, []);
 
@@ -461,15 +592,15 @@ export function VoiceAiTab() {
             <i className="fa-solid fa-microchip" /> Groq Whisper + Llama-3.3-70B
           </div>
           <h2 style={{ margin: '0 0 6px', fontSize: 21, fontWeight: 800 }}>
-            🎙️ {voiceLang === 'hi-IN' ? 'किसान AI सलाहकार' : 'Farmer AI Voice Assistant'}
+            🎙️ {voiceLang === 'hi-IN' ? 'किसान AI साथी व वेबसाइट मार्गदर्शक' : 'Farmer AI Companion & Website Guide'}
           </h2>
           <p style={{ margin: 0, fontSize: 13, opacity: .8 }}>
-            {voiceLang === 'hi-IN' ? 'रोग, कीट, खाद, पानी, मंडी भाव एवं योजनाओं के बारे में पूछें' : 'Ask about pests, fertilizers, irrigation, mandi rates & government schemes'}
+            {voiceLang === 'hi-IN' ? 'वेबसाइट के किसी भी पेज पर जाने, खाद, पानी, मंडी भाव और सरकारी योजनाओं की सीधी सहायता पाएं' : 'Get step-by-step assistance through the website, fertilizers, mandi rates, and government schemes'}
           </p>
           <div style={S.langBar}>
             {LANGS.map(l => (
               <button key={l.code} type="button" style={S.langBtn(voiceLang === l.code)}
-                onClick={() => { setVoiceLang(l.code); setMicErr(''); setTranscript(''); window.speechSynthesis?.cancel(); setSpeaking(false); if (isRec) stopRec(); }}>
+                onClick={() => { setVoiceLang(l.code); setMicErr(''); setTranscript(''); ttsEngine.stop(); setSpeaking(false); if (isRec) stopRec(); }}>
                 {l.label}
               </button>
             ))}

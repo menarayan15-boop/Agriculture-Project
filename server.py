@@ -1767,6 +1767,48 @@ class KrishiJalHandler(SimpleHTTPRequestHandler):
                     self.wfile.write(json.dumps({"profile": None}).encode('utf-8'))
                 return
 
+            # 7. API: Multilingual Farmer Text-to-Speech Engine
+            if path == "/api/tts":
+                query_params = urllib.parse.parse_qs(parsed_path.query)
+                tl = query_params.get("tl", ["hi"])[0]
+                q = query_params.get("q", [""])[0]
+                if not q.strip():
+                    self.send_response(400)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"error": "Query text required"}).encode('utf-8'))
+                    return
+
+                lang_map = {
+                    "en": "en", "hi": "hi", "te": "te", "ta": "ta", "kn": "kn",
+                    "pa": "pa", "mr": "mr", "bn": "bn", "gu": "gu", "or": "hi"
+                }
+                target_lang = lang_map.get(tl, tl)
+                google_url = f"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl={target_lang}&q={urllib.parse.quote(q[:200])}"
+                req = urllib.request.Request(google_url, headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                    "Referer": "https://translate.google.com/"
+                })
+                try:
+                    ssl_ctx = ssl.create_default_context()
+                    ssl_ctx.check_hostname = False
+                    ssl_ctx.verify_mode = ssl.CERT_NONE
+                    with urllib.request.urlopen(req, timeout=10, context=ssl_ctx) as tts_res:
+                        audio_data = tts_res.read()
+                        self.send_response(200)
+                        self.send_header("Content-Type", "audio/mpeg")
+                        self.send_header("Cache-Control", "public, max-age=86400")
+                        self.send_header("Access-Control-Allow-Origin", "*")
+                        self.end_headers()
+                        self.wfile.write(audio_data)
+                        return
+                except Exception as tts_err:
+                    self.send_response(502)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"error": str(tts_err)}).encode('utf-8'))
+                    return
+
             # Fallback to static file serving
             return super().do_GET()
         except Exception as e:
@@ -1789,7 +1831,111 @@ class KrishiJalHandler(SimpleHTTPRequestHandler):
             except Exception:
                 data = {}
 
-            # --- SOIL IMAGE AI ANALYSIS (Gemini Vision) ---
+            # --- SOIL IMAGE VALIDATION (Step 1: Strict Classifier) ---
+            if path == "/api/soillab/validate-image":
+                image_b64 = data.get("image_base64", "")
+                image_mime = data.get("mime_type", "image/jpeg")
+                api_key = data.get("api_key", "").strip()
+
+                if not image_b64:
+                    self.send_response(400)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"success": False, "isSoil": False, "errorCode": "INVALID_IMAGE", "errorMessage": "No image data provided"}).encode('utf-8'))
+                    return
+
+                if not api_key:
+                    self.send_response(400)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"success": False, "isSoil": False, "errorCode": "NO_API_KEY", "errorMessage": "Gemini API key is required"}).encode('utf-8'))
+                    return
+
+                gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+                val_prompt = """You are a strict Image Classifier for an agricultural soil testing system.
+
+Task: Determine whether the provided image primarily contains genuine visible SOIL / earth suitable for agricultural soil testing.
+
+MANDATORY REJECTION CRITERIA (Set isSoil = false):
+Reject if the image contains:
+- Cars, bikes, vehicles, tractors, machinery, wheels, roads, asphalt
+- People, faces, human body parts without soil
+- Buildings, houses, walls, furniture, interior rooms
+- Plants, crops, leaves, fruits, flowers with NO predominant soil
+- Animals, insects, food items
+- Screenshots, graphics, text, documents, logos, solid colors
+- Sky, mountains, clouds, water bodies
+- Extremely blurry, dark, or unidentifiable images.
+
+ACCEPT CRITERIA (Set isSoil = true):
+Accept ONLY if genuine natural agricultural soil, farmland dirt, soil in a tray/pot, or soil sample occupies the majority (> 70%) of the frame.
+
+Return ONLY structured JSON:
+{
+  "isSoil": true or false,
+  "confidence": number between 0.0 and 1.0 (e.g. 0.95),
+  "reason": "Specific description of what is detected in the image",
+  "imageQuality": "good" or "poor",
+  "soilVisibility": "high" or "medium" or "low" or "none"
+}"""
+
+                request_body = json.dumps({
+                    "contents": [{
+                        "parts": [
+                            {"text": val_prompt},
+                            {"inline_data": {"mime_type": image_mime, "data": image_b64}}
+                        ]
+                    }],
+                    "generationConfig": {"temperature": 0.1, "responseMimeType": "application/json"}
+                }).encode('utf-8')
+
+                try:
+                    req = urllib.request.Request(gemini_url, data=request_body, headers={"Content-Type": "application/json"}, method="POST")
+                    with urllib.request.urlopen(req, timeout=15) as resp:
+                        gemini_response = json.loads(resp.read().decode('utf-8'))
+                    raw_text = gemini_response.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "{}")
+                    parsed = json.loads(raw_text)
+                    is_soil = bool(parsed.get("isSoil", False))
+                    conf = float(parsed.get("confidence", 0.0))
+                    vis = parsed.get("soilVisibility", "none")
+                    qual = parsed.get("imageQuality", "good")
+
+                    if not is_soil or conf < 0.80 or vis in ["none", "low"] or qual == "poor":
+                        self.send_response(200)
+                        self.send_header("Content-Type", "application/json")
+                        self.end_headers()
+                        self.wfile.write(json.dumps({
+                            "success": False,
+                            "isSoil": False,
+                            "confidence": conf,
+                            "reason": parsed.get("reason", "Non-soil image detected"),
+                            "soilVisibility": vis,
+                            "imageQuality": qual,
+                            "errorCode": "INVALID_IMAGE",
+                            "errorMessage": "❌ अमान्य फोटो (Invalid Image): यह मिट्टी की फोटो नहीं है। AI केवल खेत या गमले की असली मिट्टी का परीक्षण करता है।"
+                        }).encode('utf-8'))
+                        return
+
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({
+                        "success": True,
+                        "isSoil": True,
+                        "confidence": conf,
+                        "reason": parsed.get("reason", "Soil detected"),
+                        "soilVisibility": vis,
+                        "imageQuality": qual
+                    }).encode('utf-8'))
+                    return
+                except Exception as ex:
+                    self.send_response(500)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"success": False, "error": str(ex)}).encode('utf-8'))
+                    return
+
+            # --- SOIL IMAGE AI ANALYSIS (Gemini Vision - Only after Validation) ---
             if path == "/api/soillab/analyze-image":
                 image_b64 = data.get("image_base64", "")
                 image_mime = data.get("mime_type", "image/jpeg")
@@ -1809,10 +1955,37 @@ class KrishiJalHandler(SimpleHTTPRequestHandler):
                     self.wfile.write(json.dumps({"error": "Gemini API key is required. Get one free at https://aistudio.google.com/apikey"}).encode('utf-8'))
                     return
 
-                # Build Gemini 1.5 Flash Vision API request
-                gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={api_key}"
+                gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
 
-                prompt = """You are an expert soil scientist and agronomist specializing in Indian agriculture. Carefully analyze this soil image and provide a comprehensive soil health report.
+                # STEP 1 MANDATORY SERVER VALIDATION: Ensure image is strictly soil before analyzing
+                val_prompt = """Determine whether this image is genuine soil/earth. Return ONLY JSON: {"isSoil": true/false, "confidence": 0-1, "reason": "...", "soilVisibility": "high/medium/low/none", "imageQuality": "good/poor"}"""
+                val_body = json.dumps({
+                    "contents": [{"parts": [{"text": val_prompt}, {"inline_data": {"mime_type": image_mime, "data": image_b64}}]}],
+                    "generationConfig": {"temperature": 0.1, "responseMimeType": "application/json"}
+                }).encode('utf-8')
+
+                try:
+                    val_req = urllib.request.Request(gemini_url, data=val_body, headers={"Content-Type": "application/json"}, method="POST")
+                    with urllib.request.urlopen(val_req, timeout=15) as val_resp:
+                        val_json = json.loads(val_resp.read().decode('utf-8'))
+                    val_raw = val_json.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "{}")
+                    val_parsed = json.loads(val_raw)
+                    
+                    if not val_parsed.get("isSoil", False) or float(val_parsed.get("confidence", 0)) < 0.80 or val_parsed.get("soilVisibility") in ["none", "low"]:
+                        self.send_response(400)
+                        self.send_header("Content-Type", "application/json")
+                        self.end_headers()
+                        self.wfile.write(json.dumps({
+                            "success": False,
+                            "error": "❌ अमान्य फोटो (Invalid Image): यह मिट्टी की फोटो नहीं है। / Not a valid soil photo.",
+                            "validation": val_parsed
+                        }).encode('utf-8'))
+                        return
+                except Exception as val_e:
+                    print(f"Backend validation check warning: {val_e}")
+
+                # STEP 2: Soil Analysis
+                prompt = """You are an expert soil scientist and agronomist specializing in Indian agriculture. This image has passed soil verification. Carefully analyze this soil image and provide an estimated soil health report for guidance.
 
 Please analyze the soil and return a JSON response with EXACTLY this structure (no markdown, just raw JSON):
 {
@@ -2280,6 +2453,104 @@ KNOWLEDGE & BEHAVIOR MANDATE:
                 self.end_headers()
                 self.wfile.write(json.dumps({"success": True, "answer": ai_answer}).encode('utf-8'))
                 return
+
+            elif parsed_path.path == "/api/whisper/transcribe":
+                # OpenAI Whisper Speech-to-Text API Endpoint
+                length = int(self.headers.get('Content-Length', 0))
+                body = self.rfile.read(length)
+                
+                try:
+                    payload = json.loads(body.decode('utf-8'))
+                    audio_b64 = payload.get("audio", "")
+                    lang_iso = payload.get("lang", "en")
+                    api_key = payload.get("apiKey", "").strip()
+                    
+                    transcribed_text = ""
+                    
+                    # 1. Attempt local Python Whisper if installed (openai-whisper)
+                    try:
+                        import whisper
+                        import tempfile
+                        
+                        audio_bytes = base64.b64decode(audio_b64)
+                        with tempfile.NamedTemporaryFile(suffix=".webm", delete=False) as tf:
+                            tf.write(audio_bytes)
+                            temp_path = tf.name
+                        
+                        model = whisper.load_model("base")
+                        result = model.transcribe(temp_path, language=lang_iso)
+                        transcribed_text = result.get("text", "").strip()
+                        try:
+                            os.remove(temp_path)
+                        except Exception:
+                            pass
+                    except Exception as local_err:
+                        print(f"[Local Whisper Check]: {local_err} -> Falling back to Whisper API", flush=True)
+
+                    # 2. Fallback to Cloud Whisper API (Groq / OpenAI)
+                    if not transcribed_text and audio_b64:
+                        audio_bytes = base64.b64decode(audio_b64)
+                        boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
+                        
+                        body_parts = []
+                        # File part
+                        body_parts.append(f"--{boundary}\r\n".encode('utf-8'))
+                        body_parts.append(b'Content-Disposition: form-data; name="file"; filename="audio.webm"\r\n')
+                        body_parts.append(b'Content-Type: audio/webm\r\n\r\n')
+                        body_parts.append(audio_bytes)
+                        body_parts.append(b'\r\n')
+                        
+                        # Model part
+                        body_parts.append(f"--{boundary}\r\n".encode('utf-8'))
+                        body_parts.append(b'Content-Disposition: form-data; name="model"\r\n\r\n')
+                        body_parts.append(b'whisper-large-v3\r\n')
+                        
+                        # Language part
+                        body_parts.append(f"--{boundary}\r\n".encode('utf-8'))
+                        body_parts.append(b'Content-Disposition: form-data; name="language"\r\n\r\n')
+                        body_parts.append(lang_iso.encode('utf-8'))
+                        body_parts.append(b'\r\n')
+                        body_parts.append(f"--{boundary}--\r\n".encode('utf-8'))
+                        
+                        multipart_body = b''.join(body_parts)
+                        
+                        whisper_key = api_key if (api_key.startswith("gsk_") or api_key.startswith("sk-")) else "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"
+                        whisper_url = "https://api.openai.com/v1/audio/transcriptions" if whisper_key.startswith("sk-") else "https://api.groq.com/openai/v1/audio/transcriptions"
+                        
+                        req = urllib.request.Request(
+                            whisper_url,
+                            data=multipart_body,
+                            headers={
+                                "Authorization": f"Bearer {whisper_key}",
+                                "Content-Type": f"multipart/form-data; boundary={boundary}"
+                            }
+                        )
+                        ssl_ctx = ssl.create_default_context()
+                        ssl_ctx.check_hostname = False
+                        ssl_ctx.verify_mode = ssl.CERT_NONE
+                        
+                        with urllib.request.urlopen(req, timeout=20, context=ssl_ctx) as res:
+                            if res.status == 200:
+                                res_json = json.loads(res.read().decode('utf-8'))
+                                transcribed_text = res_json.get("text", "").strip()
+
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({
+                        "success": True,
+                        "text": transcribed_text,
+                        "engine": "OpenAI Whisper",
+                        "language": lang_iso
+                    }).encode('utf-8'))
+                    return
+                except Exception as w_err:
+                    print(f"[Whisper Transcribe Error]: {w_err}", flush=True)
+                    self.send_response(500)
+                    self.send_header("Content-Type", "application/json")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"success": False, "error": str(w_err)}).encode('utf-8'))
+                    return
 
             self.send_response(404)
             self.end_headers()

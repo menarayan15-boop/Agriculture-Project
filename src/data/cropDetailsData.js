@@ -774,6 +774,300 @@ export const CROP_SEASONS_DATA = [
           rotation: 'Chilli → Onion / Garlic (Rabi) → Maize (Zaid)',
           companion: 'Marigold border trap crop + Onion intercrop'
         }
+      },
+      {
+        id: 'ragi',
+        name: 'Finger Millet / Ragi',
+        hindiName: 'रागी / मडुआ',
+        category: 'Millet / Superfood',
+        duration: '95–115 days',
+        water: 'Low-Medium',
+        soil: 'Red Loam, Sandy-Loam, Clay-Loam',
+        soilDetails: {
+          bestType: 'Fertile red sandy loam, laterite, and well-drained medium black soils with high organic matter.',
+          idealPh: '5.0 – 8.2 (Tolerates moderate soil acidity and alkalinity)',
+          drainage: 'Good drainage required; highly resilient to erratic monsoon rainfall.',
+          soilPrep: '2–3 deep ploughings followed by fine tilth; apply 6 tonnes well-decomposed FYM/acre.'
+        },
+        climate: {
+          tempRange: '22°C – 34°C (Optimum: 26–29°C; germination fails below 15°C)',
+          rainfall: '50 – 90 cm (Well-distributed monsoon showers; excellent drought recovery)',
+          sunlight: 'High intensity bright sunshine (>7 hrs/day).',
+          climateType: 'Tropical & Sub-tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler / Border Strip (Mostly rainfed, 1–2 protective irrigations in drought)',
+          criticalStages: 'Tillering (25–30 DAS), Flowering (50–60 DAS), Grain Filling (75–85 DAS)',
+          waterReq: '300 – 400 mm'
+        },
+        nutrients: {
+          npk: 'N: 30, P: 20, K: 15 kg/acre (Apply 50% N + Full P & K as basal; 50% N top-dress at tillering)',
+          micronutrients: 'Zinc Sulphate (10 kg/acre) + Azospirillum seed treatment (200g/acre).'
+        },
+        pestsAndDiseases: {
+          pests: 'Ragi Stem Borer (Sesamia inferens), Armyworm, Earhead Caterpillar',
+          diseases: 'Blast (Magnaporthe grisea / Pyricularia), Foot Rot, Smut',
+          management: 'Seed treatment with Trichoderma viride (4g/kg); Grow blast-resistant varieties (GPU-28, ML-365); Spray Tricyclazole if blast lesions appear.'
+        },
+        agronomy: {
+          seedRate: '2–2.5 kg/acre (Transplanting) or 4 kg/acre (Line Sowing)',
+          spacing: '22.5 cm × 10 cm (Line Sowing) / 20 cm × 10 cm (Transplanted)',
+          expectedYield: '14 – 20 Quintals/acre grain + 30–40 Quintals dry nutritious straw',
+          rotation: 'Ragi → Chickpea / Mustard (Rabi) → Groundnut / Moong (Zaid)',
+          companion: 'Pigeonpea (Arhar) 4:1 or Cowpea 6:1 intercrop'
+        }
+      },
+      {
+        id: 'tomato-kharif',
+        name: 'Tomato (Kharif)',
+        hindiName: 'टमाटर (खरीफ)',
+        category: 'Vegetable / Cash',
+        duration: '110–135 days',
+        water: 'Medium-High',
+        soil: 'Sandy-Loam, Red Loam, Rich Alluvial',
+        soilDetails: {
+          bestType: 'Deep, fertile sandy-loam to clay-loam rich in humus, with loose subsoil and excellent aeration.',
+          idealPh: '6.0 – 7.2',
+          drainage: 'High drainage essential; raised beds with plastic mulch prevent root asphyxiation during heavy rain.',
+          soilPrep: 'Deep summer ploughing, 10 tonnes FYM + 200 kg neem cake/acre, construct raised beds (90 cm width, 15 cm height).'
+        },
+        climate: {
+          tempRange: '20°C – 32°C (Night temperature >24°C causes blossom drop; day >35°C reduces lycopene pigmentation)',
+          rainfall: '60 – 100 cm (Rain during fruit ripening causes cracking; drip + staking protects fruit quality)',
+          sunlight: 'Full sunshine (>7 hrs/day).',
+          climateType: 'Warm Sub-tropical'
+        },
+        irrigation: {
+          method: 'Drip Fertigation with Silver-Black Plastic Mulch (Highly Recommended)',
+          criticalStages: 'Seedling Establishment, Flowering & Fruit Set, Fruit Sizing (Irrigate every 3–4 days)',
+          waterReq: '450 – 600 mm'
+        },
+        nutrients: {
+          npk: 'N: 60, P: 40, K: 60 kg/acre (High potash demand for firm skin, long shelf life and uniform red color)',
+          micronutrients: 'Calcium Nitrate + Boron foliar spray at flowering prevents Blossom End Rot (BER).'
+        },
+        pestsAndDiseases: {
+          pests: 'Tomato Fruit Borer (Helicoverpa armigera), Whitefly (Bemisia tabaci), Leaf Miner (Tuta absoluta)',
+          diseases: 'Tomato Leaf Curl Virus (ToLCV), Early Blight (Alternaria solani), Late Blight, Bacterial Wilt',
+          management: 'Yellow sticky traps (20/acre); Pheromone traps for Fruit borer; Grow ToLCV-tolerant hybrids (Arka Rakshak, Abhinav); Copper Oxychloride for blight.'
+        },
+        agronomy: {
+          seedRate: '50–75 grams/acre (F1 Hybrid nursery seedlings transplanted at 25–30 days)',
+          spacing: '90 cm (Row) × 45–60 cm (Plant) with bamboo/string staking',
+          expectedYield: '180 – 280 Quintals/acre high quality firm fruits',
+          rotation: 'Tomato → Wheat / Onion (Rabi) → Moong (Zaid)',
+          companion: 'Marigold border trap crop (reduces nematodes and traps fruit borer moths)'
+        }
+      },
+      {
+        id: 'brinjal-kharif',
+        name: 'Brinjal / Eggplant',
+        hindiName: 'बैंगन',
+        category: 'Vegetable',
+        duration: '120–150 days',
+        water: 'Medium',
+        soil: 'Loamy, Clay-Loam, Silt Loam',
+        soilDetails: {
+          bestType: 'Deep, rich, fertile loam and silt loam with good moisture holding capacity and drainage.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'Good drainage; tolerates temporary heavy rain better than tomato.',
+          soilPrep: '2–3 deep ploughings; incorporate 10 tonnes FYM/acre; prepare ridges & furrows or raised beds.'
+        },
+        climate: {
+          tempRange: '22°C – 35°C (Warm season crop; sensitive to severe frost)',
+          rainfall: '60 – 100 cm',
+          sunlight: 'Full bright sunshine.',
+          climateType: 'Tropical & Sub-tropical'
+        },
+        irrigation: {
+          method: 'Drip Irrigation / Furrow Method',
+          criticalStages: 'Transplanting, Early Flowering, Peak Fruiting (Irrigate every 4–6 days)',
+          waterReq: '500 – 650 mm'
+        },
+        nutrients: {
+          npk: 'N: 50, P: 30, K: 30 kg/acre (Apply N in 3 splits to maintain continuous picking cycle)',
+          micronutrients: 'Zinc Sulphate + Magnesium Sulphate foliar spray.'
+        },
+        pestsAndDiseases: {
+          pests: 'Shoot and Fruit Borer (Leucinodes orbonalis - Major Pest!), Jassids, Epilachna Beetle, Whitefly',
+          diseases: 'Little Leaf of Brinjal (Phytoplasma by leafhopper), Phomopsis Blight, Bacterial Wilt, Damping Off',
+          management: 'Clipping and destruction of wilted shoots; Pheromone traps for Fruit borer (8/acre); Spray Emamectin Benzoate; Roguing of Little leaf plants.'
+        },
+        agronomy: {
+          seedRate: '100–120 grams/acre (Hybrid nursery seedlings)',
+          spacing: '75 cm × 60 cm or 90 cm × 60 cm',
+          expectedYield: '120 – 180 Quintals/acre glossy purple/green fruits',
+          rotation: 'Brinjal → Radish / Mustard (Rabi) → Cowpea / Fodder (Zaid)',
+          companion: 'Coriander or Fennel border rows to attract beneficial predatory insects'
+        }
+      },
+      {
+        id: 'sunflower-kharif',
+        name: 'Sunflower (Kharif)',
+        hindiName: 'सूरजमुखी',
+        category: 'Oilseed',
+        duration: '85–100 days',
+        water: 'Medium',
+        soil: 'Loamy, Clay-Loam, Medium Black Soil',
+        soilDetails: {
+          bestType: 'Deep, well-drained loams and medium to heavy black soils with neutral reaction.',
+          idealPh: '6.5 – 8.0',
+          drainage: 'Good internal drainage; deep taproot system penetrates down to 1.5–2.0 meters.',
+          soilPrep: 'Deep tilling and harrowing; make ridges and furrows at 60 cm distance.'
+        },
+        climate: {
+          tempRange: '20°C – 32°C (Day-neutral crop; photo-insensitive and can be grown year-round)',
+          rainfall: '50 – 70 cm',
+          sunlight: 'High intensity sunlight for maximum seed oil synthesis (>40% oil).',
+          climateType: 'Tropical & Sub-tropical'
+        },
+        irrigation: {
+          method: 'Furrow / Ridge Irrigation',
+          criticalStages: 'Buttoning / Bud Stage (30–35 DAS), Flowering (50–55 DAS), Seed Setting (65–75 DAS)',
+          waterReq: '400 – 500 mm'
+        },
+        nutrients: {
+          npk: 'N: 35, P: 30, K: 20 kg/acre + Sulphur (15 kg/acre for oil enhancement)',
+          micronutrients: 'Borax (2 kg/acre soil or 0.2% foliar spray at ray floret opening) - Vital for 100% seed fill!'
+        },
+        pestsAndDiseases: {
+          pests: 'Head Borer (Helicoverpa armigera), Bihar Hairy Caterpillar, Leafhopper',
+          diseases: 'Alternaria Leaf Blight, Rust, Sunflower Necrosis Virus (Thrips vector)',
+          management: 'Seed treatment with Imidacloprid (5g/kg); Mancozeb spray for Alternaria; Spray Boron + Hand pollination in morning hours for complete seed filling.'
+        },
+        agronomy: {
+          seedRate: '2–2.5 kg/acre (Hybrid seed)',
+          spacing: '60 cm × 30 cm',
+          expectedYield: '8 – 14 Quintals/acre rich oilseeds',
+          rotation: 'Sunflower → Chickpea / Wheat (Rabi) → Moong (Zaid)',
+          companion: 'Pigeonpea or Groundnut intercropping in 2:4 ratio'
+        }
+      },
+      {
+        id: 'cowpea-kharif',
+        name: 'Cowpea / Lobia (Kharif)',
+        hindiName: 'लोबिया (खरीफ)',
+        category: 'Pulse / Fodder',
+        duration: '65–80 days',
+        water: 'Low-Medium',
+        soil: 'Sandy-Loam, Red Loam, Clay-Loam',
+        soilDetails: {
+          bestType: 'Adaptable to wide range of soils from sandy loams to red laterites; tolerates slight acidity.',
+          idealPh: '5.5 – 7.5',
+          drainage: 'Good drainage; deep taproot makes it hardy and drought tolerant.',
+          soilPrep: '1 ploughing followed by harrowing.'
+        },
+        climate: {
+          tempRange: '24°C – 36°C (Warm tropical conditions)',
+          rainfall: '50 – 80 cm',
+          sunlight: 'Full sunshine.',
+          climateType: 'Tropical'
+        },
+        irrigation: {
+          method: 'Rainfed / Sprinkler',
+          criticalStages: 'Flowering (30–35 DAS) and Pod Development (50 DAS)',
+          waterReq: '300 – 400 mm'
+        },
+        nutrients: {
+          npk: 'N: 10, P: 25, K: 15 kg/acre (Fixes 60–80 kg atmospheric Nitrogen into soil)',
+          micronutrients: 'Rhizobium leguminosarum + PSB seed inoculation.'
+        },
+        pestsAndDiseases: {
+          pests: 'Aphids (Aphis craccivora), Pod Borer, Leafhopper',
+          diseases: 'Cercospora Leaf Spot, Cowpea Yellow Mosaic Virus, Anthracnose',
+          management: 'Neem seed kernel extract (NSKE 5%) spray; Grow disease resistant varieties (Pusa Komal, CP-4).'
+        },
+        agronomy: {
+          seedRate: '8–10 kg/acre (Grain) or 15 kg/acre (Dual purpose fodder/green pods)',
+          spacing: '45 cm × 15 cm',
+          expectedYield: '6 – 10 Quintals dry grain / 35–50 Quintals green tender pods/acre',
+          rotation: 'Cowpea → Wheat / Barley (Rabi) → Summer Moong (Zaid)',
+          companion: 'Maize or Sorghum companion intercrop (1:2 ratio) provides natural physical support'
+        }
+      },
+      {
+        id: 'sweet-potato',
+        name: 'Sweet Potato / Shakarkand',
+        hindiName: 'शकरकंद',
+        category: 'Tuber / Superfood',
+        duration: '105–120 days',
+        water: 'Medium',
+        soil: 'Sandy-Loam, Loam, Well-Drained Red Soil',
+        soilDetails: {
+          bestType: 'Light, loose, friable sandy loam with clay subsoil; heavy soils cause misshapen tubers and poor yield.',
+          idealPh: '5.8 – 6.8',
+          drainage: 'Excellent drainage; raised ridges (30 cm height) facilitate rapid tuber expansion.',
+          soilPrep: 'Deep tilling (25 cm), incorporate 8 tonnes FYM/acre, make high ridges and furrows.'
+        },
+        climate: {
+          tempRange: '22°C – 32°C (Warm sub-tropical and tropical climate; requires minimum 4 months warm weather)',
+          rainfall: '75 – 100 cm',
+          sunlight: 'Abundant sunshine (>7 hrs/day).',
+          climateType: 'Tropical & Sub-tropical'
+        },
+        irrigation: {
+          method: 'Furrow / Drip Irrigation',
+          criticalStages: 'Vine Establishment (0–15 DAP), Tuber Initiation (30–45 DAP), Tuber Bulking (60–80 DAP)',
+          waterReq: '450 – 550 mm'
+        },
+        nutrients: {
+          npk: 'N: 25, P: 20, K: 40 kg/acre (High potash requirement for starch storage and tuber girth)',
+          micronutrients: 'Boron (0.1% spray) prevents internal brown spot in tubers.'
+        },
+        pestsAndDiseases: {
+          pests: 'Sweet Potato Weevil (Cylas formicarius - Major Pest!), Vine Borer, Whitefly',
+          diseases: 'Black Rot, Feathery Mottle Virus, Stem Rot (Fusarium)',
+          management: 'Use terminal vine cuttings free from weevil; Earthing up at 30 and 60 DAP to cover exposed tubers; Crop rotation with rice.'
+        },
+        agronomy: {
+          seedRate: '20,000 – 25,000 terminal vine cuttings (20–25 cm length with 3–4 nodes) per acre',
+          spacing: '60 cm (Ridge) × 20–25 cm (Plant)',
+          expectedYield: '80 – 140 Quintals/acre high calorie nutritious tubers',
+          rotation: 'Sweet Potato → Wheat / Peas (Rabi) → Moong (Zaid)',
+          companion: 'Corn or Soybean intercrop'
+        }
+      },
+      {
+        id: 'daincha',
+        name: 'Daincha / Green Manure',
+        hindiName: 'ढैंचा / सनई (हरी खाद)',
+        category: 'Soil Health / Green Manuring',
+        duration: '45–55 days (Incorporated)',
+        water: 'Medium',
+        soil: 'Any Soil, Saline-Alkali, Waterlogged Tolerant',
+        soilDetails: {
+          bestType: 'Highly versatile; thrives in saline, alkaline, waterlogged, and infertile barren soils.',
+          idealPh: '4.5 – 9.5 (Champions reclamation of barren sodic soils with pH up to 9.5)',
+          drainage: 'Tolerates extreme waterlogging and stagnation.',
+          soilPrep: 'Broadcast seeds in moist field with minimal tillage.'
+        },
+        climate: {
+          tempRange: '25°C – 40°C (High heat and monsoon tolerant)',
+          rainfall: '40 – 120 cm',
+          sunlight: 'Full sunshine.',
+          climateType: 'Tropical'
+        },
+        irrigation: {
+          method: 'Rainfed / 1–2 Flooding Irrigations',
+          criticalStages: 'Emergence and 30 DAS fast vegetative surge',
+          waterReq: '200 – 300 mm'
+        },
+        nutrients: {
+          npk: 'Fixes 80–120 kg Nitrogen/acre and adds 8–10 tonnes fresh organic biomass/acre into soil!',
+          micronutrients: 'Rhizobium sesbaniae nodules fix tremendous atmospheric nitrogen.'
+        },
+        pestsAndDiseases: {
+          pests: 'Minimal pest incidence; highly robust.',
+          diseases: 'Resistant to major soil pathogens.',
+          management: 'Incorporate into soil using disc harrow or rotavator at 45–50 days (before stem becomes woody).'
+        },
+        agronomy: {
+          seedRate: '15–20 kg/acre (Broadcast)',
+          spacing: 'Dense broadcasting for maximum biomass and weed suppression',
+          expectedYield: '80 – 120 Quintals/acre green succulent organic manure incorporated into soil',
+          rotation: 'Daincha (Pre-Monsoon Green Manure) → Paddy / Sugarcane (Main Crop) → Wheat',
+          companion: 'Universal soil conditioning pre-crop for saline/alkali land reclamation'
+        }
       }
     ]
   },
@@ -1211,6 +1505,510 @@ export const CROP_SEASONS_DATA = [
           rotation: 'Maize (Kharif) → Cauliflower → Moong / Cucumber (Zaid)',
           companion: 'Mint, Rosemary, or Mustard border trap crop'
         }
+      },
+      {
+        id: 'cabbage',
+        name: 'Cabbage / Patta Gobhi',
+        hindiName: 'पत्तागोभी / बंदगोभी',
+        category: 'Cole Crop / Vegetable',
+        duration: '70–95 days',
+        water: 'Medium',
+        soil: 'Loamy, Clay-Loam, Alluvial',
+        soilDetails: {
+          bestType: 'Moisture-retentive, heavy loamy and clay-loam soils rich in decomposed organic matter.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'Good drainage with regular root moisture.',
+          soilPrep: 'Deep tilling with 10 tonnes FYM/acre; prepare raised beds.'
+        },
+        climate: {
+          tempRange: '12°C – 22°C (Prefers cool, humid climate; high heat causes loose bursting heads)',
+          rainfall: '40 – 60 cm',
+          sunlight: 'Full winter sunshine.',
+          climateType: 'Cool Temperate & Sub-tropical'
+        },
+        irrigation: {
+          method: 'Drip / Furrow Irrigation',
+          criticalStages: 'Seedling Establishment, Head Formation & Firming (Irrigate every 6–8 days)',
+          waterReq: '350 – 450 mm'
+        },
+        nutrients: {
+          npk: 'N: 50, P: 30, K: 35 kg/acre',
+          micronutrients: 'Borax (5 kg/acre) + Molybdenum foliar spray.'
+        },
+        pestsAndDiseases: {
+          pests: 'Diamondback Moth (DBM), Tobacco Caterpillar, Cabbage Aphid',
+          diseases: 'Black Rot, Downy Mildew, Clubroot',
+          management: 'Mustard trap crop; Bt spray; Pheromone traps for DBM.'
+        },
+        agronomy: {
+          seedRate: '150–200 grams/acre (Nursery seedlings)',
+          spacing: '45 cm × 45 cm',
+          expectedYield: '120 – 180 Quintals/acre solid compact heads',
+          rotation: 'Rice / Maize (Kharif) → Cabbage → Moong / Tinda (Zaid)',
+          companion: 'Tomatoes, Celery, or Onions'
+        }
+      },
+      {
+        id: 'lentil',
+        name: 'Lentil / Masoor',
+        hindiName: 'मसूर दाल',
+        category: 'Pulse / Legume',
+        duration: '100–120 days',
+        water: 'Low',
+        soil: 'Loamy, Clay-Loam, Alluvial Silt',
+        soilDetails: {
+          bestType: 'Fertile loams and clay-loam soils with good moisture retention; ideal for flood-receded Gangetic diara lands.',
+          idealPh: '6.0 – 7.5 (Tolerates moderate soil acidity)',
+          drainage: 'High drainage; sensitive to water stagnation.',
+          soilPrep: '1–2 shallow ploughings and planking; also highly suitable for Relay / Utera cropping directly into standing rice fields!'
+        },
+        climate: {
+          tempRange: '10°C – 25°C (Cool climate crop; frost and winter rains at vegetative stage promote branching)',
+          rainfall: '30 – 45 cm',
+          sunlight: 'Full bright sunshine during pod setting.',
+          climateType: 'Cool Sub-tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler / Border Strip (Mostly grown on residual moisture)',
+          criticalStages: 'Branching (35–40 DAS) and Pod formation (65–70 DAS) — 1–2 light irrigations',
+          waterReq: '180 – 250 mm'
+        },
+        nutrients: {
+          npk: 'N: 8, P: 20, K: 10 kg/acre + Sulphur (8 kg/acre)',
+          micronutrients: 'Rhizobium leguminosarum + Ammonium Molybdate seed treatment.'
+        },
+        pestsAndDiseases: {
+          pests: 'Aphids, Pod Borer',
+          diseases: 'Rust (Uromyces viciae-fabae), Wilt (Fusarium oxysporum), Collar Rot',
+          management: 'Grow Rust-resistant varieties (HUL-57, KLS-218, PL-8); Trichoderma seed treatment.'
+        },
+        agronomy: {
+          seedRate: '15–18 kg/acre (Bold seeded) / 12 kg/acre (Small seeded)',
+          spacing: '22.5 cm × 5 cm',
+          expectedYield: '7 – 12 Quintals/acre high protein pink lentils',
+          rotation: 'Rice (Kharif) → Masoor (Rabi) → Moong (Zaid)',
+          companion: 'Mustard, Barley or Linseed intercropping (4:1 ratio)'
+        }
+      },
+      {
+        id: 'linseed',
+        name: 'Linseed / Flaxseed',
+        hindiName: 'अलसी / तीसी',
+        category: 'Oilseed / Superfood',
+        duration: '110–130 days',
+        water: 'Low',
+        soil: 'Clay-Loam, Deep Black Soil, Alluvial',
+        soilDetails: {
+          bestType: 'Deep moisture-retentive clay-loams, black cotton soils, and alluvial soils.',
+          idealPh: '6.0 – 7.8',
+          drainage: 'Good drainage; deep taproot extracts residual subsoil moisture.',
+          soilPrep: 'Fine seedbed; 2 ploughings and planking.'
+        },
+        climate: {
+          tempRange: '10°C – 25°C (Cool temperate winter enhances Omega-3 Alpha Linolenic Acid content in seeds)',
+          rainfall: '30 – 50 cm',
+          sunlight: 'Bright sunny winter days.',
+          climateType: 'Cool Sub-tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler / Light Border',
+          criticalStages: 'Branching (30–35 DAS) and Flowering / Capsule setting (55–65 DAS)',
+          waterReq: '200 – 300 mm'
+        },
+        nutrients: {
+          npk: 'N: 20, P: 15, K: 10 kg/acre + Sulphur (10 kg/acre for oil synthesis)',
+          micronutrients: 'Zinc Sulphate (10 kg/acre).'
+        },
+        pestsAndDiseases: {
+          pests: 'Linseed Gall Fly (Dasyneura lini - Major Pest!), Semilooper',
+          diseases: 'Rust (Melampsora lini), Powdery Mildew, Alternaria Blight',
+          management: 'Early sowing by end of October; Grow resistant varieties (JLS-66, RLC-92); Spray Wettable Sulphur for Powdery mildew.'
+        },
+        agronomy: {
+          seedRate: '10–12 kg/acre',
+          spacing: '25–30 cm × 5–7 cm',
+          expectedYield: '6 – 10 Quintals/acre golden/brown flaxseed',
+          rotation: 'Paddy / Maize (Kharif) → Linseed → Summer Moong (Zaid)',
+          companion: 'Chickpea or Wheat intercrop (3:1 ratio)'
+        }
+      },
+      {
+        id: 'safflower',
+        name: 'Safflower / Kusum',
+        hindiName: 'कुसुम',
+        category: 'Oilseed / Arid Crop',
+        duration: '120–140 days',
+        water: 'Very Low',
+        soil: 'Deep Black Cotton Soil, Vertisols',
+        soilDetails: {
+          bestType: 'Deep black soils with high moisture-holding capacity and deep subsoil layers; deep taproot penetrates 2.5 meters!',
+          idealPh: '6.5 – 8.5 (Highly salt tolerant)',
+          drainage: 'Good drainage; excellent drought resilience.',
+          soilPrep: 'Deep summer ploughing to store late monsoon rains.'
+        },
+        climate: {
+          tempRange: '15°C – 30°C (Drought and heat hardy)',
+          rainfall: '25 – 45 cm',
+          sunlight: 'Full bright sunshine.',
+          climateType: 'Semi-Arid'
+        },
+        irrigation: {
+          method: 'Mostly Rainfed / 1 Furrow Irrigation',
+          criticalStages: 'Rosette / Branching (35 DAS) and Flowering (70 DAS)',
+          waterReq: '180 – 250 mm'
+        },
+        nutrients: {
+          npk: 'N: 20, P: 15, K: 10 kg/acre',
+          micronutrients: 'Sulphur (10 kg/acre) + Azotobacter seed inoculation.'
+        },
+        pestsAndDiseases: {
+          pests: 'Safflower Aphid (Uroleucon compositae), Gujhia Weevil',
+          diseases: 'Alternaria Leaf Spot, Wilt, Rust',
+          management: 'Sow early to escape aphid attack; Spray Dimethoate (0.05%); Spiny nature serves as natural cattle-proof field fencing.'
+        },
+        agronomy: {
+          seedRate: '4–5 kg/acre',
+          spacing: '45 cm × 20 cm',
+          expectedYield: '6 – 10 Quintals/acre high PUFA healthy cooking oilseeds',
+          rotation: 'Soybean / Cotton (Kharif) → Safflower → Fallow / Sesame',
+          companion: 'Chickpea + Safflower (3:1 ratio) or border rows around wheat'
+        }
+      },
+      {
+        id: 'cumin',
+        name: 'Cumin / Jeera',
+        hindiName: 'जीरा',
+        category: 'High-Value Export Spice',
+        duration: '90–110 days',
+        water: 'Low',
+        soil: 'Sandy-Loam, Loamy Silt, Well-Drained',
+        soilDetails: {
+          bestType: 'Well-aerated sandy loam and loamy soils rich in organic matter and free from fungal inoculum.',
+          idealPh: '6.5 – 7.8',
+          drainage: 'High drainage required; excess moisture causes fatal wilt and blight.',
+          soilPrep: 'Fine seedbed prepared with 2–3 harrowings and planking; incorporate 6 tonnes FYM/acre.'
+        },
+        climate: {
+          tempRange: '10°C – 22°C (Cool, dry, cloud-free winter; persistent cloudy or foggy weather causes devastating blight!)',
+          rainfall: '15 – 25 cm (Dry sunny climate essential)',
+          sunlight: 'Intense clear winter sunshine.',
+          climateType: 'Arid & Semi-Arid Sub-tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler / Micro-Irrigation (Gentle light irrigations)',
+          criticalStages: 'Germination (Day 1 & Day 7), Flowering (35 DAS), Seed Formation (60 DAS) — Never over-irrigate!',
+          waterReq: '150 – 220 mm (4–5 light irrigations)'
+        },
+        nutrients: {
+          npk: 'N: 15, P: 10, K: 10 kg/acre + Sulphur (10 kg/acre)',
+          micronutrients: 'Zinc Sulphate + Trichoderma bio-agent.'
+        },
+        pestsAndDiseases: {
+          pests: 'Cumin Aphids (Severe), Thrips',
+          diseases: 'Blight (Alternaria burnsii - Catastrophic!), Fusarium Wilt, Powdery Mildew',
+          management: 'Prophylactic Mancozeb (0.2%) spray before cloud cover; Trichoderma seed treatment (10g/kg); Spray Acetamiprid for aphids.'
+        },
+        agronomy: {
+          seedRate: '4–5 kg/acre (Seed soaked in water for 8 hrs before sowing)',
+          spacing: '22.5–30 cm × 5 cm',
+          expectedYield: '3 – 5 Quintals/acre premium export grade cumin seed',
+          rotation: 'Bajra / Guar (Kharif) → Cumin → Fallow (Zaid)',
+          companion: 'Mustard or Coriander border trap crop'
+        }
+      },
+      {
+        id: 'fennel',
+        name: 'Fennel / Saunf',
+        hindiName: 'सौंफ',
+        category: 'Spice / Cash Crop',
+        duration: '150–180 days',
+        water: 'Medium',
+        soil: 'Loamy, Sandy-Loam, Clay-Loam',
+        soilDetails: {
+          bestType: 'Deep, rich, well-drained loamy and alluvial soils with high fertility.',
+          idealPh: '6.5 – 8.0',
+          drainage: 'Good drainage; deep taproot.',
+          soilPrep: 'Deep tilling and fine seedbed preparation; 8 tonnes FYM/acre.'
+        },
+        climate: {
+          tempRange: '15°C – 28°C (Cool weather during vegetative phase; warm dry climate during seed umbel ripening)',
+          rainfall: '35 – 55 cm',
+          sunlight: 'Bright sunshine.',
+          climateType: 'Sub-tropical'
+        },
+        irrigation: {
+          method: 'Furrow / Drip Irrigation',
+          criticalStages: 'Early Branching, Umbel Emergence (70 DAS), Flowering (100 DAS), Seed Milking (125 DAS)',
+          waterReq: '350 – 450 mm (6–8 irrigations)'
+        },
+        nutrients: {
+          npk: 'N: 35, P: 20, K: 15 kg/acre (Apply N in 3 splits)',
+          micronutrients: 'Zinc Sulphate + Borax spray at umbel formation.'
+        },
+        pestsAndDiseases: {
+          pests: 'Fennel Aphids, Thrips, Seed Chalcid',
+          diseases: 'Ramularia Blight, Powdery Mildew, Root Rot',
+          management: 'Wettable Sulphur spray for Mildew; Mancozeb for Blight; Neem oil for aphids.'
+        },
+        agronomy: {
+          seedRate: '3–4 kg/acre (Direct sown) or 1.5 kg/acre (Transplanted nursery)',
+          spacing: '45–60 cm × 20–30 cm',
+          expectedYield: '6 – 10 Quintals/acre aromatic export quality fennel seed',
+          rotation: 'Guar / Moong (Kharif) → Fennel → Fallow (Zaid)',
+          companion: 'Companion herb; attracts predatory ladybugs and hoverflies'
+        }
+      },
+      {
+        id: 'fenugreek',
+        name: 'Fenugreek / Methi',
+        hindiName: 'मेथी (कसूरी व दाना मेथी)',
+        category: 'Spice / Herb / Legume',
+        duration: '80–100 days (Grain) / 30–45 days (Leafy)',
+        water: 'Low',
+        soil: 'Loamy, Sandy-Loam, Well-Drained',
+        soilDetails: {
+          bestType: 'Rich loamy to sandy loam soils with good organic matter and high calcium content.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'Good drainage; sensitive to waterlogging.',
+          soilPrep: 'Fine seedbed; apply 6 tonnes FYM/acre.'
+        },
+        climate: {
+          tempRange: '10°C – 25°C (Cool climate crop; frost tolerant)',
+          rainfall: '25 – 40 cm',
+          sunlight: 'Bright winter sun.',
+          climateType: 'Cool Sub-tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler / Flat Bed Flooding',
+          criticalStages: 'Branching (25 DAS), Flowering (45 DAS), Pod Sizing (65 DAS)',
+          waterReq: '200 – 280 mm'
+        },
+        nutrients: {
+          npk: 'N: 10, P: 20, K: 10 kg/acre (Fixes 35–45 kg atmospheric Nitrogen)',
+          micronutrients: 'Rhizobium meliloti + PSB seed inoculation.'
+        },
+        pestsAndDiseases: {
+          pests: 'Aphids, Leaf Miner',
+          diseases: 'Powdery Mildew, Downy Mildew, Root Rot',
+          management: 'Spray Dinocap or Wettable Sulphur for Powdery mildew; Neem spray for aphids.'
+        },
+        agronomy: {
+          seedRate: '8–10 kg/acre (Grain) or 12–15 kg/acre (Kasuri Leafy Methi)',
+          spacing: '22.5–30 cm × 5 cm',
+          expectedYield: '6 – 9 Quintals dry seeds/acre (or 30–40 Q fresh green leaves across 3 cuts)',
+          rotation: 'Bajra / Cotton (Kharif) → Methi → Watermelon (Zaid)',
+          companion: 'Natural soil-enriching intercrop in wheat or vegetable beds'
+        }
+      },
+      {
+        id: 'tomato-rabi',
+        name: 'Tomato (Rabi / Winter)',
+        hindiName: 'टमाटर (रबी / शीतकालीन)',
+        category: 'Vegetable / Cash',
+        duration: '120–140 days',
+        water: 'Medium',
+        soil: 'Sandy-Loam, Loam, Alluvial',
+        soilDetails: {
+          bestType: 'Deep, rich fertile loamy soil with abundant humus and loose structure.',
+          idealPh: '6.0 – 7.2',
+          drainage: 'Well-drained; raised beds prevent root rot during winter dew/fog.',
+          soilPrep: 'Deep ploughing, 10 tonnes FYM/acre, construct raised beds with silver-black mulch.'
+        },
+        climate: {
+          tempRange: '15°C – 28°C (Cool bright winter weather promotes heavy fruit set and deep red lycopene color)',
+          rainfall: '30 – 50 cm',
+          sunlight: 'Full winter sunshine.',
+          climateType: 'Cool Sub-tropical'
+        },
+        irrigation: {
+          method: 'Drip Fertigation with Bamboo Staking',
+          criticalStages: 'Transplanting, Early Flowering, Peak Sizing & Harvest Cycle',
+          waterReq: '400 – 500 mm'
+        },
+        nutrients: {
+          npk: 'N: 60, P: 40, K: 60 kg/acre',
+          micronutrients: 'Calcium Nitrate + Boron foliar spray every 15 days.'
+        },
+        pestsAndDiseases: {
+          pests: 'Fruit Borer, Whitefly, Leaf Miner (Tuta absoluta)',
+          diseases: 'Early Blight, Late Blight (in foggy winter), ToLCV',
+          management: 'Prophylactic Mancozeb + Cymoxanil for Late blight; Pheromone traps; Yellow sticky traps.'
+        },
+        agronomy: {
+          seedRate: '50–70 grams/acre (Hybrid seedlings)',
+          spacing: '90 cm × 45 cm (Staked)',
+          expectedYield: '200 – 300 Quintals/acre high yield export grade tomatoes',
+          rotation: 'Maize (Kharif) → Rabi Tomato → Cucumber / Moong (Zaid)',
+          companion: 'Marigold border trap crop'
+        }
+      },
+      {
+        id: 'carrot',
+        name: 'Carrot / Gajar',
+        hindiName: 'गाजर (लाल / नारंगी)',
+        category: 'Root Vegetable',
+        duration: '75–90 days',
+        water: 'Medium',
+        soil: 'Deep Sandy-Loam, Loose Loam, Free from Stones',
+        soilDetails: {
+          bestType: 'Deep, loose, light sandy-loam soil free from stones, pebbles, or hard pan to allow straight root development.',
+          idealPh: '6.0 – 7.0 (Hard clay soils cause branching and forking of carrot roots)',
+          drainage: 'High drainage; raised ridges facilitate long straight root growth.',
+          soilPrep: 'Deep tilling (30 cm) and pulverizing into fine crumb tilth; prepare 25 cm high ridges.'
+        },
+        climate: {
+          tempRange: '10°C – 20°C (Cool climate is essential; temperature 15–18°C gives deep red carotene color and sweet taste)',
+          rainfall: '30 – 45 cm',
+          sunlight: 'Full winter sunshine.',
+          climateType: 'Cool Temperate & Sub-tropical'
+        },
+        irrigation: {
+          method: 'Drip / Furrow Irrigation (Maintain even soil moisture; fluctuating moisture causes root cracking)',
+          criticalStages: 'Germination, Root Expansion (30–60 DAS)',
+          waterReq: '300 – 400 mm'
+        },
+        nutrients: {
+          npk: 'N: 25, P: 20, K: 35 kg/acre (Avoid excessive Nitrogen which causes hairy roots and split crowns)',
+          micronutrients: 'Borax (2 kg/acre) prevents cavity spot in roots.'
+        },
+        pestsAndDiseases: {
+          pests: 'Carrot Rust Fly, Aphids, Cutworm',
+          diseases: 'Alternaria Leaf Blight, Powdery Mildew, Sclerotinia White Rot',
+          management: 'Grow on high ridges; Mancozeb spray for Leaf blight; Avoid fresh un-rotted FYM (causes root forking).'
+        },
+        agronomy: {
+          seedRate: '3–4 kg/acre (Seeds rubbed with fine sand for uniform broadcasting or ridge drilling)',
+          spacing: '30 cm (Ridge) × 8–10 cm (Plant)',
+          expectedYield: '100 – 160 Quintals/acre crisp sweet juicy carrots',
+          rotation: 'Maize (Kharif) → Carrot → Summer Moong / Okra (Zaid)',
+          companion: 'Onions or Leeks (Onion smell deters Carrot fly)'
+        }
+      },
+      {
+        id: 'radish',
+        name: 'Radish / Mooli',
+        hindiName: 'मूली (सफेद)',
+        category: 'Root Vegetable',
+        duration: '35–50 days (Fastest Cash Crop)',
+        water: 'Medium',
+        soil: 'Sandy-Loam, Loam, Loose Friable',
+        soilDetails: {
+          bestType: 'Friable, loose, fertile sandy-loam with plenty of decomposed organic matter.',
+          idealPh: '6.0 – 7.0',
+          drainage: 'High drainage; raised ridges (20 cm) provide straight white roots.',
+          soilPrep: 'Deep ploughing with 6 tonnes FYM/acre; prepare ridges and furrows.'
+        },
+        climate: {
+          tempRange: '10°C – 22°C (Cool climate keeps roots sweet, tender and pungent without pithiness)',
+          rainfall: '25 – 40 cm',
+          sunlight: 'Full sunshine.',
+          climateType: 'Cool Sub-tropical'
+        },
+        irrigation: {
+          method: 'Furrow / Sprinkler (Frequent light irrigations every 4–5 days)',
+          criticalStages: 'Root swelling stage (15–35 DAS)',
+          waterReq: '200 – 280 mm'
+        },
+        nutrients: {
+          npk: 'N: 25, P: 15, K: 20 kg/acre (Fast feeder; quick harvest turnover)',
+          micronutrients: 'Boron spray prevents internal blackening.'
+        },
+        pestsAndDiseases: {
+          pests: 'Flea Beetle, Aphids, Mustard Sawfly',
+          diseases: 'Alternaria Blight, White Rust',
+          management: 'Harvest on time before roots turn spongy/pithy; Neem oil spray for aphids.'
+        },
+        agronomy: {
+          seedRate: '4–5 kg/acre',
+          spacing: '30 cm × 8–10 cm on ridges',
+          expectedYield: '80 – 120 Quintals/acre fresh white crisp radishes',
+          rotation: 'Paddy / Maize (Kharif) → Radish → Onion / Wheat → Zaid',
+          companion: 'Spinach, Lettuce or Peas intercrop'
+        }
+      },
+      {
+        id: 'spinach',
+        name: 'Spinach / Palak',
+        hindiName: 'पालक (हरी पत्तियां)',
+        category: 'Leafy Green / Vegetable',
+        duration: '30–60 days (Multi-cut)',
+        water: 'Medium',
+        soil: 'Loamy, Alluvial, Rich Organic Silt',
+        soilDetails: {
+          bestType: 'Rich, fertile loamy and alluvial soils with high organic matter and nitrogen.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'Good drainage; shallow fibrous root system.',
+          soilPrep: 'Fine tilth; incorporate 8 tonnes FYM/acre; prepare level beds.'
+        },
+        climate: {
+          tempRange: '10°C – 22°C (Cool weather prevents early bolting and keeps leaves tender)',
+          rainfall: '30 – 45 cm',
+          sunlight: 'Full to partial sunshine.',
+          climateType: 'Cool Sub-tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler / Flat Bed (Light irrigation after every harvest cut)',
+          criticalStages: 'Continuous vegetative flushes (Irrigate every 4–6 days)',
+          waterReq: '250 – 350 mm'
+        },
+        nutrients: {
+          npk: 'N: 35, P: 20, K: 20 kg/acre (Apply 10 kg N after each cutting to promote lush green regrowth)',
+          micronutrients: 'Iron & Zinc foliar spray.'
+        },
+        pestsAndDiseases: {
+          pests: 'Aphids, Leaf Miner, Semilooper',
+          diseases: 'Cercospora Leaf Spot, Downy Mildew, Damping Off',
+          management: 'Neem spray; Copper Oxychloride spray for leaf spots; Harvest every 12–15 days.'
+        },
+        agronomy: {
+          seedRate: '8–10 kg/acre (Winter) / 12 kg/acre (Summer)',
+          spacing: '20 cm × 5 cm',
+          expectedYield: '70 – 110 Quintals/acre fresh dark green iron-rich leaves (across 4–6 cuttings)',
+          rotation: 'Cereal (Kharif) → Spinach → Summer Gourd (Zaid)',
+          companion: 'Cabbage, Cauliflower or Radish border rows'
+        }
+      },
+      {
+        id: 'oats',
+        name: 'Oats / Jai',
+        hindiName: 'जई (अनाज व हरा चारा)',
+        category: 'Cereal / Livestock Fodder',
+        duration: '85–110 days (Multi-cut fodder)',
+        water: 'Low-Medium',
+        soil: 'Loamy, Clay-Loam, Alluvial',
+        soilDetails: {
+          bestType: 'Fertile loams and clay-loams with good moisture holding capacity; tolerates slight soil acidity.',
+          idealPh: '5.5 – 7.5',
+          drainage: 'Good drainage; hardy.',
+          soilPrep: '2 ploughings and planking; 6 tonnes FYM/acre.'
+        },
+        climate: {
+          tempRange: '10°C – 22°C (Cool, moist winter weather promotes tillering and leafy biomass)',
+          rainfall: '30 – 50 cm',
+          sunlight: 'Bright winter sun.',
+          climateType: 'Cool Temperate'
+        },
+        irrigation: {
+          method: 'Border Strip / Flooding',
+          criticalStages: 'Tillering (25 DAS), After 1st Cut (55 DAS), Booting / Milk Stage (85 DAS)',
+          waterReq: '300 – 400 mm (3–4 irrigations)'
+        },
+        nutrients: {
+          npk: 'N: 40, P: 20, K: 15 kg/acre (Top-dress 20 kg N immediately after 1st cutting)',
+          micronutrients: 'Zinc Sulphate + Azotobacter biofertilizer.'
+        },
+        pestsAndDiseases: {
+          pests: 'Aphids, Armyworm',
+          diseases: 'Crown Rust (Puccinia coronata), Loose Smut, Blight',
+          management: 'Seed treatment with Carboxin (2g/kg); Grow high-biomass multi-cut varieties (Kent, JHO-822, OS-6).'
+        },
+        agronomy: {
+          seedRate: '30–35 kg/acre',
+          spacing: '20–25 cm × continuous drill',
+          expectedYield: '200 – 300 Quintals/acre green succulent dairy fodder + 12–16 Quintals grain/acre',
+          rotation: 'Maize / Cowpea (Kharif) → Oats (Rabi) → Summer Moong (Zaid)',
+          companion: 'Berseem or Mustard intercrop (3:1 ratio) maximizes milk yield in cattle'
+        }
       }
     ]
   },
@@ -1647,6 +2445,426 @@ export const CROP_SEASONS_DATA = [
           expectedYield: '250 – 350 Quintals/acre green juicy palatable fodder (across 3–4 summer cuts)',
           rotation: 'Wheat (Rabi) → Fodder → Paddy (Kharif)',
           companion: 'Cowpea intercrop (3:1 ratio) significantly increases protein content of green fodder'
+        }
+      },
+      {
+        id: 'ridge-gourd',
+        name: 'Ridge Gourd / Torai',
+        hindiName: 'तोरी / तोरई / झींगा',
+        category: 'Cucurbit / Vegetable',
+        duration: '50–70 days',
+        water: 'Medium',
+        soil: 'Loamy, Sandy-Loam, Rich Humus',
+        soilDetails: {
+          bestType: 'Fertile loamy to sandy loam soils with high organic matter and good aeration.',
+          idealPh: '6.5 – 7.5',
+          drainage: 'High drainage; trellis/bower system prevents fruit rot and bending.',
+          soilPrep: 'Deep ploughing with 8 tonnes FYM/acre; erect GI wire or net trellis.'
+        },
+        climate: {
+          tempRange: '25°C – 38°C (Warm tropical and sub-tropical summer weather)',
+          rainfall: 'Dry summer with regular drip irrigation',
+          sunlight: 'Full sunshine.',
+          climateType: 'Tropical'
+        },
+        irrigation: {
+          method: 'Drip Irrigation with Trellis Support',
+          criticalStages: 'Flowering & Continuous Fruit Set (Irrigate every 2–3 days in summer)',
+          waterReq: '350 – 450 mm'
+        },
+        nutrients: {
+          npk: 'N: 35, P: 25, K: 30 kg/acre (Apply N in 3 equal splits)',
+          micronutrients: 'Foliar spray of 19:19:19 + Micronutrients every 12 days.'
+        },
+        pestsAndDiseases: {
+          pests: 'Fruit Fly (Bactrocera cucurbitae), Red Pumpkin Beetle, Leaf Miner',
+          diseases: 'Downy Mildew, Powdery Mildew, Mosaic Virus',
+          management: 'Cue-lure pheromone traps (6/acre); Mancozeb spray for Downy mildew.'
+        },
+        agronomy: {
+          seedRate: '1.5–2 kg/acre (Open) / 500g (Hybrid)',
+          spacing: '2.0 m × 0.6 m on trellis lines',
+          expectedYield: '60 – 90 Quintals/acre fresh dark green straight ridged gourds',
+          rotation: 'Wheat / Potato (Rabi) → Torai → Cabbage / Peas (Rabi)',
+          companion: 'Corn or Marigold borders'
+        }
+      },
+      {
+        id: 'sponge-gourd',
+        name: 'Sponge Gourd / Nenua',
+        hindiName: 'नेनुआ / घिया तोरी',
+        category: 'Cucurbit / Vegetable',
+        duration: '50–65 days',
+        water: 'Medium',
+        soil: 'Sandy-Loam, Loam, Alluvial',
+        soilDetails: {
+          bestType: 'Rich, fertile sandy-loam and alluvial soils with neutral pH.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'Good drainage; shallow root system.',
+          soilPrep: '2 ploughings with 8 tonnes FYM/acre; prepare channels or raised beds.'
+        },
+        climate: {
+          tempRange: '25°C – 38°C (Heat-loving fast summer climber)',
+          rainfall: 'Dry summer with irrigation',
+          sunlight: 'Bright sunny days.',
+          climateType: 'Warm Tropical'
+        },
+        irrigation: {
+          method: 'Drip / Channel Furrow',
+          criticalStages: 'Vine expansion, Flowering, Fruit Harvest (Every 3 days)',
+          waterReq: '300 – 400 mm'
+        },
+        nutrients: {
+          npk: 'N: 30, P: 20, K: 25 kg/acre',
+          micronutrients: 'Zinc Sulphate + Borax foliar spray.'
+        },
+        pestsAndDiseases: {
+          pests: 'Fruit Fly, Red Pumpkin Beetle',
+          diseases: 'Anthracnose, Powdery Mildew',
+          management: 'Pheromone traps; Trichoderma drenching; Wettable sulphur spray.'
+        },
+        agronomy: {
+          seedRate: '1.5–2 kg/acre',
+          spacing: '1.8 m × 0.5 m',
+          expectedYield: '70 – 100 Quintals/acre tender smooth green gourds',
+          rotation: 'Mustard (Rabi) → Nenua → Paddy / Maize (Kharif)',
+          companion: 'Maize living trellis poles'
+        }
+      },
+      {
+        id: 'tinda',
+        name: 'Round Gourd / Tinda',
+        hindiName: 'टिंडा / दिलपसंद',
+        category: 'Cucurbit / Vegetable',
+        duration: '45–60 days (Fast Summer Harvest)',
+        water: 'Low-Medium',
+        soil: 'Sandy-Loam, Light Loam, Riverbed Silt',
+        soilDetails: {
+          bestType: 'Light sandy loam and riverbed alluvial soils that warm up early in March.',
+          idealPh: '6.5 – 7.5',
+          drainage: 'Rapid drainage; deep taproot.',
+          soilPrep: '1 deep ploughing and harrowing; prepare pits or raised channels.'
+        },
+        climate: {
+          tempRange: '25°C – 38°C (Warm, dry semi-arid summer climate)',
+          rainfall: 'Low rainfall',
+          sunlight: 'Intense sunshine.',
+          climateType: 'Semi-Arid Summer'
+        },
+        irrigation: {
+          method: 'Furrow / Drip Irrigation',
+          criticalStages: 'Flowering & Rapid Fruit Setting (Irrigate every 4–5 days in summer)',
+          waterReq: '250 – 350 mm'
+        },
+        nutrients: {
+          npk: 'N: 30, P: 20, K: 20 kg/acre',
+          micronutrients: 'Micronutrient mix spray at early flowering.'
+        },
+        pestsAndDiseases: {
+          pests: 'Red Pumpkin Beetle, Fruit Fly',
+          diseases: 'Powdery Mildew, Downy Mildew',
+          management: 'Neem spray; Wood ash dusting on cotyledon leaves.'
+        },
+        agronomy: {
+          seedRate: '1.5–2 kg/acre',
+          spacing: '1.5 m × 0.45 m',
+          expectedYield: '40 – 60 Quintals/acre small round apple-shaped tender gourds',
+          rotation: 'Wheat / Gram (Rabi) → Tinda → Kharif Bajra / Cotton',
+          companion: 'Cowpea or Radish borders'
+        }
+      },
+      {
+        id: 'summer-sunflower',
+        name: 'Summer Sunflower (Zaid)',
+        hindiName: 'जायद सूरजमुखी',
+        category: 'Oilseed / Cash Crop',
+        duration: '80–90 days',
+        water: 'Medium',
+        soil: 'Loamy, Clay-Loam, Alluvial',
+        soilDetails: {
+          bestType: 'Fertile loams and clay-loams with good subsoil moisture storage and neutral pH.',
+          idealPh: '6.5 – 8.0',
+          drainage: 'Good drainage; deep taproot extracts subsoil nutrients.',
+          soilPrep: 'Deep tilling after Potato/Sugarcane/Toria harvest; 6 tonnes FYM/acre.'
+        },
+        climate: {
+          tempRange: '24°C – 38°C (Summer sunshine produces superior seed fill and oil content >42%)',
+          rainfall: 'Summer irrigated',
+          sunlight: 'High intensity sunlight (>8 hrs/day).',
+          climateType: 'Warm Sub-tropical'
+        },
+        irrigation: {
+          method: 'Ridge & Furrow / Drip Irrigation',
+          criticalStages: 'Bud Initiation (30 DAS), Flowering (50 DAS), Seed Milking (65 DAS)',
+          waterReq: '350 – 450 mm (4–5 irrigations)'
+        },
+        nutrients: {
+          npk: 'N: 35, P: 30, K: 20 kg/acre + Sulphur (15 kg/acre)',
+          micronutrients: 'Borax (2 kg/acre) is essential at ray floret opening for 100% seed setting.'
+        },
+        pestsAndDiseases: {
+          pests: 'Helicoverpa Head Borer, Thrips, Parrots (at maturity)',
+          diseases: 'Alternaria Leaf Blight, Sunflower Necrosis',
+          management: 'Foliar Boron spray; Pheromone traps for borer; Morning hand pollination.'
+        },
+        agronomy: {
+          seedRate: '2–2.5 kg/acre (Hybrid seed)',
+          spacing: '60 cm × 30 cm',
+          expectedYield: '10 – 16 Quintals/acre high quality oilseeds',
+          rotation: 'Potato / Mustard (Rabi) → Summer Sunflower → Paddy (Kharif)',
+          companion: 'Summer Moong intercrop (2:4 ratio)'
+        }
+      },
+      {
+        id: 'summer-groundnut',
+        name: 'Summer Groundnut (Zaid)',
+        hindiName: 'जायद मूंगफली',
+        category: 'Oilseed / Legume',
+        duration: '100–115 days',
+        water: 'Medium-High',
+        soil: 'Sandy-Loam, Red Sandy Soil, Light Loam',
+        soilDetails: {
+          bestType: 'Light sandy-loam with loose friable crumb structure that allows easy peg penetration.',
+          idealPh: '6.0 – 7.2',
+          drainage: 'Well-drained; loose topsoil.',
+          soilPrep: 'Fine tilth; Gypsum (200 kg/acre) applied in two splits.'
+        },
+        climate: {
+          tempRange: '25°C – 38°C (High summer heat produces 30% higher yield than Kharif groundnut!)',
+          rainfall: 'Irrigated summer crop',
+          sunlight: 'Abundant high-intensity sunshine.',
+          climateType: 'Warm Sub-tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler Irrigation / Micro-Sprinkler (Best method)',
+          criticalStages: 'Flowering (25–30 DAS), Pegging (40–50 DAS), Pod Bulking (65–85 DAS)',
+          waterReq: '500 – 650 mm (Irrigate every 8–10 days)'
+        },
+        nutrients: {
+          npk: 'N: 15, P: 40, K: 25 kg/acre + Gypsum (200 kg/acre for pod calcium & sulphur)',
+          micronutrients: 'Ferrous Sulphate foliar spray for iron chlorosis + Rhizobium seed inoculation.'
+        },
+        pestsAndDiseases: {
+          pests: 'Thrips, Leaf Miner, Spodoptera caterpillar',
+          diseases: 'Tikka Leaf Spot, Rust, Stem Rot',
+          management: 'Mancozeb + Carbendazim spray for Tikka disease; Pheromone traps for Spodoptera.'
+        },
+        agronomy: {
+          seedRate: '40–45 kg/acre kernels',
+          spacing: '30 cm × 10 cm',
+          expectedYield: '14 – 20 Quintals/acre bold high oil kernels',
+          rotation: 'Potato / Mustard (Rabi) → Summer Groundnut → Paddy / Maize (Kharif)',
+          companion: 'Sesame or Sunflower border rows'
+        }
+      },
+      {
+        id: 'summer-sesame',
+        name: 'Summer Sesame / Til (Zaid)',
+        hindiName: 'जायद तिल (सफेद तिल)',
+        category: 'Oilseed / Export Cash Crop',
+        duration: '75–85 days',
+        water: 'Low',
+        soil: 'Sandy-Loam, Loam, Well-Drained',
+        soilDetails: {
+          bestType: 'Light sandy-loam and loamy soils with good drainage and loose tilth.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'High drainage; sensitive to water stagnation.',
+          soilPrep: 'Very fine level seedbed; shallow seed placement (1–2 cm).'
+        },
+        climate: {
+          tempRange: '26°C – 38°C (High heat and dry summer produce snow-white seeds with >50% oil content)',
+          rainfall: 'Dry summer with light irrigations',
+          sunlight: 'Full bright sunshine.',
+          climateType: 'Tropical'
+        },
+        irrigation: {
+          method: 'Sprinkler / Gentle Furrow',
+          criticalStages: 'Branching (25 DAS), Flowering (45 DAS), Capsule Sizing (60 DAS)',
+          waterReq: '250 – 350 mm (3–4 light irrigations)'
+        },
+        nutrients: {
+          npk: 'N: 20, P: 15, K: 10 kg/acre + Sulphur (10 kg/acre)',
+          micronutrients: 'Zinc Sulphate + Azotobacter biofertilizer.'
+        },
+        pestsAndDiseases: {
+          pests: 'Leaf and Pod Caterpillar (Antigastra), Gall Fly',
+          diseases: 'Phyllody, Powdery Mildew, Macrophomina Root Rot',
+          management: 'Spray Dimethoate for leafhopper vectors; Grow summer varieties (Pragati, RT-351, TKG-22).'
+        },
+        agronomy: {
+          seedRate: '1.5–2 kg/acre (Mix with fine sand 1:3 for even drilling)',
+          spacing: '30 cm × 10–12 cm',
+          expectedYield: '4 – 7 Quintals/acre premium white sesame seeds',
+          rotation: 'Potato / Toria (Rabi) → Summer Til → Rice / Maize (Kharif)',
+          companion: 'Summer Moong or Cowpea intercrop'
+        }
+      },
+      {
+        id: 'sweet-corn',
+        name: 'Sweet Corn (Zaid)',
+        hindiName: 'स्वीट कॉर्न / मीठा भुट्टा',
+        category: 'High-Value Cereal / Vegetable',
+        duration: '70–80 days',
+        water: 'Medium',
+        soil: 'Loamy, Sandy-Loam, Alluvial',
+        soilDetails: {
+          bestType: 'Deep, rich, well-aerated sandy loam to silt loam with high organic carbon.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'High drainage required; cannot tolerate standing water.',
+          soilPrep: '2 deep ploughings; apply 10 tonnes FYM/acre; make ridges at 60 cm.'
+        },
+        climate: {
+          tempRange: '22°C – 35°C (High temperature accelerates cob sweet sugar accumulation)',
+          rainfall: 'Summer irrigated',
+          sunlight: 'Full bright sunshine (>8 hrs/day).',
+          climateType: 'Warm Sub-tropical'
+        },
+        irrigation: {
+          method: 'Drip / Furrow Irrigation',
+          criticalStages: 'Knee-high (25 DAS), Tasseling / Silking (45–50 DAS), Cob Milking (60–65 DAS)',
+          waterReq: '400 – 500 mm'
+        },
+        nutrients: {
+          npk: 'N: 50, P: 30, K: 30 kg/acre (Apply N in 3 splits)',
+          micronutrients: 'Zinc Sulphate (10 kg/acre) + Borax spray at silking for 100% grain fill on cob tip.'
+        },
+        pestsAndDiseases: {
+          pests: 'Fall Armyworm (FAW - Spodoptera frugiperda), Stem Borer',
+          diseases: 'Turcicum Leaf Blight, Downy Mildew',
+          management: 'Pheromone traps for FAW; Emamectin Benzoate (0.4g/L) whorl application; Harvest at 72–75 days in milky stage.'
+        },
+        agronomy: {
+          seedRate: '3.5–4 kg/acre (F1 Hybrid Sugar-75, Madhuri, Priya)',
+          spacing: '60 cm × 20 cm',
+          expectedYield: '15,000 – 20,000 fresh large sweet cobs/acre (40–55 Quintals/acre) + 80 Q green cattle fodder',
+          rotation: 'Potato / Mustard (Rabi) → Sweet Corn → Paddy (Kharif)',
+          companion: 'Cowpea or Bush beans intercrop'
+        }
+      },
+      {
+        id: 'summer-okra',
+        name: 'Summer Okra / Bhindi (Zaid)',
+        hindiName: 'जायद भिंडी',
+        category: 'Vegetable / High Profit',
+        duration: '50–70 days',
+        water: 'Medium',
+        soil: 'Loamy, Sandy-Loam, Rich Clay-Loam',
+        soilDetails: {
+          bestType: 'Rich, fertile loamy soil with neutral pH and high organic matter.',
+          idealPh: '6.0 – 7.5',
+          drainage: 'Good drainage; ridges and furrows facilitate frequent summer watering.',
+          soilPrep: '2 deep ploughings; 8 tonnes FYM/acre; prepare ridges at 45 cm.'
+        },
+        climate: {
+          tempRange: '25°C – 38°C (Summer heat promotes continuous tender pod growth and high market rates)',
+          rainfall: 'Dry summer with assured irrigation',
+          sunlight: 'Full bright sunshine.',
+          climateType: 'Tropical'
+        },
+        irrigation: {
+          method: 'Drip Irrigation / Furrow Method',
+          criticalStages: 'Flowering & Continuous Alternate-Day Picking (Irrigate every 3–4 days in summer)',
+          waterReq: '400 – 500 mm'
+        },
+        nutrients: {
+          npk: 'N: 45, P: 25, K: 30 kg/acre (Apply N in 3 splits)',
+          micronutrients: 'Foliar spray of 19:19:19 + Micronutrients every 12 days.'
+        },
+        pestsAndDiseases: {
+          pests: 'Shoot and Fruit Borer, Whitefly, Red Spider Mite, Jassids',
+          diseases: 'Yellow Vein Mosaic Virus (YVMV), Powdery Mildew',
+          management: 'Grow YVMV-resistant hybrids (Radhika, Mahyco-10, Kashi Kranti); Yellow sticky traps; Spinosad spray for fruit borer.'
+        },
+        agronomy: {
+          seedRate: '5–6 kg/acre (Higher seed rate for summer)',
+          spacing: '45 cm × 20 cm on ridges',
+          expectedYield: '50 – 75 Quintals/acre tender green pods',
+          rotation: 'Wheat / Peas (Rabi) → Summer Bhindi → Cauliflower / Potato (Rabi)',
+          companion: 'Marigold border trap crop'
+        }
+      },
+      {
+        id: 'mint',
+        name: 'Mint / Pudina',
+        hindiName: 'पुदीना (मेंथा / जापानी पुदीना)',
+        category: 'Medicinal / Essential Oil / Herb',
+        duration: '75–90 days (1st Cut) + 45 days (2nd Cut)',
+        water: 'High',
+        soil: 'Deep Loam, Rich Organic Alluvial, Silt Loam',
+        soilDetails: {
+          bestType: 'Deep, rich fertile loamy to clay-loam soils with high water-holding capacity and rich humus.',
+          idealPh: '6.5 – 7.5',
+          drainage: 'Good drainage with continuous moist topsoil.',
+          soilPrep: '3–4 ploughings; incorporate 12 tonnes FYM/acre; prepare shallow furrows or flat beds.'
+        },
+        climate: {
+          tempRange: '25°C – 38°C (Hot bright summer sunshine is vital for high menthol essential oil concentration)',
+          rainfall: 'Summer irrigated',
+          sunlight: 'Intense direct sunshine (>9 hrs/day).',
+          climateType: 'Sub-tropical'
+        },
+        irrigation: {
+          method: 'Micro-Sprinkler / Flat Bed Flooding',
+          criticalStages: 'Stolon Sprouting, Fast Vegetative Expansion (Irrigate every 5–7 days in summer)',
+          waterReq: '500 – 650 mm (8–10 summer irrigations)'
+        },
+        nutrients: {
+          npk: 'N: 50, P: 25, K: 20 kg/acre (Apply N in 3 splits; top-dress 20 kg N after 1st cutting)',
+          micronutrients: 'Zinc Sulphate (10 kg/acre) increases menthol yield.'
+        },
+        pestsAndDiseases: {
+          pests: 'Hairy Caterpillar, Termites, Mites',
+          diseases: 'Rust (Puccinia menthae), Powdery Mildew, Stolon Rot',
+          management: 'Stolon dip in Carbendazim (0.1%) before planting; Harvest on clear sunny morning for maximum oil yield.'
+        },
+        agronomy: {
+          seedRate: '1.5–2 Quintals fresh healthy rooted stolons (underground runners) per acre',
+          spacing: '45 cm × continuous stolon line in 5 cm deep furrows',
+          expectedYield: '100 – 140 Quintals fresh herb / 45–65 kg high value Menthol Essential Oil per acre across 2 cuts',
+          rotation: 'Potato / Mustard (Rabi) → Mentha (Zaid) → Rice / Maize (Kharif)',
+          companion: 'Short-duration radish or coriander intercrop in early 30 days'
+        }
+      },
+      {
+        id: 'summer-guar',
+        name: 'Summer Cluster Bean / Guar (Zaid)',
+        hindiName: 'जायद ग्वार (सब्जी व हरी खाद)',
+        category: 'Pulse / Vegetable / Green Manure',
+        duration: '60–75 days',
+        water: 'Low',
+        soil: 'Sandy, Sandy-Loam, Arid Soil',
+        soilDetails: {
+          bestType: 'Light sandy to sandy loam soils; highly drought hardy and heat resilient.',
+          idealPh: '7.0 – 8.5 (Highly tolerant to soil alkalinity)',
+          drainage: 'Rapid drainage; deep taproot.',
+          soilPrep: '1 ploughing and harrowing.'
+        },
+        climate: {
+          tempRange: '28°C – 42°C (Extreme heat tolerant; thrives in 40°C+ summer heat of North/West India)',
+          rainfall: 'Low summer rain',
+          sunlight: 'Intense bright sunshine.',
+          climateType: 'Arid & Semi-Arid'
+        },
+        irrigation: {
+          method: 'Sprinkler / Border Strip (2–3 light irrigations in entire season)',
+          criticalStages: 'Flowering (30 DAS) and Pod Setting (50 DAS)',
+          waterReq: '200 – 280 mm'
+        },
+        nutrients: {
+          npk: 'N: 8, P: 20, K: 10 kg/acre (Fixes 40–60 kg atmospheric Nitrogen into soil)',
+          micronutrients: 'Rhizobium seed inoculation.'
+        },
+        pestsAndDiseases: {
+          pests: 'Jassids, Whitefly, Aphids',
+          diseases: 'Bacterial Blight, Alternaria Leaf Spot',
+          management: 'Seed treatment with Streptocycline (100 ppm); Grow varieties Pusa Navbahar (vegetable) or RGC-936.'
+        },
+        agronomy: {
+          seedRate: '6–8 kg/acre',
+          spacing: '45 cm × 15 cm',
+          expectedYield: '35 – 50 Quintals green tender vegetable clusters / 6–8 Quintals dry grain/acre',
+          rotation: 'Wheat / Mustard (Rabi) → Summer Guar → Bajra / Cotton (Kharif)',
+          companion: 'Excellent nitrogen-fixing catch crop before main Kharif season'
         }
       }
     ]

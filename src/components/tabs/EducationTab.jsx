@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CROPS, SOILS, getText } from '../../data/constants';
 import { useApp } from '../../context/AppContext';
+import { ttsEngine } from '../../services/ai/ttsService';
 
 export function EducationTab() {
   const { lang } = useApp();
@@ -16,12 +17,7 @@ export function EducationTab() {
     const cropName = selectedCrop.name || getText(selectedCrop.nameKey, lang);
     const desc = selectedCrop.desc || getText(selectedCrop.descKey, lang);
     const speechText = `${cropName}. ${desc}. Duration: ${selectedCrop.cropCycleDays || '110 days'}. Water demand is ${selectedCrop.waterReqMm || 500} mm. Yield is ${selectedCrop.avgYieldQuintalsPerAcre || 20} quintals per acre. Soil recommendations: ${selectedSoil.name}. ${selectedSoil.desc}`;
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const ut = new SpeechSynthesisUtterance(speechText);
-      ut.lang = lang === 'hi' ? 'hi-IN' : 'en-US';
-      window.speechSynthesis.speak(ut);
-    }
+    ttsEngine.speak(speechText, lang);
   };
 
   // Filter crops based on category & season selection

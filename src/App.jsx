@@ -19,33 +19,27 @@ import { GeminiKeyModal } from './components/modals/GeminiKeyModal';
 import { RentalBookingModal } from './components/modals/RentalBookingModal';
 import { OnboardingWizard } from './components/modals/OnboardingWizard';
 import { LandingPage } from './components/LandingPage';
-import { SoftwareFarmersApp } from './software-farmers/SoftwareFarmersApp';
 
 export function App() {
   const { activeTab, setActiveTab, setShowOnboarding } = useApp();
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [bookingItem, setBookingItem] = useState(null);
 
-  // Routes: 'landing' | 'krishi-jal' | 'software-farmers'
+  // Routes: 'app' | 'landing'
   const [currentRoute, setCurrentRoute] = useState(() => {
     const hash = window.location.hash.toLowerCase();
-    if (hash.includes('software-farmers') || hash.includes('smartfarm')) return 'software-farmers';
-    if (hash.includes('krishi-jal') || hash.includes('krishi')) return 'krishi-jal';
-    return 'landing';
+    if (hash.includes('landing')) return 'landing';
+    return 'app';
   });
-
-  const [sfInitialTab, setSfInitialTab] = useState('web');
 
   // Sync hash changes
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.toLowerCase();
-      if (hash.includes('software-farmers') || hash.includes('smartfarm')) {
-        setCurrentRoute('software-farmers');
-      } else if (hash.includes('krishi-jal') || hash.includes('krishi')) {
-        setCurrentRoute('krishi-jal');
-      } else {
+      if (hash.includes('landing')) {
         setCurrentRoute('landing');
+      } else {
+        setCurrentRoute('app');
       }
     };
 
@@ -54,42 +48,28 @@ export function App() {
   }, []);
 
   const handleNavigate = (route, tab = null) => {
-    if (route === 'krishi-jal') {
-      window.location.hash = '/krishi-jal';
-      setCurrentRoute('krishi-jal');
-      if (tab) setActiveTab(tab);
-    } else if (route === 'software-farmers') {
-      window.location.hash = '/software-farmers';
-      if (tab) setSfInitialTab(tab);
-      setCurrentRoute('software-farmers');
+    if (route === 'landing') {
+      window.location.hash = '/landing';
+      setCurrentRoute('landing');
     } else {
       window.location.hash = '/';
-      setCurrentRoute('landing');
+      setCurrentRoute('app');
+      if (tab) setActiveTab(tab);
     }
   };
 
   return (
     <>
-      {currentRoute === 'landing' && (
+      {currentRoute === 'landing' ? (
         <LandingPage 
-          onStartKrishiJal={() => handleNavigate('krishi-jal')}
-          onStartSoftwareFarmers={() => handleNavigate('software-farmers')}
-          onOpenDirectTab={(route, tab) => handleNavigate(route, tab)}
+          onStartKrishiJal={() => handleNavigate('app')}
+          onOpenDirectTab={(_, tab) => handleNavigate('app', tab)}
         />
-      )}
-
-      {currentRoute === 'software-farmers' && (
-        <SoftwareFarmersApp 
-          onNavigate={handleNavigate}
-          initialTab={sfInitialTab}
-        />
-      )}
-
-      {currentRoute === 'krishi-jal' && (
+      ) : (
         <div className="app-container">
           <OnboardingWizard onComplete={() => {}} />
           
-          {/* Top Navbar with Dual Software Portal Switcher */}
+          {/* Top Navbar */}
           <Header 
             onOpenAiModal={() => setAiModalOpen(true)} 
             onNavigate={handleNavigate}

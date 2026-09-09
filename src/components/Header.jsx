@@ -1,11 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { getText } from '../data/constants';
-import GoogleTranslate from './GoogleTranslate';
+import { pageReader } from '../services/ai/pageNarrationService';
 
-export function Header({ onOpenAiModal, onNavigate }) {
-  const { lang, setLang, geminiKey, setShowOnboarding } = useApp();
+export function Header({ onOpenAiModal }) {
+  const { lang, setLang, setShowOnboarding, activeTab, crop, soil, location, area, report } = useApp();
   const [profileOpen, setProfileOpen] = useState(false);
+  const [readerState, setReaderState] = useState({
+    isReading: pageReader.isReading,
+    isMuted: pageReader.isMuted
+  });
+
+  // Subscribe to page reader state updates (isReading, isMuted)
+  useEffect(() => {
+    const unsubscribe = pageReader.subscribe((state) => {
+      setReaderState({
+        isReading: state.isReading,
+        isMuted: state.isMuted
+      });
+    });
+    return unsubscribe;
+  }, []);
+
+  // When activeTab or language changes:
+  // Immediately stops reading the previous page and, if not muted, reads the newly opened page!
+  useEffect(() => {
+    pageReader.handlePageChange(activeTab, lang, { crop, soil, location, area, report });
+  }, [activeTab, lang, crop, soil, location, area, report]);
+
+  // Handle Play/Listen Toggle
+  const handleListenClick = () => {
+    if (readerState.isReading) {
+      // If currently speaking, re-read or pause
+      pageReader.readPage(activeTab, lang, { crop, soil, location, area, report });
+    } else {
+      pageReader.unmuteAndRead(activeTab, lang, { crop, soil, location, area, report });
+    }
+  };
+
+  // Handle Mute Button Click
+  const handleMuteClick = () => {
+    pageReader.mute();
+  };
+
+  // Localized button text for Farmer Voice Guide
+  const LISTEN_LABELS = {
+    en: { play: 'Farmer Guide', reading: 'Assisting...' },
+    hi: { play: 'किसान साथी', reading: 'मदद कर रहा है...' },
+    te: { play: 'రైతు మార్గదర్శి', reading: 'సహాయం చేస్తోంది...' },
+    ta: { play: 'விவசாய வழிகாட்டி', reading: 'வழிகாட்டுகிறது...' },
+    kn: { play: 'ರೈತ ಮಾರ್ಗದರ್ಶಿ', reading: 'ಸಹಾಯ ಮಾಡುತ್ತಿದೆ...' },
+    pa: { play: 'ਕਿਸਾਨ ਸਾਥੀ', reading: 'ਅਗਵਾਈ ਕਰ ਰਿਹਾ...' },
+    mr: { play: 'शेतकरी साथी', reading: 'मार्गदर्शन करत आहे...' },
+    bn: { play: 'কৃষক সাথী', reading: 'সহায়তা করছে...' },
+    gu: { play: 'ખેડૂત સાથી', reading: 'માર્ગદર્શન આપે છે...' },
+    or: { play: 'କୃଷକ ସାଥୀ', reading: 'ସାହାଯ୍ୟ କରୁଛି...' }
+  };
+
+  const MUTE_LABELS = {
+    en: 'Mute',
+    hi: 'म्यूट',
+    te: 'మ్యూట్',
+    ta: 'ஒலியடக்கு',
+    kn: 'ಮ್ಯೂಟ್',
+    pa: 'ਮਿਊਟ',
+    mr: 'म्यूट',
+    bn: 'নিঃশব্দ',
+    gu: 'મ્યૂટ',
+    or: 'ମ୍ୟୁଟ୍'
+  };
+
+  const currentListenLabel = LISTEN_LABELS[lang] || LISTEN_LABELS.en;
+  const currentMuteLabel = MUTE_LABELS[lang] || MUTE_LABELS.en;
 
   return (
     <header className="app-header">
@@ -34,60 +100,6 @@ export function Header({ onOpenAiModal, onNavigate }) {
       </div>
 
       <div className="header-actions">
-        {/* Hub / Home button */}
-        <button
-          onClick={() => onNavigate && onNavigate('landing')}
-          title="Back to Landing Portal Hub"
-          style={{
-            background: 'rgba(255, 255, 255, 0.06)',
-            border: '1px solid var(--border-color)',
-            color: 'var(--text-primary)',
-            padding: '7px 12px',
-            borderRadius: 'var(--border-radius-sm)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            fontSize: '0.85rem',
-            fontWeight: '600',
-            transition: 'all 0.2s'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
-          onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
-        >
-          <i className="fa-solid fa-house" style={{ color: 'var(--highlight)' }}></i>
-          <span>Hub</span>
-        </button>
-
-        {/* Switch to Software Farmers Portal */}
-        <button
-          onClick={() => onNavigate && onNavigate('software-farmers')}
-          title="Switch to Software Farmers SmartFarm Suite"
-          style={{
-            background: 'linear-gradient(135deg, #0f5132 0%, #198754 100%)',
-            border: '1px solid rgba(32, 201, 151, 0.4)',
-            color: '#ffffff',
-            padding: '7px 14px',
-            borderRadius: 'var(--border-radius-sm)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            fontSize: '0.85rem',
-            fontWeight: '700',
-            boxShadow: '0 2px 8px rgba(25, 135, 84, 0.35)',
-            transition: 'all 0.2s'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-        >
-          <i className="fa-solid fa-microchip" style={{ color: '#6ee7b7' }}></i>
-          <span>Software Farmers</span>
-          <i className="fa-solid fa-arrow-right" style={{ fontSize: '0.75rem', opacity: 0.8 }}></i>
-        </button>
-
-
-
         {/* Language Selector Dropdown */}
         <div 
           className="lang-selector-wrapper"
@@ -130,6 +142,112 @@ export function Header({ onOpenAiModal, onNavigate }) {
           </select>
         </div>
 
+        {/* ── AUDIO PAGE READER & MUTE BUTTONS (BESIDE LANGUAGE SELECTOR) ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {/* 1. Listen / Read Page Button */}
+          <button
+            id="btn-page-reader-play"
+            onClick={handleListenClick}
+            title={readerState.isReading ? "Reading this page aloud" : "Read this entire page aloud in chosen language"}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 12px',
+              borderRadius: 'var(--border-radius-sm)',
+              fontSize: '0.83rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: readerState.isReading 
+                ? '1.5px solid #22c55e' 
+                : '1px solid rgba(255, 255, 255, 0.15)',
+              background: readerState.isReading
+                ? 'linear-gradient(135deg, rgba(21, 128, 61, 0.85) 0%, rgba(34, 197, 94, 0.95) 100%)'
+                : 'rgba(255, 255, 255, 0.07)',
+              color: '#ffffff',
+              boxShadow: readerState.isReading 
+                ? '0 0 14px rgba(34, 197, 94, 0.5)' 
+                : 'none',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              if (!readerState.isReading) {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.14)';
+                e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.5)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!readerState.isReading) {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.07)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+              }
+            }}
+          >
+            <i 
+              className={`fa-solid ${readerState.isReading ? 'fa-volume-high' : 'fa-volume-low'}`}
+              style={{
+                color: readerState.isReading ? '#ffffff' : 'var(--highlight)',
+                fontSize: '0.9rem',
+                animation: readerState.isReading ? 'pulse 1.2s infinite' : 'none'
+              }}
+            ></i>
+            <span>
+              {readerState.isReading ? currentListenLabel.reading : currentListenLabel.play}
+            </span>
+            {readerState.isReading && (
+              <span style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: '#ffffff',
+                display: 'inline-block',
+                boxShadow: '0 0 6px #ffffff'
+              }} />
+            )}
+          </button>
+
+          {/* 2. Mute / Stop Button */}
+          <button
+            id="btn-page-reader-mute"
+            onClick={handleMuteClick}
+            title="Stop and Mute Page Audio"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              padding: '6px 10px',
+              borderRadius: 'var(--border-radius-sm)',
+              fontSize: '0.83rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              border: readerState.isMuted
+                ? '1px solid rgba(239, 68, 68, 0.4)'
+                : '1px solid rgba(255, 255, 255, 0.15)',
+              background: readerState.isMuted
+                ? 'rgba(239, 68, 68, 0.12)'
+                : 'rgba(255, 255, 255, 0.05)',
+              color: readerState.isMuted ? '#fca5a5' : 'var(--text-secondary)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.7)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = readerState.isMuted ? 'rgba(239, 68, 68, 0.12)' : 'rgba(255, 255, 255, 0.05)';
+              e.currentTarget.style.color = readerState.isMuted ? '#fca5a5' : 'var(--text-secondary)';
+              e.currentTarget.style.borderColor = readerState.isMuted ? 'rgba(239, 68, 68, 0.4)' : 'rgba(255, 255, 255, 0.15)';
+            }}
+          >
+            <i 
+              className="fa-solid fa-volume-xmark" 
+              style={{ color: readerState.isMuted ? '#ef4444' : 'inherit' }}
+            ></i>
+            <span>{currentMuteLabel}</span>
+          </button>
+        </div>
+
         {/* Profile Dropdown */}
         <div style={{ position: 'relative' }}>
           <button 
@@ -170,10 +288,10 @@ export function Header({ onOpenAiModal, onNavigate }) {
               <button 
                 onClick={() => {
                   setProfileOpen(false);
-                  const key = prompt("Enter your Google Translate API Key (optional for Cloud Translation API):", localStorage.getItem('krishi_translate_key') || '');
+                  const key = prompt("Enter your Gemini API Key for AI features:", localStorage.getItem('krishi_gemini_key') || '');
                   if (key !== null) {
-                    localStorage.setItem('krishi_translate_key', key.trim());
-                    alert("Google Translate API Key saved successfully!");
+                    localStorage.setItem('krishi_gemini_key', key.trim());
+                    alert("Gemini API Key saved successfully!");
                   }
                 }}
                 style={{
@@ -184,7 +302,7 @@ export function Header({ onOpenAiModal, onNavigate }) {
                 onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <i className="fa-solid fa-key"></i> Translation API Key
+                <i className="fa-solid fa-key"></i> Gemini API Key
               </button>
             </div>
           )}
@@ -194,3 +312,5 @@ export function Header({ onOpenAiModal, onNavigate }) {
     </header>
   );
 }
+
+export default Header;

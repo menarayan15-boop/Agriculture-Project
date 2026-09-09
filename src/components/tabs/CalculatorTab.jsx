@@ -70,6 +70,8 @@ const CALC_LANG = {
     nav_mandi_profit: "Mandi Net Price",
     nav_storage: "Storage/Warehouse",
     nav_multicrop: "Multi-Crop Farm",
+    nav_settings: "Admin Settings",
+    nav_history: "Saved Calculations",
   },
   hi: {
     title: "एकीकृत कृषि कैलकुलेटर",
@@ -130,6 +132,8 @@ const CALC_LANG = {
     nav_mandi_profit: "मंडी शुद्ध मूल्य",
     nav_storage: "भंडारण / गोदाम",
     nav_multicrop: "बहु-फसल खेत",
+    nav_settings: "व्यवस्थापक सेटिंग्स",
+    nav_history: "सहेजे गए गणनाएं",
   },
   kn: {
     title: "ಸಮಗ್ರ ಕೃಷಿ ಕ್ಯಾಲ್ಕುಲೇಟರ್",
@@ -190,6 +194,8 @@ const CALC_LANG = {
     nav_mandi_profit: "ಮಂಡಿ ನಿವ್ವಳ ಬೆಲೆ",
     nav_storage: "ಗೋದಾಮು ಸಂಗ್ರಹಣೆ",
     nav_multicrop: "ಬಹು-ಬೆಳೆ ಫಾರ್ಮ್",
+    nav_settings: "ಆಡಳಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+    nav_history: "ಉಳಿಸಿದ ಲೆಕ್ಕಾಚಾರಗಳು",
   },
   te: {
     title: "సమగ్ర వ్యవసాయ క్యాలిక్యులేటర్",
@@ -250,6 +256,8 @@ const CALC_LANG = {
     nav_mandi_profit: "మండి నికర ధర",
     nav_storage: "గిడ్డంగి నిల్వ",
     nav_multicrop: "బహుళ పంటలు",
+    nav_settings: "అడ్మిన్ సెట్టింగ్‌లు",
+    nav_history: "సేవ్ చేసిన లెక్కలు",
   },
   ta: {
     title: "ஒருங்கிணைந்த விவசாய கால்குலேட்டர்",
@@ -310,6 +318,8 @@ const CALC_LANG = {
     nav_mandi_profit: "மண்டி நிகர விலை",
     nav_storage: "சேமிப்பு கிடங்கு",
     nav_multicrop: "பல பயிர் பண்ணை",
+    nav_settings: "நிர்வாக அமைப்புகள்",
+    nav_history: "சேமிக்கப்பட்ட கணக்கீடுகள்",
   },
   pa: {
     title: "ਇਕਜੁੱਟ ਖੇਤੀ ਕੈਲਕੁਲੇਟਰ",
@@ -370,6 +380,8 @@ const CALC_LANG = {
     nav_mandi_profit: "ਮੰਡੀ ਦਾ ਸ਼ੁੱਧ ਭਾਅ",
     nav_storage: "ਸਟੋਰੇਜ",
     nav_multicrop: "ਬਹੁ-ਫਸਲੀ ਖੇਤ",
+    nav_settings: "ਐਡਮਿਨ ਸੈਟਿੰਗਾਂ",
+    nav_history: "ਸੰਭਾਲੀਆਂ ਗਈਆਂ ਗਣਨਾਵਾਂ",
   },
   mr: {
     title: "एकात्मिक शेती कॅल्क्युलेटर",
@@ -430,6 +442,8 @@ const CALC_LANG = {
     nav_mandi_profit: "मोंडी निव्वळ दर",
     nav_storage: "साठवणूक गोदाम",
     nav_multicrop: "बहु-पीक शेती",
+    nav_settings: "प्रशासक सेटिंग्ज",
+    nav_history: "जतन केलेली गणिते",
   },
   bn: {
     title: "সমন্বিত কৃষি ক্যালকুলেটর",
@@ -490,6 +504,8 @@ const CALC_LANG = {
     nav_mandi_profit: "মান্ডির নিট দর",
     nav_storage: "গুদামজাতকরণ",
     nav_multicrop: "বহু-ফসলী খামার",
+    nav_settings: "অ্যাডমিন সেটিংস",
+    nav_history: "সংরক্ষিত গণনা",
   },
   gu: {
     title: "સંકલિત કૃષિ કેલ્ક્યુલેટર",
@@ -550,6 +566,8 @@ const CALC_LANG = {
     nav_mandi_profit: "માર્કેટ યાર્ડ ચોખ્ખો ભાવ",
     nav_storage: "સંગ્રહ ગોડાઉન",
     nav_multicrop: "બહુ-પાક ફાર્મ",
+    nav_settings: "એડમિન સેટિંગ્સ",
+    nav_history: "સાચવેલ ગણતરીઓ",
   },
   or: {
     title: "ସମନ୍ୱିତ କୃଷି କ୍ୟାଲକୁଲେଟର",
@@ -610,6 +628,8 @@ const CALC_LANG = {
     nav_mandi_profit: "ମଣ୍ଡି ନିଟ୍ ଦର",
     nav_storage: "ସଂରକ୍ଷଣ ଗୋଦାମ",
     nav_multicrop: "ବହୁ-ଫସଲ କ୍ଷେତ",
+    nav_settings: "ପ୍ରଶାସକ ସେଟିଙ୍ଗ୍",
+    nav_history: "ସଂରକ୍ଷିତ ହିସାବ",
   }
 };
 
@@ -639,11 +659,6 @@ const NAV = [
   { id: 'machinery',    icon: '🚜', label: 'Machinery Rental',group: 'operations'},
   { id: 'polyhouse',    icon: '🏛️', label: 'Polyhouse/Greenhouse',group: 'operations'},
   { id: 'cattle_fodder',icon: '🐄', label: 'Cattle & Dairy',  group: 'operations'},
-  { id: 'farmcost',     icon: '🧾', label: 'Farm Cost Sheet', group: 'economics'},
-  { id: 'profit',       icon: '💰', label: 'Crop Net Profit', group: 'economics'},
-  { id: 'breakeven',    icon: '⚖️', label: 'Break-Even Price',group: 'economics'},
-  { id: 'loan',         icon: '🏦', label: 'Krishi Loan EMI', group: 'economics'},
-  { id: 'roi',          icon: '📈', label: 'ROI Analysis',    group: 'economics'},
   { id: 'crop_compare', icon: '🆚', label: 'Crop Comparison', group: 'advanced' },
   { id: 'mandi_profit', icon: '🏪', label: 'Mandi Net Price', group: 'advanced' },
   { id: 'storage',      icon: '🏗️', label: 'Storage/Warehouse',group: 'advanced' },
@@ -657,7 +672,6 @@ const GROUP_LABELS = {
   basics:   { label: '🌾 Farm Basics', color: C.green },
   resources:{ label: '💧 Resources', color: C.blue },
   operations:{ label: '⚙️ Operations', color: C.amber },
-  economics:{ label: '💰 Economics', color: C.purple },
   advanced: { label: '📊 Advanced', color: C.rose },
   settings: { label: '⚙️ Config', color: '#94a3b8' },
   history:  { label: '🕐 History', color: '#64748b' },
@@ -816,11 +830,6 @@ function getNavItems(lang) {
     { id: 'machinery',    icon: '🚜', label: t('nav_machinery', lang),       group: 'operations'},
     { id: 'polyhouse',    icon: '🏛️', label: t('nav_polyhouse', lang),       group: 'operations'},
     { id: 'cattle_fodder',icon: '🐄', label: t('nav_cattle_fodder', lang),   group: 'operations'},
-    { id: 'farmcost',     icon: '🧾', label: t('nav_farmcost', lang),        group: 'economics'},
-    { id: 'profit',       icon: '💰', label: t('nav_profit', lang),          group: 'economics'},
-    { id: 'breakeven',    icon: '⚖️', label: t('nav_breakeven', lang),       group: 'economics'},
-    { id: 'loan',         icon: '🏦', label: t('nav_loan', lang),            group: 'economics'},
-    { id: 'roi',          icon: '📈', label: t('nav_roi', lang),             group: 'economics'},
     { id: 'crop_compare', icon: '🆚', label: t('nav_crop_compare', lang),    group: 'advanced' },
     { id: 'mandi_profit', icon: '🏪', label: t('nav_mandi_profit', lang),    group: 'advanced' },
     { id: 'storage',      icon: '🏗️', label: t('nav_storage', lang),         group: 'advanced' },
@@ -836,7 +845,6 @@ function getGroupLabels(lang) {
     basics:     { label: t('group_basics', lang), color: C.green },
     resources:  { label: t('group_resources', lang), color: C.blue },
     operations: { label: t('group_operations', lang), color: C.amber },
-    economics:  { label: t('group_economics', lang), color: C.purple },
     advanced:   { label: t('group_advanced', lang), color: C.rose },
     settings:   { label: t('group_settings', lang), color: '#94a3b8' },
     history:    { label: t('group_history', lang), color: '#64748b' },
@@ -1356,230 +1364,7 @@ function SprayPanel({ gs, cropData, lang }) {
   );
 }
 
-// 7. Farming Cost Calculator
-function FarmCostPanel({ gs, cropData, lang, onSaveCalculatedCosts }) {
-  const [area, setArea] = useState(gs.area);
-  const [unit, setUnit] = useState(gs.unit);
-  const [expenses, setExpenses] = useState({
-    landPrep: 4000,
-    seeds: 2500,
-    fertilizers: 3500,
-    pesticides: 1500,
-    labour: 6000,
-    machinery: 5000,
-    irrigation: 2000,
-    fuel: 1500,
-    transport: 1800,
-    harvesting: 4500,
-    storage: 1000,
-    other: 1000
-  });
-  const [yieldExpected, setYieldExpected] = useState(25); // quintals per acre
 
-  const acres = toAcres(area, unit);
-  const totalCost = Object.values(expenses).reduce((a, b) => parseFloat(a || 0) + parseFloat(b || 0), 0);
-  const costPerAcre = totalCost / (acres || 1);
-  const costPerHectare = costPerAcre * 2.47105;
-  const totalProductionKg = yieldExpected * acres * 100; // 1 quintal = 100 kg
-  const costPerKg = totalProductionKg > 0 ? totalCost / totalProductionKg : 0;
-
-  // Auto load calculated values from other modules
-  const handleLoadCalculations = () => {
-    const cropInfo = cropData[gs.crop] || cropData.wheat;
-    const seedResult = calcSeed(gs.crop, acres, 0, 90);
-    const fertResult = calcFertilizer(gs.crop, acres, 'balanced', 'medium');
-    const irrigResult = calcIrrigation(gs.crop, acres, 'drip', null);
-    
-    setExpenses(p => ({
-      ...p,
-      seeds: Math.round(seedResult.cost),
-      fertilizers: Math.round(fertResult.totalCost),
-      irrigation: Math.round(irrigResult.totalCost),
-      machinery: Math.round(acres * 2500), // estimated standard
-      labour: Math.round(acres * 3000),
-      landPrep: Math.round(acres * 2000)
-    }));
-  };
-
-  const handleSaveToProfit = () => {
-    if (onSaveCalculatedCosts) {
-      onSaveCalculatedCosts(totalCost, yieldExpected);
-      alert("Costs successfully loaded into the Crop Profit Calculator!");
-    }
-  };
-
-  return (
-    <div>
-      <PanelHeader icon="🧾" title="Farming Cost Calculator" subtitle="Estimate itemized expenses to calculate overall cost parameters" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-          <button 
-            onClick={handleLoadCalculations}
-            style={{
-              width: '100%', padding: '10px 14px', background: C.cyan,
-              color: '#fff', border: 'none', borderRadius: 10, cursor: 'pointer',
-              fontWeight: 700, fontSize: '0.85rem', marginBottom: 16
-            }}
-          >
-            🔄 Load Estimated Values From Other Calculators
-          </button>
-          
-          <Grid cols={2}>
-            <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
-            <FormRow label="Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
-          </Grid>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-            <InputWithVoice label="Land Preparation (₹)" value={expenses.landPrep} onChange={v => setExpenses(p => ({ ...p, landPrep: v }))} resetValue={4000} lang={lang} />
-            <InputWithVoice label="Seeds (₹)" value={expenses.seeds} onChange={v => setExpenses(p => ({ ...p, seeds: v }))} resetValue={2500} lang={lang} />
-            <InputWithVoice label="Fertilizers (₹)" value={expenses.fertilizers} onChange={v => setExpenses(p => ({ ...p, fertilizers: v }))} resetValue={3500} lang={lang} />
-            <InputWithVoice label="Pesticides (₹)" value={expenses.pesticides} onChange={v => setExpenses(p => ({ ...p, pesticides: v }))} resetValue={1500} lang={lang} />
-            <InputWithVoice label="Labour Costs (₹)" value={expenses.labour} onChange={v => setExpenses(p => ({ ...p, labour: v }))} resetValue={6000} lang={lang} />
-            <InputWithVoice label="Machinery Rental (₹)" value={expenses.machinery} onChange={v => setExpenses(p => ({ ...p, machinery: v }))} resetValue={5000} lang={lang} />
-            <InputWithVoice label="Irrigation (₹)" value={expenses.irrigation} onChange={v => setExpenses(p => ({ ...p, irrigation: v }))} resetValue={2000} lang={lang} />
-            <InputWithVoice label="Electricity/Fuel (₹)" value={expenses.fuel} onChange={v => setExpenses(p => ({ ...p, fuel: v }))} resetValue={1500} lang={lang} />
-            <InputWithVoice label="Transportation (₹)" value={expenses.transport} onChange={setExpenses} resetValue={1800} lang={lang} />
-            <InputWithVoice label="Harvesting (₹)" value={expenses.harvesting} onChange={v => setExpenses(p => ({ ...p, harvesting: v }))} resetValue={4500} lang={lang} />
-            <InputWithVoice label="Storage Fee (₹)" value={expenses.storage} onChange={v => setExpenses(p => ({ ...p, storage: v }))} resetValue={1000} lang={lang} />
-            <InputWithVoice label="Other Expenses (₹)" value={expenses.other} onChange={v => setExpenses(p => ({ ...p, other: v }))} resetValue={1000} lang={lang} />
-          </div>
-
-          <InputWithVoice label="Expected Yield (Quintals/Acre)" value={yieldExpected} onChange={setYieldExpected} resetValue={25} lang={lang} />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <BigResult label="Total Farming Cost" value={`₹${fmt(totalCost)}`} color={C.rose} />
-          <Grid cols={3}>
-            <ResultCard label="Cost per Acre" value={`₹${fmt(costPerAcre)}`} color={C.green} />
-            <ResultCard label="Cost per Hectare" value={`₹${fmt(costPerHectare)}`} color={C.blue} />
-            <ResultCard label="Cost per Kg" value={`₹${costPerKg.toFixed(2)}/kg`} color={C.purple} />
-          </Grid>
-          <button 
-            onClick={handleSaveToProfit}
-            style={{
-              width: '100%', padding: '12px', background: C.green,
-              color: '#fff', border: 'none', borderRadius: 10, cursor: 'pointer',
-              fontWeight: 700, fontSize: '0.85rem', marginTop: 10
-            }}
-          >
-            💰 Push Total Cost to Crop Profit Calculator
-          </button>
-          <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 12, padding: 12, marginTop: 10 }}>
-            <div style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.5)', marginBottom: 6 }}>COST SHEET PERCENTAGE SHARE</div>
-            {Object.entries(expenses).map(([key, val]) => {
-              const share = totalCost > 0 ? (val / totalCost) * 100 : 0;
-              return (
-                <div key={key} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: 4 }}>
-                  <span style={{ color: 'rgba(255,255,255,0.6)' }}>{key}</span>
-                  <span>{share.toFixed(1)}% (₹{fmt(val)})</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 8. Crop Profit Calculator
-function ProfitPanel({ gs, cropData, calculatedCosts, lang }) {
-  const [crop, setCrop] = useState(gs.crop);
-  const [area, setArea] = useState(gs.area);
-  const [unit, setUnit] = useState(gs.unit);
-  const [expectedYield, setExpectedYield] = useState(calculatedCosts.yieldExpected || 25);
-  const [marketPrice, setMarketPrice] = useState(CROP_DATA[gs.crop]?.msp || 2000);
-  const [totalCost, setTotalCost] = useState(calculatedCosts.totalCost || 25000);
-
-  const acres = toAcres(area, unit);
-  const expectedProduction = expectedYield * acres; // In Quintals
-  const expectedRevenue = expectedProduction * marketPrice;
-  const netProfit = expectedRevenue - totalCost;
-  const profitPerAcre = netProfit / (acres || 1);
-  const margin = expectedRevenue > 0 ? (netProfit / expectedRevenue) * 100 : 0;
-  const breakEven = expectedProduction > 0 ? totalCost / expectedProduction : 0;
-
-  // Sync state if calculatedCosts changes
-  useEffect(() => {
-    if (calculatedCosts.totalCost) {
-      setTotalCost(calculatedCosts.totalCost);
-      setExpectedYield(calculatedCosts.yieldExpected);
-    }
-  }, [calculatedCosts]);
-
-  return (
-    <div>
-      <PanelHeader icon="💰" title="Crop Profit Calculator" subtitle="Determine net profitability margins and revenue calculations" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-          <FormRow label="Crop"><CropSelect cropData={cropData} value={crop} onChange={setCrop} /></FormRow>
-          <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
-          <FormRow label="Land Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
-          <InputWithVoice label="Expected Yield (Quintals/Acre)" value={expectedYield} onChange={setExpectedYield} resetValue={25} lang={lang} />
-          <InputWithVoice label="Expected Market Price (₹/Quintal)" value={marketPrice} onChange={setMarketPrice} resetValue={2000} lang={lang} />
-          <InputWithVoice label="Total Farming Expenses (₹)" value={totalCost} onChange={setTotalCost} resetValue={25000} lang={lang} />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 14, padding: 16 }}>
-            <h4 style={{ color: C.green, margin: '0 0 12px', fontSize: '0.9rem' }}>Financial Formula Summary</h4>
-            <div style={{ fontSize: '0.85rem', display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>📈 Expected Revenue ({expectedProduction.toFixed(1)} Qtl × ₹{marketPrice})</span>
-                <span style={{ color: C.blue, fontWeight: 700 }}>₹{fmt(expectedRevenue)}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 8 }}>
-                <span>📉 Total Farming Cost</span>
-                <span style={{ color: C.rose, fontWeight: 700 }}>- ₹{fmt(totalCost)}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 8, fontSize: '1.1rem', fontWeight: 800 }}>
-                <span style={{ color: netProfit >= 0 ? C.green : C.red }}>💵 Expected Net Profit</span>
-                <span style={{ color: netProfit >= 0 ? C.green : C.red }}>₹{fmt(netProfit)}</span>
-              </div>
-            </div>
-          </div>
-
-          <Grid cols={2}>
-            <ResultCard label="Profit Margin" value={`${margin.toFixed(1)}%`} color={netProfit >= 0 ? C.green : C.red} />
-            <ResultCard label="Profit Per Acre" value={`₹${fmt(profitPerAcre)}`} color={netProfit >= 0 ? C.green : C.red} />
-          </Grid>
-          <BigResult label="Break-Even selling price" value={`₹${breakEven.toFixed(0)}/Quintal`} color={C.amber} sub={`Equivalent to ₹${(breakEven / 100).toFixed(2)}/kg`} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 9. Break-Even Calculator
-function BreakEvenPanel({ lang }) {
-  const [totalCost, setTotalCost] = useState(30000);
-  const [expectedQty, setExpectedQty] = useState(25); // In Quintals
-
-  const qtyKg = expectedQty * 100;
-  const qtyTon = expectedQty / 10;
-  const breakEvenKg = totalCost / (qtyKg || 1);
-  const breakEvenQtl = totalCost / (expectedQty || 1);
-  const breakEvenTon = totalCost / (qtyTon || 1);
-
-  return (
-    <div>
-      <PanelHeader icon="⚖️" title="Break-Even Calculator" subtitle="Minimum selling price per unit required to recover farming costs" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-          <InputWithVoice label="Total Farming Cost (₹)" value={totalCost} onChange={setTotalCost} resetValue={30000} lang={lang} />
-          <InputWithVoice label="Expected Production (Quintals)" value={expectedQty} onChange={setExpectedQty} resetValue={25} lang={lang} />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <BigResult label="Break-Even Price per Kg" value={`₹${breakEvenKg.toFixed(2)}/kg`} color={C.green} />
-          <BigResult label="Break-Even Price per Quintal" value={`₹${breakEvenQtl.toFixed(0)}/qtl`} color={C.amber} />
-          <BigResult label="Break-Even Price per Ton" value={`₹${breakEvenTon.toFixed(0)}/ton`} color={C.blue} />
-          <Disclaimer text="Ensure your market selling price exceeds these values to avoid net agricultural losses." />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // 10. Labour Calculator
 function LabourPanel({ gs, lang }) {
@@ -1689,28 +1474,66 @@ function MachineryPanel({ gs, setActiveCalc, lang }) {
 
 // 12. Crop Comparison Calculator
 function CropComparePanel({ gs, cropData, lang }) {
-  const [cropList, setCropList] = useState(['wheat', 'rice', 'cotton']);
+  const [cropList, setCropList] = useState(['wheat', 'mustard', 'chana', 'potato']);
   const [area, setArea] = useState(gs.area);
   const [unit, setUnit] = useState(gs.unit);
 
   const acres = toAcres(area, unit);
 
+  // Quick Preset Handlers
+  const loadPreset = (crops) => {
+    setCropList(crops);
+  };
+
+  const addCrop = () => {
+    if (cropList.length >= 4) return;
+    const allKeys = Object.keys(cropData);
+    const nextKey = allKeys.find(k => !cropList.includes(k)) || 'rice';
+    setCropList(prev => [...prev, nextKey]);
+  };
+
+  const removeCrop = (idx) => {
+    if (cropList.length <= 2) return;
+    setCropList(prev => prev.filter((_, i) => i !== idx));
+  };
+
   const comparisons = cropList.map(cropKey => {
-    const cropInfo = cropData[cropKey] || cropData.wheat;
-    const cost = cropInfo.typicalCostAcre * acres;
-    const yieldExpected = cropInfo.yieldQtlAcre * acres;
-    const revenue = yieldExpected * (cropInfo.msp || 2000);
+    const cropInfo = cropData[cropKey] || DEFAULT_CROP_DATA[cropKey] || DEFAULT_CROP_DATA.wheat;
+    const cost = (cropInfo.typicalCostAcre || 15000) * acres;
+    const yieldExpected = (cropInfo.yieldQtlAcre || 20) * acres;
+    const price = cropInfo.marketPrice || cropInfo.msp || 2000;
+    const revenue = yieldExpected * price;
     const profit = revenue - cost;
+    const profitPerAcre = acres > 0 ? profit / acres : 0;
+    const roi = cost > 0 ? (profit / cost) * 100 : 0;
     const breakeven = yieldExpected > 0 ? cost / yieldExpected : 0;
+    const waterLit = (cropInfo.waterLitAcre || 500000) * acres;
+    const irrigations = cropInfo.irrigations || 5;
+    const seedKg = (cropInfo.seedRateKgAcre || 20) * acres;
+    const days = cropInfo.daysToMature || 120;
+    const season = cropInfo.season || 'All';
+    const isMsp = !!cropInfo.msp;
+
     return {
       cropKey,
       name: cropInfo.name,
+      nameHi: cropInfo.nameHi,
       icon: cropInfo.icon,
       cost,
       yieldExpected,
+      price,
       revenue,
       profit,
-      breakeven
+      profitPerAcre,
+      roi,
+      breakeven,
+      waterLit,
+      irrigations,
+      seedKg,
+      seedUnit: cropInfo.seedUnit || 'kg',
+      days,
+      season,
+      isMsp
     };
   });
 
@@ -1718,19 +1541,45 @@ function CropComparePanel({ gs, cropData, lang }) {
   const highestProfit = [...comparisons].sort((a, b) => b.profit - a.profit)[0];
   const highestYield = [...comparisons].sort((a, b) => b.yieldExpected - a.yieldExpected)[0];
   const lowestBreakeven = [...comparisons].sort((a, b) => a.breakeven - b.breakeven)[0];
+  const shortestDuration = [...comparisons].sort((a, b) => a.days - b.days)[0];
+  const mostWaterEfficient = [...comparisons].sort((a, b) => a.waterLit - b.waterLit)[0];
 
   return (
     <div>
-      <PanelHeader icon="🆚" title="Crop Comparison Calculator" subtitle="Compare expected financial returns of up to 4 crops side-by-side" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: 14 }}>
+      <PanelHeader icon="🆚" title="Crop Comparison Calculator" subtitle="Compare expected financial returns, input requirements, and profit margins of up to 4 crops side-by-side" />
+      
+      {/* Land Area and Unit Controls */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: 14 }}>
         <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
         <FormRow label="Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 14 }}>
+      {/* Preset Comparison Buttons */}
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14, padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)' }}>
+        <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>Quick Presets:</span>
+        <button onClick={() => loadPreset(['wheat', 'mustard', 'chana', 'potato'])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+          🌾 Rabi Season (Wheat / Mustard / Gram / Potato)
+        </button>
+        <button onClick={() => loadPreset(['rice', 'cotton', 'maize', 'soybean'])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(96,165,250,0.15)', border: '1px solid rgba(96,165,250,0.3)', color: C.blue, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+          🍚 Kharif Season (Paddy / Cotton / Maize / Soybean)
+        </button>
+        <button onClick={() => loadPreset(['tomato', 'onion', 'chilli', 'garlic'])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: C.amber, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+          🍅 High-Value Cash Crops (Tomato / Onion / Chilli / Garlic)
+        </button>
+      </div>
+
+      {/* Crop Selector Columns */}
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cropList.length}, 1fr)`, gap: 10, marginBottom: 14 }}>
         {cropList.map((cKey, idx) => (
-          <div key={idx}>
-            <Label>Select Crop {idx + 1}</Label>
+          <div key={idx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 10 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <Label>Crop {idx + 1}</Label>
+              {cropList.length > 2 && (
+                <button onClick={() => removeCrop(idx)} style={{ background: 'transparent', border: 'none', color: C.red, cursor: 'pointer', fontSize: '0.75rem' }} title="Remove this crop">
+                  ✕ Remove
+                </button>
+              )}
+            </div>
             <Select value={cKey} onChange={v => setCropList(p => {
               const next = [...p];
               next[idx] = v;
@@ -1744,203 +1593,438 @@ function CropComparePanel({ gs, cropData, lang }) {
         ))}
       </div>
 
-      <div style={{ overflowX: 'auto', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 12 }}>
+      {cropList.length < 4 && (
+        <button onClick={addCrop} style={{ marginBottom: 14, padding: '6px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px dashed rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)', cursor: 'pointer', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+          ➕ Add 4th Crop to Compare
+        </button>
+      )}
+
+      {/* Full Comparison Table */}
+      <div style={{ overflowX: 'auto', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 12, marginBottom: 16 }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              <th style={{ textAlign: 'left', padding: 8 }}>Metric</th>
-              {comparisons.map((c, i) => <th key={i} style={{ textAlign: 'right', padding: 8 }}>{c.icon} {c.name}</th>)}
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
+              <th style={{ textAlign: 'left', padding: '10px 8px', color: 'rgba(255,255,255,0.7)' }}>Parameter / Metric</th>
+              {comparisons.map((c, i) => (
+                <th key={i} style={{ textAlign: 'right', padding: '10px 8px', color: '#fff', fontSize: '0.92rem' }}>
+                  {c.icon} {c.name}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Total Investment</td>
-              {comparisons.map((c, i) => <td key={i} style={{ textAlign: 'right', padding: 8 }}>₹{fmt(c.cost)}</td>)}
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Benchmark Price (₹/Qtl)</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.blue, fontWeight: 600 }}>
+                  ₹{fmt(c.price)} {c.isMsp ? <span style={{ fontSize: '0.68rem', color: C.green }}>(MSP)</span> : <span style={{ fontSize: '0.68rem', color: C.amber }}>(Mkt)</span>}
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Season & Duration</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, color: 'rgba(255,255,255,0.8)' }}>
+                  {c.season} · {c.days} days
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Seed Quantity Needed</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8 }}>
+                  {c.seedKg.toFixed(1)} {c.seedUnit}
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Total Irrigation Water</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.cyan }}>
+                  {fmt(c.waterLit)} L ({c.irrigations} rounds)
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Total Cultivation Cost</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.rose, fontWeight: 600 }}>
+                  ₹{fmt(c.cost)}
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Expected Yield ({acres.toFixed(1)} ac)</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, fontWeight: 600 }}>
+                  {c.yieldExpected.toFixed(1)} Qtl
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Gross Sales Revenue</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.blue, fontWeight: 600 }}>
+                  ₹{fmt(c.revenue)}
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderTop: '2px solid rgba(34,197,94,0.3)', background: 'rgba(34,197,94,0.05)', fontWeight: 700, fontSize: '0.95rem' }}>
+              <td style={{ padding: 10, color: C.green }}>Expected Net Profit</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 10, color: c.profit >= 0 ? C.green : C.red }}>
+                  ₹{fmt(c.profit)}
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Profit Per Acre</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, color: c.profitPerAcre >= 0 ? C.green : C.red }}>
+                  ₹{fmt(c.profitPerAcre)}/ac
+                </td>
+              ))}
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Return on Investment (ROI)</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: c.roi >= 0 ? C.green : C.red }}>
+                  {c.roi.toFixed(1)}%
+                </td>
+              ))}
             </tr>
             <tr>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Expected Yield (Qtl)</td>
-              {comparisons.map((c, i) => <td key={i} style={{ textAlign: 'right', padding: 8 }}>{c.yieldExpected.toFixed(1)} Qtl</td>)}
-            </tr>
-            <tr>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Expected Revenue</td>
-              {comparisons.map((c, i) => <td key={i} style={{ textAlign: 'right', padding: 8 }}>₹{fmt(c.revenue)}</td>)}
-            </tr>
-            <tr style={{ borderTop: '1px solid rgba(255,255,255,0.08)', fontWeight: 700 }}>
-              <td style={{ padding: 8, color: C.green }}>Expected Profit</td>
-              {comparisons.map((c, i) => <td key={i} style={{ textAlign: 'right', padding: 8, color: c.profit >= 0 ? C.green : C.red }}>₹{fmt(c.profit)}</td>)}
+              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Break-Even Selling Price</td>
+              {comparisons.map((c, i) => (
+                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.amber }}>
+                  ₹{c.breakeven.toFixed(0)}/Qtl
+                </td>
+              ))}
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-        <ResultCard label="Lowest Investment Needed" value={`${lowestInvestment?.icon} ${lowestInvestment?.name}`} sub={`₹${fmt(lowestInvestment?.cost)}`} color={C.blue} />
-        <ResultCard label="Highest Expected Profit" value={`${highestProfit?.icon} ${highestProfit?.name}`} sub={`₹${fmt(highestProfit?.profit)}`} color={C.green} />
-        <ResultCard label="Highest Expected Yield" value={`${highestYield?.icon} ${highestYield?.name}`} sub={`${highestYield?.yieldExpected.toFixed(1)} Qtl`} color={C.cyan} />
-        <ResultCard label="Lowest Break-Even selling price" value={`${lowestBreakeven?.icon} ${lowestBreakeven?.name}`} sub={`₹${lowestBreakeven?.breakeven.toFixed(0)}/Qtl`} color={C.amber} />
+      {/* Strategic Decision Highlight Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
+        <ResultCard 
+          label="🏆 Highest Net Profit" 
+          value={`${highestProfit?.icon} ${highestProfit?.name}`} 
+          sub={`₹${fmt(highestProfit?.profit)} (${highestProfit?.roi.toFixed(0)}% ROI)`} 
+          color={C.green} 
+        />
+        <ResultCard 
+          label="🛡️ Lowest Capital Needed" 
+          value={`${lowestInvestment?.icon} ${lowestInvestment?.name}`} 
+          sub={`₹${fmt(lowestInvestment?.cost)} Total Cost`} 
+          color={C.blue} 
+        />
+        <ResultCard 
+          label="💧 Most Water-Efficient" 
+          value={`${mostWaterEfficient?.icon} ${mostWaterEfficient?.name}`} 
+          sub={`${fmt(mostWaterEfficient?.waterLit)} Liters (${mostWaterEfficient?.irrigations} irrigations)`} 
+          color={C.cyan} 
+        />
+        <ResultCard 
+          label="⚡ Fastest Harvest" 
+          value={`${shortestDuration?.icon} ${shortestDuration?.name}`} 
+          sub={`${shortestDuration?.days} Days (${shortestDuration?.season})`} 
+          color={C.amber} 
+        />
       </div>
     </div>
   );
 }
 
-// 13. Mandi Price & Profit Calculator
+// 13. Mandi Price & Net Profit Calculator
 function MandiProfitPanel({ gs, cropData, lang }) {
   const [crop, setCrop] = useState(gs.crop);
   const [qty, setQty] = useState(50); // Quintals
-  const [mandiPrice, setMandiPrice] = useState(CROP_DATA[gs.crop]?.msp || 2000);
-  const [transport, setTransport] = useState(1200);
-  const [commission, setCommission] = useState(500);
-  const [otherSelling, setOtherSelling] = useState(300);
+  const [mandiPrice, setMandiPrice] = useState(() => {
+    const c = cropData[gs.crop] || DEFAULT_CROP_DATA[gs.crop];
+    return c?.marketPrice || c?.msp || 2200;
+  });
 
-  const grossVal = qty * mandiPrice;
-  const totalSellingExpenses = parseFloat(transport) + parseFloat(commission) + parseFloat(otherSelling);
-  const netIncome = grossVal - totalSellingExpenses;
-  const expectedProfit = netIncome - (cropData[crop]?.typicalCostAcre * toAcres(gs.area, gs.unit));
+  // Dynamic logistics & deduction factors
+  const [distanceKm, setDistanceKm] = useState(25);
+  const [transportRateQtl, setTransportRateQtl] = useState(30); // ₹30/qtl freight
+  const [hamaliPerQtl, setHamaliPerQtl] = useState(12); // ₹12/qtl loading & unloading
+  const [mandiCessPct, setMandiCessPct] = useState(1.5); // 1.5% Mandi Cess
+  const [commissionPct, setCommissionPct] = useState(1.5); // 1.5% Arhat/commission
+  const [weighingFee, setWeighingFee] = useState(60); // Flat Dharamkanta fee
+  const [packagingPerQtl, setPackagingPerQtl] = useState(40); // Gunny bags / bardana ₹40/qtl
+
+  // Update mandiPrice automatically when selected crop changes
+  useEffect(() => {
+    const c = cropData[crop] || DEFAULT_CROP_DATA[crop];
+    if (c) {
+      setMandiPrice(c.marketPrice || c.msp || 2200);
+    }
+  }, [crop, cropData]);
+
+  const numQty = Math.max(0, parseFloat(qty) || 0);
+  const numPrice = Math.max(0, parseFloat(mandiPrice) || 0);
+  const grossVal = numQty * numPrice;
+
+  // Logistics & Mandi Fees Breakdown
+  const transportTotal = numQty * (parseFloat(transportRateQtl) || 0);
+  const hamaliTotal = numQty * (parseFloat(hamaliPerQtl) || 0);
+  const mandiCessTotal = (grossVal * (parseFloat(mandiCessPct) || 0)) / 100;
+  const commissionTotal = (grossVal * (parseFloat(commissionPct) || 0)) / 100;
+  const packagingTotal = numQty * (parseFloat(packagingPerQtl) || 0);
+  const weighingTotal = parseFloat(weighingFee) || 0;
+
+  const totalSellingExpenses = transportTotal + hamaliTotal + mandiCessTotal + commissionTotal + packagingTotal + weighingTotal;
+  const netIncome = Math.max(0, grossVal - totalSellingExpenses);
+  const netRatePerQtl = numQty > 0 ? netIncome / numQty : 0;
+
+  const cropInfo = cropData[crop] || DEFAULT_CROP_DATA[crop] || DEFAULT_CROP_DATA.wheat;
+  const productionCost = (cropInfo?.typicalCostAcre || 15000) * toAcres(gs.area, gs.unit);
+  const expectedProfit = netIncome - productionCost;
+
+  // Comparison with Village Trader (Farmgate) & MSP
+  const villageTraderRate = numPrice * 0.90; // Typically 10% lower at farmgate, but zero transport
+  const villageTraderNetIncome = numQty * villageTraderRate;
+  const mandiAdvantage = netIncome - villageTraderNetIncome;
+
+  const mspPrice = cropInfo?.msp || numPrice;
+  const mspNetIncome = Math.max(0, (numQty * mspPrice) - transportTotal); // FCI/NAFED pays packaging & cess
 
   return (
     <div>
-      <PanelHeader icon="🏪" title="Mandi Price & Profit Calculator" subtitle="Deduct transportation and commissions from market rates" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <PanelHeader icon="🏪" title="Mandi Net Price & Selling Profit Calculator" subtitle="Deduct transportation freight, hamali, mandi cess, and packaging to calculate true in-hand cash realization" />
+      
+      <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '1.2rem', marginBottom: 16 }}>
+        {/* Left Input Configuration Card */}
         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-          <FormRow label="Crop"><CropSelect cropData={cropData} value={crop} onChange={setCrop} /></FormRow>
-          <InputWithVoice label="Production Quantity (Quintals)" value={qty} onChange={setQty} resetValue={50} lang={lang} />
-          <InputWithVoice label="Current Mandi Market Price (₹/Quintal)" value={mandiPrice} onChange={setMandiPrice} resetValue={2000} lang={lang} />
-          <InputWithVoice label="Transportation Cost (₹)" value={transport} onChange={setTransport} resetValue={1200} lang={lang} />
-          <InputWithVoice label="Commission/Market Charges (₹)" value={commission} onChange={setCommission} resetValue={500} lang={lang} />
-          <InputWithVoice label="Other Selling Expenses (₹)" value={otherSelling} onChange={setOtherSelling} resetValue={300} lang={lang} />
+          <FormRow label="Crop Selection">
+            <CropSelect cropData={cropData} value={crop} onChange={setCrop} />
+          </FormRow>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <InputWithVoice label="Production Quantity (Quintals)" value={qty} onChange={setQty} resetValue={50} lang={lang} />
+            <InputWithVoice label="Mandi Rate (₹/Quintal)" value={mandiPrice} onChange={setMandiPrice} resetValue={2200} lang={lang} />
+          </div>
+
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '12px 0 10px', paddingTop: 8 }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mandi Logistics & Deductions</span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <InputWithVoice label="Mandi Distance (KM)" value={distanceKm} onChange={setDistanceKm} resetValue={25} lang={lang} />
+            <InputWithVoice label="Transport Freight (₹/Qtl)" value={transportRateQtl} onChange={setTransportRateQtl} resetValue={30} lang={lang} />
+            <InputWithVoice label="Hamali / Loading (₹/Qtl)" value={hamaliPerQtl} onChange={setHamaliPerQtl} resetValue={12} lang={lang} />
+            <InputWithVoice label="Gunny Bags/Bardana (₹/Qtl)" value={packagingPerQtl} onChange={setPackagingPerQtl} resetValue={40} lang={lang} />
+            <InputWithVoice label="Mandi Tax / Cess (%)" value={mandiCessPct} onChange={setMandiCessPct} resetValue={1.5} lang={lang} />
+            <InputWithVoice label="Arhat / Commission (%)" value={commissionPct} onChange={setCommissionPct} resetValue={1.5} lang={lang} />
+          </div>
         </div>
 
+        {/* Right Metric Highlights */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <BigResult label="Gross Selling Value" value={`₹${fmt(grossVal)}`} color={C.blue} />
-          <BigResult label="Total Selling Expenses" value={`₹${fmt(totalSellingExpenses)}`} color={C.rose} />
-          <BigResult label="Net Mandi Income" value={`₹${fmt(netIncome)}`} color={C.green} />
-          <BigResult label="Net Expected Profit" value={`₹${fmt(expectedProfit)}`} color={expectedProfit >= 0 ? C.green : C.red} />
+          <BigResult label="Gross Mandi Selling Value" value={`₹${fmt(grossVal)}`} color={C.blue} sub={`@ ₹${fmt(numPrice)}/Qtl for ${numQty} Quintals`} />
+          <BigResult label="Total Logistics & Market Deductions" value={`- ₹${fmt(totalSellingExpenses)}`} color={C.rose} sub={`Freight: ₹${fmt(transportTotal)} | Hamali & Bags: ₹${fmt(hamaliTotal + packagingTotal)} | Tax & Comm: ₹${fmt(mandiCessTotal + commissionTotal)}`} />
+          <BigResult label="Actual Net In-Hand Income" value={`₹${fmt(netIncome)}`} color={C.green} sub={`Effective Realized Price: ₹${fmt(netRatePerQtl)}/Quintal in hand`} />
+          <BigResult label="Net Expected Profit (after Crop Cultivation)" value={`₹${fmt(expectedProfit)}`} color={expectedProfit >= 0 ? C.green : C.red} sub={`Crop Cultivation Cost: ₹${fmt(productionCost)}`} />
+        </div>
+      </div>
+
+      {/* 3-Way Selling Channels Comparison Table */}
+      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 14, marginBottom: 14 }}>
+        <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Selling Channels Comparison: Where should you sell?
+        </div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.83rem' }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+              <th style={{ textAlign: 'left', padding: '8px' }}>Channel</th>
+              <th style={{ textAlign: 'right', padding: '8px' }}>Quoted Price</th>
+              <th style={{ textAlign: 'right', padding: '8px' }}>Total Deductions</th>
+              <th style={{ textAlign: 'right', padding: '8px' }}>Effective Price/Qtl</th>
+              <th style={{ textAlign: 'right', padding: '8px' }}>Total Net Realization</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <td style={{ padding: 8, fontWeight: 600, color: C.blue }}>🏛️ APMC Mandi Auction</td>
+              <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(numPrice)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: 8, color: C.rose }}>-₹{fmt(totalSellingExpenses)}</td>
+              <td style={{ textAlign: 'right', padding: 8, color: C.cyan, fontWeight: 600 }}>₹{fmt(netRatePerQtl)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: C.green }}>₹{fmt(netIncome)}</td>
+            </tr>
+            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <td style={{ padding: 8, fontWeight: 600, color: C.amber }}>🚜 Local Village Trader (Farmgate)</td>
+              <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(villageTraderRate)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: 8, color: C.green }}>₹0 (Picked at farm)</td>
+              <td style={{ textAlign: 'right', padding: 8, color: C.amber, fontWeight: 600 }}>₹{fmt(villageTraderRate)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: 'rgba(255,255,255,0.8)' }}>₹{fmt(villageTraderNetIncome)}</td>
+            </tr>
+            {cropInfo?.msp && (
+              <tr>
+                <td style={{ padding: 8, fontWeight: 600, color: C.purple }}>🏛️ Govt MSP Centre (FCI/NAFED)</td>
+                <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(mspPrice)}/Qtl</td>
+                <td style={{ textAlign: 'right', padding: 8, color: C.rose }}>-₹{fmt(transportTotal)} (Transport only)</td>
+                <td style={{ textAlign: 'right', padding: 8, color: C.purple, fontWeight: 600 }}>₹{fmt((numQty > 0 ? mspNetIncome / numQty : 0))}/Qtl</td>
+                <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: C.green }}>₹{fmt(mspNetIncome)}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Advisory Banner */}
+      <div style={{
+        padding: '12px 16px', borderRadius: 10,
+        background: mandiAdvantage >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
+        border: mandiAdvantage >= 0 ? '1px solid rgba(34,197,94,0.25)' : '1px solid rgba(245,158,11,0.25)',
+        display: 'flex', alignItems: 'center', gap: 12
+      }}>
+        <span style={{ fontSize: '1.5rem' }}>{mandiAdvantage >= 0 ? '💡' : '⚠️'}</span>
+        <div style={{ fontSize: '0.85rem' }}>
+          {mandiAdvantage >= 0 ? (
+            <span>
+              <strong>Smart Recommendation: Selling at APMC Mandi is more profitable!</strong> Even after ₹{fmt(totalSellingExpenses)} transport, labor, and market deductions, you earn <strong style={{ color: C.green }}>₹{fmt(mandiAdvantage)} MORE</strong> than selling to a village trader at your farmgate.
+            </span>
+          ) : (
+            <span>
+              <strong>Smart Recommendation: Sell at Farmgate to avoid loss!</strong> Due to high transportation freight and mandi fees for small batches, selling directly at farmgate yields <strong style={{ color: C.amber }}>₹{fmt(Math.abs(mandiAdvantage))} MORE</strong> net in-hand cash.
+            </span>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-// 14. Storage Calculator
+// 14. Storage & Warehouse Decision Calculator
 function StoragePanel({ cropData, lang }) {
   const [crop, setCrop] = useState('wheat');
   const [qty, setQty] = useState(50); // In Quintals
-  const [duration, setDuration] = useState(3); // Months
+  const [duration, setDuration] = useState(4); // Months
   const [storageType, setStorageType] = useState('warehouse');
 
+  // Benchmark harvest price and expected off-season market appreciation
+  const currentCrop = cropData[crop] || DEFAULT_CROP_DATA[crop] || DEFAULT_CROP_DATA.wheat;
+  const basePrice = currentCrop.marketPrice || currentCrop.msp || 2200;
+
+  const [harvestPrice, setHarvestPrice] = useState(basePrice);
+  const [offSeasonPrice, setOffSeasonPrice] = useState(() => Math.round(basePrice * 1.22)); // 22% typical appreciation
+  const [shrinkagePct, setShrinkagePct] = useState(2.5); // 2.5% natural moisture loss/shrinkage
+
+  // Automatically adjust prices when crop changes
+  useEffect(() => {
+    const c = cropData[crop] || DEFAULT_CROP_DATA[crop] || DEFAULT_CROP_DATA.wheat;
+    const p = c.marketPrice || c.msp || 2200;
+    setHarvestPrice(p);
+    setOffSeasonPrice(Math.round(p * 1.22));
+  }, [crop, cropData]);
+
   const stInfo = STORAGE_TYPES[storageType] || STORAGE_TYPES.warehouse;
-  const capacityRequired = qty * 1.5; // conversion factor estimate
-  const monthlyCost = qty * stInfo.rateQtlMo;
-  const totalCost = monthlyCost * duration;
+  const numQty = Math.max(0, parseFloat(qty) || 0);
+  const numMonths = Math.max(1, parseFloat(duration) || 1);
+  const numHarvestPrice = Math.max(0, parseFloat(harvestPrice) || 0);
+  const numOffSeasonPrice = Math.max(0, parseFloat(offSeasonPrice) || 0);
+  const numShrinkage = Math.max(0, parseFloat(shrinkagePct) || 0);
+
+  const capacityRequired = numQty * 1.5; // Cubic feet estimate
+
+  // Storage Cost Factors
+  const rentalCost = numQty * stInfo.rateQtlMo * numMonths;
+  const handlingAndInsurance = numQty * 8 + (numQty * (numHarvestPrice * 0.002) * (numMonths / 3)); // handling + insurance
+  const totalStorageExpenses = rentalCost + handlingAndInsurance;
+
+  // Immediate Harvest Selling vs Off-Season Selling
+  const immediateRevenue = numQty * numHarvestPrice;
+  const shrinkageWeightQtl = numQty * (numShrinkage / 100);
+  const effectiveQty = Math.max(0, numQty - shrinkageWeightQtl);
+  const grossOffSeasonRevenue = effectiveQty * numOffSeasonPrice;
+  const netOffSeasonRevenue = grossOffSeasonRevenue - totalStorageExpenses;
+
+  // Net Gain from Storing
+  const netAdvantage = netOffSeasonRevenue - immediateRevenue;
+  const storageRoi = totalStorageExpenses > 0 ? (netAdvantage / totalStorageExpenses) * 100 : 0;
+
+  // WDRA e-NWR Pledge Loan (75% of stock value at 7% subsidized interest)
+  const pledgeLoanEligible = immediateRevenue * 0.75;
+  const pledgeMonthlyInterest = (pledgeLoanEligible * 0.07) / 12;
 
   return (
     <div>
-      <PanelHeader icon="🏗️" title="Storage Calculator" subtitle="Estimate monthly and seasonal storage fees for your harvested yields" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <PanelHeader icon="🏗️" title="Storage / Warehouse Profitability & WDRA Pledge Loan Calculator" subtitle="Analyze off-season price appreciation, moisture dryage, and storage expenses to decide whether to hold or sell immediately" />
+      
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginBottom: 16 }}>
+        {/* Left Input Configuration Card */}
         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-          <FormRow label="Crop"><CropSelect cropData={cropData} value={crop} onChange={setCrop} /></FormRow>
-          <InputWithVoice label="Quantity Produced (Quintals)" value={qty} onChange={setQty} resetValue={50} lang={lang} />
-          <InputWithVoice label="Storage Duration (Months)" value={duration} onChange={setDuration} resetValue={3} lang={lang} />
+          <FormRow label="Crop Selection">
+            <CropSelect cropData={cropData} value={crop} onChange={setCrop} />
+          </FormRow>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <InputWithVoice label="Quantity Produced (Quintals)" value={qty} onChange={setQty} resetValue={50} lang={lang} />
+            <InputWithVoice label="Holding Duration (Months)" value={duration} onChange={setDuration} resetValue={4} lang={lang} />
+            <InputWithVoice label="Harvest Season Price (₹/Qtl)" value={harvestPrice} onChange={setHarvestPrice} resetValue={basePrice} lang={lang} />
+            <InputWithVoice label="Expected Off-Season Price (₹/Qtl)" value={offSeasonPrice} onChange={setOffSeasonPrice} resetValue={Math.round(basePrice * 1.22)} lang={lang} />
+          </div>
+
           <FormRow label="Storage Facility Type">
             <Select value={storageType} onChange={setStorageType}>
-              <option value="warehouse">Village Warehouse/Godown (₹25/qtl/mo)</option>
-              <option value="cold_storage">Cold Storage (₹65/qtl/mo)</option>
-              <option value="farm_silo">On-Farm Grain Silo (₹8/qtl/mo)</option>
-              <option value="wrs">WRS WDRA Regulated Warehouse (₹30/qtl/mo)</option>
+              <option value="warehouse">Village Warehouse / Godown (₹25/qtl/mo)</option>
+              <option value="wrs">WDRA Accredited Warehouse (₹30/qtl/mo - e-NWR Loan Eligible)</option>
+              <option value="cold_storage">Cold Storage (₹65/qtl/mo - Fruits/Vegetables/Potatoes)</option>
+              <option value="farm_silo">On-Farm Grain Silo / Hermetic Bag (₹8/qtl/mo)</option>
             </Select>
           </FormRow>
+
+          <InputWithVoice label="Moisture Dryage / Shrinkage Loss (%)" value={shrinkagePct} onChange={setShrinkagePct} resetValue={2.5} lang={lang} />
         </div>
 
+        {/* Right Output Highlights */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <BigResult label="Required Capacity Estimate" value={`${capacityRequired.toFixed(0)} Cubic Feet`} color={C.blue} sub={`Equates to ${qty} Quintals of grain storage`} />
-          <BigResult label="Approximate Storage Cost Per Month" value={`₹${fmt(monthlyCost)}`} color={C.amber} />
-          <BigResult label="Total Seasonal Storage Expense" value={`₹${fmt(totalCost)}`} color={C.purple} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 15. Loan Calculator
-function LoanPanel({ lang }) {
-  const [loanAmount, setLoanAmount] = useState(100000);
-  const [interestRate, setInterestRate] = useState(7);
-  const [duration, setDuration] = useState(12); // Months
-  const [frequency, setFrequency] = useState('monthly');
-
-  const annualRateFraction = interestRate / 100;
-  let emi = 0;
-  let totalRepayment = 0;
-  let totalInterest = 0;
-
-  if (frequency === 'monthly') {
-    const monthlyRate = annualRateFraction / 12;
-    emi = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, duration) / (Math.pow(1 + monthlyRate, duration) - 1);
-    totalRepayment = emi * duration;
-    totalInterest = totalRepayment - loanAmount;
-  } else {
-    // Annual Repayment
-    const years = duration / 12;
-    totalInterest = loanAmount * annualRateFraction * years;
-    totalRepayment = loanAmount + totalInterest;
-    emi = totalRepayment / years;
-  }
-
-  return (
-    <div>
-      <PanelHeader icon="🏦" title="Loan / Farming Investment Calculator" subtitle="Estimate repayments and overall interest details for farm financing" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-          <InputWithVoice label="Loan Amount (₹)" value={loanAmount} onChange={setLoanAmount} resetValue={100000} lang={lang} />
-          <InputWithVoice label="Annual Interest Rate (%)" value={interestRate} onChange={setInterestRate} resetValue={7} lang={lang} />
-          <InputWithVoice label="Loan Duration (Months)" value={duration} onChange={setDuration} resetValue={12} lang={lang} />
-          <FormRow label="Repayment Frequency">
-            <Select value={frequency} onChange={setFrequency}>
-              <option value="monthly">Monthly Instalments (EMIs)</option>
-              <option value="annual">Annual Lump Sum</option>
-            </Select>
-          </FormRow>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <BigResult label={frequency === 'monthly' ? "Estimated Monthly EMI" : "Estimated Annual Payment"} value={`₹${emi.toFixed(0)}`} color={C.green} />
-          <BigResult label="Total Interest Owed" value={`₹${totalInterest.toFixed(0)}`} color={C.rose} />
-          <BigResult label="Total Repayment Amount" value={`₹${totalRepayment.toFixed(0)}`} color={C.blue} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 16. ROI Calculator
-function ROIPanel({ lang }) {
-  const [investment, setInvestment] = useState(40000);
-  const [revenue, setRevenue] = useState(65000);
-
-  const profit = revenue - investment;
-  const roi = investment > 0 ? (profit / investment) * 100 : 0;
-
-  return (
-    <div>
-      <PanelHeader icon="📈" title="ROI Calculator" subtitle="Evaluate overall investment efficiency and return percentage" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-          <InputWithVoice label="Total Investment (₹)" value={investment} onChange={setInvestment} resetValue={40000} lang={lang} />
-          <InputWithVoice label="Total Revenue Generated (₹)" value={revenue} onChange={setRevenue} resetValue={65000} lang={lang} />
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <BigResult label="Net Return On Investment (ROI)" value={`${roi.toFixed(1)}%`} color={roi >= 0 ? C.green : C.red} />
-          <BigResult label="Net Profit" value={`₹${fmt(profit)}`} color={profit >= 0 ? C.green : C.red} />
+          <BigResult 
+            label="Decision: Sell at Harvest vs Store Off-Season" 
+            value={netAdvantage >= 0 ? `+ ₹${fmt(netAdvantage)} Net Advantage` : `- ₹${fmt(Math.abs(netAdvantage))} Loss from Storing`} 
+            color={netAdvantage >= 0 ? C.green : C.red} 
+            sub={netAdvantage >= 0 ? `🟢 PROFITABLE TO STORE: Yields extra cash after all warehouse fees and shrinkage` : `🔴 SELL AT HARVEST: Price hike will not cover storage rental and moisture loss`}
+          />
           <Grid cols={2}>
-            <ResultCard label="Total Investment" value={`₹${fmt(investment)}`} color={C.rose} />
-            <ResultCard label="Total Revenue" value={`₹${fmt(revenue)}`} color={C.blue} />
+            <ResultCard label="If Sold at Harvest Today" value={`₹${fmt(immediateRevenue)}`} color={C.blue} sub={`@ ₹${fmt(numHarvestPrice)}/Qtl`} />
+            <ResultCard label="Net Off-Season Cash" value={`₹${fmt(netOffSeasonRevenue)}`} color={C.green} sub={`@ ₹${fmt(numOffSeasonPrice)}/Qtl net fees`} />
           </Grid>
+          <Grid cols={2}>
+            <ResultCard label="Total Storage Fees" value={`₹${fmt(totalStorageExpenses)}`} color={C.rose} sub={`Rent: ₹${fmt(rentalCost)} | Ins: ₹${fmt(handlingAndInsurance)}`} />
+            <ResultCard label="Moisture Weight Loss" value={`${shrinkageWeightQtl.toFixed(1)} Qtl`} color={C.amber} sub={`${numShrinkage}% dryage (${effectiveQty.toFixed(1)} Qtl salable)`} />
+          </Grid>
+          <ResultCard label="Warehouse Space Required" value={`${capacityRequired.toFixed(0)} Cubic Feet`} color={C.cyan} sub={`Equates to approx ${Math.ceil(numQty * 2)} standard 50kg gunny bags`} />
+        </div>
+      </div>
+
+      {/* WDRA e-NWR Warehouse Receipt Pledge Loan Box */}
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(168,85,247,0.12), rgba(96,165,250,0.08))',
+        border: '1px solid rgba(168,85,247,0.25)', borderRadius: 14, padding: '16px 20px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: '1.8rem' }}>🏛️</span>
+            <div>
+              <h4 style={{ margin: 0, color: C.purple, fontSize: '0.98rem' }}>WDRA Electronic Warehouse Receipt (e-NWR) Pledge Loan Scheme</h4>
+              <p style={{ margin: '3px 0 0', fontSize: '0.78rem', color: 'rgba(255,255,255,0.65)' }}>
+                Deposit your produce in a WDRA registered warehouse to get an instant pledge loan from public sector banks at 7% subsidized interest rate without distress selling!
+              </p>
+            </div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>Eligible Immediate Bank Loan (75%)</div>
+            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: C.green }}>₹{fmt(pledgeLoanEligible)}</div>
+            <div style={{ fontSize: '0.72rem', color: C.purple }}>Approx EMI / Interest: ₹{fmt(pledgeMonthlyInterest)}/month</div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+
 
 // 17. Multi-Crop Farm Calculator
 function MultiCropPanel({ gs, cropData, lang }) {
@@ -1948,21 +2032,72 @@ function MultiCropPanel({ gs, cropData, lang }) {
   const [unit, setUnit] = useState(gs.unit);
   const [allocations, setAllocations] = useState([
     { crop: 'wheat', pct: 40 },
-    { crop: 'maize', pct: 30 },
-    { crop: 'soybean', pct: 20 },
-    { crop: 'vegetables', pct: 10 }
+    { crop: 'mustard', pct: 30 },
+    { crop: 'chana', pct: 20 },
+    { crop: 'potato', pct: 10 }
   ]);
 
   const acres = toAcres(totalArea, unit);
-  const totalAllocPct = allocations.reduce((a, b) => a + parseFloat(b.pct || 0), 0);
+  const totalAllocPct = allocations.reduce((a, b) => a + (parseFloat(b.pct) || 0), 0);
+
+  // Quick Preset Handlers
+  const loadPreset = (template) => {
+    setAllocations(template);
+  };
+
+  const addPlot = () => {
+    if (allocations.length >= 6) return;
+    const allKeys = Object.keys(cropData);
+    const unused = allKeys.find(k => !allocations.some(a => a.crop === k)) || 'maize';
+    setAllocations(prev => [...prev, { crop: unused, pct: 10 }]);
+  };
+
+  const removePlot = (idx) => {
+    if (allocations.length <= 2) return;
+    setAllocations(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const autoBalance = () => {
+    if (allocations.length === 0) return;
+    const currentSum = allocations.reduce((acc, item) => acc + (parseFloat(item.pct) || 0), 0);
+    if (currentSum === 0) {
+      const even = Math.floor(100 / allocations.length);
+      setAllocations(prev => prev.map((item, i) => ({ ...item, pct: i === 0 ? 100 - even * (prev.length - 1) : even })));
+      return;
+    }
+    const factor = 100 / currentSum;
+    let running = 0;
+    const balanced = allocations.map((item, i) => {
+      if (i === allocations.length - 1) {
+        return { ...item, pct: Math.max(0, 100 - running) };
+      }
+      const val = Math.round((parseFloat(item.pct) || 0) * factor);
+      running += val;
+      return { ...item, pct: val };
+    });
+    setAllocations(balanced);
+  };
 
   const cropSummaries = allocations.map(item => {
-    const cropAcres = acres * (item.pct / 100);
-    const cropInfo = cropData[item.crop] || cropData.wheat;
-    const inv = cropInfo.typicalCostAcre * cropAcres;
-    const prod = cropInfo.yieldQtlAcre * cropAcres;
-    const rev = prod * (cropInfo.msp || 2000);
+    const cropAcres = acres * ((parseFloat(item.pct) || 0) / 100);
+    const cropInfo = cropData[item.crop] || DEFAULT_CROP_DATA[item.crop] || DEFAULT_CROP_DATA.wheat;
+    const inv = (cropInfo.typicalCostAcre || 15000) * cropAcres;
+    const prod = (cropInfo.yieldQtlAcre || 20) * cropAcres;
+    const price = cropInfo.marketPrice || cropInfo.msp || 2200;
+    const rev = prod * price;
     const prof = rev - inv;
+    const waterLit = (cropInfo.waterLitAcre || 500000) * cropAcres;
+    const seedKg = (cropInfo.seedRateKgAcre || 20) * cropAcres;
+    
+    // Quick fertilizer estimate (N-P-K bags)
+    const fd = FERTILIZER_DATA;
+    const nKg = (cropInfo.npkAcre?.N || 60) * cropAcres;
+    const pKg = (cropInfo.npkAcre?.P || 30) * cropAcres;
+    const kKg = (cropInfo.npkAcre?.K || 20) * cropAcres;
+    const ureaBags = Math.ceil(nKg / (0.46 * 50));
+    const dapBags = Math.ceil(pKg / (0.46 * 50));
+    const mopBags = Math.ceil(kKg / (0.60 * 50));
+
     return {
       ...item,
       name: cropInfo.name,
@@ -1970,8 +2105,16 @@ function MultiCropPanel({ gs, cropData, lang }) {
       cropAcres,
       inv,
       prod,
+      price,
       rev,
-      prof
+      prof,
+      waterLit,
+      seedKg,
+      seedUnit: cropInfo.seedUnit || 'kg',
+      ureaBags,
+      dapBags,
+      mopBags,
+      season: cropInfo.season || 'All'
     };
   });
 
@@ -1979,77 +2122,197 @@ function MultiCropPanel({ gs, cropData, lang }) {
   const aggregateRev = cropSummaries.reduce((a, b) => a + b.rev, 0);
   const aggregateProf = aggregateRev - aggregateInv;
   const aggregateRoi = aggregateInv > 0 ? (aggregateProf / aggregateInv) * 100 : 0;
+  const aggregateWaterLit = cropSummaries.reduce((a, b) => a + b.waterLit, 0);
+  const aggregateUrea = cropSummaries.reduce((a, b) => a + b.ureaBags, 0);
+  const aggregateDap = cropSummaries.reduce((a, b) => a + b.dapBags, 0);
+  const aggregateMop = cropSummaries.reduce((a, b) => a + b.mopBags, 0);
+
+  // Ecological Diversification Rating
+  const distinctSeasons = new Set(cropSummaries.map(c => c.season)).size;
+  const hasPulse = allocations.some(a => ['chana', 'tur', 'moong', 'soybean'].includes(a.crop));
+  const hasOilseed = allocations.some(a => ['mustard', 'groundnut', 'sunflower'].includes(a.crop));
+  const hasStaple = allocations.some(a => ['wheat', 'rice', 'maize'].includes(a.crop));
+  const diversityStars = 2 + (hasPulse ? 1 : 0) + (hasOilseed ? 1 : 0) + (hasStaple ? 1 : 0);
+
+  // Palette for allocation bar
+  const plotColors = ['#22c55e', '#60a5fa', '#f59e0b', '#a855f7', '#06b6d4', '#f43f5e'];
 
   return (
     <div>
-      <PanelHeader icon="🗺️" title="Multi-Crop Farm Calculator" subtitle="Distribute land area among different crops and view cumulative returns" />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: 14 }}>
-        <InputWithVoice label="Total Land Area" value={totalArea} onChange={setTotalArea} resetValue={10.0} lang={lang} />
+      <PanelHeader icon="🗺️" title="Multi-Crop Farm Allocation & Cumulative Planner" subtitle="Distribute farm acreage across multiple crops to model whole-farm input requirements, revenue, and ecological diversification" />
+      
+      {/* Land Area and Unit Controls */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: 14 }}>
+        <InputWithVoice label="Total Farm Land Area" value={totalArea} onChange={setTotalArea} resetValue={10.0} lang={lang} />
         <FormRow label="Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 14 }}>
+      {/* Quick Seasonal Diversification Templates */}
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14, padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)' }}>
+        <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>Presets:</span>
+        <button onClick={() => loadPreset([
+          { crop: 'wheat', pct: 50 },
+          { crop: 'mustard', pct: 25 },
+          { crop: 'chana', pct: 25 }
+        ])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+          🌾 Rabi Balanced (50% Wheat + 25% Mustard + 25% Gram)
+        </button>
+        <button onClick={() => loadPreset([
+          { crop: 'rice', pct: 40 },
+          { crop: 'maize', pct: 30 },
+          { crop: 'soybean', pct: 30 }
+        ])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(96,165,250,0.15)', border: '1px solid rgba(96,165,250,0.3)', color: C.blue, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+          🍚 Kharif Water-Smart (40% Paddy + 30% Maize + 30% Soybean)
+        </button>
+        <button onClick={() => loadPreset([
+          { crop: 'wheat', pct: 40 },
+          { crop: 'potato', pct: 30 },
+          { crop: 'tomato', pct: 20 },
+          { crop: 'garlic', pct: 10 }
+        ])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: C.amber, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+          💰 High-Value Horticulture (40% Wheat + 30% Potato + 20% Tomato + 10% Garlic)
+        </button>
+      </div>
+
+      {/* Visual Stacked Allocation Bar */}
+      <div style={{ marginBottom: 14 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+          <span style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>Land Distribution Visualizer:</span>
+          <span style={{ fontSize: '0.78rem', fontWeight: 700, color: totalAllocPct === 100 ? C.green : C.red }}>
+            Total Allocated: {totalAllocPct}% {totalAllocPct === 100 ? '✓ Balanced' : '(Adjust to 100%)'}
+          </span>
+        </div>
+        <div style={{ display: 'flex', height: 28, borderRadius: 8, overflow: 'hidden', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+          {cropSummaries.map((c, i) => {
+            const widthPct = Math.max(0, parseFloat(c.pct) || 0);
+            if (widthPct <= 0) return null;
+            return (
+              <div 
+                key={i} 
+                style={{
+                  width: `${widthPct}%`,
+                  background: plotColors[i % plotColors.length],
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.75rem', fontWeight: 700, color: '#000',
+                  overflow: 'hidden', whiteSpace: 'nowrap', padding: '0 4px',
+                  transition: 'width 0.2s'
+                }}
+                title={`${c.name}: ${c.pct}% (${c.cropAcres.toFixed(1)} Acres)`}
+              >
+                {widthPct >= 12 ? `${c.icon} ${c.pct}%` : `${c.icon}`}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Allocation Plot Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(allocations.length, 4)}, 1fr)`, gap: 10, marginBottom: 14 }}>
         {allocations.map((item, idx) => (
           <div key={idx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 10 }}>
-            <FormRow label={`Crop ${idx + 1}`}>
-              <Select value={item.crop} onChange={v => setAllocations(p => {
-                const next = [...p];
-                next[idx].crop = v;
-                return next;
-              })}>
-                {Object.entries(cropData).map(([k, d]) => <option key={k} value={k}>{d.icon} {d.name}</option>)}
-              </Select>
-            </FormRow>
-            <InputWithVoice label="Acreage Share %" value={item.pct} onChange={v => setAllocations(p => {
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <Label>Plot {idx + 1}</Label>
+              {allocations.length > 2 && (
+                <button onClick={() => removePlot(idx)} style={{ background: 'transparent', border: 'none', color: C.red, cursor: 'pointer', fontSize: '0.72rem' }}>
+                  ✕ Remove
+                </button>
+              )}
+            </div>
+            <Select value={item.crop} onChange={v => setAllocations(p => {
               const next = [...p];
-              next[idx].pct = v;
+              next[idx] = { ...next[idx], crop: v };
               return next;
-            })} resetValue={25} lang={lang} />
+            })}>
+              {Object.entries(cropData).map(([k, d]) => <option key={k} value={k}>{d.icon} {d.name}</option>)}
+            </Select>
+            <div style={{ marginTop: 8 }}>
+              <InputWithVoice label="Land Share (%)" value={item.pct} onChange={v => setAllocations(p => {
+                const next = [...p];
+                next[idx] = { ...next[idx], pct: v };
+                return next;
+              })} resetValue={25} lang={lang} />
+            </div>
           </div>
         ))}
       </div>
 
-      {totalAllocPct !== 100 && (
-        <div style={{ padding: 10, background: 'rgba(239, 68, 68, 0.1)', color: C.red, borderRadius: 8, marginBottom: 12, fontSize: '0.8rem' }}>
-          ⚠️ Warning: Land allocation percentages sum to {totalAllocPct}%. Adjust them to total exactly 100%.
-        </div>
-      )}
+      {/* Action Buttons: Add Plot & Auto-Balance */}
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 14 }}>
+        {allocations.length < 6 && (
+          <button onClick={addPlot} style={{ padding: '6px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px dashed rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)', cursor: 'pointer', fontSize: '0.78rem' }}>
+            ➕ Add Another Crop Plot
+          </button>
+        )}
+        {totalAllocPct !== 100 && (
+          <button onClick={autoBalance} style={{ padding: '6px 14px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700 }}>
+            ⚖️ Auto-Balance to Exactly 100%
+          </button>
+        )}
+      </div>
 
-      <div style={{ overflowX: 'auto', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 12 }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
+      {/* Plot Breakdown Table */}
+      <div style={{ overflowX: 'auto', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 12, marginBottom: 16 }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.83rem' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              <th style={{ textAlign: 'left', padding: 8 }}>Allocated Crop</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Area (Acres)</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Investment</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Revenue</th>
+              <th style={{ textAlign: 'left', padding: 8 }}>Allocated Plot</th>
+              <th style={{ textAlign: 'right', padding: 8 }}>Acreage</th>
+              <th style={{ textAlign: 'right', padding: 8 }}>Seed Required</th>
+              <th style={{ textAlign: 'right', padding: 8 }}>Est. Yield</th>
+              <th style={{ textAlign: 'right', padding: 8 }}>Cultivation Cost</th>
+              <th style={{ textAlign: 'right', padding: 8 }}>Gross Revenue</th>
               <th style={{ textAlign: 'right', padding: 8 }}>Expected Profit</th>
             </tr>
           </thead>
           <tbody>
             {cropSummaries.map((c, i) => (
-              <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <td style={{ padding: 8 }}>{c.icon} {c.name}</td>
+              <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                <td style={{ padding: 8, fontWeight: 600 }}>{c.icon} {c.name} <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)' }}>({c.pct}%)</span></td>
                 <td style={{ textAlign: 'right', padding: 8 }}>{c.cropAcres.toFixed(1)} ac</td>
-                <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(c.inv)}</td>
-                <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(c.rev)}</td>
-                <td style={{ textAlign: 'right', padding: 8, color: c.prof >= 0 ? C.green : C.red }}>₹{fmt(c.prof)}</td>
+                <td style={{ textAlign: 'right', padding: 8 }}>{c.seedKg.toFixed(1)} {c.seedUnit}</td>
+                <td style={{ textAlign: 'right', padding: 8 }}>{c.prod.toFixed(1)} Qtl</td>
+                <td style={{ textAlign: 'right', padding: 8, color: C.rose }}>₹{fmt(c.inv)}</td>
+                <td style={{ textAlign: 'right', padding: 8, color: C.blue }}>₹{fmt(c.rev)}</td>
+                <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: c.prof >= 0 ? C.green : C.red }}>₹{fmt(c.prof)}</td>
               </tr>
             ))}
-            <tr style={{ fontWeight: 700, borderTop: '2px solid rgba(255,255,255,0.15)' }}>
-              <td style={{ padding: 8 }}>Total Farm Planner</td>
-              <td style={{ textAlign: 'right', padding: 8 }}>{acres.toFixed(1)} ac</td>
-              <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(aggregateInv)}</td>
-              <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(aggregateRev)}</td>
-              <td style={{ textAlign: 'right', padding: 8, color: aggregateProf >= 0 ? C.green : C.red }}>₹{fmt(aggregateProf)}</td>
+            <tr style={{ fontWeight: 700, borderTop: '2px solid rgba(34,197,94,0.3)', background: 'rgba(34,197,94,0.05)', fontSize: '0.9rem' }}>
+              <td style={{ padding: 10, color: C.green }}>Whole Farm Totals</td>
+              <td style={{ textAlign: 'right', padding: 10 }}>{acres.toFixed(1)} ac</td>
+              <td style={{ textAlign: 'right', padding: 10, color: 'rgba(255,255,255,0.7)' }}>Combined</td>
+              <td style={{ textAlign: 'right', padding: 10, color: 'rgba(255,255,255,0.7)' }}>Diversified</td>
+              <td style={{ textAlign: 'right', padding: 10, color: C.rose }}>₹{fmt(aggregateInv)}</td>
+              <td style={{ textAlign: 'right', padding: 10, color: C.blue }}>₹{fmt(aggregateRev)}</td>
+              <td style={{ textAlign: 'right', padding: 10, color: aggregateProf >= 0 ? C.green : C.red }}>₹{fmt(aggregateProf)}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
-        <BigResult label="Cumulative Net Profit" value={`₹${fmt(aggregateProf)}`} color={aggregateProf >= 0 ? C.green : C.red} />
-        <BigResult label="Overall Expected ROI" value={`${aggregateRoi.toFixed(1)}%`} color={aggregateRoi >= 0 ? C.green : C.red} />
+      {/* Aggregated Whole-Farm Resource Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 14 }}>
+        <BigResult label="Cumulative Net Profit" value={`₹${fmt(aggregateProf)}`} color={aggregateProf >= 0 ? C.green : C.red} sub={`Across all ${allocations.length} crop plots`} />
+        <BigResult label="Expected Farm ROI" value={`${aggregateRoi.toFixed(1)}%`} color={aggregateRoi >= 0 ? C.green : C.red} sub={`Total Investment: ₹${fmt(aggregateInv)}`} />
+        <ResultCard label="Total Irrigation Water" value={`${fmt(aggregateWaterLit)} Liters`} color={C.cyan} sub="Whole-farm seasonal water needs" />
+        <ResultCard label="Total Fertilizer Bags" value={`${aggregateUrea} Urea · ${aggregateDap} DAP · ${aggregateMop} MOP`} color={C.purple} sub="Aggregated nutrient dose" />
+      </div>
+
+      {/* Ecological & Market Diversification Advisory Box */}
+      <div style={{
+        background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+        borderRadius: 12, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14
+      }}>
+        <div style={{ fontSize: '2rem' }}>🌿</div>
+        <div>
+          <div style={{ fontSize: '0.88rem', fontWeight: 700, color: C.green }}>
+            Ecological & Market Diversification Score: {'★'.repeat(Math.min(5, diversityStars))}{'☆'.repeat(Math.max(0, 5 - diversityStars))}
+          </div>
+          <p style={{ margin: '3px 0 0', fontSize: '0.78rem', color: 'rgba(255,255,255,0.65)' }}>
+            {hasPulse && hasOilseed && hasStaple
+              ? 'Outstanding Farm Diversification! Combining a cereal staple, a nitrogen-fixing legume/pulse, and an oilseed/cash crop dramatically reduces market price volatility risk while enriching soil microbiology.'
+              : 'Good farm distribution. Tip: Incorporating at least one pulse/legume (like Gram, Tur, or Moong) fixes atmospheric nitrogen, reducing future chemical fertilizer expenses by up to 25%.'}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -2270,57 +2533,296 @@ function OrganicInputsPanel({ gs, lang }) {
   );
 }
 
+// ── Pre-loaded seasonal sample farm models for History ──
+const SAMPLE_PROJECTIONS = [
+  {
+    id: 'sample_wheat_rabi',
+    isSample: true,
+    name: '🌾 2-Acre Wheat High-Yield Rabi Plan',
+    date: 'ICAR Standard Rabi Model',
+    crop: 'wheat',
+    area: 2,
+    unit: 'acre',
+    inv: 30000,
+    yieldExpected: 40,
+    rev: 97000,
+    profit: 67000,
+    roi: 123.3,
+    description: 'Timely sown HD-2967/HD-3086 wheat with 6 irrigations, balanced NPK, and MSP rate ₹2,425/Qtl.'
+  },
+  {
+    id: 'sample_rice_kharif',
+    isSample: true,
+    name: '🍚 5-Acre Paddy (Rice) Kharif Plan',
+    date: 'ICAR Standard Kharif Model',
+    crop: 'rice',
+    area: 5,
+    unit: 'acre',
+    inv: 90000,
+    yieldExpected: 110,
+    rev: 253000,
+    profit: 163000,
+    roi: 81.1,
+    description: 'Medium duration hybrid paddy with transplanting, zinc application, and Grade-A MSP rate ₹2,300/Qtl.'
+  },
+  {
+    id: 'sample_mustard_cash',
+    isSample: true,
+    name: '🌼 3-Bigha Mustard Cash Crop Plan',
+    date: 'ICAR Standard Rabi Cash Model',
+    crop: 'mustard',
+    area: 3,
+    unit: 'bigha_pucca',
+    inv: 15000,
+    yieldExpected: 15,
+    rev: 89250,
+    profit: 74250,
+    roi: 395.0,
+    description: 'Low water requirement mustard (Giriraj/Pusa Jai Kisan) with high oil content and ₹5,950/Qtl MSP.'
+  }
+];
+
 // Settings Panel
 function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerData, lang }) {
+  const [activeTab, setActiveTab] = useState('crops');
   const [selectedCrop, setSelectedCrop] = useState('wheat');
   const [seedRate, setSeedRate] = useState(20);
   const [typicalCost, setTypicalCost] = useState(15000);
   const [yieldVal, setYieldVal] = useState(20);
+  const [marketPriceVal, setMarketPriceVal] = useState(2425);
+  const [statusMsg, setStatusMsg] = useState('');
+
+  // Editable fertilizer state
+  const [localFert, setLocalFert] = useState(() => fertilizerData || DEFAULT_FERTILIZER_DATA);
+
+  // Editable machinery rates
+  const [localMachinery, setLocalMachinery] = useState(() => {
+    const saved = localStorage.getItem('krishi_config_machinery');
+    return saved ? JSON.parse(saved) : DEFAULT_MACHINERY_DATA;
+  });
+
+  // Editable labour wage rate
+  const [labourWage, setLabourWage] = useState(() => {
+    return parseFloat(localStorage.getItem('krishi_config_labour_wage')) || 400;
+  });
 
   useEffect(() => {
-    const c = cropData[selectedCrop];
+    const c = cropData[selectedCrop] || DEFAULT_CROP_DATA[selectedCrop] || DEFAULT_CROP_DATA.wheat;
     if (c) {
-      setSeedRate(c.seedRateKgAcre);
-      setTypicalCost(c.typicalCostAcre);
-      setYieldVal(c.yieldQtlAcre);
+      setSeedRate(c.seedRateKgAcre || 20);
+      setTypicalCost(c.typicalCostAcre || 15000);
+      setYieldVal(c.yieldQtlAcre || 20);
+      setMarketPriceVal(c.marketPrice || c.msp || 2200);
     }
   }, [selectedCrop, cropData]);
 
-  const handleUpdate = () => {
+  const showStatus = (msg) => {
+    setStatusMsg(msg);
+    setTimeout(() => setStatusMsg(''), 4000);
+  };
+
+  const handleUpdateCrop = () => {
     setCropData(prev => ({
       ...prev,
       [selectedCrop]: {
         ...prev[selectedCrop],
-        seedRateKgAcre: parseFloat(seedRate),
-        typicalCostAcre: parseFloat(typicalCost),
-        yieldQtlAcre: parseFloat(yieldVal)
+        seedRateKgAcre: parseFloat(seedRate) || 20,
+        typicalCostAcre: parseFloat(typicalCost) || 15000,
+        yieldQtlAcre: parseFloat(yieldVal) || 20,
+        marketPrice: parseFloat(marketPriceVal) || 2200
       }
     }));
-    alert("Administrative baseline configuration parameters successfully updated!");
+    showStatus(`✓ Baseline configurations for ${cropData[selectedCrop]?.name || selectedCrop} updated!`);
+  };
+
+  const handleFertilizerChange = (fertKey, field, val) => {
+    const parsed = parseFloat(val) || 0;
+    setLocalFert(prev => ({
+      ...prev,
+      [fertKey]: {
+        ...prev[fertKey],
+        [field]: parsed
+      }
+    }));
+  };
+
+  const handleMachineryChange = (machKey, val) => {
+    const parsed = parseFloat(val) || 0;
+    setLocalMachinery(prev => ({
+      ...prev,
+      [machKey]: {
+        ...prev[machKey],
+        rateHr: parsed
+      }
+    }));
+  };
+
+  const handleSaveAll = () => {
+    setFertilizerData(localFert);
+    localStorage.setItem('krishi_config_crops', JSON.stringify(cropData));
+    localStorage.setItem('krishi_config_fertilizers', JSON.stringify(localFert));
+    localStorage.setItem('krishi_config_machinery', JSON.stringify(localMachinery));
+    localStorage.setItem('krishi_config_labour_wage', labourWage.toString());
+    showStatus("✓ All configurations saved globally into persistent storage!");
+  };
+
+  const handleResetDefaults = () => {
+    if (window.confirm("Reset all crop baselines, subsidized fertilizer prices, and machinery rental rates back to official ICAR / Government benchmarks?")) {
+      setCropData(DEFAULT_CROP_DATA);
+      setFertilizerData(DEFAULT_FERTILIZER_DATA);
+      setLocalFert(DEFAULT_FERTILIZER_DATA);
+      setLocalMachinery(DEFAULT_MACHINERY_DATA);
+      setLabourWage(400);
+      localStorage.removeItem('krishi_config_crops');
+      localStorage.removeItem('krishi_config_fertilizers');
+      localStorage.removeItem('krishi_config_machinery');
+      localStorage.removeItem('krishi_config_labour_wage');
+      showStatus("✓ Restored official ICAR / Government benchmark rates!");
+    }
   };
 
   return (
     <div>
-      <PanelHeader icon="⚙️" title="Administrator Config & Baselines" subtitle="Customize default crop rates, yield targets, and baseline expenses" />
-      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
-        <FormRow label="Select Crop Template to Modify">
-          <Select value={selectedCrop} onChange={setSelectedCrop}>
-            {Object.entries(cropData).map(([k, d]) => <option key={k} value={k}>{d.icon} {d.name}</option>)}
-          </Select>
-        </FormRow>
-        <InputWithVoice label="Baseline Seed Rate (kg/acre)" value={seedRate} onChange={setSeedRate} resetValue={20} lang={lang} />
-        <InputWithVoice label="Baseline Production Cost (₹/acre)" value={typicalCost} onChange={setTypicalCost} resetValue={15000} lang={lang} />
-        <InputWithVoice label="Baseline Expected Yield (Quintals/acre)" value={yieldVal} onChange={setYieldVal} resetValue={20} lang={lang} />
-        
+      <PanelHeader icon="⚙️" title="Administrator Config & Baselines" subtitle="Customize default crop rates, subsidized fertilizer bag prices, machinery rentals, and labour wage benchmarks" />
+      
+      {statusMsg && (
+        <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, marginBottom: 14, fontSize: '0.85rem', fontWeight: 600 }}>
+          {statusMsg}
+        </div>
+      )}
+
+      {/* Sub-Navigation Tabs */}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 14, borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 10 }}>
+        {[
+          { id: 'crops', icon: '🌾', label: 'Crop Baselines' },
+          { id: 'fertilizers', icon: '🧪', label: 'Fertilizer Subsidies' },
+          { id: 'machinery', icon: '🚜', label: 'Machinery Rentals' },
+          { id: 'labour', icon: '👷', label: 'Labour Wages' },
+        ].map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            style={{
+              padding: '6px 14px', borderRadius: 8, border: activeTab === tab.id ? `1px solid ${C.green}` : '1px solid rgba(255,255,255,0.1)',
+              background: activeTab === tab.id ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.04)',
+              color: activeTab === tab.id ? '#fff' : 'rgba(255,255,255,0.6)', cursor: 'pointer',
+              fontSize: '0.82rem', fontWeight: activeTab === tab.id ? 700 : 500, display: 'flex', alignItems: 'center', gap: 6
+            }}
+          >
+            <span>{tab.icon}</span>
+            <span>{tab.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* TAB 1: Crops */}
+      {activeTab === 'crops' && (
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
+          <FormRow label="Select Crop Template to View/Modify">
+            <Select value={selectedCrop} onChange={setSelectedCrop}>
+              {Object.entries(cropData).map(([k, d]) => <option key={k} value={k}>{d.icon} {d.name}</option>)}
+            </Select>
+          </FormRow>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 10 }}>
+            <InputWithVoice label="Baseline Seed Rate (kg/acre)" value={seedRate} onChange={setSeedRate} resetValue={20} lang={lang} />
+            <InputWithVoice label="Cultivation Cost (₹/acre)" value={typicalCost} onChange={setTypicalCost} resetValue={15000} lang={lang} />
+            <InputWithVoice label="Expected Yield Target (Qtl/acre)" value={yieldVal} onChange={setYieldVal} resetValue={20} lang={lang} />
+            <InputWithVoice label="Benchmark Market / MSP Price (₹/Qtl)" value={marketPriceVal} onChange={setMarketPriceVal} resetValue={2425} lang={lang} />
+          </div>
+
+          <button
+            onClick={handleUpdateCrop}
+            style={{
+              padding: '10px 16px', background: 'rgba(34,197,94,0.2)', border: `1px solid ${C.green}`,
+              color: C.green, borderRadius: 10, cursor: 'pointer', fontWeight: 700, fontSize: '0.82rem', marginTop: 12
+            }}
+          >
+            Update {cropData[selectedCrop]?.name || selectedCrop} Parameters
+          </button>
+        </div>
+      )}
+
+      {/* TAB 2: Fertilizers */}
+      {activeTab === 'fertilizers' && (
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
+          <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>
+            Configure Government Subsidized Fertilizer Maximum Retail Prices (MRP per 50kg bag) or private retailer rates:
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+            {Object.entries(localFert).map(([k, d]) => (
+              <div key={k} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: 10 }}>
+                <div style={{ fontWeight: 700, color: C.blue, fontSize: '0.85rem', marginBottom: 6 }}>{d.name}</div>
+                <InputWithVoice 
+                  label="Bag Price (₹/50kg)" 
+                  value={d.pricePerBag} 
+                  onChange={v => handleFertilizerChange(k, 'pricePerBag', v)} 
+                  resetValue={DEFAULT_FERTILIZER_DATA[k]?.pricePerBag || 500} 
+                  lang={lang} 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 3: Machinery */}
+      {activeTab === 'machinery' && (
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
+          <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>
+            Adjust custom hourly machinery rental rates to match prevailing local custom hiring center (CHC) rates in your village:
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+            {Object.entries(localMachinery).slice(0, 9).map(([k, d]) => (
+              <div key={k} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: 10 }}>
+                <div style={{ fontWeight: 700, color: C.amber, fontSize: '0.85rem', marginBottom: 6 }}>{d.icon} {d.name}</div>
+                <InputWithVoice 
+                  label="Rental Rate (₹/Hour)" 
+                  value={d.rateHr} 
+                  onChange={v => handleMachineryChange(k, v)} 
+                  resetValue={DEFAULT_MACHINERY_DATA[k]?.rateHr || 500} 
+                  lang={lang} 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: Labour */}
+      {activeTab === 'labour' && (
+        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
+          <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>
+            Set standard daily agricultural wage rates applicable for field preparation, transplanting, weeding, and harvesting operations:
+          </div>
+          <div style={{ maxWidth: 350 }}>
+            <InputWithVoice label="Daily Farm Labour Wage (₹/Person-day)" value={labourWage} onChange={setLabourWage} resetValue={400} lang={lang} />
+          </div>
+        </div>
+      )}
+
+      {/* Global Actions */}
+      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
         <button
-          onClick={handleUpdate}
+          onClick={handleSaveAll}
           style={{
-            width: '100%', padding: '12px', background: C.green, color: '#fff',
+            padding: '12px 22px', background: C.green, color: '#fff',
             border: 'none', borderRadius: 10, cursor: 'pointer',
-            fontWeight: 700, fontSize: '0.85rem', marginTop: 14
+            fontWeight: 700, fontSize: '0.88rem'
           }}
         >
-          Save Configurations Globally
+          💾 Save All Configurations Globally
+        </button>
+
+        <button
+          onClick={handleResetDefaults}
+          style={{
+            padding: '12px 18px', background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)',
+            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10, cursor: 'pointer',
+            fontSize: '0.82rem'
+          }}
+        >
+          🔄 Restore ICAR Standard Benchmarks
         </button>
       </div>
     </div>
@@ -2328,29 +2830,120 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
 }
 
 // History Panel
-function HistoryPanel({ saved, onLoad, onDelete }) {
-  if (saved.length === 0) return (
-    <div style={{ textAlign: 'center', padding: '3rem', color: 'rgba(255,255,255,0.35)' }}>
-      <div style={{ fontSize: '3rem', marginBottom: 12 }}>🕐</div>
-      <p>No saved calculations yet.</p>
-    </div>
+function HistoryPanel({ saved = [], onLoad, onDelete, onClearAll }) {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredSaved = saved.filter(s => 
+    (s.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (s.crop || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   return (
     <div>
-      <PanelHeader icon="🕐" title="Saved Calculations" subtitle="View and edit historical farm calculation projections" />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {saved.map(s => (
-          <div key={s.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ fontWeight: 700, color: C.green, fontSize: '0.92rem' }}>{s.name}</div>
-              <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{s.date} · Crop: {s.crop} · Area: {s.area} {s.unit}</div>
+      <PanelHeader icon="🕐" title="Saved Farm Projections & History" subtitle="Restore, inspect, and analyze previously saved seasonal farm budgets or choose from official preloaded scenario models" />
+      
+      {/* Search & Actions Bar */}
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, flexWrap: 'wrap' }}>
+        <input 
+          type="text"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          placeholder="🔍 Search saved calculations by name or crop..."
+          style={{
+            padding: '8px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.85rem',
+            width: '280px', maxWidth: '100%'
+          }}
+        />
+
+        {saved.length > 0 && onClearAll && (
+          <button 
+            onClick={() => {
+              if (window.confirm("Are you sure you want to clear all saved calculations?")) {
+                onClearAll();
+              }
+            }}
+            style={{
+              padding: '6px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.1)',
+              border: '1px solid rgba(239,68,68,0.25)', color: C.red, cursor: 'pointer', fontSize: '0.78rem'
+            }}
+          >
+            🗑️ Clear All History
+          </button>
+        )}
+      </div>
+
+      {/* User Saved Calculations */}
+      {filteredSaved.length > 0 ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
+          {filteredSaved.map(s => (
+            <div key={s.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
+              <div>
+                <div style={{ fontWeight: 700, color: C.green, fontSize: '0.96rem' }}>{s.name}</div>
+                <div style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)', marginTop: 3 }}>
+                  Saved: {s.date} · Crop: <strong style={{ color: '#fff' }}>{s.crop}</strong> · Land Area: <strong style={{ color: '#fff' }}>{s.area} {s.unit}</strong>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button onClick={() => onLoad(s)} style={{ padding: '8px 14px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600 }}>
+                  📥 Restore to Workspace
+                </button>
+                <button onClick={() => onDelete(s.id)} style={{ padding: '8px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', color: C.red, cursor: 'pointer', fontSize: '0.82rem' }}>
+                  ✕ Delete
+                </button>
+              </div>
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <button onClick={() => onLoad(s)} style={{ padding: '6px 12px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}>Restore</button>
-              <button onClick={() => onDelete(s.id)} style={{ padding: '6px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', color: C.red, cursor: 'pointer', fontSize: '0.8rem' }}>Delete</button>
+          ))}
+        </div>
+      ) : saved.length === 0 ? (
+        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.12)', borderRadius: 14, padding: '1.5rem', textAlign: 'center', marginBottom: 20 }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>💾</div>
+          <h4 style={{ margin: '0 0 6px', color: '#fff' }}>No Custom Saved Calculations Yet</h4>
+          <p style={{ margin: '0 0 14px', fontSize: '0.82rem', color: 'rgba(255,255,255,0.55)', maxWidth: 460, marginInline: 'auto' }}>
+            To save your current farm plan, click the <strong>💾 Save</strong> button in the top toolbar. In the meantime, you can explore and instantly restore any of the preloaded reference models below:
+          </p>
+        </div>
+      ) : (
+        <div style={{ padding: 14, color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', marginBottom: 20 }}>
+          No saved calculations match "{searchTerm}".
+        </div>
+      )}
+
+      {/* Pre-loaded Benchmark Sample Models */}
+      <div>
+        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'rgba(255,255,255,0.8)', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span>📚</span>
+          <span>Pre-Loaded Seasonal Farm Projection Models (Click to Load):</span>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+          {SAMPLE_PROJECTIONS.map(sample => (
+            <div key={sample.id} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 14, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ fontWeight: 700, color: C.blue, fontSize: '0.92rem', marginBottom: 4 }}>{sample.name}</div>
+                <div style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.5)', marginBottom: 8 }}>{sample.date}</div>
+                <p style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.7)', margin: '0 0 10px', lineHeight: 1.4 }}>
+                  {sample.description}
+                </p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, fontSize: '0.72rem', background: 'rgba(0,0,0,0.2)', padding: '6px 8px', borderRadius: 8, marginBottom: 10 }}>
+                  <div>Investment: <strong style={{ color: C.rose }}>₹{fmt(sample.inv)}</strong></div>
+                  <div>Yield: <strong>{sample.yieldExpected} Qtl</strong></div>
+                  <div>Revenue: <strong style={{ color: C.blue }}>₹{fmt(sample.rev)}</strong></div>
+                  <div>Profit: <strong style={{ color: C.green }}>₹{fmt(sample.profit)}</strong></div>
+                </div>
+              </div>
+              <button
+                onClick={() => onLoad({ crop: sample.crop, area: sample.area, unit: sample.unit })}
+                style={{
+                  width: '100%', padding: '8px', borderRadius: 8, background: 'rgba(96,165,250,0.15)',
+                  border: '1px solid rgba(96,165,250,0.3)', color: C.blue, cursor: 'pointer',
+                  fontSize: '0.8rem', fontWeight: 700
+                }}
+              >
+                📥 Load This Model into Workspace
+              </button>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -2385,13 +2978,6 @@ export function CalculatorTab() {
   const [saveModal, setSaveModal] = useState(false);
   const [saveName, setSaveName] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  // Dynamic shared cost channel
-  const [calculatedCosts, setCalculatedCosts] = useState({ totalCost: 0, yieldExpected: 25 });
-
-  const handleSaveCalculatedCosts = (totalCost, yieldExpected) => {
-    setCalculatedCosts({ totalCost, yieldExpected });
-  };
 
   const setActiveCalc = (id) => {
     if (id === 'rentals_tab_proxy') { setActiveTab('rentals'); return; }
@@ -2584,17 +3170,12 @@ export function CalculatorTab() {
           {activeCalc === 'machinery'    && <MachineryPanel gs={gs} setActiveCalc={setActiveCalc} lang={lang} />}
           {activeCalc === 'polyhouse'    && <PolyhousePanel lang={lang} />}
           {activeCalc === 'cattle_fodder'&& <CattleFodderPanel lang={lang} />}
-          {activeCalc === 'farmcost'     && <FarmCostPanel gs={gs} cropData={cropData} lang={lang} onSaveCalculatedCosts={handleSaveCalculatedCosts} />}
-          {activeCalc === 'profit'       && <ProfitPanel gs={gs} cropData={cropData} calculatedCosts={calculatedCosts} lang={lang} />}
-          {activeCalc === 'breakeven'    && <BreakEvenPanel lang={lang} />}
-          {activeCalc === 'loan'         && <LoanPanel lang={lang} />}
-          {activeCalc === 'roi'          && <ROIPanel lang={lang} />}
           {activeCalc === 'crop_compare' && <CropComparePanel gs={gs} cropData={cropData} lang={lang} />}
           {activeCalc === 'mandi_profit' && <MandiProfitPanel gs={gs} cropData={cropData} lang={lang} />}
           {activeCalc === 'storage'      && <StoragePanel cropData={cropData} lang={lang} />}
           {activeCalc === 'multicrop'    && <MultiCropPanel gs={gs} cropData={cropData} lang={lang} />}
           {activeCalc === 'settings'     && <SettingsPanel cropData={cropData} setCropData={setCropData} fertilizerData={fertilizerData} setFertilizerData={setFertilizerData} lang={lang} />}
-          {activeCalc === 'history'      && <HistoryPanel saved={saved} onLoad={loadCalc} onDelete={deleteCalc} />}
+          {activeCalc === 'history'      && <HistoryPanel saved={saved} onLoad={loadCalc} onDelete={deleteCalc} onClearAll={() => { setSaved([]); localStorage.removeItem('krishi_saved_calcs'); }} />}
         </div>
       </div>
 
