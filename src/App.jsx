@@ -18,6 +18,8 @@ import { PlannerTab } from './components/tabs/PlannerTab';
 import { GeminiKeyModal } from './components/modals/GeminiKeyModal';
 import { RentalBookingModal } from './components/modals/RentalBookingModal';
 import { OnboardingWizard } from './components/modals/OnboardingWizard';
+import { MobileBottomNav } from './components/MobileBottomNav';
+import { MobileDrawer } from './components/MobileDrawer';
 import { LandingPage } from './components/LandingPage';
 import { GoogleTranslate } from './components/GoogleTranslate';
 import { pageReader } from './services/ai/pageNarrationService';
@@ -27,6 +29,7 @@ export function App() {
   const { activeTab, setActiveTab, setShowOnboarding } = useApp();
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [bookingItem, setBookingItem] = useState(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   // Stop speech only when shifting to a completely different browser tab, window, or route
   useEffect(() => {
@@ -106,11 +109,12 @@ export function App() {
           <Header 
             onOpenAiModal={() => setAiModalOpen(true)} 
             onNavigate={handleNavigate}
+            onOpenDrawer={setMobileDrawerOpen}
           />
 
           {/* Main Page Layout */}
           <div className="main-layout">
-            {/* Left Sidebar */}
+            {/* Left Sidebar (Desktop Only) */}
             <Sidebar />
 
             {/* Right Main Content */}
@@ -135,6 +139,19 @@ export function App() {
               </div>
             </main>
           </div>
+
+          {/* Mobile-First Sticky Bottom Navigation */}
+          <MobileBottomNav 
+            onOpenDrawer={setMobileDrawerOpen} 
+            isDrawerOpen={mobileDrawerOpen}
+          />
+
+          {/* Mobile-First Full Feature Drawer & Farm Settings Sheet */}
+          <MobileDrawer 
+            isOpen={mobileDrawerOpen} 
+            onClose={() => setMobileDrawerOpen(false)} 
+            onOpenAiModal={() => setAiModalOpen(true)}
+          />
 
           {/* Modals */}
           {aiModalOpen && <GeminiKeyModal onClose={() => setAiModalOpen(false)} />}

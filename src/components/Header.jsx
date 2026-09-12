@@ -4,7 +4,7 @@ import { getText } from '../data/constants';
 import { pageReader } from '../services/ai/pageNarrationService';
 import { ttsEngine } from '../services/ai/ttsService';
 
-export function Header({ onOpenAiModal }) {
+export function Header({ onOpenAiModal, onOpenDrawer }) {
   const { lang, setLang, setShowOnboarding, activeTab, crop, soil, location, area, report } = useApp();
   const [profileOpen, setProfileOpen] = useState(false);
   const [readerState, setReaderState] = useState({
@@ -75,15 +75,27 @@ export function Header({ onOpenAiModal }) {
 
   return (
     <header className="app-header">
-      <div className="header-logo">
-        <img 
-          src="/logo.svg" 
-          alt="Krishi Jal Logo" 
-          style={{ width: '40px', height: '40px', objectFit: 'contain' }} 
-        />
-        <div className="logo-text">
-          <h1 className="logo-title">{getText('logo-title', lang)}</h1>
-          <span className="logo-subtitle">{getText('logo-subtitle', lang)}</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {/* Mobile Hamburger Button */}
+        <button
+          type="button"
+          className="mobile-header-menu-btn"
+          onClick={() => onOpenDrawer && onOpenDrawer(true)}
+          aria-label="Open mobile menu"
+        >
+          <i className="fa-solid fa-bars"></i>
+        </button>
+
+        <div className="header-logo">
+          <img 
+            src="/logo.svg" 
+            alt="Krishi Jal Logo" 
+            style={{ width: '38px', height: '38px', objectFit: 'contain' }} 
+          />
+          <div className="logo-text">
+            <h1 className="logo-title">{getText('logo-title', lang)}</h1>
+            <span className="logo-subtitle">{getText('logo-subtitle', lang)}</span>
+          </div>
         </div>
       </div>
 
