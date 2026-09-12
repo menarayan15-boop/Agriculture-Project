@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishi Jal: Root Cause Analysis & AI Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .canvas {
+      width: 1400px;
+      background: #ffffff;
+      border: 3px solid #111827;
+      border-radius: 4px;
+      padding: 24px 32px 36px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+    .top-header {
+      border: 2px solid #111827;
+      border-radius: 14px;
+      padding: 8px 48px;
+      font-size: 34px;
+      font-weight: 700;
+      color: #111827;
+      background: #ffffff;
+      margin-bottom: 24px;
+      letter-spacing: 0.2px;
+    }
+    .columns-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+    .card {
+      border: 2px solid #111827;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .card-header {
+      background: #cbf3e1;
+      padding: 18px 12px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border-bottom: 2px solid #111827;
+      min-height: 140px;
+      justify-content: center;
+      gap: 10px;
+    }
+    .card-header .icon {
+      font-size: 38px;
+      line-height: 1;
+    }
+    .card-header .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .card-body {
+      padding: 16px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+    }
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 14.5px;
+      line-height: 1.35;
+      color: #1e293b;
+      font-weight: 500;
+    }
+    .bullet-list li {
+      position: relative;
+      padding-left: 14px;
+    }
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #000000;
+    }
+    .arrows-connector-row {
+      width: 100%;
+      height: 90px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .svg-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .central-hexagon {
+      width: 160px;
+      height: 75px;
+      background: #ffd6df;
+      border: 2px solid #111827;
+      clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.2;
+      color: #111827;
+      z-index: 10;
+      margin-top: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .bottom-banner-container {
+      margin-top: 18px;
+      width: 68%;
+    }
+    .bottom-banner {
+      background: #cbf3e1;
+      border: 2px solid #111827;
+      border-radius: 16px;
+      padding: 12px 24px;
+      text-align: center;
+      font-size: 23px;
+      font-weight: 800;
+      color: #111827;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+    .print-bar {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .btn:hover { background: #334155; }
+  </style>
+</head>
+<body>
+
+  <div class="canvas">
+    <div class="top-header">Root Cause Analysis</div>
+
+    <div class="columns-row">
+      <!-- Card 1: Environmental Triggers -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon">⛈️</div>
+          <div class="title">Environmental<br>Triggers</div>
+        </div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li>Intense Heatwaves & High ET₀</li>
+            <li>Erratic & Delayed Monsoons</li>
+            <li>Prolonged Drought Dry Spells</li>
+            <li>Depleting Groundwater Tables</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 2: Operational Factors -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon">⚙️💧</div>
+          <div class="title">Operational<br>Factors</div>
+        </div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li>Unregulated Flood Irrigation</li>
+            <li>Over-Pumping & High Power Cost</li>
+            <li>Untimely Water Application</li>
+            <li>Runoff & Nitrogen Leaching</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 3: Soil Conditions -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon">🌍🔍</div>
+          <div class="title">Soil<br>Conditions</div>
+        </div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li>Unknown Water Retention Capacity</li>
+            <li>Severe NPK Nutrient Imbalance</li>
+            <li>Soil Compaction & Poor Aeration</li>
+            <li>Low Organic Carbon & Salinity</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 4: Monitoring Gaps -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon">📡🌐</div>
+          <div class="title">Monitoring<br>Gaps</div>
+        </div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li>Inadequate In-Situ Soil Sensors</li>
+            <li>Siloed, Unintegrated Agro Data</li>
+            <li>Lack of Real-Time Deficit Metrics</li>
+            <li>No Predictive Crop Analytics</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 5: Human Factors -->
+      <div class="card">
+        <div class="card-header">
+          <div class="icon">👨‍🌾⚠️</div>
+          <div class="title">Human<br>Factors</div>
+        </div>
+        <div class="card-body">
+          <ul class="bullet-list">
+            <li>Inconsistent Irrigation Practices</li>
+            <li>Delayed Pest & Stress Detection</li>
+            <li>High Machinery Rental Costs</li>
+            <li>Language & Digital Literacy Gaps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connecting Arrows Section -->
+    <div class="arrows-connector-row">
+      <svg class="svg-lines" viewBox="0 0 1400 90" preserveAspectRatio="none">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="#000000" />
+          </marker>
+        </defs>
+        <!-- Lines from columns down into central node -->
+        <line x1="140" y1="0" x2="620" y2="45" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow)" />
+        <line x1="420" y1="0" x2="630" y2="35" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow)" />
+        <line x1="700" y1="0" x2="700" y2="20" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow)" />
+        <line x1="980" y1="0" x2="770" y2="35" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow)" />
+        <line x1="1260" y1="0" x2="780" y2="45" stroke="#000000" stroke-width="2.5" marker-end="url(#arrow)" />
+      </svg>
+
+      <div class="central-hexagon">
+        <span>Crop Loss<br>& Water<br>Stress</span>
+      </div>
+    </div>
+
+    <!-- Bottom Solution Banner -->
+    <div class="bottom-banner-container">
+      <div class="bottom-banner">
+        AI-Based Precision Irrigation and Advisory System
+      </div>
+    </div>
+
+    <div class="print-bar">
+      <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      <a class="btn" href="/diagrams/krishi_jal_root_cause_analysis.jpg" download>📥 Download High-Res JPG</a>
+    </div>
+  </div>
+
+</body>
+</html>

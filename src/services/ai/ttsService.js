@@ -1,25 +1,21 @@
 /**
  * Krishi Jal - Multilingual Farmer Text-to-Speech (TTS) Voice Engine
- * Speaks aloud naturally and smoothly in all 10 regional Indian languages:
+ * Pure Neural HTML5 Audio Streaming Engine (Google Neural Audio)
+ * Speaks aloud smoothly, naturally, and sweetly in all 10 regional Indian languages:
  * 1. English (en)
  * 2. Hindi (hi)
- * 3. Punjabi (pa)
- * 4. Telugu (te)
- * 5. Tamil (ta)
- * 6. Kannada (kn)
+ * 3. Telugu (te)
+ * 4. Tamil (ta)
+ * 5. Kannada (kn)
+ * 6. Punjabi (pa)
  * 7. Marathi (mr)
  * 8. Bengali (bn)
  * 9. Gujarati (gu)
  * 10. Odia (or)
- *
- * Architecture:
- * - Tier 1: Neural high-fidelity audio chunks streamed via /api/tts (Google TTS proxy)
- * - Tier 2: Direct client-side web audio playback
- * - Tier 3: Browser SpeechSynthesis (SpeechSynthesisUtterance) fallback
  */
 
 const LANG_MAP = {
-  en: 'en',
+  en: 'en-IN',
   hi: 'hi',
   te: 'te',
   ta: 'ta',
@@ -28,36 +24,32 @@ const LANG_MAP = {
   mr: 'mr',
   bn: 'bn',
   gu: 'gu',
-  or: 'hi' // Odia phonetic fallback to Hindi voice for clear audio
-};
-
-const LOCALE_SPEECH_MAP = {
-  en: 'en-IN',
-  hi: 'hi-IN',
-  te: 'te-IN',
-  ta: 'ta-IN',
-  kn: 'kn-IN',
-  pa: 'pa-IN',
-  mr: 'mr-IN',
-  bn: 'bn-IN',
-  gu: 'gu-IN',
-  or: 'hi-IN'
+  or: 'hi' // Odia maps to Hindi phonetics for clear, sweet pronunciation
 };
 
 export class TtsService {
   constructor() {
     this.isSpeaking = false;
-    this.currentAudio = null;
+    this.audio = null;
     this.activeToken = null;
+
+    if (typeof window !== 'undefined') {
+      try {
+        this.audio = new Audio();
+        this.audio.preload = 'auto';
+        window.__ttsEngine = this;
+        window.__ttsAudio = this.audio;
+      } catch (e) {}
+    }
   }
 
   /**
-   * Split long text into natural spoken sentence chunks under 160 characters.
+   * Split text into short, natural, conversational spoken sentences.
    */
   chunkText(rawText) {
     if (!rawText) return [];
     
-    // Remove emojis, markdown, and special formatting characters
+    // Remove markdown symbols, brackets, emojis, extra whitespace
     const clean = rawText
       .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
       .replace(/[\*\#\`\_\[\]\(\)\{\}\<\>\~\\\/]/g, '')
@@ -66,7 +58,7 @@ export class TtsService {
 
     if (!clean) return [];
 
-    // Split on natural sentence enders (. ! ? । ; :)
+    // Split on sentence terminators (. ! ? । ; :)
     const rawSentences = clean.split(/([.।?!;:\n]+)/);
     const sentences = [];
     
@@ -75,16 +67,16 @@ export class TtsService {
       const punct = rawSentences[i + 1] || '';
       const full = (part + punct).trim();
       if (full) {
-        if (full.length <= 160) {
+        if (full.length <= 150) {
           sentences.push(full);
         } else {
-          // If a sentence is unusually long, split by comma or space
+          // Split longer sentences by commas
           const subParts = full.split(/([,،]+)/);
           let currentSub = '';
           for (let j = 0; j < subParts.length; j++) {
             const sub = subParts[j].trim();
             if (!sub) continue;
-            if ((currentSub + ' ' + sub).length <= 150) {
+            if ((currentSub + ' ' + sub).length <= 140) {
               currentSub = currentSub ? currentSub + ' ' + sub : sub;
             } else {
               if (currentSub) sentences.push(currentSub);
@@ -101,12 +93,17 @@ export class TtsService {
 
   /**
    * Speak plain text answer aloud in farmer's chosen language.
-   * @param {string} text - Text to speak
-   * @param {string} langCode - Language code ('en', 'hi', 'te', 'ta', 'kn', 'pa', 'mr', 'bn', 'gu', 'or' or 'hi-IN')
-   * @param {Object} callbacks - { onStart, onEnd, onError }
+   * Plays each sentence chunk cleanly once using Google Neural TTS stream.
    */
-  speak(text, langCode = 'hi', callbacks = {}) {
+  speak(text, langCode = 'hi', arg3 = {}, arg4 = {}) {
     this.stop();
+
+    let callbacks = {};
+    if (typeof arg3 === 'object' && arg3 !== null && (arg3.onStart || arg3.onEnd || arg3.onError)) {
+      callbacks = arg3;
+    } else if (typeof arg4 === 'object' && arg4 !== null) {
+      callbacks = arg4;
+    }
 
     if (!text || !text.trim()) {
       if (callbacks.onEnd) callbacks.onEnd();
@@ -121,93 +118,70 @@ export class TtsService {
 
     const iso = (langCode || 'hi').toLowerCase().slice(0, 2);
     const tl = LANG_MAP[iso] || 'hi';
-    const speechLocale = LOCALE_SPEECH_MAP[iso] || 'hi-IN';
 
-    const myToken = Symbol('tts-session');
-    this.activeToken = myToken;
+    const sessionToken = Symbol('tts-session');
+    this.activeToken = sessionToken;
     this.isSpeaking = true;
+
+    if (!this.audio) {
+      this.audio = new Audio();
+    }
 
     if (callbacks.onStart) callbacks.onStart();
 
     let currentIndex = 0;
 
     const playNext = () => {
-      if (this.activeToken !== myToken) return;
+      if (this.activeToken !== sessionToken) return;
 
       if (currentIndex >= sentences.length) {
         this.isSpeaking = false;
-        this.currentAudio = null;
         if (callbacks.onEnd) callbacks.onEnd();
         return;
       }
 
       const chunk = sentences[currentIndex];
       currentIndex++;
+      console.log(`[TTS Engine] Playing chunk ${currentIndex}/${sentences.length} (${tl}):`, chunk);
 
-      // Tier 1: Try /api/tts endpoint (high-quality neural voice stream)
-      const primaryUrl = `/api/tts?tl=${encodeURIComponent(tl)}&q=${encodeURIComponent(chunk)}`;
-      const fallbackUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${encodeURIComponent(tl)}&q=${encodeURIComponent(chunk)}`;
+      const audio = this.audio;
+      audio.onended = null;
+      audio.onerror = null;
 
-      const audio = new Audio();
-      this.currentAudio = audio;
-
-      let hasFallenBack = false;
-
-      const fallbackToWebSpeech = () => {
-        if (this.activeToken !== myToken) return;
-        if (typeof window !== 'undefined' && window.speechSynthesis) {
-          try {
-            const u = new SpeechSynthesisUtterance(chunk);
-            u.lang = speechLocale;
-            u.rate = 0.95;
-            const voices = window.speechSynthesis.getVoices() || [];
-            const match = voices.find(v => v.lang && (v.lang.startsWith(iso) || v.lang.replace('_', '-').startsWith(iso)));
-            if (match) u.voice = match;
-
-            u.onend = () => {
-              if (this.activeToken === myToken) playNext();
-            };
-            u.onerror = () => {
-              if (this.activeToken === myToken) playNext();
-            };
-            window.speechSynthesis.speak(u);
-            return;
-          } catch (e) {
-            console.warn('[WebSpeech Error]:', e);
-          }
-        }
-        // If web speech also unavailable, continue to next chunk
-        playNext();
-      };
-
-      audio.onended = () => {
-        if (this.activeToken === myToken) playNext();
-      };
-
-      audio.onerror = () => {
-        if (this.activeToken !== myToken) return;
-        if (!hasFallenBack) {
-          hasFallenBack = true;
-          // Try direct fallback URL
-          audio.src = fallbackUrl;
-          audio.play().catch(() => {
-            fallbackToWebSpeech();
-          });
-        } else {
-          fallbackToWebSpeech();
+      let chunkHandled = false;
+      const onDone = () => {
+        if (chunkHandled) return;
+        chunkHandled = true;
+        console.log(`[TTS Engine] Finished chunk ${currentIndex}/${sentences.length}`);
+        if (this.activeToken === sessionToken) {
+          // Gentle 180ms conversational pause between sentences for a pleasant, natural human cadence
+          setTimeout(() => {
+            if (this.activeToken === sessionToken) {
+              playNext();
+            }
+          }, 180);
         }
       };
 
-      audio.src = primaryUrl;
+      audio.onended = onDone;
+      audio.onerror = (e) => {
+        console.warn('[TTS Audio Stream Error on chunk]:', chunk, e);
+        // Advance to next chunk smoothly after short pause
+        setTimeout(onDone, 120);
+      };
+
+      const url = `/api/tts?tl=${encodeURIComponent(tl)}&q=${encodeURIComponent(chunk)}`;
+      audio.src = url;
+      audio.preservesPitch = true;
+      audio.playbackRate = 1.0; // Crystal-clear, un-distorted neural studio quality
+
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          if (this.activeToken === myToken) {
-            audio.src = fallbackUrl;
-            audio.play().catch(() => {
-              fallbackToWebSpeech();
-            });
-          }
+        playPromise.then(() => {
+          console.log(`[TTS Engine] audio.play() succeeded for chunk ${currentIndex}`);
+        }).catch((err) => {
+          console.warn('[TTS play() Error]:', err);
+          onDone();
         });
       }
     };
@@ -216,19 +190,34 @@ export class TtsService {
   }
 
   /**
-   * Stop current speech playback immediately.
+   * Stop current speech playback immediately and cleanly.
    */
   stop() {
     this.activeToken = Symbol('tts-stop');
     this.isSpeaking = false;
 
-    if (this.currentAudio) {
+    if (this.audio) {
       try {
-        this.currentAudio.pause();
-        this.currentAudio.currentTime = 0;
-        this.currentAudio.src = '';
+        this.audio.onended = null;
+        this.audio.onerror = null;
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.audio.src = '';
       } catch (e) { }
-      this.currentAudio = null;
+    }
+
+    if (typeof document !== 'undefined') {
+      try {
+        document.querySelectorAll('audio').forEach(a => {
+          try {
+            a.onended = null;
+            a.onerror = null;
+            a.pause();
+            a.currentTime = 0;
+            a.src = '';
+          } catch (e) {}
+        });
+      } catch (e) {}
     }
 
     if (typeof window !== 'undefined' && window.speechSynthesis) {
@@ -240,4 +229,21 @@ export class TtsService {
 }
 
 export const ttsEngine = new TtsService();
+
+if (typeof window !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      ttsEngine.stop();
+    }
+  });
+
+  window.addEventListener('pagehide', () => {
+    ttsEngine.stop();
+  });
+
+  window.addEventListener('beforeunload', () => {
+    ttsEngine.stop();
+  });
+}
+
 export default ttsEngine;

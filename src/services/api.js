@@ -93,38 +93,40 @@ export async function saveSoilReport(reportData) {
 }
 
 /**
- * Step 1: Strict AI Vision Soil Image Validation
- * Returns structured classification: { isSoil, confidence, reason, imageQuality, soilVisibility, errorCode, errorMessage }
+ * Step 1: Two-Stage Robust AI Vision Soil Image Validation
+ * Returns standardized structured classification:
+ * { success, is_soil, isSoil, confidence, soil_area_percentage, image_quality, decision, reason, suggestion, errorMessage }
  */
 export async function validateSoilImage({ imageBase64, mimeType, apiKey }) {
   if (apiKey) {
     try {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
-      const prompt = `You are a strict Image Classifier for an agricultural soil testing system.
+      const prompt = `You are a visual classifier for an agricultural soil-testing application.
 
-Task: Determine whether the provided image primarily contains genuine visible SOIL / earth suitable for agricultural soil testing.
+Determine whether the uploaded photograph contains a meaningful and sufficiently visible amount of NATURAL SOIL suitable for agricultural soil analysis.
 
-MANDATORY REJECTION CRITERIA (Set isSoil = false):
-Reject if the image contains:
-- Cars, bikes, vehicles, tractors, machinery, wheels, roads, asphalt
-- People, faces, human body parts without soil
-- Buildings, houses, walls, furniture, interior rooms
-- Plants, crops, leaves, fruits, flowers with NO predominant soil
-- Animals, insects, food items
-- Screenshots, graphics, text, documents, logos, solid colors
-- Sky, mountains, clouds, water bodies
-- Extremely blurry, dark, or unidentifiable images.
+Accept natural soil in any realistic appearance:
+- Dry, wet, dark, brown, red, black, sandy, clay, loamy, granular, or clumped soil.
+- Soil profile, embankment, horizontal/vertical cross-section, or agricultural field soil.
+- Soil sample placed in a container, tray, bucket, or held in a person's hand.
+- Soil containing small stones, rocks, roots, organic matter, or small vegetation/grass patches.
+- Crops or seedlings where soil around the roots is clearly visible and meaningful.
 
-ACCEPT CRITERIA (Set isSoil = true):
-Accept ONLY if genuine natural agricultural soil, farmland dirt, soil in a tray/pot, or soil sample occupies the majority (> 70%) of the frame. Colors include red laterite, black cotton, sandy loam, alluvial, clay, brown loam, wet mud, or dry earth.
+Do not classify based solely on color. Brown color alone is not evidence of soil (e.g. brown clothes, leather, cardboard, wooden tables, or brown cars must be REJECTED). Conversely, red, black, yellow, grey, sandy, or dark soils with granular/earthy texture MUST BE ACCEPTED.
 
-Return ONLY structured JSON:
+Small amounts of rocks, roots, grass, hands, containers, or agricultural surroundings do not invalidate a soil photograph if soil remains clearly visible and meaningful.
+
+Reject photographs where the primary visual content is a car, motorcycle, clothing, footwear, machinery, tractor, building, person/face, animal, plant without visible soil, road, furniture, electronics, mobile phone, laptop, tools, food, documents, screenshots, sky, water, or another unrelated object.
+
+Return ONLY structured JSON in this exact format:
 {
-  "isSoil": true or false,
-  "confidence": number between 0.0 and 1.0 (e.g. 0.95),
-  "reason": "Specific description of what is detected in the image",
-  "imageQuality": "good" or "poor",
-  "soilVisibility": "high" or "medium" or "low" or "none"
+  "is_soil": true or false,
+  "confidence": number between 0.0 and 1.0 (e.g. 0.91),
+  "soil_area_percentage": integer percentage (0 to 100),
+  "image_quality": "good" or "poor",
+  "decision": "ACCEPT" or "REJECT" or "RETRY",
+  "reason": "Clear, concise reason explaining the classification",
+  "suggestion": null or "Actionable guidance for the farmer if RETRY or REJECT"
 }`;
 
       const res = await fetch(url, {
@@ -149,47 +151,75 @@ Return ONLY structured JSON:
         const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (textOutput) {
           const parsed = JSON.parse(textOutput);
-          const isSoil = Boolean(parsed.isSoil);
-          const confidence = typeof parsed.confidence === 'number' ? parsed.confidence : (isSoil ? 0.92 : 0.95);
-          const soilVisibility = parsed.soilVisibility || (isSoil ? 'high' : 'none');
-          const imageQuality = parsed.imageQuality || 'good';
-          const reason = parsed.reason || (isSoil ? 'Soil detected' : 'Non-soil image detected');
 
-          // Strict Confidence Thresholds
-          if (!isSoil || confidence < 0.80 || soilVisibility === 'none' || soilVisibility === 'low' || imageQuality === 'poor') {
-            let errorCode = 'INVALID_IMAGE';
-            let errorMessage = '❌ अमान्य फोटो (Invalid Image): यह मिट्टी की फोटो नहीं है (वाहन/इमारत/वस्तु पाई गई)। AI केवल खेत या गमले की असली मिट्टी (soil) की फोटो का परीक्षण करता है। / This does not appear to be a soil photo.';
-            
-            if (imageQuality === 'poor') {
-              errorCode = 'POOR_QUALITY';
-              errorMessage = '📸 फोटो बहुत धुंधली या अँधेरे में है (Poor Image Quality)। कृपया अच्छी रोशनी में साफ़ क्लोज़-अप फोटो अपलोड करें। / The image is too blurry or dark for analysis.';
-            } else if (soilVisibility === 'low' || soilVisibility === 'none') {
-              errorCode = 'NO_SOIL_VISIBLE';
-              errorMessage = '🌱 मिट्टी साफ़ दिखाई नहीं दे रही है (Soil Not Clearly Visible)। कृपया केवल पौधों की नहीं बल्कि मिट्टी की क्लोज़-अप फोटो लें। / Soil is not clearly visible in the image.';
-            } else if (confidence < 0.80) {
-              errorCode = 'LOW_CONFIDENCE';
-              errorMessage = '⚠️ मिट्टी की स्पष्ट पहचान नहीं हो सकी (Low Confidence)। कृपया खेत से साफ़ मिट्टी का नमूना अपलोड करें। / Soil could not be confidently identified.';
-            }
+          const rawDecision = (parsed.decision || '').toUpperCase();
+          const is_soil_flag = Boolean(parsed.is_soil);
+          let decision = rawDecision;
+          if (!['ACCEPT', 'REJECT', 'RETRY'].includes(decision)) {
+            decision = is_soil_flag ? 'ACCEPT' : 'REJECT';
+          }
 
+          const confidence = typeof parsed.confidence === 'number' ? parsed.confidence : (decision === 'ACCEPT' ? 0.92 : 0.25);
+          const soil_area_percentage = typeof parsed.soil_area_percentage === 'number' ? parsed.soil_area_percentage : (decision === 'ACCEPT' ? 75 : 10);
+          const image_quality = parsed.image_quality || 'good';
+          const reason = parsed.reason || (decision === 'ACCEPT' ? 'Natural soil is clearly visible and suitable for analysis.' : 'Soil not clearly detected.');
+          const suggestion = parsed.suggestion || null;
+
+          // Debug logging in development mode
+          if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+            console.log('[Soil Validation Debug - Gemini]:', {
+              soil_confidence: confidence,
+              soil_area_percentage,
+              image_quality,
+              decision,
+              model_response: parsed
+            });
+          }
+
+          if (decision === 'REJECT') {
             return {
               success: false,
+              is_soil: false,
               isSoil: false,
               confidence,
+              soil_area_percentage,
+              image_quality,
+              decision: 'REJECT',
               reason,
-              imageQuality,
-              soilVisibility,
-              errorCode,
-              errorMessage
+              suggestion: suggestion || 'Please upload a close-up photograph of the soil.',
+              errorCode: 'REJECTED_NON_SOIL',
+              errorMessage: '❌ Soil not clearly detected / मिट्टी स्पष्ट रूप से नहीं पाई गई\n\nPlease upload a close-up photo where soil is clearly visible and occupies most of the frame.\n\nAvoid photos where cars, machinery, buildings, clothing or other objects are the main subject.'
             };
           }
 
+          if (decision === 'RETRY') {
+            return {
+              success: false,
+              is_soil: false,
+              isSoil: false,
+              confidence,
+              soil_area_percentage,
+              image_quality,
+              decision: 'RETRY',
+              reason,
+              suggestion: suggestion || 'Please move closer to the soil and take another photo in good daylight.',
+              errorCode: 'RETRY_UNCLEAR_SOIL',
+              errorMessage: '⚠️ Soil is not clear enough / मिट्टी साफ़ दिखाई नहीं दे रही है\n\nPlease move closer to the soil and take another photo in good daylight.'
+            };
+          }
+
+          // ACCEPT decision
           return {
             success: true,
+            is_soil: true,
             isSoil: true,
             confidence,
+            soil_area_percentage,
+            image_quality,
+            decision: 'ACCEPT',
             reason,
-            imageQuality,
-            soilVisibility
+            suggestion: null,
+            successMessage: '✓ Soil detected successfully\n\nYour soil sample is ready for analysis.'
           };
         }
       }
@@ -208,11 +238,17 @@ export async function analyzeSoilImage({ imageBase64, mimeType, apiKey }) {
   try {
     if (apiKey) {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
-      const prompt = `You are a Soil Agronomist. This image has been verified as a genuine soil sample.
-Analyze the soil's visible color, texture, moisture, and estimate its agronomic properties.
+      const prompt = `You are a Soil Agronomist. First, verify whether this image is a genuine soil sample.
+If the image is a car, vehicle, clothing, machinery, person, electronics, animal, or non-soil object, return:
+{
+  "is_soil": false,
+  "error": "❌ Non-soil object detected. Please upload a close-up photo of natural soil."
+}
 
+Otherwise, analyze the soil's visible color, texture, moisture, and estimate its agronomic properties.
 Return ONLY structured JSON:
 {
+  "is_soil": true,
   "soil_type": "लाल मिट्टी / Red Laterite Soil",
   "color_analysis": "गहरा लाल-नारंगी रंग, लौह ऑक्साइड की प्रचुरता...",
   "texture": "दानेदार दोमट / Gravelly Loam",

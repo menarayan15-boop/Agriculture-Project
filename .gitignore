@@ -8,4 +8,7 @@ __pycache__/
 *.zip
 software farmers/
 *.log
-
+scratch/
+test_*.png
+test_*.ps1
+render_test.js

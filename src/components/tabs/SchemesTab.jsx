@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-import { CENTRAL_SCHEMES, STATE_SCHEMES } from '../../data/constants';
+import { CENTRAL_SCHEMES, STATE_SCHEMES, getText } from '../../data/constants';
 
 // Standard documents & eligibility helper for farmer clarity
 function getSchemeHelperDetails(scheme) {
@@ -36,7 +36,7 @@ function getSchemeHelperDetails(scheme) {
 }
 
 export function SchemesTab() {
-  const { farmerProfile } = useApp();
+  const { farmerProfile, lang } = useApp();
   const [subTab, setSubTab] = useState('central'); // 'central' | 'state'
   const [search, setSearch] = useState('');
   const [selectedState, setSelectedState] = useState('All');
@@ -140,7 +140,7 @@ export function SchemesTab() {
                 </span>
               </div>
               <div style={{ fontSize: '0.78rem', color: subTab === 'central' ? '#DCFCE7' : '#6B7280', fontWeight: 'normal', marginTop: '1px' }}>
-                केंद्र सरकार की योजनाएं
+                {getText('schemes-central-subtitle', lang)}
               </div>
             </div>
           </button>
@@ -176,7 +176,7 @@ export function SchemesTab() {
                 </span>
               </div>
               <div style={{ fontSize: '0.78rem', color: subTab === 'state' ? '#DCFCE7' : '#6B7280', fontWeight: 'normal', marginTop: '1px' }}>
-                राज्य सरकार की योजनाएं
+                {getText('schemes-state-subtitle', lang)}
               </div>
             </div>
           </button>

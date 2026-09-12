@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useApp } from '../../context/AppContext';
+import { getCropDisplayName } from '../../data/constants';
 import {
   UNIT_TO_ACRE, UNIT_NAMES, CROP_DATA as DEFAULT_CROP_DATA, FERTILIZER_DATA as DEFAULT_FERTILIZER_DATA,
   LABOUR_ACTIVITIES, MACHINERY_DATA as DEFAULT_MACHINERY_DATA, STORAGE_TYPES,
@@ -662,7 +663,6 @@ const NAV = [
   { id: 'crop_compare', icon: '🆚', label: 'Crop Comparison', group: 'advanced' },
   { id: 'mandi_profit', icon: '🏪', label: 'Mandi Net Price', group: 'advanced' },
   { id: 'storage',      icon: '🏗️', label: 'Storage/Warehouse',group: 'advanced' },
-  { id: 'multicrop',    icon: '🗺️', label: 'Multi-Crop Farm', group: 'advanced' },
   { id: 'settings',     icon: '⚙️', label: 'Admin Settings',  group: 'settings'  },
   { id: 'history',      icon: '🕐', label: 'Saved Calcs',     group: 'history'  },
 ];
@@ -799,7 +799,8 @@ function CropSelect({ value, onChange, cropData, lang = 'en' }) {
   return (
     <Select value={value} onChange={onChange}>
       {Object.entries(cropData).map(([k, v]) => {
-        const cropName = lang === 'hi' && v.nameHi ? `${v.icon} ${v.nameHi}` : `${v.icon} ${v.name}`;
+        const localizedName = getCropDisplayName(k, lang);
+        const cropName = localizedName ? `${v.icon} ${localizedName}` : (lang === 'hi' && v.nameHi ? `${v.icon} ${v.nameHi}` : `${v.icon} ${v.name}`);
         return <option key={k} value={k}>{cropName}</option>;
       })}
     </Select>
@@ -834,7 +835,6 @@ function getNavItems(lang) {
     { id: 'crop_compare', icon: '🆚', label: t('nav_crop_compare', lang),    group: 'advanced' },
     { id: 'mandi_profit', icon: '🏪', label: t('nav_mandi_profit', lang),    group: 'advanced' },
     { id: 'storage',      icon: '🏗️', label: t('nav_storage', lang),         group: 'advanced' },
-    { id: 'multicrop',    icon: '🗺️', label: t('nav_multicrop', lang),       group: 'advanced' },
     { id: 'settings',     icon: '⚙️', label: t('nav_settings', lang),        group: 'settings'  },
     { id: 'history',      icon: '🕐', label: t('nav_history', lang),         group: 'history'  },
   ];
@@ -941,7 +941,7 @@ function DashboardPanel({ gs, cropData, lang = 'en' }) {
   const totalCost = crop.typicalCostAcre * acres;
   const { profit, roi } = calcROI(totalCost, expectedRevenue);
 
-  const cropTitle = lang === 'hi' && crop.nameHi ? crop.nameHi : crop.name;
+  const cropTitle = getCropDisplayName(gs.crop || crop, lang) || (lang === 'hi' && crop.nameHi ? crop.nameHi : crop.name);
 
   const cards = [
     { icon: '📐', label: t('landArea', lang),         value: `${gs.area} ${gs.unit}`, sub: `= ${fmt(acres, 2)} acres`, color: C.cyan },
@@ -963,11 +963,11 @@ function DashboardPanel({ gs, cropData, lang = 'en' }) {
       </div>
       <div style={{ marginTop: 16 }}>
         <h4 style={{ color: C.green, marginBottom: 8, fontSize: '0.9rem' }}>💡 {t('smartInsights', lang)}</h4>
-        <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 12, padding: 14, fontSize: '0.82rem', lineHeight: 1.7 }}>
+        <div style={{ background: '#F8FAF9', border: '1px solid #E5E7EB', borderRadius: 12, padding: 14, fontSize: '0.82rem', lineHeight: 1.7, color: '#374151' }}>
           <ul style={{ margin: 0, paddingLeft: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <li>Based on your land size, seed rate calculation indicates you will need approximately <strong>{seed.qty.toFixed(1)} kg</strong> of seed.</li>
-            <li>Recommended base fertilizer expense sits at around <strong>₹{fert.totalCost.toLocaleString('en-IN')}</strong> using balanced application.</li>
-            <li>Expected break-even market price for this yield and cost structure is approximately <strong>₹{(totalCost / (crop.yieldQtlAcre * acres || 1)).toFixed(0)}/Quintal</strong>.</li>
+            <li>Based on your land size, seed rate calculation indicates you will need approximately <strong style={{ color: '#17211B' }}>{seed.qty.toFixed(1)} kg</strong> of seed.</li>
+            <li>Recommended base fertilizer expense sits at around <strong style={{ color: '#17211B' }}>₹{fert.totalCost.toLocaleString('en-IN')}</strong> using balanced application.</li>
+            <li>Expected break-even market price for this yield and cost structure is approximately <strong style={{ color: '#17211B' }}>₹{(totalCost / (crop.yieldQtlAcre * acres || 1)).toFixed(0)}/Quintal</strong>.</li>
             <li>Machinery rental is estimated to be cheaper than outright purchasing machinery for this land size of {gs.area} {gs.unit}.</li>
           </ul>
         </div>
@@ -1020,14 +1020,14 @@ function AreaPanel({ gs, setGs, lang }) {
     <div>
       <PanelHeader icon="📐" title="Crop Area Calculator" subtitle="Calculate field area and convert between regional units" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
             <button 
               onClick={() => setUseDimensions(true)} 
               style={{
-                flex: 1, padding: 8, borderRadius: 8, border: 'none',
-                background: useDimensions ? C.green : 'rgba(255,255,255,0.05)',
-                color: '#fff', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
+                flex: 1, padding: 8, borderRadius: 8, border: useDimensions ? '1px solid #15803D' : '1px solid #E5E7EB',
+                background: useDimensions ? '#15803D' : '#F9FAFB',
+                color: useDimensions ? '#fff' : '#4B5563', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
               }}
             >
               📏 Enter Dimensions
@@ -1035,9 +1035,9 @@ function AreaPanel({ gs, setGs, lang }) {
             <button 
               onClick={() => setUseDimensions(false)} 
               style={{
-                flex: 1, padding: 8, borderRadius: 8, border: 'none',
-                background: !useDimensions ? C.green : 'rgba(255,255,255,0.05)',
-                color: '#fff', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
+                flex: 1, padding: 8, borderRadius: 8, border: !useDimensions ? '1px solid #15803D' : '1px solid #E5E7EB',
+                background: !useDimensions ? '#15803D' : '#F9FAFB',
+                color: !useDimensions ? '#fff' : '#4B5563', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
               }}
             >
               📍 Enter Direct Area
@@ -1119,7 +1119,7 @@ function SeedPanel({ gs, setGs, cropData, lang }) {
     <div>
       <PanelHeader icon="🌱" title="Seed Requirement Calculator" subtitle="Determine optimal seed quantities and costs based on acreage" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <FormRow label="Crop"><CropSelect cropData={cropData} value={crop} onChange={setCrop} /></FormRow>
           <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
           <FormRow label="Land Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
@@ -1135,8 +1135,8 @@ function SeedPanel({ gs, setGs, cropData, lang }) {
           <button 
             onClick={handleApply} 
             style={{
-              width: '100%', padding: '10px 14px', background: 'rgba(255, 255, 255, 0.08)',
-              color: '#fff', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: 10,
+              width: '100%', padding: '10px 14px', background: '#F0FDF4',
+              color: '#15803D', border: '1px solid #86EFAC', borderRadius: 10,
               cursor: 'pointer', fontWeight: 700, fontSize: '0.85rem', marginTop: 10
             }}
           >
@@ -1200,7 +1200,7 @@ function FertilizerPanel({ gs, fertilizerData, cropData, lang }) {
     <div>
       <PanelHeader icon="🧪" title="Fertilizer Requirement Calculator" subtitle="Determine standard NPK weights and corresponding fertilizer bags" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <FormRow label="Crop"><CropSelect cropData={cropData} value={crop} onChange={setCrop} /></FormRow>
           <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
           <FormRow label="Land Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
@@ -1233,8 +1233,8 @@ function FertilizerPanel({ gs, fertilizerData, cropData, lang }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <BigResult label="Quantity of Fertilizer Required" value={qtyMessage} color={C.green} />
           <BigResult label="Estimated Fertilizer Cost" value={`₹${fmt(estCost)}`} color={C.amber} />
-          <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: 12 }}>
-            <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.5)', marginBottom: 6, textTransform: 'uppercase' }}>NPK Requirement Breakdown</div>
+          <div style={{ background: '#F8FAF9', border: '1px solid #E5E7EB', borderRadius: 12, padding: 12 }}>
+            <div style={{ fontSize: '0.72rem', color: '#6B7280', marginBottom: 6, textTransform: 'uppercase', fontWeight: 700 }}>NPK Requirement Breakdown</div>
             <Grid cols={3}>
               <ResultCard label="N (Nitrogen)" value={`${nReq.toFixed(1)} kg`} color={C.green} />
               <ResultCard label="P (Phosphorus)" value={`${pReq.toFixed(1)} kg`} color={C.blue} />
@@ -1271,7 +1271,7 @@ function IrrigationPanel({ gs, cropData, lang }) {
     <div>
       <PanelHeader icon="💧" title="Irrigation & Water Calculator" subtitle="Estimate water volume and electricity/pump expenses for the season" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <FormRow label="Crop"><CropSelect cropData={cropData} value={crop} onChange={setCrop} /></FormRow>
           <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
           <FormRow label="Land Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
@@ -1325,7 +1325,7 @@ function SprayPanel({ gs, cropData, lang }) {
     <div>
       <PanelHeader icon="🔫" title="Pesticide & Spray Calculator" subtitle="Determine pesticide concentrates and water requirements" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <FormRow label="Crop"><CropSelect cropData={cropData} value={crop} onChange={setCrop} /></FormRow>
           <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
           <FormRow label="Land Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
@@ -1386,7 +1386,7 @@ function LabourPanel({ gs, lang }) {
     <div>
       <PanelHeader icon="👷" title="Labour Requirement Calculator" subtitle="Estimate overall labour hours, costs, and timeline required for activities" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
           <FormRow label="Land Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
           <FormRow label="Farming Activity">
@@ -1437,7 +1437,7 @@ function MachineryPanel({ gs, setActiveCalc, lang }) {
     <div>
       <PanelHeader icon="🚜" title="Machinery Cost Calculator" subtitle="Estimate machinery usage expenses and link directly to local rentals" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <FormRow label="Machine Type">
             <Select value={machine} onChange={handleMachineChange}>
               {Object.entries(DEFAULT_MACHINERY_DATA).map(([k, v]) => (
@@ -1547,24 +1547,24 @@ function CropComparePanel({ gs, cropData, lang }) {
 
   return (
     <div>
-      <PanelHeader icon="🆚" title="Crop Comparison Calculator" subtitle="Compare expected financial returns, input requirements, and profit margins of up to 4 crops side-by-side" />
+      <PanelHeader icon="🆚" title={t('nav_crop_compare', lang) || "Crop Comparison Calculator"} subtitle="Compare expected financial returns, input requirements, and profit margins of up to 4 crops side-by-side" />
       
       {/* Land Area and Unit Controls */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: 14 }}>
-        <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1.0} lang={lang} />
+        <InputWithVoice label={t('landArea', lang) || "Land Area"} value={area} onChange={setArea} resetValue={1.0} lang={lang} />
         <FormRow label="Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
       </div>
 
       {/* Preset Comparison Buttons */}
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14, padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)' }}>
-        <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>Quick Presets:</span>
-        <button onClick={() => loadPreset(['wheat', 'mustard', 'chana', 'potato'])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14, padding: '10px 14px', background: '#F8FAF9', borderRadius: 12, border: '1px solid #E5E7EB' }}>
+        <span style={{ fontSize: '0.78rem', color: '#4B5563', fontWeight: 700 }}>Quick Presets:</span>
+        <button onClick={() => loadPreset(['wheat', 'mustard', 'chana', 'potato'])} style={{ padding: '6px 12px', borderRadius: 20, background: '#DCFCE7', border: '1px solid #86EFAC', color: '#15803D', fontSize: '0.78rem', cursor: 'pointer', fontWeight: 700 }}>
           🌾 Rabi Season (Wheat / Mustard / Gram / Potato)
         </button>
-        <button onClick={() => loadPreset(['rice', 'cotton', 'maize', 'soybean'])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(96,165,250,0.15)', border: '1px solid rgba(96,165,250,0.3)', color: C.blue, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+        <button onClick={() => loadPreset(['rice', 'cotton', 'maize', 'soybean'])} style={{ padding: '6px 12px', borderRadius: 20, background: '#EFF6FF', border: '1px solid #BFDBFE', color: '#1D4ED8', fontSize: '0.78rem', cursor: 'pointer', fontWeight: 700 }}>
           🍚 Kharif Season (Paddy / Cotton / Maize / Soybean)
         </button>
-        <button onClick={() => loadPreset(['tomato', 'onion', 'chilli', 'garlic'])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: C.amber, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+        <button onClick={() => loadPreset(['tomato', 'onion', 'chilli', 'garlic'])} style={{ padding: '6px 12px', borderRadius: 20, background: '#FEF3C7', border: '1px solid #FDE68A', color: '#B45309', fontSize: '0.78rem', cursor: 'pointer', fontWeight: 700 }}>
           🍅 High-Value Cash Crops (Tomato / Onion / Chilli / Garlic)
         </button>
       </div>
@@ -1572,11 +1572,11 @@ function CropComparePanel({ gs, cropData, lang }) {
       {/* Crop Selector Columns */}
       <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cropList.length}, 1fr)`, gap: 10, marginBottom: 14 }}>
         {cropList.map((cKey, idx) => (
-          <div key={idx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 10 }}>
+          <div key={idx} style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 12, padding: 12, boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
               <Label>Crop {idx + 1}</Label>
               {cropList.length > 2 && (
-                <button onClick={() => removeCrop(idx)} style={{ background: 'transparent', border: 'none', color: C.red, cursor: 'pointer', fontSize: '0.75rem' }} title="Remove this crop">
+                <button onClick={() => removeCrop(idx)} style={{ background: 'transparent', border: 'none', color: C.red, cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700 }} title="Remove this crop">
                   ✕ Remove
                 </button>
               )}
@@ -1587,7 +1587,7 @@ function CropComparePanel({ gs, cropData, lang }) {
               return next;
             })}>
               {Object.entries(cropData).map(([k, d]) => (
-                <option key={k} value={k}>{d.icon} {d.name}</option>
+                <option key={k} value={k}>{d.icon} {getCropDisplayName(k, lang) || d.name}</option>
               ))}
             </Select>
           </div>
@@ -1595,109 +1595,109 @@ function CropComparePanel({ gs, cropData, lang }) {
       </div>
 
       {cropList.length < 4 && (
-        <button onClick={addCrop} style={{ marginBottom: 14, padding: '6px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px dashed rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)', cursor: 'pointer', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+        <button onClick={addCrop} style={{ marginBottom: 14, padding: '8px 16px', borderRadius: 10, background: '#F0FDF4', border: '1px dashed #86EFAC', color: '#15803D', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
           ➕ Add 4th Crop to Compare
         </button>
       )}
 
       {/* Full Comparison Table */}
-      <div style={{ overflowX: 'auto', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 12, marginBottom: 16 }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+      <div style={{ overflowX: 'auto', background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: 14, marginBottom: 16, boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
-              <th style={{ textAlign: 'left', padding: '10px 8px', color: 'rgba(255,255,255,0.7)' }}>Parameter / Metric</th>
+            <tr style={{ borderBottom: '2px solid #E5E7EB' }}>
+              <th style={{ textAlign: 'left', padding: '12px 10px', color: '#17211B', fontWeight: 800 }}>Parameter / Metric</th>
               {comparisons.map((c, i) => (
-                <th key={i} style={{ textAlign: 'right', padding: '10px 8px', color: '#fff', fontSize: '0.92rem' }}>
-                  {c.icon} {c.name}
+                <th key={i} style={{ textAlign: 'right', padding: '12px 10px', color: '#15803D', fontSize: '0.95rem', fontWeight: 800 }}>
+                  {c.icon} {getCropDisplayName(c.cropKey, lang) || c.name}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Benchmark Price (₹/Qtl)</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Benchmark Price (₹/Qtl)</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.blue, fontWeight: 600 }}>
-                  ₹{fmt(c.price)} {c.isMsp ? <span style={{ fontSize: '0.68rem', color: C.green }}>(MSP)</span> : <span style={{ fontSize: '0.68rem', color: C.amber }}>(Mkt)</span>}
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: C.blue, fontWeight: 700 }}>
+                  ₹{fmt(c.price)} {c.isMsp ? <span style={{ fontSize: '0.72rem', color: C.green }}>(MSP)</span> : <span style={{ fontSize: '0.72rem', color: C.amber }}>(Mkt)</span>}
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Season & Duration</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Season & Duration</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, color: 'rgba(255,255,255,0.8)' }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: '#4B5563', fontWeight: 600 }}>
                   {c.season} · {c.days} days
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Seed Quantity Needed</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Seed Quantity Needed</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8 }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 600 }}>
                   {c.seedKg.toFixed(1)} {c.seedUnit}
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Total Irrigation Water</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Total Irrigation Water</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.cyan }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: C.cyan, fontWeight: 700 }}>
                   {fmt(c.waterLit)} L ({c.irrigations} rounds)
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Total Cultivation Cost</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Total Cultivation Cost</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.rose, fontWeight: 600 }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: C.rose, fontWeight: 700 }}>
                   ₹{fmt(c.cost)}
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Expected Yield ({acres.toFixed(1)} ac)</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Expected Yield ({acres.toFixed(1)} ac)</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, fontWeight: 600 }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 700 }}>
                   {c.yieldExpected.toFixed(1)} Qtl
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Gross Sales Revenue</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Gross Sales Revenue</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.blue, fontWeight: 600 }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: C.blue, fontWeight: 700 }}>
                   ₹{fmt(c.revenue)}
                 </td>
               ))}
             </tr>
-            <tr style={{ borderTop: '2px solid rgba(34,197,94,0.3)', background: 'rgba(34,197,94,0.05)', fontWeight: 700, fontSize: '0.95rem' }}>
-              <td style={{ padding: 10, color: C.green }}>Expected Net Profit</td>
+            <tr style={{ borderTop: '2px solid #BBF7D0', background: '#F0FDF4', fontWeight: 700, fontSize: '0.95rem' }}>
+              <td style={{ padding: '12px 10px', color: '#15803D', fontWeight: 800 }}>Expected Net Profit</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 10, color: c.profit >= 0 ? C.green : C.red }}>
+                <td key={i} style={{ textAlign: 'right', padding: '12px 10px', color: c.profit >= 0 ? '#15803D' : C.red, fontWeight: 800 }}>
                   ₹{fmt(c.profit)}
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Profit Per Acre</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Profit Per Acre</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, color: c.profitPerAcre >= 0 ? C.green : C.red }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: c.profitPerAcre >= 0 ? '#15803D' : C.red, fontWeight: 700 }}>
                   ₹{fmt(c.profitPerAcre)}/ac
                 </td>
               ))}
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Return on Investment (ROI)</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Return on Investment (ROI)</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: c.roi >= 0 ? C.green : C.red }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', fontWeight: 800, color: c.roi >= 0 ? '#15803D' : C.red }}>
                   {c.roi.toFixed(1)}%
                 </td>
               ))}
             </tr>
             <tr>
-              <td style={{ padding: 8, color: 'rgba(255,255,255,0.6)' }}>Break-Even Selling Price</td>
+              <td style={{ padding: '10px 8px', color: '#374151', fontWeight: 600 }}>Break-Even Selling Price</td>
               {comparisons.map((c, i) => (
-                <td key={i} style={{ textAlign: 'right', padding: 8, color: C.amber }}>
+                <td key={i} style={{ textAlign: 'right', padding: '10px 8px', color: C.amber, fontWeight: 700 }}>
                   ₹{c.breakeven.toFixed(0)}/Qtl
                 </td>
               ))}
@@ -1710,25 +1710,25 @@ function CropComparePanel({ gs, cropData, lang }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
         <ResultCard 
           label="🏆 Highest Net Profit" 
-          value={`${highestProfit?.icon} ${highestProfit?.name}`} 
+          value={`${highestProfit?.icon} ${getCropDisplayName(highestProfit?.cropKey, lang) || highestProfit?.name}`} 
           sub={`₹${fmt(highestProfit?.profit)} (${highestProfit?.roi.toFixed(0)}% ROI)`} 
           color={C.green} 
         />
         <ResultCard 
           label="🛡️ Lowest Capital Needed" 
-          value={`${lowestInvestment?.icon} ${lowestInvestment?.name}`} 
+          value={`${lowestInvestment?.icon} ${getCropDisplayName(lowestInvestment?.cropKey, lang) || lowestInvestment?.name}`} 
           sub={`₹${fmt(lowestInvestment?.cost)} Total Cost`} 
           color={C.blue} 
         />
         <ResultCard 
           label="💧 Most Water-Efficient" 
-          value={`${mostWaterEfficient?.icon} ${mostWaterEfficient?.name}`} 
+          value={`${mostWaterEfficient?.icon} ${getCropDisplayName(mostWaterEfficient?.cropKey, lang) || mostWaterEfficient?.name}`} 
           sub={`${fmt(mostWaterEfficient?.waterLit)} Liters (${mostWaterEfficient?.irrigations} irrigations)`} 
           color={C.cyan} 
         />
         <ResultCard 
           label="⚡ Fastest Harvest" 
-          value={`${shortestDuration?.icon} ${shortestDuration?.name}`} 
+          value={`${shortestDuration?.icon} ${getCropDisplayName(shortestDuration?.cropKey, lang) || shortestDuration?.name}`} 
           sub={`${shortestDuration?.days} Days (${shortestDuration?.season})`} 
           color={C.amber} 
         />
@@ -1797,7 +1797,7 @@ function MandiProfitPanel({ gs, cropData, lang }) {
       
       <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '1.2rem', marginBottom: 16 }}>
         {/* Left Input Configuration Card */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
           <FormRow label="Crop Selection">
             <CropSelect cropData={cropData} value={crop} onChange={setCrop} />
           </FormRow>
@@ -1807,7 +1807,7 @@ function MandiProfitPanel({ gs, cropData, lang }) {
             <InputWithVoice label="Mandi Rate (₹/Quintal)" value={mandiPrice} onChange={setMandiPrice} resetValue={2200} lang={lang} />
           </div>
 
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '12px 0 10px', paddingTop: 8 }}>
+          <div style={{ borderTop: '1px solid #E5E7EB', margin: '12px 0 10px', paddingTop: 8 }}>
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mandi Logistics & Deductions</span>
           </div>
 
@@ -1831,42 +1831,42 @@ function MandiProfitPanel({ gs, cropData, lang }) {
       </div>
 
       {/* 3-Way Selling Channels Comparison Table */}
-      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 14, marginBottom: 14 }}>
-        <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+      <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: 14, marginBottom: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
+        <div style={{ fontSize: '0.84rem', fontWeight: 700, color: '#17211B', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Selling Channels Comparison: Where should you sell?
         </div>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.83rem' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              <th style={{ textAlign: 'left', padding: '8px' }}>Channel</th>
-              <th style={{ textAlign: 'right', padding: '8px' }}>Quoted Price</th>
-              <th style={{ textAlign: 'right', padding: '8px' }}>Total Deductions</th>
-              <th style={{ textAlign: 'right', padding: '8px' }}>Effective Price/Qtl</th>
-              <th style={{ textAlign: 'right', padding: '8px' }}>Total Net Realization</th>
+            <tr style={{ borderBottom: '2px solid #E5E7EB' }}>
+              <th style={{ textAlign: 'left', padding: '10px 8px', color: '#17211B', fontWeight: 700 }}>Channel</th>
+              <th style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 700 }}>Quoted Price</th>
+              <th style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 700 }}>Total Deductions</th>
+              <th style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 700 }}>Effective Price/Qtl</th>
+              <th style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 700 }}>Total Net Realization</th>
             </tr>
           </thead>
           <tbody>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              <td style={{ padding: 8, fontWeight: 600, color: C.blue }}>🏛️ APMC Mandi Auction</td>
-              <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(numPrice)}/Qtl</td>
-              <td style={{ textAlign: 'right', padding: 8, color: C.rose }}>-₹{fmt(totalSellingExpenses)}</td>
-              <td style={{ textAlign: 'right', padding: 8, color: C.cyan, fontWeight: 600 }}>₹{fmt(netRatePerQtl)}/Qtl</td>
-              <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: C.green }}>₹{fmt(netIncome)}</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', fontWeight: 600, color: C.blue }}>🏛️ APMC Mandi Auction</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 600 }}>₹{fmt(numPrice)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', color: C.rose, fontWeight: 600 }}>-₹{fmt(totalSellingExpenses)}</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', color: C.cyan, fontWeight: 700 }}>₹{fmt(netRatePerQtl)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', fontWeight: 800, color: C.green }}>₹{fmt(netIncome)}</td>
             </tr>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              <td style={{ padding: 8, fontWeight: 600, color: C.amber }}>🚜 Local Village Trader (Farmgate)</td>
-              <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(villageTraderRate)}/Qtl</td>
-              <td style={{ textAlign: 'right', padding: 8, color: C.green }}>₹0 (Picked at farm)</td>
-              <td style={{ textAlign: 'right', padding: 8, color: C.amber, fontWeight: 600 }}>₹{fmt(villageTraderRate)}/Qtl</td>
-              <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: 'rgba(255,255,255,0.8)' }}>₹{fmt(villageTraderNetIncome)}</td>
+            <tr style={{ borderBottom: '1px solid #F3F4F6' }}>
+              <td style={{ padding: '10px 8px', fontWeight: 600, color: C.amber }}>🚜 Local Village Trader (Farmgate)</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 600 }}>₹{fmt(villageTraderRate)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', color: C.green, fontWeight: 600 }}>₹0 (Picked at farm)</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', color: C.amber, fontWeight: 700 }}>₹{fmt(villageTraderRate)}/Qtl</td>
+              <td style={{ textAlign: 'right', padding: '10px 8px', fontWeight: 800, color: '#374151' }}>₹{fmt(villageTraderNetIncome)}</td>
             </tr>
             {cropInfo?.msp && (
               <tr>
-                <td style={{ padding: 8, fontWeight: 600, color: C.purple }}>🏛️ Govt MSP Centre (FCI/NAFED)</td>
-                <td style={{ textAlign: 'right', padding: 8 }}>₹{fmt(mspPrice)}/Qtl</td>
-                <td style={{ textAlign: 'right', padding: 8, color: C.rose }}>-₹{fmt(transportTotal)} (Transport only)</td>
-                <td style={{ textAlign: 'right', padding: 8, color: C.purple, fontWeight: 600 }}>₹{fmt((numQty > 0 ? mspNetIncome / numQty : 0))}/Qtl</td>
-                <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: C.green }}>₹{fmt(mspNetIncome)}</td>
+                <td style={{ padding: '10px 8px', fontWeight: 600, color: C.purple }}>🏛️ Govt MSP Centre (FCI/NAFED)</td>
+                <td style={{ textAlign: 'right', padding: '10px 8px', color: '#17211B', fontWeight: 600 }}>₹{fmt(mspPrice)}/Qtl</td>
+                <td style={{ textAlign: 'right', padding: '10px 8px', color: C.rose, fontWeight: 600 }}>-₹{fmt(transportTotal)} (Transport only)</td>
+                <td style={{ textAlign: 'right', padding: '10px 8px', color: C.purple, fontWeight: 700 }}>₹{fmt((numQty > 0 ? mspNetIncome / numQty : 0))}/Qtl</td>
+                <td style={{ textAlign: 'right', padding: '10px 8px', fontWeight: 800, color: C.green }}>₹{fmt(mspNetIncome)}</td>
               </tr>
             )}
           </tbody>
@@ -1875,13 +1875,13 @@ function MandiProfitPanel({ gs, cropData, lang }) {
 
       {/* Advisory Banner */}
       <div style={{
-        padding: '12px 16px', borderRadius: 10,
-        background: mandiAdvantage >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(245,158,11,0.1)',
-        border: mandiAdvantage >= 0 ? '1px solid rgba(34,197,94,0.25)' : '1px solid rgba(245,158,11,0.25)',
+        padding: '12px 16px', borderRadius: 12,
+        background: mandiAdvantage >= 0 ? '#F0FDF4' : '#FFFBEB',
+        border: mandiAdvantage >= 0 ? '1px solid #BBF7D0' : '1px solid #FDE68A',
         display: 'flex', alignItems: 'center', gap: 12
       }}>
         <span style={{ fontSize: '1.5rem' }}>{mandiAdvantage >= 0 ? '💡' : '⚠️'}</span>
-        <div style={{ fontSize: '0.85rem' }}>
+        <div style={{ fontSize: '0.85rem', color: mandiAdvantage >= 0 ? '#14532D' : '#78350F' }}>
           {mandiAdvantage >= 0 ? (
             <span>
               <strong>Smart Recommendation: Selling at APMC Mandi is more profitable!</strong> Even after ₹{fmt(totalSellingExpenses)} transport, labor, and market deductions, you earn <strong style={{ color: C.green }}>₹{fmt(mandiAdvantage)} MORE</strong> than selling to a village trader at your farmgate.
@@ -1955,7 +1955,7 @@ function StoragePanel({ cropData, lang }) {
       
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginBottom: 16 }}>
         {/* Left Input Configuration Card */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
           <FormRow label="Crop Selection">
             <CropSelect cropData={cropData} value={crop} onChange={setCrop} />
           </FormRow>
@@ -2001,23 +2001,24 @@ function StoragePanel({ cropData, lang }) {
 
       {/* WDRA e-NWR Warehouse Receipt Pledge Loan Box */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(168,85,247,0.12), rgba(96,165,250,0.08))',
-        border: '1px solid rgba(168,85,247,0.25)', borderRadius: 14, padding: '16px 20px'
+        background: '#F5F3FF',
+        border: '1px solid #DDD6FE', borderRadius: 14, padding: '16px 20px',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ fontSize: '1.8rem' }}>🏛️</span>
             <div>
-              <h4 style={{ margin: 0, color: C.purple, fontSize: '0.98rem' }}>WDRA Electronic Warehouse Receipt (e-NWR) Pledge Loan Scheme</h4>
-              <p style={{ margin: '3px 0 0', fontSize: '0.78rem', color: 'rgba(255,255,255,0.65)' }}>
+              <h4 style={{ margin: 0, color: C.purple, fontSize: '0.98rem', fontWeight: 800 }}>WDRA Electronic Warehouse Receipt (e-NWR) Pledge Loan Scheme</h4>
+              <p style={{ margin: '3px 0 0', fontSize: '0.78rem', color: '#4B5563' }}>
                 Deposit your produce in a WDRA registered warehouse to get an instant pledge loan from public sector banks at 7% subsidized interest rate without distress selling!
               </p>
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>Eligible Immediate Bank Loan (75%)</div>
+            <div style={{ fontSize: '0.72rem', color: '#6B7280', textTransform: 'uppercase', fontWeight: 700 }}>Eligible Immediate Bank Loan (75%)</div>
             <div style={{ fontSize: '1.3rem', fontWeight: 800, color: C.green }}>₹{fmt(pledgeLoanEligible)}</div>
-            <div style={{ fontSize: '0.72rem', color: C.purple }}>Approx EMI / Interest: ₹{fmt(pledgeMonthlyInterest)}/month</div>
+            <div style={{ fontSize: '0.72rem', color: C.purple, fontWeight: 600 }}>Approx EMI / Interest: ₹{fmt(pledgeMonthlyInterest)}/month</div>
           </div>
         </div>
       </div>
@@ -2149,20 +2150,20 @@ function MultiCropPanel({ gs, cropData, lang }) {
       </div>
 
       {/* Quick Seasonal Diversification Templates */}
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14, padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)' }}>
-        <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>Presets:</span>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14, padding: '8px 12px', background: '#F8FAF9', borderRadius: 10, border: '1px solid #E5E7EB' }}>
+        <span style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>Presets:</span>
         <button onClick={() => loadPreset([
           { crop: 'wheat', pct: 50 },
           { crop: 'mustard', pct: 25 },
           { crop: 'chana', pct: 25 }
-        ])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+        ])} style={{ padding: '4px 10px', borderRadius: 8, background: '#DCFCE7', border: '1px solid #86EFAC', color: '#15803D', fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
           🌾 Rabi Balanced (50% Wheat + 25% Mustard + 25% Gram)
         </button>
         <button onClick={() => loadPreset([
           { crop: 'rice', pct: 40 },
           { crop: 'maize', pct: 30 },
           { crop: 'soybean', pct: 30 }
-        ])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(96,165,250,0.15)', border: '1px solid rgba(96,165,250,0.3)', color: C.blue, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+        ])} style={{ padding: '4px 10px', borderRadius: 8, background: '#DBEAFE', border: '1px solid #93C5FD', color: '#2563EB', fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
           🍚 Kharif Water-Smart (40% Paddy + 30% Maize + 30% Soybean)
         </button>
         <button onClick={() => loadPreset([
@@ -2170,7 +2171,7 @@ function MultiCropPanel({ gs, cropData, lang }) {
           { crop: 'potato', pct: 30 },
           { crop: 'tomato', pct: 20 },
           { crop: 'garlic', pct: 10 }
-        ])} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: C.amber, fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
+        ])} style={{ padding: '4px 10px', borderRadius: 8, background: '#FEF3C7', border: '1px solid #FCD34D', color: '#D97706', fontSize: '0.75rem', cursor: 'pointer', fontWeight: 600 }}>
           💰 High-Value Horticulture (40% Wheat + 30% Potato + 20% Tomato + 10% Garlic)
         </button>
       </div>
@@ -2178,12 +2179,12 @@ function MultiCropPanel({ gs, cropData, lang }) {
       {/* Visual Stacked Allocation Bar */}
       <div style={{ marginBottom: 14 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-          <span style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>Land Distribution Visualizer:</span>
+          <span style={{ fontSize: '0.78rem', color: '#374151', fontWeight: 600 }}>Land Distribution Visualizer:</span>
           <span style={{ fontSize: '0.78rem', fontWeight: 700, color: totalAllocPct === 100 ? C.green : C.red }}>
             Total Allocated: {totalAllocPct}% {totalAllocPct === 100 ? '✓ Balanced' : '(Adjust to 100%)'}
           </span>
         </div>
-        <div style={{ display: 'flex', height: 28, borderRadius: 8, overflow: 'hidden', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ display: 'flex', height: 28, borderRadius: 8, overflow: 'hidden', background: '#F3F4F6', border: '1px solid #E5E7EB' }}>
           {cropSummaries.map((c, i) => {
             const widthPct = Math.max(0, parseFloat(c.pct) || 0);
             if (widthPct <= 0) return null;
@@ -2210,11 +2211,11 @@ function MultiCropPanel({ gs, cropData, lang }) {
       {/* Allocation Plot Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(allocations.length, 4)}, 1fr)`, gap: 10, marginBottom: 14 }}>
         {allocations.map((item, idx) => (
-          <div key={idx} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 10 }}>
+          <div key={idx} style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 12, padding: 10, boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
               <Label>Plot {idx + 1}</Label>
               {allocations.length > 2 && (
-                <button onClick={() => removePlot(idx)} style={{ background: 'transparent', border: 'none', color: C.red, cursor: 'pointer', fontSize: '0.72rem' }}>
+                <button onClick={() => removePlot(idx)} style={{ background: 'transparent', border: 'none', color: C.red, cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700 }}>
                   ✕ Remove
                 </button>
               )}
@@ -2240,48 +2241,48 @@ function MultiCropPanel({ gs, cropData, lang }) {
       {/* Action Buttons: Add Plot & Auto-Balance */}
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 14 }}>
         {allocations.length < 6 && (
-          <button onClick={addPlot} style={{ padding: '6px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px dashed rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)', cursor: 'pointer', fontSize: '0.78rem' }}>
+          <button onClick={addPlot} style={{ padding: '6px 14px', borderRadius: 8, background: '#F9FAFB', border: '1px dashed #D1D5DB', color: '#374151', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600 }}>
             ➕ Add Another Crop Plot
           </button>
         )}
         {totalAllocPct !== 100 && (
-          <button onClick={autoBalance} style={{ padding: '6px 14px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700 }}>
+          <button onClick={autoBalance} style={{ padding: '6px 14px', borderRadius: 8, background: '#DCFCE7', border: '1px solid #86EFAC', color: '#15803D', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700 }}>
             ⚖️ Auto-Balance to Exactly 100%
           </button>
         )}
       </div>
 
       {/* Plot Breakdown Table */}
-      <div style={{ overflowX: 'auto', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 12, marginBottom: 16 }}>
+      <div style={{ overflowX: 'auto', background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 12, padding: 12, marginBottom: 16, boxShadow: '0 2px 6px rgba(0,0,0,0.02)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.83rem' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              <th style={{ textAlign: 'left', padding: 8 }}>Allocated Plot</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Acreage</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Seed Required</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Est. Yield</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Cultivation Cost</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Gross Revenue</th>
-              <th style={{ textAlign: 'right', padding: 8 }}>Expected Profit</th>
+            <tr style={{ borderBottom: '2px solid #E5E7EB' }}>
+              <th style={{ textAlign: 'left', padding: 8, color: '#17211B', fontWeight: 700 }}>Allocated Plot</th>
+              <th style={{ textAlign: 'right', padding: 8, color: '#17211B', fontWeight: 700 }}>Acreage</th>
+              <th style={{ textAlign: 'right', padding: 8, color: '#17211B', fontWeight: 700 }}>Seed Required</th>
+              <th style={{ textAlign: 'right', padding: 8, color: '#17211B', fontWeight: 700 }}>Est. Yield</th>
+              <th style={{ textAlign: 'right', padding: 8, color: '#17211B', fontWeight: 700 }}>Cultivation Cost</th>
+              <th style={{ textAlign: 'right', padding: 8, color: '#17211B', fontWeight: 700 }}>Gross Revenue</th>
+              <th style={{ textAlign: 'right', padding: 8, color: '#17211B', fontWeight: 700 }}>Expected Profit</th>
             </tr>
           </thead>
           <tbody>
             {cropSummaries.map((c, i) => (
-              <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                <td style={{ padding: 8, fontWeight: 600 }}>{c.icon} {c.name} <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)' }}>({c.pct}%)</span></td>
-                <td style={{ textAlign: 'right', padding: 8 }}>{c.cropAcres.toFixed(1)} ac</td>
-                <td style={{ textAlign: 'right', padding: 8 }}>{c.seedKg.toFixed(1)} {c.seedUnit}</td>
-                <td style={{ textAlign: 'right', padding: 8 }}>{c.prod.toFixed(1)} Qtl</td>
-                <td style={{ textAlign: 'right', padding: 8, color: C.rose }}>₹{fmt(c.inv)}</td>
-                <td style={{ textAlign: 'right', padding: 8, color: C.blue }}>₹{fmt(c.rev)}</td>
+              <tr key={i} style={{ borderBottom: '1px solid #F3F4F6' }}>
+                <td style={{ padding: 8, fontWeight: 600, color: '#17211B' }}>{c.icon} {c.name} <span style={{ fontSize: '0.72rem', color: '#6B7280' }}>({c.pct}%)</span></td>
+                <td style={{ textAlign: 'right', padding: 8, color: '#374151' }}>{c.cropAcres.toFixed(1)} ac</td>
+                <td style={{ textAlign: 'right', padding: 8, color: '#374151' }}>{c.seedKg.toFixed(1)} {c.seedUnit}</td>
+                <td style={{ textAlign: 'right', padding: 8, color: '#374151' }}>{c.prod.toFixed(1)} Qtl</td>
+                <td style={{ textAlign: 'right', padding: 8, color: C.rose, fontWeight: 600 }}>₹{fmt(c.inv)}</td>
+                <td style={{ textAlign: 'right', padding: 8, color: C.blue, fontWeight: 600 }}>₹{fmt(c.rev)}</td>
                 <td style={{ textAlign: 'right', padding: 8, fontWeight: 700, color: c.prof >= 0 ? C.green : C.red }}>₹{fmt(c.prof)}</td>
               </tr>
             ))}
-            <tr style={{ fontWeight: 700, borderTop: '2px solid rgba(34,197,94,0.3)', background: 'rgba(34,197,94,0.05)', fontSize: '0.9rem' }}>
-              <td style={{ padding: 10, color: C.green }}>Whole Farm Totals</td>
-              <td style={{ textAlign: 'right', padding: 10 }}>{acres.toFixed(1)} ac</td>
-              <td style={{ textAlign: 'right', padding: 10, color: 'rgba(255,255,255,0.7)' }}>Combined</td>
-              <td style={{ textAlign: 'right', padding: 10, color: 'rgba(255,255,255,0.7)' }}>Diversified</td>
+            <tr style={{ fontWeight: 700, borderTop: '2px solid #BBF7D0', background: '#F0FDF4', fontSize: '0.9rem' }}>
+              <td style={{ padding: 10, color: '#15803D', fontWeight: 800 }}>Whole Farm Totals</td>
+              <td style={{ textAlign: 'right', padding: 10, color: '#17211B' }}>{acres.toFixed(1)} ac</td>
+              <td style={{ textAlign: 'right', padding: 10, color: '#4B5563' }}>Combined</td>
+              <td style={{ textAlign: 'right', padding: 10, color: '#4B5563' }}>Diversified</td>
               <td style={{ textAlign: 'right', padding: 10, color: C.rose }}>₹{fmt(aggregateInv)}</td>
               <td style={{ textAlign: 'right', padding: 10, color: C.blue }}>₹{fmt(aggregateRev)}</td>
               <td style={{ textAlign: 'right', padding: 10, color: aggregateProf >= 0 ? C.green : C.red }}>₹{fmt(aggregateProf)}</td>
@@ -2300,15 +2301,15 @@ function MultiCropPanel({ gs, cropData, lang }) {
 
       {/* Ecological & Market Diversification Advisory Box */}
       <div style={{
-        background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+        background: '#F0FDF4', border: '1px solid #BBF7D0',
         borderRadius: 12, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14
       }}>
         <div style={{ fontSize: '2rem' }}>🌿</div>
         <div>
-          <div style={{ fontSize: '0.88rem', fontWeight: 700, color: C.green }}>
+          <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#15803D' }}>
             Ecological & Market Diversification Score: {'★'.repeat(Math.min(5, diversityStars))}{'☆'.repeat(Math.max(0, 5 - diversityStars))}
           </div>
-          <p style={{ margin: '3px 0 0', fontSize: '0.78rem', color: 'rgba(255,255,255,0.65)' }}>
+          <p style={{ margin: '3px 0 0', fontSize: '0.78rem', color: '#374151' }}>
             {hasPulse && hasOilseed && hasStaple
               ? 'Outstanding Farm Diversification! Combining a cereal staple, a nitrogen-fixing legume/pulse, and an oilseed/cash crop dramatically reduces market price volatility risk while enriching soil microbiology.'
               : 'Good farm distribution. Tip: Incorporating at least one pulse/legume (like Gram, Tur, or Moong) fixes atmospheric nitrogen, reducing future chemical fertilizer expenses by up to 25%.'}
@@ -2332,7 +2333,7 @@ function SolarPumpPanel({ gs, lang }) {
     <div>
       <PanelHeader icon="⚡" title="Solar Water Pump & PM-KUSUM Subsidy Calculator" subtitle="Estimate solar capacity required, diesel savings, and government subsidy benefits" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <FormRow label="Motor Horsepower (HP)">
             <Select value={hp} onChange={setHp}>
               <option value="3">3 HP Surface / Submersible Pump</option>
@@ -2383,7 +2384,7 @@ function CattleFodderPanel({ lang }) {
     <div>
       <PanelHeader icon="🐄" title="Cattle Feed & Dairy Fodder Calculator" subtitle="Estimate daily green fodder, dry fodder, concentrate feed & monthly dairy profit margins" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <InputWithVoice label="Number of Milch Cows" value={cows} onChange={setCows} resetValue={2} lang={lang} />
           <InputWithVoice label="Number of Milch Buffaloes" value={buffaloes} onChange={setBuffaloes} resetValue={2} lang={lang} />
           <InputWithVoice label="Avg Milk Yield per Animal (Liters/day)" value={milkYield} onChange={setMilkYield} resetValue={10} lang={lang} />
@@ -2391,8 +2392,8 @@ function CattleFodderPanel({ lang }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>DAILY FODDER REQUIREMENT FOR {res.totalHeads} ANIMALS</div>
+          <div style={{ background: '#F8FAF9', border: '1px solid #E5E7EB', borderRadius: 12, padding: 14 }}>
+            <div style={{ fontSize: '0.75rem', color: '#6B7280', marginBottom: 6, fontWeight: 700, textTransform: 'uppercase' }}>DAILY FODDER REQUIREMENT FOR {res.totalHeads} ANIMALS</div>
             <Grid cols={3}>
               <ResultCard label="Green Fodder" value={`${res.dailyGreenFodderKg} kg/day`} color={C.green} sub="Berseem/Napier/Sorghum" />
               <ResultCard label="Dry Fodder (Straw)" value={`${res.dailyDryFodderKg} kg/day`} color={C.amber} sub="Wheat/Paddy Straw" />
@@ -2425,7 +2426,7 @@ function DripCalcPanel({ gs, lang }) {
     <div>
       <PanelHeader icon="🌧️" title="Drip Irrigation & Pipeline Estimator" subtitle="Calculate lateral line length, emitter counts, and government subsidy under Per Drop More Crop" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1} lang={lang} />
           <FormRow label="Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
           <InputWithVoice label="Crop Row Spacing (Feet)" value={rowSpacing} onChange={setRowSpacing} resetValue={5} lang={lang} />
@@ -2465,7 +2466,7 @@ function PolyhousePanel({ lang }) {
     <div>
       <PanelHeader icon="🏛️" title="Polyhouse & Greenhouse Profitability Calculator" subtitle="Estimate polyhouse construction costs, government subsidies, and high-value crop returns" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <InputWithVoice label="Polyhouse Covered Area (Sq. Meters)" value={areaSqM} onChange={setAreaSqM} resetValue={1000} lang={lang} />
           <FormRow label="Protected Crop Type">
             <Select value={cropType} onChange={setCropType}>
@@ -2510,14 +2511,14 @@ function OrganicInputsPanel({ gs, lang }) {
     <div>
       <PanelHeader icon="🍃" title="Organic Farming & Bio-Input Requirement Calculator" subtitle="Determine Vermicompost, Neem Cake, Bio-NPK, and Jeevamrut quantities per acre" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <InputWithVoice label="Land Area" value={area} onChange={setArea} resetValue={1} lang={lang} />
           <FormRow label="Unit"><UnitSelect value={unit} onChange={setUnit} /></FormRow>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>ORGANIC PACKAGE REQUIREMENTS</div>
+          <div style={{ background: '#F8FAF9', border: '1px solid #E5E7EB', borderRadius: 12, padding: 14 }}>
+            <div style={{ fontSize: '0.75rem', color: '#6B7280', marginBottom: 6, fontWeight: 700, textTransform: 'uppercase' }}>ORGANIC PACKAGE REQUIREMENTS</div>
             <Grid cols={2}>
               <ResultCard label="Vermicompost" value={`${res.vermicompostTonnes} Tonnes`} color={C.green} sub="Base organic manure" />
               <ResultCard label="Neem Cake (खली)" value={`${res.neemCakeKg} kg`} color={C.amber} sub="Nematode & Pest repellent" />
@@ -2687,13 +2688,13 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
       <PanelHeader icon="⚙️" title="Administrator Config & Baselines" subtitle="Customize default crop rates, subsidized fertilizer bag prices, machinery rentals, and labour wage benchmarks" />
       
       {statusMsg && (
-        <div style={{ padding: '10px 14px', borderRadius: 10, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, marginBottom: 14, fontSize: '0.85rem', fontWeight: 600 }}>
+        <div style={{ padding: '10px 14px', borderRadius: 10, background: '#DCFCE7', border: '1px solid #86EFAC', color: '#15803D', marginBottom: 14, fontSize: '0.85rem', fontWeight: 600 }}>
           {statusMsg}
         </div>
       )}
 
       {/* Sub-Navigation Tabs */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 14, borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 10 }}>
+      <div style={{ display: 'flex', gap: 8, marginBottom: 14, borderBottom: '1px solid #E5E7EB', paddingBottom: 10, flexWrap: 'wrap' }}>
         {[
           { id: 'crops', icon: '🌾', label: 'Crop Baselines' },
           { id: 'fertilizers', icon: '🧪', label: 'Fertilizer Subsidies' },
@@ -2704,9 +2705,9 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             style={{
-              padding: '6px 14px', borderRadius: 8, border: activeTab === tab.id ? `1px solid ${C.green}` : '1px solid rgba(255,255,255,0.1)',
-              background: activeTab === tab.id ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.04)',
-              color: activeTab === tab.id ? '#fff' : 'rgba(255,255,255,0.6)', cursor: 'pointer',
+              padding: '6px 14px', borderRadius: 8, border: activeTab === tab.id ? `1px solid #15803D` : '1px solid #E5E7EB',
+              background: activeTab === tab.id ? '#DCFCE7' : '#F9FAFB',
+              color: activeTab === tab.id ? '#15803D' : '#4B5563', cursor: 'pointer',
               fontSize: '0.82rem', fontWeight: activeTab === tab.id ? 700 : 500, display: 'flex', alignItems: 'center', gap: 6
             }}
           >
@@ -2718,7 +2719,7 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
 
       {/* TAB 1: Crops */}
       {activeTab === 'crops' && (
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', marginBottom: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <FormRow label="Select Crop Template to View/Modify">
             <Select value={selectedCrop} onChange={setSelectedCrop}>
               {Object.entries(cropData).map(([k, d]) => <option key={k} value={k}>{d.icon} {d.name}</option>)}
@@ -2735,8 +2736,8 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
           <button
             onClick={handleUpdateCrop}
             style={{
-              padding: '10px 16px', background: 'rgba(34,197,94,0.2)', border: `1px solid ${C.green}`,
-              color: C.green, borderRadius: 10, cursor: 'pointer', fontWeight: 700, fontSize: '0.82rem', marginTop: 12
+              padding: '10px 16px', background: '#F0FDF4', border: `1px solid #86EFAC`,
+              color: '#15803D', borderRadius: 10, cursor: 'pointer', fontWeight: 700, fontSize: '0.82rem', marginTop: 12
             }}
           >
             Update {cropData[selectedCrop]?.name || selectedCrop} Parameters
@@ -2746,13 +2747,13 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
 
       {/* TAB 2: Fertilizers */}
       {activeTab === 'fertilizers' && (
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
-          <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', marginBottom: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
+          <div style={{ fontSize: '0.82rem', color: '#4B5563', marginBottom: 12 }}>
             Configure Government Subsidized Fertilizer Maximum Retail Prices (MRP per 50kg bag) or private retailer rates:
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
             {Object.entries(localFert).map(([k, d]) => (
-              <div key={k} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: 10 }}>
+              <div key={k} style={{ background: '#F8FAF9', border: '1px solid #E5E7EB', borderRadius: 10, padding: 10 }}>
                 <div style={{ fontWeight: 700, color: C.blue, fontSize: '0.85rem', marginBottom: 6 }}>{d.name}</div>
                 <InputWithVoice 
                   label="Bag Price (₹/50kg)" 
@@ -2769,13 +2770,13 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
 
       {/* TAB 3: Machinery */}
       {activeTab === 'machinery' && (
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
-          <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', marginBottom: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
+          <div style={{ fontSize: '0.82rem', color: '#4B5563', marginBottom: 12 }}>
             Adjust custom hourly machinery rental rates to match prevailing local custom hiring center (CHC) rates in your village:
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
             {Object.entries(localMachinery).slice(0, 9).map(([k, d]) => (
-              <div key={k} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: 10 }}>
+              <div key={k} style={{ background: '#F8FAF9', border: '1px solid #E5E7EB', borderRadius: 10, padding: 10 }}>
                 <div style={{ fontWeight: 700, color: C.amber, fontSize: '0.85rem', marginBottom: 6 }}>{d.icon} {d.name}</div>
                 <InputWithVoice 
                   label="Rental Rate (₹/Hour)" 
@@ -2792,8 +2793,8 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
 
       {/* TAB 4: Labour */}
       {activeTab === 'labour' && (
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: '1.2rem', marginBottom: 16 }}>
-          <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 14, padding: '1.2rem', marginBottom: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
+          <div style={{ fontSize: '0.82rem', color: '#4B5563', marginBottom: 12 }}>
             Set standard daily agricultural wage rates applicable for field preparation, transplanting, weeding, and harvesting operations:
           </div>
           <div style={{ maxWidth: 350 }}>
@@ -2818,9 +2819,9 @@ function SettingsPanel({ cropData, setCropData, fertilizerData, setFertilizerDat
         <button
           onClick={handleResetDefaults}
           style={{
-            padding: '12px 18px', background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.8)',
-            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 10, cursor: 'pointer',
-            fontSize: '0.82rem'
+            padding: '12px 18px', background: '#F9FAFB', color: '#374151',
+            border: '1px solid #D1D5DB', borderRadius: 10, cursor: 'pointer',
+            fontSize: '0.82rem', fontWeight: 600
           }}
         >
           🔄 Restore ICAR Standard Benchmarks
@@ -2851,9 +2852,9 @@ function HistoryPanel({ saved = [], onLoad, onDelete, onClearAll }) {
           onChange={e => setSearchTerm(e.target.value)}
           placeholder="🔍 Search saved calculations by name or crop..."
           style={{
-            padding: '8px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: '0.85rem',
-            width: '280px', maxWidth: '100%'
+            padding: '8px 14px', borderRadius: 10, background: '#FFFFFF',
+            border: '1px solid #D1D5DB', color: '#17211B', fontSize: '0.85rem',
+            width: '280px', maxWidth: '100%', boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
           }}
         />
 
@@ -2865,8 +2866,8 @@ function HistoryPanel({ saved = [], onLoad, onDelete, onClearAll }) {
               }
             }}
             style={{
-              padding: '6px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.1)',
-              border: '1px solid rgba(239,68,68,0.25)', color: C.red, cursor: 'pointer', fontSize: '0.78rem'
+              padding: '6px 12px', borderRadius: 8, background: '#FEE2E2',
+              border: '1px solid #FCA5A5', color: C.red, cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600
             }}
           >
             🗑️ Clear All History
@@ -2878,18 +2879,18 @@ function HistoryPanel({ saved = [], onLoad, onDelete, onClearAll }) {
       {filteredSaved.length > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
           {filteredSaved.map(s => (
-            <div key={s.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
+            <div key={s.id} style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 12, padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10, boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
               <div>
                 <div style={{ fontWeight: 700, color: C.green, fontSize: '0.96rem' }}>{s.name}</div>
-                <div style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)', marginTop: 3 }}>
-                  Saved: {s.date} · Crop: <strong style={{ color: '#fff' }}>{s.crop}</strong> · Land Area: <strong style={{ color: '#fff' }}>{s.area} {s.unit}</strong>
+                <div style={{ fontSize: '0.78rem', color: '#6B7280', marginTop: 3 }}>
+                  Saved: {s.date} · Crop: <strong style={{ color: '#17211B' }}>{s.crop}</strong> · Land Area: <strong style={{ color: '#17211B' }}>{s.area} {s.unit}</strong>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button onClick={() => onLoad(s)} style={{ padding: '8px 14px', borderRadius: 8, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)', color: C.green, cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600 }}>
+                <button onClick={() => onLoad(s)} style={{ padding: '8px 14px', borderRadius: 8, background: '#DCFCE7', border: '1px solid #86EFAC', color: '#15803D', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600 }}>
                   📥 Restore to Workspace
                 </button>
-                <button onClick={() => onDelete(s.id)} style={{ padding: '8px 12px', borderRadius: 8, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', color: C.red, cursor: 'pointer', fontSize: '0.82rem' }}>
+                <button onClick={() => onDelete(s.id)} style={{ padding: '8px 12px', borderRadius: 8, background: '#FEE2E2', border: '1px solid #FCA5A5', color: C.red, cursor: 'pointer', fontSize: '0.82rem', fontWeight: 600 }}>
                   ✕ Delete
                 </button>
               </div>
@@ -2897,35 +2898,35 @@ function HistoryPanel({ saved = [], onLoad, onDelete, onClearAll }) {
           ))}
         </div>
       ) : saved.length === 0 ? (
-        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.12)', borderRadius: 14, padding: '1.5rem', textAlign: 'center', marginBottom: 20 }}>
+        <div style={{ background: '#F9FAFB', border: '1px dashed #D1D5DB', borderRadius: 14, padding: '1.5rem', textAlign: 'center', marginBottom: 20 }}>
           <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>💾</div>
-          <h4 style={{ margin: '0 0 6px', color: '#fff' }}>No Custom Saved Calculations Yet</h4>
-          <p style={{ margin: '0 0 14px', fontSize: '0.82rem', color: 'rgba(255,255,255,0.55)', maxWidth: 460, marginInline: 'auto' }}>
+          <h4 style={{ margin: '0 0 6px', color: '#17211B', fontWeight: 800 }}>No Custom Saved Calculations Yet</h4>
+          <p style={{ margin: '0 0 14px', fontSize: '0.82rem', color: '#6B7280', maxWidth: 460, marginInline: 'auto' }}>
             To save your current farm plan, click the <strong>💾 Save</strong> button in the top toolbar. In the meantime, you can explore and instantly restore any of the preloaded reference models below:
           </p>
         </div>
       ) : (
-        <div style={{ padding: 14, color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', marginBottom: 20 }}>
+        <div style={{ padding: 14, color: '#6B7280', fontSize: '0.85rem', marginBottom: 20 }}>
           No saved calculations match "{searchTerm}".
         </div>
       )}
 
       {/* Pre-loaded Benchmark Sample Models */}
       <div>
-        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'rgba(255,255,255,0.8)', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#17211B', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
           <span>📚</span>
           <span>Pre-Loaded Seasonal Farm Projection Models (Click to Load):</span>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
           {SAMPLE_PROJECTIONS.map(sample => (
-            <div key={sample.id} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 14, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div key={sample.id} style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 12, padding: 14, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
               <div>
                 <div style={{ fontWeight: 700, color: C.blue, fontSize: '0.92rem', marginBottom: 4 }}>{sample.name}</div>
-                <div style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.5)', marginBottom: 8 }}>{sample.date}</div>
-                <p style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.7)', margin: '0 0 10px', lineHeight: 1.4 }}>
+                <div style={{ fontSize: '0.74rem', color: '#6B7280', marginBottom: 8 }}>{sample.date}</div>
+                <p style={{ fontSize: '0.76rem', color: '#4B5563', margin: '0 0 10px', lineHeight: 1.4 }}>
                   {sample.description}
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, fontSize: '0.72rem', background: 'rgba(0,0,0,0.2)', padding: '6px 8px', borderRadius: 8, marginBottom: 10 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, fontSize: '0.72rem', background: '#F8FAF9', border: '1px solid #E5E7EB', padding: '6px 8px', borderRadius: 8, marginBottom: 10, color: '#374151' }}>
                   <div>Investment: <strong style={{ color: C.rose }}>₹{fmt(sample.inv)}</strong></div>
                   <div>Yield: <strong>{sample.yieldExpected} Qtl</strong></div>
                   <div>Revenue: <strong style={{ color: C.blue }}>₹{fmt(sample.rev)}</strong></div>
@@ -2935,8 +2936,8 @@ function HistoryPanel({ saved = [], onLoad, onDelete, onClearAll }) {
               <button
                 onClick={() => onLoad({ crop: sample.crop, area: sample.area, unit: sample.unit })}
                 style={{
-                  width: '100%', padding: '8px', borderRadius: 8, background: 'rgba(96,165,250,0.15)',
-                  border: '1px solid rgba(96,165,250,0.3)', color: C.blue, cursor: 'pointer',
+                  width: '100%', padding: '8px', borderRadius: 8, background: '#EFF6FF',
+                  border: '1px solid #BFDBFE', color: C.blue, cursor: 'pointer',
                   fontSize: '0.8rem', fontWeight: 700
                 }}
               >
@@ -3178,7 +3179,6 @@ export function CalculatorTab() {
           {activeCalc === 'crop_compare' && <CropComparePanel gs={gs} cropData={cropData} lang={lang} />}
           {activeCalc === 'mandi_profit' && <MandiProfitPanel gs={gs} cropData={cropData} lang={lang} />}
           {activeCalc === 'storage'      && <StoragePanel cropData={cropData} lang={lang} />}
-          {activeCalc === 'multicrop'    && <MultiCropPanel gs={gs} cropData={cropData} lang={lang} />}
           {activeCalc === 'settings'     && <SettingsPanel cropData={cropData} setCropData={setCropData} fertilizerData={fertilizerData} setFertilizerData={setFertilizerData} lang={lang} />}
           {activeCalc === 'history'      && <HistoryPanel saved={saved} onLoad={loadCalc} onDelete={deleteCalc} onClearAll={() => { setSaved([]); localStorage.removeItem('krishi_saved_calcs'); }} />}
         </div>

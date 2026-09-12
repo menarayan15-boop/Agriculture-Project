@@ -16,17 +16,28 @@
     --z-toast: 100000;
 
     /* Strict White + Green Design System Palette */
-    --primary: #15803D;         /* Primary Brand Green */
-    --primary-dark: #166534;    /* Dark Forest Green */
-    --primary-light: #22C55E;   /* Vivid Emerald */
-    --light-green: #DCFCE7;     /* Light Green Tint */
-    --very-light-green: #F0FDF4;/* Very Light Green Surface */
-    --white: #FFFFFF;           /* Pure White */
-    --bg-main: #F8FAF9;         /* Airy Calm Canvas Background */
-    --primary-text: #17211B;    /* Deep Charcoal Text */
-    --secondary-text: #66736B;  /* Muted Sage Slate Text */
-    --border-color: #E5E7EB;    /* Light Gray Border */
-    --border-green: rgba(21, 128, 61, 0.12); /* Subtle Green Border */
+    --primary: #15803D;
+    /* Primary Brand Green */
+    --primary-dark: #166534;
+    /* Dark Forest Green */
+    --primary-light: #22C55E;
+    /* Vivid Emerald */
+    --light-green: #DCFCE7;
+    /* Light Green Tint */
+    --very-light-green: #F0FDF4;
+    /* Very Light Green Surface */
+    --white: #FFFFFF;
+    /* Pure White */
+    --bg-main: #F8FAF9;
+    /* Airy Calm Canvas Background */
+    --primary-text: #17211B;
+    /* Deep Charcoal Text */
+    --secondary-text: #66736B;
+    /* Muted Sage Slate Text */
+    --border-color: #E5E7EB;
+    /* Light Gray Border */
+    --border-green: rgba(21, 128, 61, 0.12);
+    /* Subtle Green Border */
 
     /* Surface & Glassmorphism Tokens */
     --bg-gradient: #F8FAF9;
@@ -484,6 +495,7 @@ h6 {
         opacity: 0;
         transform: translateY(6px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -643,10 +655,12 @@ h6 {
 }
 
 @keyframes slowBob {
+
     0%,
     100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-5px);
     }

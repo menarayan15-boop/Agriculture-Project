@@ -1,31 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-
-function interpretWeatherCode(code) {
-  let icon = "fa-solid fa-sun";
-  let defaultDesc = "Clear Sky";
-  let color = "#f59e0b";
-  
-  if (code === 0) {
-    icon = "fa-solid fa-sun"; defaultDesc = "Clear Sky"; color = "#f59e0b";
-  } else if (code >= 1 && code <= 3) {
-    icon = "fa-solid fa-cloud-sun"; defaultDesc = "Partly Cloudy"; color = "#64748b";
-  } else if (code === 45 || code === 48) {
-    icon = "fa-solid fa-smog"; defaultDesc = "Foggy"; color = "#94a3b8";
-  } else if (code >= 51 && code <= 55) {
-    icon = "fa-solid fa-cloud-rain"; defaultDesc = "Light Drizzle"; color = "#60a5fa";
-  } else if (code >= 61 && code <= 65) {
-    icon = "fa-solid fa-cloud-showers-water"; defaultDesc = "Rainy"; color = "#3b82f6";
-  } else if (code >= 71 && code <= 77) {
-    icon = "fa-solid fa-snowflake"; defaultDesc = "Snowy"; color = "#93c5fd";
-  } else if (code >= 80 && code <= 82) {
-    icon = "fa-solid fa-cloud-showers-heavy"; defaultDesc = "Heavy Showers"; color = "#2563eb";
-  } else if (code >= 95 && code <= 99) {
-    icon = "fa-solid fa-cloud-bolt"; defaultDesc = "Thunderstorm"; color = "#7c3aed";
-  }
-  
-  return { icon, defaultDesc, color };
-}
+import { getWeatherData, interpretWeatherCode } from '../../services/weatherService';
+import { geocodeLocation } from '../../services/locationService';
 
 export function WeatherTab() {
   const { location, setLocation } = useApp();
@@ -43,84 +19,85 @@ export function WeatherTab() {
     }
   }, [location]);
 
-  // Fetch Open-Meteo Weather API for current location coordinates
+  // Fetch resilient multi-tier Weather data
   useEffect(() => {
-    if (!location || !location.lat) {
-      setError('कृपया पहले स्थान चुनें / Please select a location.');
-      setLoading(false);
-      return;
-    }
+    const targetLat = location?.lat || 23.6102;
+    const targetLon = location?.lon || 85.2799;
+    const targetName = location?.nameEn || 'Jharkhand (Hazaribagh), India';
 
     setLoading(true);
     setError(null);
-    
-    // Open-Meteo forecast endpoint with full variables
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,rain,snowfall,surface_pressure,pressure_msl,weather_code&hourly=temperature_2m,relative_humidity_2m,rain,surface_pressure,wind_speed_10m&daily=weather_code,temperature_2m_min,temperature_2m_max,sunshine_duration,sunset,sunrise,rain_sum,snowfall_sum,precipitation_probability_max&timezone=auto`;
 
-    fetch(url)
-      .then(res => res.json())
+    getWeatherData(targetLat, targetLon, targetName)
       .then(data => {
         if (data && data.current) {
-          setCurrentWeather({
-            temp: data.current.temperature_2m,
-            feelsLike: data.current.apparent_temperature,
-            humidity: data.current.relative_humidity_2m,
-            windSpeed: data.current.wind_speed_10m,
-            pressure: data.current.surface_pressure || data.current.pressure_msl,
-            rain: data.current.rain || 0,
-            snowfall: data.current.snowfall || 0,
-            code: data.current.weather_code
-          });
-        }
-        if (data && data.daily) {
-          const days = data.daily.time.map((timeStr, index) => {
-            const dateObj = new Date(timeStr);
-            return {
-              dateStr: dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
-              code: data.daily.weather_code[index],
-              tempMin: data.daily.temperature_2m_min[index],
-              tempMax: data.daily.temperature_2m_max[index],
-              precipProb: data.daily.precipitation_probability_max[index],
-              precipSum: data.daily.rain_sum ? data.daily.rain_sum[index] : 0,
-              snowSum: data.daily.snowfall_sum ? data.daily.snowfall_sum[index] : 0
-            };
-          });
-          setDailyForecast(days);
+          setCurrentWeather(data.current);
+          setDailyForecast(data.daily || []);
+        } else {
+          setError('मौसम डेटा उपलब्ध नहीं है / Weather data unavailable.');
         }
         setLoading(false);
       })
       .catch(err => {
-        console.warn('Open-Meteo fetch failed:', err);
-        setError('मौसम डेटा नहीं मिला / Failed to fetch Open-Meteo weather data.');
+        console.warn('Weather fetch error:', err);
+        setError('मौसम डेटा नहीं मिला / Failed to fetch weather data.');
         setLoading(false);
       });
   }, [location]);
 
-  // Search location via Open-Meteo Geocoding API
+  // Search location via Open-Meteo Geocoding API with robust Indian internal fallback
   const handleSearchLocation = async (e) => {
     e.preventDefault();
     if (!searchInput.trim()) return;
     setSearchLoading(true);
     try {
-      const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchInput.trim())}&count=1&language=en&format=json`);
-      const geoData = await geoRes.json();
-      if (geoData && geoData.results && geoData.results.length > 0) {
-        const res = geoData.results[0];
-        const formattedName = `${res.admin1 || res.name}${res.name !== res.admin1 ? ' (' + res.name + ')' : ''}, ${res.country || 'India'}`;
-        setLocation({
-          id: res.name.toLowerCase().replace(/\s+/g, '-'),
-          nameEn: formattedName,
-          nameHi: formattedName,
-          lat: res.latitude,
-          lon: res.longitude,
-          defaultSoil: 'loamy'
-        });
-      } else {
+      let matched = false;
+
+      // Tier 1: Try Open-Meteo Geocoding
+      try {
+        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchInput.trim())}&count=1&language=en&format=json`);
+        if (geoRes.ok) {
+          const geoData = await geoRes.json();
+          if (geoData && geoData.results && geoData.results.length > 0) {
+            const res = geoData.results[0];
+            const formattedName = `${res.admin1 || res.name}${res.name !== res.admin1 ? ' (' + res.name + ')' : ''}, ${res.country || 'India'}`;
+            setLocation({
+              id: res.name.toLowerCase().replace(/\s+/g, '-'),
+              nameEn: formattedName,
+              nameHi: formattedName,
+              lat: res.latitude,
+              lon: res.longitude,
+              defaultSoil: 'loamy'
+            });
+            matched = true;
+          }
+        }
+      } catch (geoErr) {
+        console.warn('Open-Meteo geocoding search failed, trying fallback:', geoErr);
+      }
+
+      // Tier 2: Geocode fallback from internal Indian coordinates lookup
+      if (!matched) {
+        const fallbackGeo = geocodeLocation(searchInput.trim(), searchInput.trim());
+        if (fallbackGeo && fallbackGeo.lat) {
+          setLocation({
+            id: searchInput.trim().toLowerCase().replace(/\s+/g, '-'),
+            nameEn: fallbackGeo.nameEn,
+            nameHi: fallbackGeo.nameHi,
+            lat: fallbackGeo.lat,
+            lon: fallbackGeo.lon,
+            defaultSoil: 'loamy'
+          });
+          matched = true;
+        }
+      }
+
+      if (!matched) {
         alert('Location not found. Please try entering a different city or region name.');
       }
     } catch (err) {
-      console.warn('Geocoding search failed:', err);
-      alert('Could not search location. Please check your internet connection.');
+      console.warn('Location search error:', err);
+      alert('Could not search location. Please check your query.');
     } finally {
       setSearchLoading(false);
     }

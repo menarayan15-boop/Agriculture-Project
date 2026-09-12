@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishi Jal System End-to-End Workflow Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-c1: #e9f2fb;
+      --border-c1: #6ba6db;
+      --header-c1: #3b82f6;
+      --card-c1: #ffffff;
+      
+      --bg-c2: #ebf8ee;
+      --border-c2: #7ece8a;
+      --header-c2: #22c55e;
+      --card-c2: #ffffff;
+      
+      --bg-c3: #fdf5e2;
+      --border-c3: #e6b85c;
+      --header-c3: #f59e0b;
+      --card-c3: #ffffff;
+      
+      --bg-c4: #f4ecfa;
+      --border-c4: #ba8be6;
+      --header-c4: #a855f7;
+      --card-c4: #ffffff;
+      
+      --bg-c5: #fae8eb;
+      --border-c5: #e88697;
+      --header-c5: #f43f5e;
+      --card-c5: #ffffff;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 24px;
+      min-width: 1440px;
+      overflow-x: auto;
+    }
+
+    .canvas-container {
+      max-width: 1680px;
+      margin: 0 auto;
+      background: #ffffff;
+      color: var(--text-main);
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      padding: 28px 24px 36px 24px;
+      position: relative;
+    }
+
+    .main-title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #0f172a;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    
+    .badge-rev {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: #e2e8f0;
+      color: #334155;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      position: relative;
+    }
+
+    .lane {
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .lane-c1 { background: var(--bg-c1); border: 1.5px solid var(--border-c1); }
+    .lane-c2 { background: var(--bg-c2); border: 1.5px solid var(--border-c2); }
+    .lane-c3 { background: var(--bg-c3); border: 1.5px solid var(--border-c3); }
+    .lane-c4 { background: var(--bg-c4); border: 1.5px solid var(--border-c4); }
+    .lane-c5 { background: var(--bg-c5); border: 1.5px solid var(--border-c5); }
+
+    .lane-header {
+      padding: 14px 12px;
+      font-weight: 800;
+      font-size: 18px;
+      text-align: center;
+      color: #ffffff;
+      letter-spacing: 0.2px;
+    }
+
+    .lane-c1 .lane-header { background: #2563eb; }
+    .lane-c2 .lane-header { background: #16a34a; }
+    .lane-c3 .lane-header { background: #d97706; }
+    .lane-c4 .lane-header { background: #9333ea; }
+    .lane-c5 .lane-header { background: #e11d48; }
+
+    .lane-body {
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+      border: 1px solid #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .icon {
+      font-size: 18px;
+    }
+
+    .card-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .card-list {
+      font-size: 11px;
+      color: #334155;
+      margin-top: 4px;
+      padding-left: 14px;
+      line-height: 1.45;
+    }
+    
+    .card-list li {
+      margin-bottom: 2px;
+    }
+
+    .code-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      background: #f1f5f9;
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .pill-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 2px;
+      align-self: flex-start;
+    }
+
+    .pill-blue { background: #dbeafe; color: #1d4ed8; }
+    .pill-green { background: #dcfce7; color: #15803d; }
+    .pill-amber { background: #fef3c7; color: #b45309; }
+    .pill-purple { background: #f3e8ff; color: #7e22ce; }
+    .pill-rose { background: #ffe4e6; color: #be123c; }
+
+    .card-flow-arrow {
+      text-align: center;
+      font-size: 14px;
+      color: #94a3b8;
+      margin: -6px 0;
+    }
+
+    .user-actors-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 6px;
+    }
+
+    .user-actor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .user-actor .avatar {
+      font-size: 22px;
+    }
+
+    .user-actor .label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.2;
+    }
+
+    .footer-bar {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .btn-export {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-export:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="canvas-container">
+    <div class="main-title">
+      <span>🌾 KRISHI JAL SYSTEM: END-TO-END WORKFLOW & SYSTEM ARCHITECTURE</span>
+      <span class="badge-rev">v3.8.2 PROD SPEC</span>
+    </div>
+
+    <div class="workflow-grid">
+      <!-- COLUMN 1: DATA SOURCES -->
+      <div class="lane lane-c1">
+        <div class="lane-header">Data Sources</div>
+        <div class="lane-body">
+          <div class="card">
+            <div class="card-title"><span class="icon">🛰️</span> Agro-Met Weather API</div>
+            <div class="card-sub">Open-Meteo & IMD 0.25° Gridded Data</div>
+            <ol class="card-list">
+              <li>Solar Irradiance (Rs MJ/m²)</li>
+              <li>2m Temp (Tmax / Tmin °C)</li>
+              <li>Relative Humidity (RH %)</li>
+              <li>10m Wind Velocity (u₂ m/s)</li>
+              <li>Precipitation Accumulator (mm)</li>
+            </ol>
+            <span class="pill-badge pill-blue">Hourly Polled</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📷</span> Soil Macro Imagery</div>
+            <div class="card-sub">Smartphone Camera & In-Field Samples</div>
+            <div class="card-sub">RGB raster captures of field topsoil, soil clods, organic sheen, and color tint.</div>
+            <span class="pill-badge pill-blue">Edge Capture</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📡</span> In-Situ Soil Sensors (IoT)</div>
+            <div class="card-sub">Capacitive Moisture & Tensiometer Probes</div>
+            <div class="card-sub">Volumetric Water Content (VWC %), Soil Suction (kPa), Inline Water Flow Pulse Rate.</div>
+            <span class="pill-badge pill-blue">Telemetry Stream</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📈</span> Market & Mandi Feeds</div>
+            <div class="card-sub">AGMARKNET & e-NAM Daily Bulletins</div>
+            <div class="card-sub">APMC arrival volumes, modal prices, CACP Minimum Support Prices (MSP).</div>
+            <span class="pill-badge pill-blue">Daily Sync</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">🚜</span> Govt Registry & CHC Fleet</div>
+            <div class="card-sub">SMAM Custom Hiring Center Fleet</div>
+            <div class="card-sub">Tractor HP, implements inventory, Soil Survey of India soil taxonomy maps.</div>
+            <span class="pill-badge pill-blue">Registry Feed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMN 2: DATA INGESTION & PREPROCESSING -->
+      <div class="lane lane-c2">
+        <div class="lane-header">Data Ingestion & Preprocessing</div>
+        <div class="lane-body">
+          <div class="card">
+            <div class="card-title"><span class="icon">🌐</span> API Gateway & Reverse Proxy</div>
+            <div class="card-sub"><span class="code-chip">ThreadingHTTPServer</span> (Python 8000) + Vite 5173 Proxy</div>
+            <div class="card-sub">CORS whitelist, multipart audio/image payload unpacker, JSON REST routing.</div>
+            <span class="pill-badge pill-green">Low Latency Edge</span>
+          </div>
+
+          <div class="card-flow-arrow">▼</div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">⚙️</span> Feature Engineering Pipeline</div>
+            <ol class="card-list">
+              <li><strong>FAO-56 Penman-Monteith ET₀:</strong> Net radiation, vapor pressure deficit, aero aerodynamic resistance.</li>
+              <li><strong>CV 8×8 Patch Granularity:</strong> 120×120 canvas downsample, local variance & Sobel line gradient filters.</li>
+              <li><strong>Effective Rain (Peff):</strong> USDA-SCS non-linear infiltration accumulator.</li>
+              <li><strong>Audio Processing:</strong> Web Audio API 16kHz mono, Opus WebM base64 framing.</li>
+            </ol>
+            <span class="pill-badge pill-green">Deterministic Core</span>
+          </div>
+
+          <div class="card-flow-arrow">▼</div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">🗄️</span> Staging & State Database</div>
+            <div class="card-sub">SQLite3 WAL Mode (<span class="code-chip">krishi_jal.db</span>) + Client Cache</div>
+            <div class="card-sub">Tables: <span class="code-chip">equipment</span>, <span class="code-chip">bookings</span>, <span class="code-chip">soil_tests</span>, <span class="code-chip">produce</span>. IndexedDB PWA offline cache.</div>
+            <span class="pill-badge pill-green">ACID & Offline Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMN 3: AI/ML PROCESSING ENGINE -->
+      <div class="lane lane-c3">
+        <div class="lane-header">AI/ML Processing Engine</div>
+        <div class="lane-body">
+          <div class="card">
+            <div class="card-title"><span class="icon">🧠</span> Model Selection & Lifecycle</div>
+            <ol class="card-list">
+              <li><strong>TF.js MobileNet v2:</strong> ImageNet edge filter rejecting non-soil (cars, pets, tech).</li>
+              <li><strong>Whisper Large v3:</strong> Multilingual ASR (Hindi, Punjabi, Telugu, Tamil).</li>
+              <li><strong>Gemini 1.5 Flash:</strong> Multimodal soil vision & agronomic reasoning.</li>
+              <li><strong>Local Heuristic Rules:</strong> ICAR crop stages & chemical dosing fallbacks.</li>
+            </ol>
+            <span class="pill-badge pill-amber">Ensemble Architecture</span>
+          </div>
+
+          <div class="card-flow-arrow">▼</div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📦</span> Model Registry & Coordinator</div>
+            <div class="card-sub">Manages API tokens (Groq, OpenAI, Gemini), fallback cascade routing, and confidence thresholds.</div>
+            <span class="pill-badge pill-amber">Routing Middleware</span>
+          </div>
+
+          <div class="card-flow-arrow">▼</div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">⚖️</span> Hydrological & Risk Scoring</div>
+            <div class="card-sub">Business Rules & Agronomic Thresholds:</div>
+            <ol class="card-list">
+              <li><strong>Crop Water Deficit:</strong> <span class="code-chip">ETc = Kc × ET₀</span></li>
+              <li><strong>Net Req (NIR):</strong> <span class="code-chip">NIR = ETc - Peff</span></li>
+              <li><strong>Gross Req (GIR):</strong> <span class="code-chip">GIR = NIR / η_irr</span> (Drip 0.90, Flood 0.50)</li>
+              <li><strong>Pump Run Time:</strong> <span class="code-chip">t = Vol / Q_pump</span></li>
+              <li><strong>Pest Window:</strong> Temp/RH risk index</li>
+            </ol>
+            <span class="pill-badge pill-amber">FAO-56 Validated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMN 4: VISUALIZATION & ALERTING -->
+      <div class="lane lane-c4">
+        <div class="lane-header">Visualization & Alerting</div>
+        <div class="lane-body">
+          <div class="card">
+            <div class="card-title"><span class="icon">📊</span> Operations Dashboard</div>
+            <div class="card-sub">React 18 + Tailwind High-Fidelity UI</div>
+            <ol class="card-list">
+              <li><strong>Water Depletion Ring:</strong> Real-time root-zone moisture deficit meter.</li>
+              <li><strong>Pump Run Timer:</strong> Daily pumping duration (hrs/mins) & cost ledger.</li>
+              <li><strong>Mandi Spread Matrix:</strong> Local vs regional APMC price differentials.</li>
+            </ol>
+            <span class="pill-badge pill-purple">Real-Time UI</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">🔔</span> Alert & Dispatch Manager</div>
+            <ol class="card-list">
+              <li><strong>Rain Intercept Halt:</strong> If rain > 10mm forecast, auto-suspend irrigation.</li>
+              <li><strong>Wilting Point Threshold:</strong> Available water depletion > 50% MAD.</li>
+              <li><strong>Spray Safety Window:</strong> Wind < 12 km/h advisory.</li>
+            </ol>
+            <span class="pill-badge pill-purple">Automated Dispatch</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📝</span> Report & Artifact Generator</div>
+            <div class="card-sub">Soil Health Card & Action Plan Suggestions (NPK, Gypsum/Lime, Micro-nutrients).</div>
+            <span class="pill-badge pill-purple">Agronomic Synthesis</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📄</span> Actionable Artifacts</div>
+            <div class="card-sub">Soil Health Card (PDF/Canvas), Irrigation Ledger (CSV), Multilingual Speech Narration stream (<span class="code-chip">/api/tts</span>).</div>
+            <span class="pill-badge pill-purple">Farmer Artifacts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMN 5: USER & EXTERNAL INTEGRATIONS -->
+      <div class="lane lane-c5">
+        <div class="lane-header">User & External Integrations</div>
+        <div class="lane-body">
+          <div class="user-actors-grid">
+            <div class="user-actor">
+              <span class="avatar">👨‍🌾</span>
+              <span class="label">Smallholder Farmer</span>
+            </div>
+            <div class="user-actor">
+              <span class="avatar">🚜</span>
+              <span class="label">CHC Fleet Operator</span>
+            </div>
+            <div class="user-actor">
+              <span class="avatar">🏛️</span>
+              <span class="label">FPO / Agri Officer</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">🔄</span> External Systems & Portals</div>
+            <ol class="card-list">
+              <li><strong>CHC Equipment Logistics:</strong> "Uber for Farm Machinery" booking & GPS dispatch.</li>
+              <li><strong>AGMARKNET & e-NAM:</strong> Live mandi trade matching & FPO price benchmarks.</li>
+              <li><strong>Govt Compliance / PMFBY:</strong> Verified irrigation logs for crop insurance claims.</li>
+              <li><strong>PM-KUSUM Solar SCADA:</strong> Remote pump automation telemetry.</li>
+            </ol>
+            <span class="pill-badge pill-rose">Enterprise APIs</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">📱</span> Mobile PWA & Voice Telephony</div>
+            <div class="card-sub">Progressive Web App with Service Worker offline cache, WhatsApp Business notifications, Kisan Call Center bridge.</div>
+            <span class="pill-badge pill-rose">Farmer Touchpoint</span>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span class="icon">☁️</span> Cloud Storage & Archival</div>
+            <div class="card-sub">AWS S3 / Google Cloud Storage for historical soil photos, seasonal logs, and audit trails.</div>
+            <span class="pill-badge pill-rose">Secure Storage</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div><strong>Krishi Jal Precision Agriculture Stack:</strong> Open-Meteo • TensorFlow.js • OpenAI Whisper • Google Gemini 1.5 • SQLite3 WAL • React 18</div>
+      <button class="btn-export" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,28 +1,42 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '../../context/AppContext';
 import { CROP_SEASONS_DATA, SOIL_TYPES_CATALOG } from '../../data/cropDetailsData';
-import { getText } from '../../data/constants';
+import { getText, getCropDisplayName, getCategoryDisplayName } from '../../data/constants';
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTH_NAMES = {
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  hi: ['जन', 'फर', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुला', 'अग', 'सितं', 'अक्टू', 'नव', 'दिस'],
+  te: ['జన', 'ఫిబ్ర', 'మార్చి', 'ఏప్రి', 'మే', 'జూన్', 'జూలై', 'ఆగ', 'సెప్టెం', 'అక్టో', 'నవం', 'డిసెం'],
+  ta: ['ஜன', 'பிப்', 'மார்', 'ஏப்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆக', 'செப்', 'அக்', 'நவ', 'டிச'],
+  kn: ['ಜನ', 'ಫೆಬ್ರ', 'ಮಾರ್ಚ್', 'ಏಪ್ರಿ', 'ಮೇ', 'ಜೂನ್', 'ಜುಲೈ', 'ಆಗ', 'ಸೆಪ್ಟೆಂ', 'ಅಕ್ಟೋ', 'ನವೆಂ', 'ಡಿಸೆಂ'],
+  pa: ['ਜਨ', 'ਫ਼ਰ', 'ਮਾਰਚ', 'ਅਪ੍ਰੈ', 'ਮਈ', 'ਜੂਨ', 'ਜੁਲਾਈ', 'ਅਗ', 'ਸਤੰ', 'ਅਕਤੂ', 'ਨਵੰ', 'ਦਸੰ'],
+  mr: ['जाने', 'फेब्रु', 'मार्च', 'एप्रि', 'मे', 'जून', 'जुलै', 'ऑग', 'सप्टें', 'ऑक्टो', 'नोव्हें', 'डिसें'],
+  bn: ['জানু', 'ফেব্রু', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টে', 'অক্টো', 'নভে', 'ডিসে'],
+  gu: ['જાન્યુ', 'ફેબ્રુ', 'માર્ચ', 'એપ્રિલ', 'મે', 'જૂન', 'જુલાઈ', 'ઓગ', 'સપ્ટે', 'ઓક્ટો', 'નવે', 'ડિસે'],
+  or: ['ଜାନୁ', 'ଫେବୃ', 'ମାର୍ଚ୍ଚ', 'ଏପ୍ରି', 'ମେ', 'ଜୁନ୍', 'ଜୁଲାଇ', 'ଅଗଷ୍ଟ', 'ସେପ୍ଟେ', 'ଅକ୍ଟୋ', 'ନଭେ', 'ଡିସେ']
+};
 
+function MonthBar({ season, lang = 'en' }) {
+  const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
+  const sowLabel = getText('planner-sow', lang);
+  const growLabel = getText('planner-grow', lang);
+  const harvLabel = getText('planner-harvest', lang);
 
-
-function MonthBar({ season }) {
   return (
     <div style={{ display: 'flex', gap: '3px', marginTop: '12px', flexWrap: 'nowrap', overflowX: 'auto', paddingBottom: '4px' }}>
-      {MONTHS.map((m, idx) => {
+      {months.map((m, idx) => {
         const isSow = season.sowMonths.includes(idx);
         const isGrow = season.growMonths.includes(idx);
         const isHarvest = season.harvestMonths.includes(idx);
         let bg = 'rgba(255,255,255,0.05)';
         let label = '';
         let textColor = 'var(--text-secondary)';
-        if (isSow) { bg = season.color; textColor = '#000'; label = 'Sow'; }
-        else if (isHarvest) { bg = '#f97316'; textColor = '#000'; label = 'Harv'; }
-        else if (isGrow) { bg = 'rgba(74, 222, 128, 0.3)'; textColor = 'var(--primary-light)'; label = 'Grow'; }
+        if (isSow) { bg = season.color; textColor = '#000'; label = sowLabel; }
+        else if (isHarvest) { bg = '#f97316'; textColor = '#000'; label = harvLabel; }
+        else if (isGrow) { bg = 'rgba(74, 222, 128, 0.3)'; textColor = 'var(--primary-light)'; label = growLabel; }
 
         return (
-          <div key={m} style={{
+          <div key={idx} style={{
             flex: '1', minWidth: '32px', textAlign: 'center', padding: '7px 2px',
             borderRadius: '6px', background: bg, color: textColor,
             fontSize: '0.65rem', fontWeight: 'bold', flexShrink: 0,
@@ -51,17 +65,28 @@ export function PlannerTab() {
 
   const season = CROP_SEASONS_DATA.find(s => s.id === selectedSeason) || CROP_SEASONS_DATA[0];
 
+  const getSeasonTitle = (sId) => {
+    if (sId === 'kharif') return getText('planner-season-kharif', lang);
+    if (sId === 'rabi') return getText('planner-season-rabi', lang);
+    if (sId === 'zaid') return getText('planner-season-zaid', lang);
+    return sId;
+  };
+
+  const currentSeasonName = getSeasonTitle(season.id);
+
   // Filter crops based on search and dropdown filters
   const filteredCrops = useMemo(() => {
     if (!season || !season.crops) return [];
     return season.crops.filter(crop => {
       const name = crop.name || '';
+      const localizedName = getCropDisplayName(crop, lang);
       const hindiName = crop.hindiName || '';
       const soil = crop.soil || '';
       const climateType = crop.climate?.climateType || '';
 
       const matchSearch = !searchQuery.trim() ||
         name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        localizedName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         hindiName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         soil.toLowerCase().includes(searchQuery.toLowerCase()) ||
         climateType.toLowerCase().includes(searchQuery.toLowerCase());
@@ -77,7 +102,7 @@ export function PlannerTab() {
 
       return matchSearch && matchSoil && matchWater && matchCategory;
     });
-  }, [season, searchQuery, filterSoil, filterWater, filterCategory]);
+  }, [season, searchQuery, filterSoil, filterWater, filterCategory, lang]);
 
   return (
     <div className="tab-panel active" style={{ animation: 'fadeIn 0.3s ease' }}>
@@ -93,10 +118,10 @@ export function PlannerTab() {
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '0 0 6px 0', color: '#17211B', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <i className="fa-solid fa-calendar-days" style={{ color: '#15803D' }}></i>
-            Crop Sowing Calendar &amp; Rotation Engine
+            {getText('planner-title', lang)}
           </h2>
           <p style={{ margin: 0, color: '#4B5563', fontSize: '0.9rem' }}>
-            Plan multi-crop rotations with detailed agronomic schedules, seed rates, fertilizer dosages, and pest defense protocols.
+            {getText('planner-subtitle', lang)}
           </p>
         </div>
 
@@ -109,7 +134,7 @@ export function PlannerTab() {
             color: activePlanView === 'calendar' ? '#FFFFFF' : '#17211B',
             transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px'
           }}>
-            <i className="fa-solid fa-calendar-days"></i> Seasonal Crops
+            <i className="fa-solid fa-calendar-days"></i> {getText('planner-tab-crops', lang)}
           </button>
           <button type="button" onClick={() => setActivePlanView('soils')} style={{
             padding: '9px 16px', borderRadius: '10px', fontSize: '0.86rem', fontWeight: 'bold',
@@ -118,7 +143,7 @@ export function PlannerTab() {
             color: activePlanView === 'soils' ? '#FFFFFF' : '#17211B',
             transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px'
           }}>
-            <i className="fa-solid fa-mountain"></i> Soil Types Guide
+            <i className="fa-solid fa-mountain"></i> {getText('planner-tab-soils', lang)}
           </button>
           <button type="button" onClick={() => setActivePlanView('rotation')} style={{
             padding: '9px 16px', borderRadius: '10px', fontSize: '0.86rem', fontWeight: 'bold',
@@ -127,7 +152,7 @@ export function PlannerTab() {
             color: activePlanView === 'rotation' ? '#FFFFFF' : '#17211B',
             transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '6px'
           }}>
-            <i className="fa-solid fa-arrows-rotate"></i> Rotation Engine
+            <i className="fa-solid fa-arrows-rotate"></i> {getText('planner-tab-rotation', lang)}
           </button>
         </div>
       </div>
@@ -137,22 +162,26 @@ export function PlannerTab() {
         <>
           {/* Season Switcher Tabs */}
           <div style={{ display: 'flex', gap: '12px', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
-            {CROP_SEASONS_DATA.map(s => (
-              <button key={s.id} type="button"
-                onClick={() => { setSelectedSeason(s.id); setSelectedCropId(null); }}
-                style={{
-                  padding: '12px 22px', borderRadius: '14px', fontSize: '0.95rem', fontWeight: 'bold',
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px',
-                  background: selectedSeason === s.id ? '#15803D' : '#FFFFFF',
-                  color: selectedSeason === s.id ? '#FFFFFF' : '#17211B',
-                  border: selectedSeason === s.id ? '2px solid #15803D' : '1px solid #E5E7EB',
-                  boxShadow: selectedSeason === s.id ? '0 4px 14px rgba(21, 128, 61, 0.25)' : '0 2px 6px rgba(0,0,0,0.02)',
-                  transform: selectedSeason === s.id ? 'translateY(-2px)' : 'none',
-                  transition: 'all 0.25s ease'
-                }}>
-                <i className={`fa-solid ${s.icon}`}></i> {s.name} ({s.crops.length} Crops)
-              </button>
-            ))}
+            {CROP_SEASONS_DATA.map(s => {
+              const sTitle = getSeasonTitle(s.id);
+              const isCurrent = selectedSeason === s.id;
+              return (
+                <button key={s.id} type="button"
+                  onClick={() => { setSelectedSeason(s.id); setSelectedCropId(null); }}
+                  style={{
+                    padding: '12px 22px', borderRadius: '14px', fontSize: '0.95rem', fontWeight: 'bold',
+                    cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px',
+                    background: isCurrent ? '#15803D' : '#FFFFFF',
+                    color: isCurrent ? '#FFFFFF' : '#17211B',
+                    border: isCurrent ? '2px solid #15803D' : '1px solid #E5E7EB',
+                    boxShadow: isCurrent ? '0 4px 14px rgba(21, 128, 61, 0.25)' : '0 2px 6px rgba(0,0,0,0.02)',
+                    transform: isCurrent ? 'translateY(-2px)' : 'none',
+                    transition: 'all 0.25s ease'
+                  }}>
+                  <i className={`fa-solid ${s.icon}`}></i> {sTitle} ({s.crops.length} {getText('planner-crops-count', lang)})
+                </button>
+              );
+            })}
           </div>
 
           {/* Month Timeline Bar */}
@@ -164,18 +193,24 @@ export function PlannerTab() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '6px' }}>
               <h4 style={{ margin: 0, color: '#15803D', fontWeight: 'bold', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <i className={`fa-solid ${season.icon}`}></i>
-                {season.name} — Sowing: {season.sowing} | Harvest: {season.harvest}
+                {currentSeasonName} — {getText('planner-sowing-window', lang)}: {season.sowing} | {getText('planner-harvest-window', lang)}: {season.harvest}
               </h4>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <span style={{ background: '#DCFCE7', color: '#15803D', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>Sowing Window</span>
-                <span style={{ background: '#EFF6FF', color: '#1D4ED8', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>Active Growth</span>
-                <span style={{ background: '#FEF3C7', color: '#B45309', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>Harvest Window</span>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <span style={{ background: '#DCFCE7', color: '#15803D', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>
+                  {getText('planner-sowing-window', lang)}
+                </span>
+                <span style={{ background: '#EFF6FF', color: '#1D4ED8', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>
+                  {getText('planner-growth-window', lang)}
+                </span>
+                <span style={{ background: '#FEF3C7', color: '#B45309', padding: '3px 10px', borderRadius: '6px', fontSize: '0.72rem', fontWeight: 'bold' }}>
+                  {getText('planner-harvest-window', lang)}
+                </span>
               </div>
             </div>
             <p style={{ margin: '0 0 10px 0', fontSize: '0.85rem', color: '#6B7280' }}>
               {season.description}
             </p>
-            <MonthBar season={season} />
+            <MonthBar season={season} lang={lang} />
           </div>
 
           {/* Search & Filter Bar */}
@@ -192,7 +227,7 @@ export function PlannerTab() {
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search crop, soil (e.g. Clay, Sandy-Loam), or climate..."
+                placeholder={getText('planner-search-placeholder', lang)}
                 style={{
                   width: '100%', padding: '9px 12px 9px 36px', borderRadius: '8px',
                   background: '#F8FAF9', border: '1px solid #E5E7EB',
@@ -211,13 +246,13 @@ export function PlannerTab() {
                   background: '#F8FAF9', border: '1px solid #E5E7EB',
                   color: '#17211B', fontSize: '0.85rem', outline: 'none', cursor: 'pointer'
                 }}>
-                <option value="all">🏔️ All Soil Types</option>
-                <option value="clay">Clay &amp; Clay-Loam</option>
-                <option value="loam">Loamy Soil</option>
-                <option value="sandy">Sandy &amp; Sandy-Loam</option>
-                <option value="black">Black Cotton Soil</option>
-                <option value="alluvial">Alluvial Soil</option>
-                <option value="red">Red Soil</option>
+                <option value="all">🏔️ {getText('planner-all-soils', lang)}</option>
+                <option value="clay">{getText('planner-soil-clay', lang)}</option>
+                <option value="loam">{getText('planner-soil-loam', lang)}</option>
+                <option value="sandy">{getText('planner-soil-sandy', lang)}</option>
+                <option value="black">{getText('planner-soil-black', lang)}</option>
+                <option value="alluvial">{getText('planner-soil-alluvial', lang)}</option>
+                <option value="red">{getText('planner-soil-red', lang)}</option>
               </select>
             </div>
 
@@ -231,11 +266,11 @@ export function PlannerTab() {
                   background: '#F8FAF9', border: '1px solid #E5E7EB',
                   color: '#17211B', fontSize: '0.85rem', outline: 'none', cursor: 'pointer'
                 }}>
-                <option value="all">💧 All Water Levels</option>
-                <option value="low">Low Water</option>
-                <option value="medium">Medium Water</option>
-                <option value="high">High Water</option>
-                <option value="very high">Very High Water</option>
+                <option value="all">💧 {getText('planner-all-water', lang)}</option>
+                <option value="low">{getText('planner-water-low', lang)}</option>
+                <option value="medium">{getText('planner-water-med', lang)}</option>
+                <option value="high">{getText('planner-water-high', lang)}</option>
+                <option value="very high">{getText('planner-water-vhigh', lang)}</option>
               </select>
             </div>
 
@@ -249,14 +284,14 @@ export function PlannerTab() {
                   background: '#F8FAF9', border: '1px solid #E5E7EB',
                   color: '#17211B', fontSize: '0.85rem', outline: 'none', cursor: 'pointer'
                 }}>
-                <option value="all">🌾 All Crop Categories</option>
-                <option value="cereal">Cereals &amp; Millets</option>
-                <option value="pulse">Pulses &amp; Legumes</option>
-                <option value="oilseed">Oilseeds</option>
-                <option value="vegetable">Vegetables</option>
-                <option value="cucurbit">Gourds &amp; Melons</option>
-                <option value="spice">Spices</option>
-                <option value="cash">Cash &amp; Commercial</option>
+                <option value="all">🌾 {getText('planner-all-cats', lang)}</option>
+                <option value="cereal">{getText('planner-cat-cereal', lang)}</option>
+                <option value="pulse">{getText('planner-cat-pulse', lang)}</option>
+                <option value="oilseed">{getText('planner-cat-oilseed', lang)}</option>
+                <option value="vegetable">{getText('planner-cat-veg', lang)}</option>
+                <option value="cucurbit">{getText('planner-cat-gourd', lang)}</option>
+                <option value="spice">{getText('planner-cat-spice', lang)}</option>
+                <option value="cash">{getText('planner-cat-cash', lang)}</option>
               </select>
             </div>
 
@@ -269,18 +304,18 @@ export function PlannerTab() {
                   color: '#DC2626', border: '1px solid #FCA5A5', fontSize: '0.82rem',
                   cursor: 'pointer', fontWeight: 'bold'
                 }}>
-                <i className="fa-solid fa-xmark"></i> Clear
+                <i className="fa-solid fa-xmark"></i> {getText('planner-clear', lang)}
               </button>
             )}
           </div>
 
           {/* Results Count */}
-          <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <span style={{ fontSize: '0.9rem', color: '#6B7280' }}>
-              Showing <strong style={{ color: '#17211B' }}>{filteredCrops.length}</strong> crop(s) for <strong style={{ color: '#15803D' }}>{season.name}</strong>
+              {getText('planner-showing', lang)} <strong style={{ color: '#17211B' }}>{filteredCrops.length}</strong> {getText('planner-crops-for', lang)} <strong style={{ color: '#15803D' }}>{currentSeasonName}</strong>
             </span>
             <span style={{ fontSize: '0.8rem', color: '#6B7280' }}>
-              💡 Click any crop card to view in-depth soil, climate, irrigation, NPK &amp; yield metrics
+              💡 {getText('planner-click-hint', lang)}
             </span>
           </div>
 
@@ -300,6 +335,9 @@ export function PlannerTab() {
               const pestInfo = crop.pestAlert || (crop.pestsAndDiseases ? `${crop.pestsAndDiseases.pests} — ${crop.pestsAndDiseases.management}` : null);
               const harvestSign = crop.harvestIndicator;
 
+              const cropDisplayName = getCropDisplayName(crop, lang);
+              const categoryDisplayName = getCategoryDisplayName(crop.category, lang);
+
               return (
                 <div key={cropId}
                   onClick={() => setSelectedCropId(isSelected ? null : cropId)}
@@ -314,33 +352,33 @@ export function PlannerTab() {
                     position: 'relative', overflow: 'hidden'
                   }}>
 
-                  {/* Category Pill */}
-                  {crop.category && (
-                    <div style={{
-                      position: 'absolute', top: '16px', right: '42px',
-                      background: '#F0FDF4', color: '#15803D',
-                      padding: '3px 10px', borderRadius: '12px', fontSize: '0.68rem',
-                      fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase'
-                    }}>
-                      {crop.category}
-                    </div>
-                  )}
-
-                  {/* Top Row: Crop Name & Chevron */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                    <div>
-                      <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 'bold', color: '#17211B', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <i className="fa-solid fa-seedling" style={{ color: '#15803D' }}></i>
-                        {getText(crop.nameKey || `crop-${crop.id}`, lang) !== `crop-${crop.id}`
-                          ? getText(crop.nameKey || `crop-${crop.id}`, lang)
-                          : (lang === 'hi' && crop.hindiName ? crop.hindiName : crop.name)}
-                      </h3>
-                      {crop.hindiName && lang === 'en' && (
-                        <div style={{ fontSize: '0.82rem', color: '#15803D', marginTop: '2px', fontWeight: 600 }}>
-                          {crop.hindiName}
+                  {/* Top Row: Crop Name + Category Pill + Chevron (Clean Non-Overlapping Layout) */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px', marginBottom: '12px' }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                        <h3 style={{ margin: 0, fontSize: '1.12rem', fontWeight: 'bold', color: '#17211B', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <i className="fa-solid fa-seedling" style={{ color: '#15803D' }}></i>
+                          {cropDisplayName}
+                        </h3>
+                        {crop.category && (
+                          <span style={{
+                            background: '#F0FDF4', color: '#15803D',
+                            border: '1px solid #BBF7D0',
+                            padding: '2px 8px', borderRadius: '12px', fontSize: '0.68rem',
+                            fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {categoryDisplayName}
+                          </span>
+                        )}
+                      </div>
+                      {lang !== 'en' && (
+                        <div style={{ fontSize: '0.8rem', color: '#6B7280', marginTop: '3px', fontWeight: 500 }}>
+                          {crop.name || crop.nameEn}
                         </div>
                       )}
                     </div>
+
                     <div style={{
                       width: '28px', height: '28px', borderRadius: '50%',
                       background: isSelected ? '#15803D' : '#F8FAF9',
@@ -362,18 +400,18 @@ export function PlannerTab() {
                       padding: '4px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#1D4ED8',
                       display: 'flex', alignItems: 'center', gap: '5px', fontWeight: 600
                     }}>
-                      <i className="fa-solid fa-droplet"></i> Water: {crop.water}
+                      <i className="fa-solid fa-droplet"></i> {getText('planner-water', lang)}: {crop.water}
                     </span>
                     {yieldBench && (
                       <span style={{ background: '#F3E8FF', padding: '3px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#7E22CE', fontWeight: 600 }}>
-                        <i className="fa-solid fa-wheat-awn" style={{ marginRight: '4px' }}></i>Yield: {yieldBench}
+                        <i className="fa-solid fa-wheat-awn" style={{ marginRight: '4px' }}></i>{getText('planner-yield', lang)}: {yieldBench}
                       </span>
                     )}
                   </div>
 
                   <p style={{ margin: 0, fontSize: '0.82rem', color: '#4B5563', lineHeight: 1.4 }}>
                     <i className="fa-solid fa-mountain" style={{ marginRight: '6px', color: '#15803D' }}></i>
-                    <strong>Soil:</strong> {crop.soilDetails?.bestType || crop.soil}
+                    <strong>{getText('planner-soil', lang)}:</strong> {crop.soilDetails?.bestType || crop.soil}
                   </p>
 
                   {/* Smooth Accordion Dropdown Container */}
@@ -391,12 +429,12 @@ export function PlannerTab() {
                           <div style={{ background: '#F8FAF9', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem', border: '1px solid #E5E7EB' }}>
                             {seedRate && (
                               <div style={{ marginBottom: '4px', color: '#17211B' }}>
-                                <strong style={{ color: '#B45309' }}>🌱 Seed Rate:</strong> {seedRate}
+                                <strong style={{ color: '#B45309' }}>🌱 {getText('planner-seed-rate', lang)}:</strong> {seedRate}
                               </div>
                             )}
                             {spacing && (
                               <div style={{ color: '#17211B' }}>
-                                <strong style={{ color: '#1D4ED8' }}>📏 Spacing:</strong> {spacing}
+                                <strong style={{ color: '#1D4ED8' }}>📏 {getText('planner-spacing', lang)}:</strong> {spacing}
                               </div>
                             )}
                           </div>
@@ -405,7 +443,7 @@ export function PlannerTab() {
                         {/* Nutrient Dosage */}
                         {nutrientInfo && (
                           <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
-                            <strong style={{ color: '#15803D', display: 'block', marginBottom: '2px' }}>🧪 NPK Fertilizer Dosage:</strong>
+                            <strong style={{ color: '#15803D', display: 'block', marginBottom: '2px' }}>🧪 {getText('planner-npk', lang)}:</strong>
                             <span style={{ color: '#166534', fontWeight: 600 }}>{nutrientInfo}</span>
                           </div>
                         )}
@@ -413,7 +451,7 @@ export function PlannerTab() {
                         {/* Critical Irrigation Stages */}
                         {waterPhases && (
                           <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
-                            <strong style={{ color: '#1D4ED8', display: 'block', marginBottom: '2px' }}>💧 Critical Water Stages:</strong>
+                            <strong style={{ color: '#1D4ED8', display: 'block', marginBottom: '2px' }}>💧 {getText('planner-critical-water', lang)}:</strong>
                             <span style={{ color: '#1E40AF' }}>{waterPhases}</span>
                           </div>
                         )}
@@ -421,7 +459,7 @@ export function PlannerTab() {
                         {/* Rotation Benefit */}
                         {rotBenefit && (
                           <div style={{ background: '#FEF3C7', border: '1px solid #FDE68A', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
-                            <strong style={{ color: '#B45309', display: 'block', marginBottom: '2px' }}>🔄 Rotation Agronomic Benefit:</strong>
+                            <strong style={{ color: '#B45309', display: 'block', marginBottom: '2px' }}>🔄 {getText('planner-rotation-benefit', lang)}:</strong>
                             <span style={{ color: '#92400E' }}>{rotBenefit}</span>
                           </div>
                         )}
@@ -429,7 +467,7 @@ export function PlannerTab() {
                         {/* Pest Alert & Prevention */}
                         {pestInfo && (
                           <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
-                            <strong style={{ color: '#DC2626', display: 'block', marginBottom: '2px' }}>⚠️ Major Pests &amp; Defense:</strong>
+                            <strong style={{ color: '#DC2626', display: 'block', marginBottom: '2px' }}>⚠️ {getText('planner-pest-defense', lang)}:</strong>
                             <span style={{ color: '#991B1B' }}>{pestInfo}</span>
                           </div>
                         )}
@@ -437,7 +475,7 @@ export function PlannerTab() {
                         {/* Harvest Indicator */}
                         {harvestSign && (
                           <div style={{ background: '#F3E8FF', border: '1px solid #E9D5FF', borderRadius: '10px', padding: '10px 12px', fontSize: '0.82rem' }}>
-                            <strong style={{ color: '#7E22CE', display: 'block', marginBottom: '2px' }}>🌾 Harvest Readiness Sign:</strong>
+                            <strong style={{ color: '#7E22CE', display: 'block', marginBottom: '2px' }}>🌾 {getText('planner-harvest-sign', lang)}:</strong>
                             <span style={{ color: '#581C87' }}>{harvestSign}</span>
                           </div>
                         )}
@@ -446,7 +484,7 @@ export function PlannerTab() {
                         {rotationSeq && (
                           <div style={{ background: '#F8FAF9', borderRadius: '10px', padding: '10px 12px', gridColumn: '1 / -1', border: '1px solid #E5E7EB' }}>
                             <p style={{ margin: '0 0 4px 0', fontWeight: 'bold', color: '#15803D', fontSize: '0.82rem' }}>
-                              <i className="fa-solid fa-arrows-rotate" style={{ marginRight: '6px' }}></i>Recommended Rotation Sequence:
+                              <i className="fa-solid fa-arrows-rotate" style={{ marginRight: '6px' }}></i>{getText('planner-rec-rotation', lang)}:
                             </p>
                             <p style={{ margin: 0, fontSize: '0.85rem', color: '#374151', lineHeight: '1.4' }}>
                               {rotationSeq}
@@ -457,11 +495,11 @@ export function PlannerTab() {
                         <div style={{ display: 'flex', gap: '8px', gridColumn: '1 / -1' }}>
                           <div style={{ flex: 1, background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: '8px', padding: '8px', textAlign: 'center', fontSize: '0.78rem' }}>
                             <div style={{ color: '#15803D', fontWeight: 'bold', marginBottom: '2px' }}>{season.sowing}</div>
-                            <div style={{ color: '#4B5563' }}>Sowing Window</div>
+                            <div style={{ color: '#4B5563' }}>{getText('planner-sowing-window', lang)}</div>
                           </div>
                           <div style={{ flex: 1, background: '#FEF3C7', border: '1px solid #FDE68A', borderRadius: '8px', padding: '8px', textAlign: 'center', fontSize: '0.78rem' }}>
                             <div style={{ color: '#B45309', fontWeight: 'bold', marginBottom: '2px' }}>{season.harvest}</div>
-                            <div style={{ color: '#4B5563' }}>Harvest Window</div>
+                            <div style={{ color: '#4B5563' }}>{getText('planner-harvest-window', lang)}</div>
                           </div>
                         </div>
 
@@ -475,6 +513,7 @@ export function PlannerTab() {
           </div>
         </>
       )}
+
 
       {/* VIEW 2: SOIL TYPES GUIDE */}
       {activePlanView === 'soils' && (

@@ -1,40 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-import { SOILS, getText } from '../../data/constants';
+import { SOILS, getText, getCropDisplayName } from '../../data/constants';
 import { CropRoadmapCard } from '../CropRoadmapCard';
-
-function interpretWeatherCode(code) {
-  let icon = "fa-solid fa-sun";
-  let defaultDesc = "Clear Sky";
-  
-  if (code === 0) {
-    icon = "fa-solid fa-sun";
-    defaultDesc = "Clear Sky";
-  } else if (code >= 1 && code <= 3) {
-    icon = "fa-solid fa-cloud-sun";
-    defaultDesc = "Partly Cloudy";
-  } else if (code === 45 || code === 48) {
-    icon = "fa-solid fa-smog";
-    defaultDesc = "Foggy";
-  } else if (code >= 51 && code <= 55) {
-    icon = "fa-solid fa-cloud-rain";
-    defaultDesc = "Light Drizzle";
-  } else if (code >= 61 && code <= 65) {
-    icon = "fa-solid fa-cloud-showers-water";
-    defaultDesc = "Rainy";
-  } else if (code >= 71 && code <= 77) {
-    icon = "fa-solid fa-snowflake";
-    defaultDesc = "Snowy";
-  } else if (code >= 80 && code <= 82) {
-    icon = "fa-solid fa-cloud-showers-heavy";
-    defaultDesc = "Heavy Showers";
-  } else if (code >= 95 && code <= 99) {
-    icon = "fa-solid fa-cloud-bolt";
-    defaultDesc = "Thunderstorm";
-  }
-  
-  return { icon, defaultDesc };
-}
+import { getWeatherData, interpretWeatherCode } from '../../services/weatherService';
 
 export function DashboardTab() {
   const {
@@ -51,30 +19,31 @@ export function DashboardTab() {
   const [weather, setWeather] = useState(null);
   const [weatherLoading, setWeatherLoading] = useState(false);
 
-  // Fetch real-time weather from Open-Meteo based on selected location coordinates
+  // Fetch resilient weather based on selected location coordinates
   useEffect(() => {
-    if (!location || !location.lat) return;
+    const targetLat = location?.lat || 23.6102;
+    const targetLon = location?.lon || 85.2799;
+    const targetName = location?.nameEn || 'Jharkhand (Hazaribagh), India';
     
     setWeatherLoading(true);
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,surface_pressure&daily=weather_code,precipitation_probability_max&timezone=auto`;
-    
-    fetch(url)
-      .then(res => res.json())
+    getWeatherData(targetLat, targetLon, targetName)
       .then(data => {
         if (data && data.current) {
+          const cur = data.current;
+          const firstDaily = data.daily && data.daily.length > 0 ? data.daily[0] : null;
           setWeather({
-            temp: data.current.temperature_2m,
-            humidity: data.current.relative_humidity_2m,
-            precipProb: data.daily.precipitation_probability_max[0],
-            windSpeed: data.current.wind_speed_10m,
-            code: data.current.weather_code,
-            uv: data.current.weather_code >= 61 ? 1.2 : (data.current.weather_code >= 1 ? 4.0 : 6.5)
+            temp: cur.temp,
+            humidity: cur.humidity,
+            precipProb: firstDaily ? firstDaily.precipProb : (cur.rain > 0 ? 80 : 15),
+            windSpeed: cur.windSpeed,
+            code: cur.code,
+            uv: cur.code >= 61 ? 1.2 : (cur.code >= 1 ? 4.0 : 6.5)
           });
         }
         setWeatherLoading(false);
       })
       .catch(err => {
-        console.warn('Weather fetch failed:', err);
+        console.warn('Dashboard weather fetch failed:', err);
         setWeatherLoading(false);
       });
   }, [location]);
@@ -84,6 +53,9 @@ export function DashboardTab() {
   const strokeDashoffset = report ? 251.2 - (251.2 * score) / 100 : 251.2;
 
   const weatherInterpreted = weather ? interpretWeatherCode(weather.code) : { icon: "fa-solid fa-sun", defaultDesc: "Clear Sky" };
+  const cropDisplayName = crop ? getCropDisplayName(crop, lang) : '';
+  const soilDisplayName = soil ? (getText(soil.nameKey, lang) || soil.name) : '--';
+  const soilDescName = soil ? (getText(soil.descKey, lang) || soil.desc) : (getText('dash-select-location', lang) || 'Select location to check soil retention capacity.');
 
   return (
     <div className="tab-panel active">
@@ -237,7 +209,7 @@ export function DashboardTab() {
 
         {/* Growth Suitability Score Card */}
         <div className="dash-card card-highlight">
-          <h3 className="card-title">Growth Suitability Score</h3>
+          <h3 className="card-title">{getText('dash-suitability-title', lang) || getText('tab-dashboard', lang) || 'Growth Suitability Score'}</h3>
           <div className="gauge-container">
             <svg viewBox="0 0 100 100" className="gauge">
               <path className="gauge-bg" d="M 50 10 A 40 40 0 1 1 49.99 10" fill="none" strokeWidth="8"></path>
@@ -252,18 +224,18 @@ export function DashboardTab() {
             </svg>
             <div className="gauge-text">
               <span className="gauge-value">{report ? `${score}%` : '--%'}</span>
-              <span className="gauge-label">Suitability</span>
+              <span className="gauge-label">{getText('confidence', lang) || 'Suitability'}</span>
             </div>
           </div>
           <div className={`suitability-alert ${report ? 'optimal' : ''}`}>
             <i className={`fa-solid ${report ? 'fa-circle-check' : 'fa-circle-question'}`}></i>
-            <span>{report ? report.verdict : 'Submit configuration to analyze'}</span>
+            <span>{report ? report.verdict : (getText('sidebar-subtitle', lang) || 'Submit configuration to analyze')}</span>
           </div>
         </div>
 
         {/* Soil Retention & Properties Card */}
         <div className="dash-card">
-          <h3 className="card-title">Soil Retention & Properties</h3>
+          <h3 className="card-title">{getText('edu-soil-catalog-title', lang) || getText('planner-soil', lang) || 'Soil Retention & Properties'}</h3>
           <div className="soil-profile-box">
             <div className="soil-graphic" style={{ background: soil ? soil.color : '#594331', borderRadius: '8px', minWidth: '40px', minHeight: '40px', position: 'relative' }}>
               <div className="soil-particle sand" style={{ position: 'absolute', width: '4px', height: '4px', background: 'rgba(244, 208, 63, 0.4)' }}></div>
@@ -271,16 +243,16 @@ export function DashboardTab() {
             </div>
             <div className="soil-profile-details">
               <h4 className="soil-name-heading" style={{ fontSize: '1.1rem', fontWeight: 'bold', margin: '0', color: '#17211B' }}>
-                {soil ? getText(soil.nameKey, lang) : '--'}
+                {soilDisplayName}
               </h4>
               <p className="soil-desc" style={{ fontSize: '0.8rem', color: '#4B5563', margin: '4px 0 0 0' }}>
-                {soil ? getText(soil.descKey, lang) : 'Select location to check soil retention capacity.'}
+                {soilDescName}
               </p>
             </div>
           </div>
           <div className="soil-bars" style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <div className="bar-group">
-              <span className="bar-label" style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>Water Retention</span>
+              <span className="bar-label" style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>{getText('edu-water-retention', lang) || 'Water Retention'}</span>
               <div className="progress-track" style={{ background: '#E5E7EB', borderRadius: '10px', height: '8px', marginTop: '4px', overflow: 'hidden' }}>
                 <div 
                   className="progress-bar" 
@@ -289,7 +261,7 @@ export function DashboardTab() {
               </div>
             </div>
             <div className="bar-group">
-              <span className="bar-label" style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>Drainage Speed</span>
+              <span className="bar-label" style={{ fontSize: '0.75rem', color: '#4B5563', fontWeight: 600 }}>{getText('edu-drainage-rate', lang) || 'Drainage Speed'}</span>
               <div className="progress-track" style={{ background: '#E5E7EB', borderRadius: '10px', height: '8px', marginTop: '4px', overflow: 'hidden' }}>
                 <div 
                   className="progress-bar progress-orange" 
@@ -302,15 +274,15 @@ export function DashboardTab() {
 
         {/* Growth Suitability Diagnostics Card */}
         <div className="dash-card span-all">
-          <h3 className="card-title">Growth Suitability Diagnostics</h3>
+          <h3 className="card-title">{getText('risk-assessment', lang) || 'Growth Suitability Diagnostics'}</h3>
           <ul className="diagnostic-list" style={{ listStyle: 'none', padding: '0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {!report ? (
               <li className="diagnostic-item info" style={{ display: 'flex', gap: '12px', background: '#F0F9FF', border: '1px solid #BAE6FD', padding: '16px', borderRadius: '12px' }}>
                 <span className="diag-icon" style={{ color: '#0284C7', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-info"></i></span>
                 <div className="diag-body">
-                  <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#0369A1' }}>Awaiting Input Data</h4>
+                  <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#0369A1' }}>{getText('sidebar-title', lang) || 'Farm Settings'}</h4>
                   <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#0C4A6E', margin: '0' }}>
-                    Please choose your Region, Soil Type, and Crop in the Farm Settings panel and click "Generate Irrigation Plan" to start analysis.
+                    {getText('sidebar-subtitle', lang) || 'Please configure your farm parameters in the sidebar to generate recommendations.'}
                   </p>
                 </div>
               </li>
@@ -319,27 +291,27 @@ export function DashboardTab() {
                 <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: '#F0FDF4', border: '1px solid #BBF7D0', padding: '16px', borderRadius: '12px' }}>
                   <span className="diag-icon" style={{ color: '#15803D', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
                   <div className="diag-body">
-                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#166534' }}>Soil Moisture Levels</h4>
+                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#166534' }}>{getText('edu-water-retention', lang) || 'Soil Moisture Levels'}</h4>
                     <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#14532D', margin: '0' }}>
-                      Current soil type retention capacity ({soil ? soil.retention : 80}%) is ideal for {crop ? getText(crop.nameKey, lang) : 'crop'} root networks.
+                      {soilDisplayName} ({soil ? soil.retention : 80}%) — {cropDisplayName || 'Crop'}
                     </p>
                   </div>
                 </li>
                 <li className="diagnostic-item optimal" style={{ display: 'flex', gap: '12px', background: '#F0FDF4', border: '1px solid #BBF7D0', padding: '16px', borderRadius: '12px' }}>
                   <span className="diag-icon" style={{ color: '#15803D', fontSize: '1.2rem' }}><i className="fa-solid fa-circle-check"></i></span>
                   <div className="diag-body">
-                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#166534' }}>Thermal Suitability</h4>
+                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#166534' }}>{getText('edu-param-temp', lang) || 'Thermal Suitability'}</h4>
                     <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#14532D', margin: '0' }}>
-                      Average ambient temperature ({weather ? `${weather.temp}°C` : '22°C'}) matches {crop ? getText(crop.nameKey, lang) : 'crop'} growth requirements.
+                      {weather ? `${weather.temp}°C` : '22°C'} — {cropDisplayName || 'Crop'}
                     </p>
                   </div>
                 </li>
                 <li className="diagnostic-item warning" style={{ display: 'flex', gap: '12px', background: '#FFFBEB', border: '1px solid #FDE68A', padding: '16px', borderRadius: '12px' }}>
                   <span className="diag-icon" style={{ color: '#D97706', fontSize: '1.2rem' }}><i className="fa-solid fa-triangle-exclamation"></i></span>
                   <div className="diag-body">
-                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#B45309' }}>Upcoming Precipitation</h4>
+                    <h4 className="diag-title" style={{ fontWeight: 800, margin: '0 0 4px 0', fontSize: '0.95rem', color: '#B45309' }}>{getText('tab-weather', lang) || 'Upcoming Precipitation'}</h4>
                     <p className="diag-desc" style={{ fontSize: '0.85rem', color: '#78350F', margin: '0' }}>
-                      Rain probability is {weather ? weather.precipProb : 59}%. Reduce irrigation dosage to avoid root saturation.
+                      {weather ? `${weather.precipProb}%` : '59%'} {getText('edu-water-req', lang) || 'Rain probability'}
                     </p>
                   </div>
                 </li>

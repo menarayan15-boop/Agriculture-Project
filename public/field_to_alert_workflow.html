@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishi Jal: Field-to-Alert Workflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px;
+    }
+    .container {
+      width: 1360px;
+      background: #ffffff;
+      border: 3px solid #1e293b;
+      border-radius: 8px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .header-bar {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 12px;
+    }
+    .pill-title {
+      border: 2px solid #0f172a;
+      border-radius: 20px;
+      background: #f1f5f9;
+      padding: 8px 32px;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: 0.3px;
+    }
+    .diagram-img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+      border: 1px solid #e2e8f0;
+    }
+    .actions-bar {
+      margin-top: 24px;
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover {
+      background: #334155;
+    }
+    .meta-text {
+      font-size: 13px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-bar">
+      <div class="pill-title">Krishi Jal: Field-to-Alert Workflow</div>
+    </div>
+
+    <!-- Render the high-resolution generated PNG image -->
+    <img src="/diagrams/krishi_jal_field_to_alert_workflow.png" alt="Krishi Jal Field to Alert Workflow" class="diagram-img" />
+
+    <div class="actions-bar">
+      <div class="meta-text">
+        <strong>Programmatic Vector Composite:</strong> Non-AI Generated • Crisp 1600×920 Native Resolution
+      </div>
+      <div style="display: flex; gap: 12px;">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+        <a class="btn" href="/diagrams/krishi_jal_field_to_alert_workflow.png" download>📥 Download High-Res PNG</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

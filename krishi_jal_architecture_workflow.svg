@@ -1,0 +1,349 @@
+
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <!-- Column Header Gradients -->
+    <linearGradient id="col1Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <linearGradient id="col2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+
+    <linearGradient id="col3Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+
+    <!-- Card Shadow Filter -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+
+    <filter id="pillShadow" x="-5%" y="-5%" width="110%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.12"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#059669"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <style>
+    .font-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 800; }
+    .font-header { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 700; }
+    .font-mono { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; }
+    .font-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 400; }
+    .font-bold { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-weight: 600; }
+  </style>
+
+  <!-- Background Canvas -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)" />
+
+  <!-- Grid Blueprint lines (engineering aesthetic) -->
+  <g stroke="#e2e8f0" stroke-width="1" opacity="0.6">
+    <line x1="80" y1="0" x2="80" y2="1080" />
+    <line x1="640" y1="0" x2="640" y2="1080" />
+    <line x1="1280" y1="0" x2="1280" y2="1080" />
+    <line x1="1840" y1="0" x2="1840" y2="1080" />
+    <line x1="0" y1="120" x2="1920" y2="120" />
+    <line x1="0" y1="1000" x2="1920" y2="1000" />
+  </g>
+
+  <!-- ================= TOP HEADER BAR ================= -->
+  <g transform="translate(80, 28)">
+    <rect width="1760" height="74" rx="10" fill="url(#headerGrad)" filter="url(#cardShadow)"/>
+    
+    <!-- Title Text -->
+    <text x="32" y="46" fill="#ffffff" font-size="24" class="font-title" letter-spacing="0.5">
+      KRISHI JAL: PRECISION AGRO-HYDROLOGICAL &amp; AI ALERT ARCHITECTURE
+    </text>
+    <text x="32" y="64" fill="#94a3b8" font-size="13" class="font-body">
+      End-to-End Field Telemetry, Edge Computing, FAO-56 Water Balance &amp; Multi-Channel Alerting
+    </text>
+
+    <!-- Version & Compliance Badges -->
+    <g transform="translate(1420, 20)">
+      <rect width="130" height="34" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+      <text x="65" y="22" fill="#38bdf8" font-size="12" class="font-mono font-bold" text-anchor="middle">v3.8.2-PROD</text>
+
+      <rect x="142" width="160" height="34" rx="6" fill="#14532d" stroke="#22c55e" stroke-width="1.5"/>
+      <text x="222" y="22" fill="#86efac" font-size="12" class="font-bold" text-anchor="middle">FAO-56 COMPLIANT</text>
+    </g>
+  </g>
+
+  <!-- ================= COLUMN 1: PHYSICAL FIELD & INGRESS (LEFT) ================= -->
+  <g transform="translate(80, 130)">
+    <!-- Column Container Box -->
+    <rect width="530" height="850" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#cardShadow)"/>
+    
+    <!-- Column Header -->
+    <rect width="530" height="52" rx="12" fill="url(#col1Grad)"/>
+    <rect y="38" width="530" height="14" fill="url(#col1Grad)"/>
+    <text x="24" y="33" fill="#ffffff" font-size="17" class="font-header">1. FIELD INGRESS &amp; SENSING MESH</text>
+    <rect x="420" y="14" width="90" height="24" rx="4" fill="#0369a1"/>
+    <text x="465" y="30" fill="#e0f2fe" font-size="11" class="font-bold" text-anchor="middle">DATA SOURCES</text>
+
+    <!-- Card 1.1: Soil & Subterranean Sensors -->
+    <g transform="translate(20, 72)">
+      <rect width="490" height="230" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#e0f2fe"/>
+      <rect y="24" width="490" height="12" fill="#e0f2fe"/>
+      <text x="16" y="24" fill="#0369a1" font-size="14" class="font-bold">In-Situ Subterranean Soil Sensors</text>
+      
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">Soil Moisture Probe (FDR):</tspan> 0–100% Volumetric Water Content (VWC)</text>
+        <text y="42">• <tspan class="font-bold">Tensiometer Sensor:</tspan> Soil Matric Potential (0–200 kPa suction)</text>
+        <text y="66">• <tspan class="font-bold">Electrical Conductivity &amp; NPK:</tspan> Subsoil salinity &amp; nutrient profile</text>
+        <text y="90">• <tspan class="font-bold">Inline Pulse Flow Meter:</tspan> Real-time irrigation discharge (m³/hr)</text>
+        <text y="114">• <tspan class="font-bold">Soil Horizon Stratum:</tspan> Topsoil (0-15cm), Root-Zone (15-45cm), Subsoil</text>
+        <text y="138">• <tspan class="font-bold">Sampling Frequency:</tspan> 15-minute telemetry intervals via LoRa SX1278</text>
+      </g>
+    </g>
+
+    <!-- Card 1.2: Aerial Remote Sensing & Drone Imagery -->
+    <g transform="translate(20, 322)">
+      <rect width="490" height="230" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#e0f2fe"/>
+      <rect y="24" width="490" height="12" fill="#e0f2fe"/>
+      <text x="16" y="24" fill="#0369a1" font-size="14" class="font-bold">Precision Aerial UAV &amp; Macro Camera</text>
+
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">Agri Drone (DJI Agras / UAV):</tspan> Multispectral NDVI crop canopy imaging</text>
+        <text y="42">• <tspan class="font-bold">Field Macro Photography:</tspan> Smartphone camera RGB soil clod samples</text>
+        <text y="66">• <tspan class="font-bold">Crop Stress Detection:</tspan> Canopy temperature depression &amp; chlorophyll index</text>
+        <text y="90">• <tspan class="font-bold">Resolution &amp; Downscaling:</tspan> Client-side 120×120 canvas normalization</text>
+        <text y="114">• <tspan class="font-bold">Edge Rejection Pre-check:</tspan> 8×8 patch directional Sobel gradient filter</text>
+        <text y="138">• <tspan class="font-bold">Payload Encoding:</tspan> Base64 JPEG/PNG multi-part framing over HTTPS</text>
+      </g>
+    </g>
+
+    <!-- Card 1.3: Hyperlocal Agro-Met & Market Feeds -->
+    <g transform="translate(20, 572)">
+      <rect width="490" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#e0f2fe"/>
+      <rect y="24" width="490" height="12" fill="#e0f2fe"/>
+      <text x="16" y="24" fill="#0369a1" font-size="14" class="font-bold">External Agro-Met &amp; Commodity Feeds</text>
+
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">Open-Meteo &amp; IMD API:</tspan> Solar Rad (Rs MJ/m²), 2m Temp, RH %, Wind u₂</text>
+        <text y="42">• <tspan class="font-bold">Forecast Rain Accumulator:</tspan> 24h/48h precipitation hazard tracking</text>
+        <text y="66">• <tspan class="font-bold">AGMARKNET APMC Mandis:</tspan> Daily modal prices &amp; arrival volume feeds</text>
+        <text y="90">• <tspan class="font-bold">Govt Mechanization (SMAM):</tspan> CHC tractor &amp; implement specifications</text>
+        <text y="114">• <tspan class="font-bold">National Soil Taxonomy:</tspan> Alluvial, Black Cotton, Red Laterite, Sandy Loam</text>
+        <text y="138">• <tspan class="font-bold">Sync Cadence:</tspan> Hourly weather cron with 6h persistent cache fallback</text>
+        <text y="162">• <tspan class="font-bold">Offline Climatology:</tspan> 10-year monthly regional baseline fallback</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= COLUMN 2: INGESTION & AI CORE (CENTER) ================= -->
+  <g transform="translate(695, 130)">
+    <!-- Column Container Box -->
+    <rect width="530" height="850" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#cardShadow)"/>
+    
+    <!-- Column Header -->
+    <rect width="530" height="52" rx="12" fill="url(#col2Grad)"/>
+    <rect y="38" width="530" height="14" fill="url(#col2Grad)"/>
+    <text x="24" y="33" fill="#ffffff" font-size="17" class="font-header">2. INGESTION, FEATURE ENGINES &amp; AI</text>
+    <rect x="420" y="14" width="90" height="24" rx="4" fill="#047857"/>
+    <text x="465" y="30" fill="#d1fae5" font-size="11" class="font-bold" text-anchor="middle">PROCESSING</text>
+
+    <!-- Card 2.1: Gateway & Persistence Layer -->
+    <g transform="translate(20, 72)">
+      <rect width="490" height="230" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#dcfce7"/>
+      <rect y="24" width="490" height="12" fill="#dcfce7"/>
+      <text x="16" y="24" fill="#15803d" font-size="14" class="font-bold">Gateway, Routing &amp; State Persistence</text>
+      
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">ThreadingHTTPServer (:8000):</tspan> Multi-threaded Python REST server</text>
+        <text y="42">• <tspan class="font-bold">Vite Reverse Proxy (:5173):</tspan> Edge middleware, CORS &amp; API proxying</text>
+        <text y="66">• <tspan class="font-bold">SQLite3 WAL Mode (krishi_jal.db):</tspan> Zero-lock high concurrency writes</text>
+        <text y="90">• <tspan class="font-bold">Relational Schema:</tspan> equipment, bookings, soil_tests, produce_listings</text>
+        <text y="114">• <tspan class="font-bold">Client Storage Layer:</tspan> IndexedDB &amp; localStorage offline telemetry queue</text>
+        <text y="138">• <tspan class="font-bold">Service Worker (sw.js):</tspan> Cache-first PWA offline field resilience</text>
+      </g>
+    </g>
+
+    <!-- Card 2.2: AI/ML Inference & Vision Pipeline -->
+    <g transform="translate(20, 322)">
+      <rect width="490" height="230" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#dcfce7"/>
+      <rect y="24" width="490" height="12" fill="#dcfce7"/>
+      <text x="16" y="24" fill="#15803d" font-size="14" class="font-bold">AI/ML Model Suite &amp; Speech Services</text>
+
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">MobileNet v2 Edge Tensor:</tspan> Rejects non-soil objects (vehicles, tech, pets)</text>
+        <text y="42">• <tspan class="font-bold">Heuristic Texture Engine:</tspan> HSV color signature &amp; clod spatial variance</text>
+        <text y="66">• <tspan class="font-bold">Gemini 1.5 Flash Vision:</tspan> Multimodal soil nutrient &amp; compaction scoring</text>
+        <text y="90">• <tspan class="font-bold">OpenAI Whisper Large v3:</tspan> Multilingual STT (Hindi, Punjabi, Telugu, etc.)</text>
+        <text y="114">• <tspan class="font-bold">Local Python Whisper Base:</tspan> Offline speech-to-text fallback engine</text>
+        <text y="138">• <tspan class="font-bold">Context-Aware LLM:</tspan> Grounded agronomic prompts with crop phenology</text>
+      </g>
+    </g>
+
+    <!-- Card 2.3: Hydrological & Agronomic Reasoner -->
+    <g transform="translate(20, 572)">
+      <rect width="490" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#dcfce7"/>
+      <rect y="24" width="490" height="12" fill="#dcfce7"/>
+      <text x="16" y="24" fill="#15803d" font-size="14" class="font-bold">FAO-56 Hydrological Calculus &amp; Rules Engine</text>
+
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">Penman-Monteith ET₀:</tspan> Net radiation, vapor pressure deficit &amp; wind</text>
+        <text y="42">• <tspan class="font-bold">Crop Evapotranspiration:</tspan> ETc = Kc × ET₀ (indexed across growth stages)</text>
+        <text y="66">• <tspan class="font-bold">Effective Rain (USDA-SCS):</tspan> Peff = P × (125 - 0.2×P) / 125</text>
+        <text y="90">• <tspan class="font-bold">Net &amp; Gross Requirement:</tspan> NIR = ETc - Peff, GIR = NIR / η_method</text>
+        <text y="114">• <tspan class="font-bold">Pumping Duration Engine:</tspan> t_pump = (GIR × Area) / (Q_pump × 3600)</text>
+        <text y="138">• <tspan class="font-bold">Threshold Gate:</tspan> Wilting point breach when soil depletion &gt; 50% MAD</text>
+        <text y="162">• <tspan class="font-bold">Rain Intercept Lock:</tspan> Auto-suspend irrigation if rain &gt; 10mm forecast</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= COLUMN 3: OPERATIONS & ALERT DISPATCH (RIGHT) ================= -->
+  <g transform="translate(1310, 130)">
+    <!-- Column Container Box -->
+    <rect width="530" height="850" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#cardShadow)"/>
+    
+    <!-- Column Header -->
+    <rect width="530" height="52" rx="12" fill="url(#col3Grad)"/>
+    <rect y="38" width="530" height="14" fill="url(#col3Grad)"/>
+    <text x="24" y="33" fill="#ffffff" font-size="17" class="font-header">3. OPERATIONS, DASHBOARD &amp; DISPATCH</text>
+    <rect x="420" y="14" width="90" height="24" rx="4" fill="#6d28d9"/>
+    <text x="465" y="30" fill="#ede9fe" font-size="11" class="font-bold" text-anchor="middle">DISPATCH</text>
+
+    <!-- Card 3.1: Operations Dashboard -->
+    <g transform="translate(20, 72)">
+      <rect width="490" height="230" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#f3e8ff"/>
+      <rect y="24" width="490" height="12" fill="#f3e8ff"/>
+      <text x="16" y="24" fill="#7e22ce" font-size="14" class="font-bold">High-Fidelity Operations Dashboard (React 18)</text>
+      
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">Soil Water Depletion Ring:</tspan> Visual percentage gauge with stress warning</text>
+        <text y="42">• <tspan class="font-bold">Pump Run-Time Counter:</tspan> Exact hours/minutes needed for replenishment</text>
+        <text y="66">• <tspan class="font-bold">Energy Cost Ledger:</tspan> Grid Electricity (kWh × Tariff) vs Diesel (L/hr)</text>
+        <text y="90">• <tspan class="font-bold">Mandi Spread Matrix:</tspan> 7-day moving average modal rates vs CACP MSP</text>
+        <text y="114">• <tspan class="font-bold">Equipment Fleet Map:</tspan> Haversine GPS proximity matching for CHCs</text>
+        <text y="138">• <tspan class="font-bold">Seasonal Crop Stage Roadmap:</tspan> Phenological irrigation &amp; NPK calendar</text>
+      </g>
+    </g>
+
+    <!-- Card 3.2: Multi-Channel Alert & Actuation -->
+    <g transform="translate(20, 322)">
+      <rect width="490" height="230" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#f3e8ff"/>
+      <rect y="24" width="490" height="12" fill="#f3e8ff"/>
+      <text x="16" y="24" fill="#7e22ce" font-size="14" class="font-bold">Multi-Channel Alerting &amp; Field Actuation</text>
+
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">Farmer Mobile PWA:</tspan> Instant push notification ("Run Pump: 2h 45m")</text>
+        <text y="42">• <tspan class="font-bold">Automated Pump Relay:</tspan> Direct solenoid trigger via PM-KUSUM SCADA</text>
+        <text y="66">• <tspan class="font-bold">Kisan SMS Service:</tspan> Plain-text regional language SMS for basic handsets</text>
+        <text y="90">• <tspan class="font-bold">WhatsApp Business API:</tspan> Rich advisory cards with local audio notes</text>
+        <text y="114">• <tspan class="font-bold">Audible Siren / Trip Alert:</tspan> On-field buzzer trigger for dry-run protection</text>
+        <text y="138">• <tspan class="font-bold">Spray Safety Window Alert:</tspan> Wind &lt; 12 km/h advisory for drone spraying</text>
+      </g>
+    </g>
+
+    <!-- Card 3.3: Actionable Artifacts & Archival -->
+    <g transform="translate(20, 572)">
+      <rect width="490" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect width="490" height="36" rx="8" fill="#f3e8ff"/>
+      <rect y="24" width="490" height="12" fill="#f3e8ff"/>
+      <text x="16" y="24" fill="#7e22ce" font-size="14" class="font-bold">Agronomic Artifacts &amp; External Integration</text>
+
+      <g transform="translate(18, 54)" font-size="13" class="font-body" fill="#1e293b">
+        <text y="18">• <tspan class="font-bold">Soil Health Card (PDF/Canvas):</tspan> NPK dosing &amp; gypsum/lime remedies</text>
+        <text y="42">• <tspan class="font-bold">Water Consumption Ledger (CSV):</tspan> Verifiable logs for PMFBY insurance</text>
+        <text y="66">• <tspan class="font-bold">Voice Narration Stream (/api/tts):</tspan> Regional speech synthesis stream</text>
+        <text y="90">• <tspan class="font-bold">e-NAM &amp; FPO Trade Gateway:</tspan> Direct mandi lot creation &amp; buyer bidding</text>
+        <text y="114">• <tspan class="font-bold">Uber for Farm Machinery:</tspan> CHC tractor, seeder &amp; drone rental bookings</text>
+        <text y="138">• <tspan class="font-bold">Cloud Object Archive (AWS S3):</tspan> Multi-season soil images &amp; audit trails</text>
+        <text y="162">• <tspan class="font-bold">Latency SLA:</tspan> Local Rules &lt;15ms | STT &lt;850ms | Vision &lt;1600ms</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= INTER-PLANE CONNECTING PIPES ================= -->
+  <!-- Pipe 1: Column 1 to Column 2 -->
+  <g stroke="#0284c7" stroke-width="3" fill="none">
+    <path d="M 610 250 L 695 250" marker-end="url(#arrowBlue)" />
+    <path d="M 610 500 L 652 500 L 652 500 L 695 500" marker-end="url(#arrowBlue)" />
+    <path d="M 610 750 L 695 750" marker-end="url(#arrowBlue)" />
+  </g>
+
+  <!-- Connector Badges (Left to Center) -->
+  <g transform="translate(620, 235)">
+    <rect width="65" height="26" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" filter="url(#pillShadow)"/>
+    <text x="32" y="17" fill="#0369a1" font-size="10" class="font-mono font-bold" text-anchor="middle">LoRa/P2P</text>
+  </g>
+  <g transform="translate(620, 485)">
+    <rect width="65" height="26" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" filter="url(#pillShadow)"/>
+    <text x="32" y="17" fill="#0369a1" font-size="10" class="font-mono font-bold" text-anchor="middle">HTTPS</text>
+  </g>
+  <g transform="translate(620, 735)">
+    <rect width="65" height="26" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" filter="url(#pillShadow)"/>
+    <text x="32" y="17" fill="#0369a1" font-size="10" class="font-mono font-bold" text-anchor="middle">REST/JSON</text>
+  </g>
+
+  <!-- Pipe 2: Column 2 to Column 3 -->
+  <g stroke="#059669" stroke-width="3" fill="none">
+    <path d="M 1225 250 L 1310 250" marker-end="url(#arrowGreen)" />
+    <path d="M 1225 500 L 1310 500" marker-end="url(#arrowGreen)" />
+    <path d="M 1225 750 L 1310 750" marker-end="url(#arrowGreen)" />
+  </g>
+
+  <!-- Connector Badges (Center to Right) -->
+  <g transform="translate(1235, 235)">
+    <rect width="65" height="26" rx="4" fill="#dcfce7" stroke="#059669" stroke-width="1.5" filter="url(#pillShadow)"/>
+    <text x="32" y="17" fill="#15803d" font-size="10" class="font-mono font-bold" text-anchor="middle">WebSocket</text>
+  </g>
+  <g transform="translate(1235, 485)">
+    <rect width="65" height="26" rx="4" fill="#dcfce7" stroke="#059669" stroke-width="1.5" filter="url(#pillShadow)"/>
+    <text x="32" y="17" fill="#15803d" font-size="10" class="font-mono font-bold" text-anchor="middle">MQTT/Push</text>
+  </g>
+  <g transform="translate(1235, 735)">
+    <rect width="65" height="26" rx="4" fill="#dcfce7" stroke="#059669" stroke-width="1.5" filter="url(#pillShadow)"/>
+    <text x="32" y="17" fill="#15803d" font-size="10" class="font-mono font-bold" text-anchor="middle">Payload</text>
+  </g>
+
+  <!-- ================= BOTTOM STATUS FOOTER ================= -->
+  <g transform="translate(80, 1000)">
+    <rect width="1760" height="50" rx="8" fill="#0f172a"/>
+    <text x="30" y="31" fill="#94a3b8" font-size="13" class="font-bold">
+      SYSTEM STACK:
+      <tspan fill="#38bdf8">Open-Meteo REST API</tspan> •
+      <tspan fill="#4ade80">TensorFlow.js MobileNet v2</tspan> •
+      <tspan fill="#c084fc">OpenAI Whisper Large v3</tspan> •
+      <tspan fill="#facc15">Google Gemini 1.5 Flash</tspan> •
+      <tspan fill="#fb7185">SQLite3 WAL Mode</tspan> •
+      <tspan fill="#38bdf8">React 18 + Vite</tspan>
+    </text>
+    <text x="1730" y="31" fill="#64748b" font-size="12" class="font-mono" text-anchor="end">
+      100% PROGRAMMATIC ARCHITECTURE SPECIFICATION
+    </text>
+  </g>
+</svg>

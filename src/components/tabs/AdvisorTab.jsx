@@ -2,6 +2,9 @@ import React, { useState, useRef } from 'react';
 import { useApp } from '../../context/AppContext';
 import { getText } from '../../data/constants';
 
+import { extractCropEntity } from '../../services/ai/cropContextService';
+import { getAiAnswerDetails } from '../../services/ai/aiReasoningService';
+
 export function AdvisorTab() {
   const { location, crop, soil, stage, area, preference, lang, geminiKey } = useApp();
 
@@ -32,118 +35,39 @@ export function AdvisorTab() {
     setIsThinking(true);
 
     try {
-      const systemPrompt = `You are "Krishi Jal Gemini Advisor" — an expert Indian agronomist AI running inside a farming terminal console.
+      const detectedCrop = extractCropEntity(text, crop);
+      const activeCropName = detectedCrop ? detectedCrop.nameEn : cropName;
 
-FARMER'S FIELD DATA:
-- Crop: ${cropName}
-- Soil: ${soilName}
-- Location: ${locationName}
-- Farm size: ${area} acres
-- Growth stage: ${stage || 'vegetative'}
-- Farming preference: ${preference || 'balanced'}
+      const aiResult = await getAiAnswerDetails(text, {
+        crop: detectedCrop || crop,
+        soil,
+        location,
+        area,
+        stage,
+        preference,
+        langCode: 'en-IN',
+        apiKey: geminiKey,
+        chatHistory: chatHistoryRef.current
+      });
 
-RESPONSE RULES:
-1. Start every response with [Gemini AI] prefix.
-2. Give specific, actionable agricultural advice with exact dosages, timings, and Indian product names.
-3. Keep responses concise (2-4 sentences) — this is a terminal console, not a chat.
-4. Use Indian units (₹, quintal, acre, bigha) and mention Indian brands when relevant.
-5. Be scientifically accurate with practical field-level advice.
-6. Respond in English only (this is a technical console).
-7. Do NOT use markdown formatting (no **, ##, bullet points, etc.) — plain text only.`;
+      const aiText = `[Krishi AI - ${activeCropName}] ${aiResult.answer}`;
 
-      const historyContents = chatHistoryRef.current.slice(-6).map(msg => ({
-        role: msg.role,
-        parts: [{ text: msg.text }]
-      }));
+      setConsoleLogs(prev => [
+        ...prev,
+        { type: 'gemini', text: aiText }
+      ]);
 
-      const requestBody = {
-        system_instruction: { parts: [{ text: systemPrompt }] },
-        contents: [
-          ...historyContents,
-          { role: 'user', parts: [{ text }] }
-        ],
-        generationConfig: {
-          temperature: 0.5,
-          maxOutputTokens: 300,
-          topP: 0.85,
-        }
-      };
-
-      const key = (geminiKey && geminiKey.trim()) ? geminiKey.trim() : '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';
-      let aiText = '';
-
-      if (key.startsWith('AIza')) {
-        // Use Gemini API if custom Gemini key provided
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`;
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestBody)
-        });
-        if (response.ok) {
-          const data = await response.json();
-          aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        }
-      } else {
-        // Use Groq Llama-3.3-70B API (Lightning fast)
-        const messages = [
-          { role: 'system', content: systemPrompt },
-          ...chatHistoryRef.current.slice(-6).map(m => ({
-            role: m.role === 'user' ? 'user' : 'assistant',
-            content: m.text
-          })),
-          { role: 'user', content: text }
-        ];
-
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${key}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
-            messages,
-            temperature: 0.5,
-            max_tokens: 350
-          })
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const raw = data?.choices?.[0]?.message?.content || '';
-          aiText = raw ? `[Groq AI] ${raw.replace(/[\*#_`]/g, '').trim()}` : '';
-        }
-      }
-
-      if (!aiText) throw new Error('API returned empty response');
-
-      chatHistoryRef.current = [
-        ...chatHistoryRef.current.slice(-8),
+      chatHistoryRef.current.push(
         { role: 'user', text },
-        { role: 'model', text: aiText }
-      ];
-
-      setConsoleLogs(prev => [...prev, { type: 'ai', text: aiText }]);
-      setIsThinking(false);
-    } catch (error) {
-      console.warn('Gemini Advisor API failed, using fallback:', error.message);
-
-      // Offline fallback
-      let aiText = '';
-      const q = text.toLowerCase();
-
-      if (q.includes('fertilizer') || q.includes('recipe') || q.includes('organic')) {
-        aiText = `[Gemini AI] For ${cropName} on ${soilName}, apply 40 kg Vermicompost and 10 kg Neem Cake per acre during early ${stage} stage to enhance bio-N fixation.`;
-      } else if (q.includes('yellow') || q.includes('cure') || q.includes('leaf')) {
-        aiText = `[Gemini AI] Leaf yellowing in ${cropName} usually indicates Nitrogen deficiency or iron chlorosis. Apply 1% Zinc Sulphate + 2% Urea spray during early morning.`;
-      } else if (q.includes('pest') || q.includes('aphid') || q.includes('rust')) {
-        aiText = `[Gemini AI] Protect ${cropName} by spraying bio-pesticide Azadirachtin (1500 ppm) at 3 ml/liter of water. Ensure uniform canopy coverage.`;
-      } else {
-        aiText = `[Gemini AI] For your ${area} acre ${cropName} field in ${locationName}, current ambient temperature and humidity favor steady growth. Maintain light drip irrigation every 2 days.`;
-      }
-
-      setConsoleLogs(prev => [...prev, { type: 'ai', text: aiText }]);
+        { role: 'assistant', text: aiResult.answer }
+      );
+    } catch (err) {
+      console.error('Advisor Error:', err);
+      setConsoleLogs(prev => [
+        ...prev,
+        { type: 'error', text: `> Error: Unable to complete agronomy analysis. (${err.message})` }
+      ]);
+    } finally {
       setIsThinking(false);
     }
   };

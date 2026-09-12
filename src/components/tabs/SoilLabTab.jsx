@@ -1,11 +1,14 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
+import { getText } from '../../data/constants';
 import { saveSoilReport, analyzeSoilImage, validateSoilImage } from '../../services/api';
+import { classifySoilImage } from '../../services/ai/imageClassifierService';
 
 // ─── Score Gauge ──────────────────────────────────────────────────────────────
 function ScoreGauge({ score }) {
+  const { lang } = useApp();
   const color = score >= 80 ? '#15803D' : score >= 60 ? '#D97706' : score >= 40 ? '#EA580C' : '#DC2626';
-  const label = score >= 80 ? 'उत्कृष्ट / Excellent' : score >= 60 ? 'अच्छा / Good' : score >= 40 ? 'सामान्य / Fair' : 'कमजोर / Poor';
+  const label = score >= 80 ? getText('soil-score-excellent', lang) : score >= 60 ? getText('soil-score-good', lang) : score >= 40 ? getText('soil-score-fair', lang) : getText('soil-score-poor', lang);
   const dashArray = 2 * Math.PI * 54;
   const dashOffset = dashArray - (score / 100) * dashArray;
 
@@ -96,272 +99,75 @@ export function SoilLabTab() {
   const [analysisResult, setAnalysisResult] = useState(null);
   const [analysisError, setAnalysisError] = useState('');
   const [soilWarning, setSoilWarning] = useState('');
+  const [validationStatus, setValidationStatus] = useState(null);
   const [detectedSoilType, setDetectedSoilType] = useState('red');
   const fileInputRef = useRef(null);
 
-  // Helper function: High-Precision Multi-Zone Soil Classifier & Non-Soil Rejector
+  // Helper function: Robust Two-Stage AI Vision & Patch-Level Texture Energy Soil Classifier
   const checkIsSoilImage = (imageDataUrl) => {
     return new Promise((resolve) => {
-      if (!imageDataUrl) return resolve({ isSoil: false, reason: 'No image', error: 'कोई फोटो नहीं मिली। / No image provided.' });
+      if (!imageDataUrl) {
+        return resolve({
+          is_soil: false,
+          isSoil: false,
+          confidence: 0,
+          soil_area_percentage: 0,
+          image_quality: 'poor',
+          decision: 'REJECT',
+          reason: 'No image provided.',
+          suggestion: 'Please upload or capture a soil photo.',
+          error: 'कोई फोटो नहीं मिली। / No image provided.'
+        });
+      }
+
       const img = new Image();
-      img.onload = () => {
+      img.onload = async () => {
         try {
           const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          const width = 160;
-          const height = 160;
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
-          const imageData = ctx.getImageData(0, 0, width, height);
-          const data = imageData.data;
-          const totalPixels = width * height;
+          const result = await classifySoilImage(img, canvas);
 
-          let plantPixels = 0;
-          let skyBluePixels = 0;
-          let metallicSyntheticGreyPixels = 0;
-          let unnaturalNeonPixels = 0;
-          let skinPixels = 0;
-          let whiteGlareBackgroundPixels = 0;
-          let naturalSoilPixels = 0;
-
-          let redSoilPixels = 0;
-          let blackSoilPixels = 0;
-          let sandySoilPixels = 0;
-          let alluvialSoilPixels = 0;
-
-          let totalR = 0, totalG = 0, totalB = 0;
-          const luminances = new Float32Array(totalPixels);
-
-          // Spatial 4x4 Grid (16 zones)
-          const gridRows = 4;
-          const gridCols = 4;
-          const cellWidth = Math.floor(width / gridCols);
-          const cellHeight = Math.floor(height / gridRows);
-          const gridSoilCount = new Array(gridRows * gridCols).fill(0);
-          const gridTotalCount = new Array(gridRows * gridCols).fill(0);
-
-          for (let y = 0; y < height; y++) {
-            const rowIdx = Math.min(gridRows - 1, Math.floor(y / cellHeight));
-            for (let x = 0; x < width; x++) {
-              const colIdx = Math.min(gridCols - 1, Math.floor(x / cellWidth));
-              const gridCellIdx = rowIdx * gridCols + colIdx;
-              const i = (y * width + x) * 4;
-
-              const r = data[i];
-              const g = data[i + 1];
-              const b = data[i + 2];
-              const a = data[i + 3];
-              const pixelIdx = y * width + x;
-
-              totalR += r;
-              totalG += g;
-              totalB += b;
-
-              const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-              luminances[pixelIdx] = lum;
-              gridTotalCount[gridCellIdx]++;
-
-              // 1. Transparent / pure white background / screen bezel / glare
-              if (a < 100 || (r > 240 && g > 240 && b > 240) || lum >= 240) {
-                whiteGlareBackgroundPixels++;
-                continue;
-              }
-
-              // 2. Plant Foliage (green dominant)
-              const isPlant = (g > r * 1.14 && g > b * 1.14 && g >= 40) || (g >= 50 && g > r + 12 && g > b + 12);
-
-              // 3. Sky Blue / Vehicle Blue / Screen Blue
-              const isSkyBlue = (b > r * 1.12 && b > g * 1.05 && b >= 70);
-
-              // 4. Unnatural Neon / Vibrant Synthetic Colors
-              const isNeon = (r > 190 && b > 140 && g < 110) || (g > 200 && b > 200 && r < 90) || (b > 180 && r > 180 && g < 120);
-
-              // 5. Pure Metallic Grey / Plastic / Paint / Phone Bezel / Concrete:
-              // Natural soil has warm earth tones (R > B + 10 or R > G). Perfect neutral grey is synthetic.
-              const isMetallicGrey = (Math.abs(r - g) <= 6 && Math.abs(r - b) <= 6 && Math.abs(g - b) <= 6 && lum >= 55 && lum <= 235);
-
-              // 6. Human Skin / Face / Hand / Finger Tone
-              const isSkinTone = (r > 135 && g > 90 && b > 60 && r > g && g > b && (r - b) >= 30 && (r - g) >= 14 && (g - b) >= 8 && lum >= 105);
-
-              // 7. Strict Genuine Soil / Earth Spectrum (Must have natural organic earth pigmentation)
-              let isSoilPixel = false;
-              if (!isPlant && !isSkyBlue && !isNeon && !isMetallicGrey && !isSkinTone) {
-                // Red / Laterite Earth: distinct warm terracotta
-                const isRedEarth = (r >= 65 && r <= 225 && g >= 30 && g <= 170 && b >= 15 && b <= 130 && (r - g) >= 10 && (r - b) >= 20 && lum <= 210);
-                // Black Cotton Earth: dark, rich organic soil (low luminance, warm dark earth)
-                const isBlackEarth = (lum >= 15 && lum <= 75 && r >= 15 && r <= 85 && g >= 15 && g <= 78 && b >= 10 && b <= 70 && (r >= b - 2) && Math.abs(r - g) <= 20);
-                // Sandy Loam: warm yellowish-brown earth
-                const isSandyEarth = (r >= 85 && r <= 215 && g >= 65 && g <= 180 && b >= 35 && b <= 140 && (r - b) >= 22 && (g - b) >= 10 && r >= g - 6 && lum <= 215);
-                // Alluvial / Clay Loam: classic brown silt earth
-                const isClayAlluvial = (r >= 45 && r <= 170 && g >= 35 && g <= 145 && b >= 20 && b <= 115 && (r - b) >= 14 && (r - g) >= 3 && r >= g && lum <= 205);
-
-                if (isRedEarth) { isSoilPixel = true; redSoilPixels++; }
-                else if (isBlackEarth) { isSoilPixel = true; blackSoilPixels++; }
-                else if (isSandyEarth) { isSoilPixel = true; sandySoilPixels++; }
-                else if (isClayAlluvial) { isSoilPixel = true; alluvialSoilPixels++; }
-              }
-
-              if (isPlant) plantPixels++;
-              if (isSkyBlue) skyBluePixels++;
-              if (isNeon) unnaturalNeonPixels++;
-              if (isMetallicGrey) metallicSyntheticGreyPixels++;
-              if (isSkinTone) skinPixels++;
-              if (isSoilPixel) {
-                naturalSoilPixels++;
-                gridSoilCount[gridCellIdx]++;
-              }
-            }
-          }
-
-          const avgLuminance = (0.299 * totalR + 0.587 * totalG + 0.114 * totalB) / totalPixels;
-          const avgR = totalR / totalPixels;
-          const avgG = totalG / totalPixels;
-          const avgB = totalB / totalPixels;
-
-          // Soil ratio across entire image
-          const soilRatio = naturalSoilPixels / totalPixels;
-          const plantRatio = plantPixels / totalPixels;
-          const skyRatio = skyBluePixels / totalPixels;
-          const metalRatio = metallicSyntheticGreyPixels / totalPixels;
-          const skinRatio = skinPixels / totalPixels;
-          const whiteRatio = whiteGlareBackgroundPixels / totalPixels;
-
-          // Center 4 cells (5, 6, 9, 10 - the focal region of any genuine soil sample photo)
-          const centerSoilPixels = gridSoilCount[5] + gridSoilCount[6] + gridSoilCount[9] + gridSoilCount[10];
-          const centerTotalPixels = gridTotalCount[5] + gridTotalCount[6] + gridTotalCount[9] + gridTotalCount[10] || 1;
-          const centerSoilRatio = centerSoilPixels / centerTotalPixels;
-
-          // Top 4 cells (0, 1, 2, 3 - sky/horizon)
-          const topSoilPixels = gridSoilCount[0] + gridSoilCount[1] + gridSoilCount[2] + gridSoilCount[3];
-          const topTotalPixels = gridTotalCount[0] + gridTotalCount[1] + gridTotalCount[2] + gridTotalCount[3] || 1;
-          const topSoilRatio = topSoilPixels / topTotalPixels;
-
-          // Compute Luminance Standard Deviation across image
-          let sumSqDiff = 0;
-          for (let i = 0; i < totalPixels; i++) {
-            const diff = luminances[i] - avgLuminance;
-            sumSqDiff += diff * diff;
-          }
-          const stdDevLuminance = Math.sqrt(sumSqDiff / totalPixels);
-
-          // Texture gradient
-          let totalNeighborDiff = 0;
-          let neighborCount = 0;
-          for (let y = 0; y < height; y += 2) {
-            for (let x = 0; x < width; x += 2) {
-              const currentLum = luminances[y * width + x];
-              if (x < width - 2) {
-                totalNeighborDiff += Math.abs(currentLum - luminances[y * width + (x + 2)]);
-                neighborCount++;
-              }
-            }
-          }
-          const avgTextureDiff = neighborCount > 0 ? (totalNeighborDiff / neighborCount) : 0;
-
-          // ── STRICT REJECTION RULES ──
-
-          // REJECTION 1: PHONE / DEVICE / SMARTPHONE SCREEN / BEZEL / HAND
-          if (skinRatio >= 0.08 && soilRatio < 0.70) {
-            return resolve({
-              isSoil: false,
-              reason: 'hand_or_person_detected',
-              error: '❌ अमान्य फोटो (Hand / Person Detected)! फोटो में हाथ, उंगलियां या व्यक्ति दिखाई दे रहा है। कृपया केवल खेत या गमले की मिट्टी की साफ़ क्लोज़-अप फोटो अपलोड करें। / Hand or person detected in image.'
+          // Debug logging in development mode
+          if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+            console.log('[Soil Validation Debug - Client Classifier]:', {
+              soil_confidence: result.confidence,
+              soil_area_percentage: result.soil_area_percentage,
+              decision: result.decision,
+              reason: result.reason
             });
           }
 
-          if (metalRatio >= 0.15 || whiteRatio >= 0.25) {
-            if (soilRatio < 0.65) {
-              return resolve({
-                isSoil: false,
-                reason: 'phone_or_object_detected',
-                error: '❌ अमान्य फोटो (Smartphone / Object / Screen Detected)! यह स्मार्टफोन, स्क्रीन, वाहन या अन्य वस्तु की फोटो है। कृपया केवल खेत की असली मिट्टी की फोटो अपलोड करें। / Smartphone, screen or object detected.'
-              });
-            }
-          }
-
-          // REJECTION 2: CENTER FOCAL CHECK (Object / Vehicle / Screen in Center)
-          if (centerSoilRatio < 0.60) {
-            return resolve({
-              isSoil: false,
-              reason: 'non_soil_in_center',
-              error: '❌ अमान्य फोटो (Object / Screen / Vehicle in Center)! फोटो के मुख्य केंद्र में मिट्टी नहीं है (वाहन, फोन स्क्रीन या अन्य वस्तु पाई गई)। कृपया मिट्टी के नमूने की साफ़ क्लोज़-अप फोटो लें। / Center of the image is not soil.'
-            });
-          }
-
-          // REJECTION 3: OVERALL SOIL COVERAGE MUST BE AT LEAST 60%
-          if (soilRatio < 0.60) {
-            return resolve({
-              isSoil: false,
-              reason: 'insufficient_soil_coverage',
-              error: '❌ अमान्य फोटो (No Soil / Non-Soil Detected)! फोटो में मिट्टी मुख्य रूप से दिखाई नहीं दे रही है (वाहन/फोन/स्क्रीन/इमारत/वस्तु पाई गई)। AI केवल खेत या गमले की असली मिट्टी (soil) की फोटो का परीक्षण करता है। / Insufficient soil coverage.'
-            });
-          }
-
-          // REJECTION 4: PERSON / FACE / SKIN TONE
-          if (skinRatio >= 0.12) {
-            return resolve({
-              isSoil: false,
-              reason: 'person_or_face_detected',
-              error: '❌ अमान्य फोटो (Person / Face Detected)! यह व्यक्ति या चेहरे की फोटो है। कृपया केवल खेत या गमले की मिट्टी की फोटो अपलोड करें।'
-            });
-          }
-
-          // REJECTION 5: PLANT LEAF / VEGETATION (> 18% foliage and low soil)
-          if (plantRatio >= 0.18) {
-            return resolve({
-              isSoil: false,
-              reason: 'plant_leaf_detected',
-              error: '❌ अमान्य फोटो (Plant / Crop Photo Detected)! यह पौधे या फसल की फोटो है। सॉइल लैब में केवल मिट्टी की फोटो अपलोड करें। (फसल सलाह के लिए Advisor टैब देखें।)'
-            });
-          }
-
-          // REJECTION 6: SKY / WATER / BLUE OBJECT
-          if (skyRatio >= 0.12 || topSoilRatio < 0.20) {
-            return resolve({
-              isSoil: false,
-              reason: 'sky_or_horizon_landscape',
-              error: '❌ अमान्य फोटो (Sky / Landscape Scene Detected)! यह खुले वातावरण, क्षितिज या आसमान की फोटो है। केवल मिट्टी की क्लोज़-अप फोटो लें।'
-            });
-          }
-
-          // REJECTION 7: DIGITAL BLANK / SOLID COLOR
-          if (stdDevLuminance < 3.0 && avgTextureDiff < 0.8) {
-            return resolve({
-              isSoil: false,
-              reason: 'blank_digital_color',
-              error: '❌ अमान्य फोटो (Solid Color / Blank Image)! कृपया खेत या गमले से असली मिट्टी की फोटो अपलोड करें।'
-            });
-          }
-
-          // Determine detected soil category for realistic report
-          let detectedCategory = 'alluvial';
-          if (redSoilPixels > blackSoilPixels && redSoilPixels > sandySoilPixels && redSoilPixels > alluvialSoilPixels) {
-            detectedCategory = 'red';
-          } else if (blackSoilPixels > redSoilPixels && blackSoilPixels > sandySoilPixels && blackSoilPixels > alluvialSoilPixels) {
-            detectedCategory = 'black';
-          } else if (sandySoilPixels > redSoilPixels && sandySoilPixels > blackSoilPixels && sandySoilPixels > alluvialSoilPixels) {
-            detectedCategory = 'sandy';
-          } else {
-            detectedCategory = 'alluvial';
-          }
-
-          // Genuine Soil Verified!
-          resolve({
-            isSoil: true,
-            detectedCategory,
-            soilRatio,
-            avgRGB: { r: avgR, g: avgG, b: avgB }
-          });
+          resolve(result);
         } catch (e) {
           console.warn('Canvas check error:', e);
-          resolve({ isSoil: false, error: '❌ फोटो पढ़ने में त्रुटि। कृपया साफ़ JPG/PNG फोटो अपलोड करें। / Error reading image.' });
+          resolve({
+            is_soil: false,
+            isSoil: false,
+            confidence: 0,
+            soil_area_percentage: 0,
+            image_quality: 'poor',
+            decision: 'RETRY',
+            reason: 'Error reading image.',
+            suggestion: 'Please re-upload a clear JPG or PNG image.',
+            error: '❌ फोटो पढ़ने में त्रुटि। कृपया साफ़ JPG/PNG फोटो अपलोड करें। / Error reading image.'
+          });
         }
       };
+
       img.onerror = (err) => {
         console.warn('Image load event error:', err);
-        resolve({ isSoil: false, error: '❌ फोटो लोड नहीं हो सकी। / Failed to load image.' });
+        resolve({
+          is_soil: false,
+          isSoil: false,
+          confidence: 0,
+          soil_area_percentage: 0,
+          image_quality: 'poor',
+          decision: 'REJECT',
+          reason: 'Failed to load image file.',
+          suggestion: 'Please upload a valid image file.',
+          error: '❌ फोटो लोड नहीं हो सकी। कृपया सही फाइल चुनें। / Failed to load image.'
+        });
       };
+
       img.src = imageDataUrl;
     });
   };
@@ -387,6 +193,7 @@ export function SoilLabTab() {
   const handleClearImage = () => {
     setImagePreview(null);
     setImageBase64(null);
+    setValidationStatus(null);
     setAnalysisError('');
     setSoilWarning('');
     setAnalysisResult(null);
@@ -402,6 +209,7 @@ export function SoilLabTab() {
     }
     setAnalysisError('');
     setSoilWarning('');
+    setValidationStatus(null);
     setAnalysisResult(null);
     setImageMime(file.type);
     const reader = new FileReader();
@@ -412,12 +220,15 @@ export function SoilLabTab() {
         setImageBase64(dataUrl.split(',')[1]);
 
         const check = await checkIsSoilImage(dataUrl);
-        if (!check.isSoil) {
-          const errText = check.error || '❌ अमान्य फोटो: यह मिट्टी की फोटो नहीं है (वाहन/फोन/स्क्रीन/इमारत पाई गई)। कृपया केवल खेत या गमले की मिट्टी की क्लोज़-अप फोटो अपलोड करें।';
-          setSoilWarning(errText);
-          setAnalysisError(errText);
-        } else if (check.detectedCategory) {
-          setDetectedSoilType(check.detectedCategory);
+        setValidationStatus(check);
+        if (check.decision === 'ACCEPT') {
+          setAnalysisError('');
+          setSoilWarning('');
+          if (check.detectedCategory) {
+            setDetectedSoilType(check.detectedCategory);
+          }
+        } else {
+          setAnalysisError(check.error || '❌ Soil not clearly detected / मिट्टी स्पष्ट रूप से नहीं पाई गई');
         }
       } catch (err) {
         console.warn('Soil check handler warning:', err);
@@ -444,36 +255,43 @@ export function SoilLabTab() {
     setAnalysisResult(null);
 
     // Initial validation state indicator
-    setAnalysisSteps(['🔍 मिट्टी की फोटो जांची जा रही है... / Checking and validating soil image...']);
+    setAnalysisSteps(['🔍 मिट्टी की फोटो जांची जा रही है... / Validating soil image...']);
 
     const activeKey = geminiKey || localStorage.getItem('gemini_api_key') || '';
 
-    // ── STEP 1: MULTI-ZONE SPATIAL & VISUAL SOIL VALIDATION ──
-    // Reject cars, vehicles, people, buildings, solid colors, plants without soil
-    const clientCheck = await checkIsSoilImage(imagePreview);
-    if (!clientCheck.isSoil) {
+    // ── STAGE 1: CLIENT-SIDE VALIDATION CHECK ──
+    let clientCheck = validationStatus;
+    if (!clientCheck) {
+      clientCheck = await checkIsSoilImage(imagePreview);
+      setValidationStatus(clientCheck);
+    }
+
+    if (clientCheck.decision !== 'ACCEPT') {
       setAnalyzing(false);
       setAnalysisSteps([]);
-      setAnalysisError(clientCheck.error || '❌ अमान्य फोटो (Invalid Image): यह मिट्टी की फोटो नहीं है। AI केवल खेत या गमले की असली मिट्टी (soil) की फोटो का परीक्षण करता है। / This does not appear to be a soil photo.');
+      setAnalysisError(clientCheck.error || '❌ Soil not clearly detected / मिट्टी स्पष्ट रूप से नहीं पाई गई');
       return;
     }
 
-    // ── STEP 2: AI VISION VALIDATION (If API key provided) ──
+    // ── STAGE 2: AI VISION VALIDATION (If Gemini API key provided) ──
     if (activeKey) {
       try {
         const validation = await validateSoilImage({ imageBase64, mimeType: imageMime, apiKey: activeKey });
-        if (validation && (!validation.isSoil || validation.confidence < 0.80 || validation.soilVisibility === 'none' || validation.soilVisibility === 'low' || validation.imageQuality === 'poor')) {
-          setAnalyzing(false);
-          setAnalysisSteps([]);
-          setAnalysisError(validation.errorMessage || '❌ अमान्य फोटो: यह मिट्टी की फोटो नहीं है। कृपया असली मिट्टी की फोटो अपलोड करें।');
-          return;
+        if (validation) {
+          setValidationStatus(validation);
+          if (validation.decision !== 'ACCEPT') {
+            setAnalyzing(false);
+            setAnalysisSteps([]);
+            setAnalysisError(validation.errorMessage || '❌ Soil not clearly detected / मिट्टी स्पष्ट रूप से नहीं पाई गई');
+            return;
+          }
         }
       } catch (valErr) {
         console.warn('AI validation error:', valErr);
       }
     }
 
-    // ── STEP 3: VALIDATION PASSED → PROCEED TO SOIL ANALYSIS & REPORT ──
+    // ── STAGE 3: VALIDATION PASSED → PROCEED TO SOIL ANALYSIS & REPORT ──
     const detectedCat = clientCheck.detectedCategory || detectedSoilType || 'red';
     setDetectedSoilType(detectedCat);
 
@@ -520,8 +338,9 @@ export function SoilLabTab() {
       // Direct simulation mode
       setTimeout(() => {
         clearInterval(timer);
+        setAnalyzing(false);
         runSimulation(detectedCat);
-      }, 2400);
+      }, 3000);
     }
   };
 
@@ -952,43 +771,113 @@ export function SoilLabTab() {
                   />
                 </div>
 
-                {/* Submit button */}
-                <button
-                  type="button"
-                  onClick={handleAnalyze}
-                  disabled={analyzing}
-                  style={{
-                    marginTop: '16px', width: '100%', padding: '16px', borderRadius: '12px', border: 'none',
-                    background: analyzing ? '#E5E7EB' : '#15803D',
-                    color: analyzing ? '#9CA3AF' : '#FFFFFF', fontSize: '16px', fontWeight: 800, cursor: analyzing ? 'not-allowed' : 'pointer',
-                    boxShadow: analyzing ? 'none' : '0 4px 14px rgba(21, 128, 61, 0.25)',
-                  }}
-                >
-                  {analyzing ? '🔍 जांच हो रही है... / Analyzing...' : '🔍 मिट्टी की जांच शुरू करें / Start Soil Test'}
-                </button>
+                {/* Validation Feedback Status Banner */}
+                {validationStatus && (
+                  <div style={{ marginTop: '16px' }}>
+                    {validationStatus.decision === 'ACCEPT' && (
+                      <div style={{
+                        padding: '14px 18px', borderRadius: '12px',
+                        background: '#F0FDF4', border: '1.5px solid #86EFAC',
+                        color: '#15803D', display: 'flex', alignItems: 'flex-start', gap: '12px',
+                        boxShadow: '0 2px 8px rgba(21, 128, 61, 0.08)'
+                      }}>
+                        <span style={{ fontSize: '24px', lineHeight: 1 }}>✓</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 800, fontSize: '15px', color: '#166534' }}>
+                            ✓ Soil detected successfully / मिट्टी की सफल पहचान हुई
+                          </div>
+                          <div style={{ fontSize: '13px', marginTop: '4px', color: '#15803D' }}>
+                            Your soil sample is ready for analysis. (आपका मिट्टी का नमूना परीक्षण के लिए तैयार है।)
+                          </div>
+                          <div style={{ fontSize: '11px', marginTop: '6px', color: '#166534', opacity: 0.85 }}>
+                            Confidence: {Math.round((validationStatus.confidence || 0.9) * 100)}% • Soil Coverage: ~{validationStatus.soil_area_percentage || 80}%
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
-                {soilWarning && !analysisError && (
-                  <div style={{
-                    marginTop: '12px', padding: '12px 16px', borderRadius: '12px',
-                    background: '#FFFBEB', border: '1px solid #FDE68A',
-                    color: '#B45309', fontSize: '13px', fontWeight: 600, lineHeight: 1.5
-                  }}>
-                    {soilWarning}
+                    {validationStatus.decision === 'RETRY' && (
+                      <div style={{
+                        padding: '14px 18px', borderRadius: '12px',
+                        background: '#FFFBEB', border: '1.5px solid #FDE68A',
+                        color: '#B45309', display: 'flex', alignItems: 'flex-start', gap: '12px',
+                        boxShadow: '0 2px 8px rgba(245, 158, 11, 0.08)'
+                      }}>
+                        <span style={{ fontSize: '24px', lineHeight: 1 }}>⚠️</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 800, fontSize: '15px', color: '#92400E' }}>
+                            ⚠️ Soil is not clear enough / मिट्टी साफ़ दिखाई नहीं दे रही है
+                          </div>
+                          <div style={{ fontSize: '13px', marginTop: '4px', lineHeight: 1.45, color: '#B45309' }}>
+                            Please move closer to the soil and take another photo in good daylight.<br />
+                            <span style={{ fontSize: '12px' }}>(कृपया मिट्टी के अधिक पास जाकर अच्छी रोशनी में दोबारा फोटो लें।)</span>
+                          </div>
+                          {validationStatus.suggestion && (
+                            <div style={{ fontSize: '12px', marginTop: '6px', color: '#78350F', fontStyle: 'italic' }}>
+                              💡 सुझाव / Suggestion: {validationStatus.suggestion}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {validationStatus.decision === 'REJECT' && (
+                      <div style={{
+                        padding: '14px 18px', borderRadius: '14px',
+                        background: '#FEF2F2', border: '1.5px solid #FECACA',
+                        color: '#DC2626', display: 'flex', alignItems: 'flex-start', gap: '12px',
+                        boxShadow: '0 2px 8px rgba(220, 38, 38, 0.08)'
+                      }}>
+                        <span style={{ fontSize: '24px', lineHeight: 1 }}>❌</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 800, fontSize: '15px', color: '#991B1B' }}>
+                            ❌ Soil not clearly detected / मिट्टी स्पष्ट रूप से नहीं पाई गई
+                          </div>
+                          <div style={{ fontSize: '13px', marginTop: '4px', lineHeight: 1.45, color: '#B91C1C' }}>
+                            Please upload a close-up photo where soil is clearly visible and occupies most of the frame.<br />
+                            Avoid photos where cars, machinery, buildings, clothing or other objects are the main subject.<br />
+                            <span style={{ fontSize: '12px' }}>(कृपया ऐसी फोटो अपलोड करें जिसमें मिट्टी मुख्य रूप से दिखाई दे। वाहन, कपड़े, इमारत या मशीनरी की फोटो न डालें।)</span>
+                          </div>
+                          {validationStatus.reason && (
+                            <div style={{ fontSize: '12px', marginTop: '6px', color: '#7F1D1D', fontStyle: 'italic' }}>
+                              कारण / Reason: {validationStatus.reason}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
-                {analysisError && (
+                {/* Additional Error Banner */}
+                {analysisError && (!validationStatus || validationStatus.decision === 'ACCEPT') && (
                   <div style={{
                     marginTop: '16px', padding: '16px 20px', borderRadius: '14px',
                     background: '#FEF2F2', border: '1.5px solid #FECACA',
                     color: '#DC2626', fontSize: '15px', fontWeight: 700, lineHeight: 1.5,
-                    display: 'flex', alignItems: 'center', gap: '12px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+                    display: 'flex', alignItems: 'center', gap: '12px'
                   }}>
                     <span style={{ fontSize: '24px' }}>🚫</span>
                     <div>{analysisError}</div>
                   </div>
                 )}
+
+                {/* Submit button */}
+                <button
+                  type="button"
+                  onClick={handleAnalyze}
+                  disabled={analyzing || validationStatus?.decision === 'REJECT'}
+                  style={{
+                    marginTop: '16px', width: '100%', padding: '16px', borderRadius: '12px', border: 'none',
+                    background: (analyzing || validationStatus?.decision === 'REJECT') ? '#E5E7EB' : '#15803D',
+                    color: (analyzing || validationStatus?.decision === 'REJECT') ? '#9CA3AF' : '#FFFFFF',
+                    fontSize: '16px', fontWeight: 800,
+                    cursor: (analyzing || validationStatus?.decision === 'REJECT') ? 'not-allowed' : 'pointer',
+                    boxShadow: (analyzing || validationStatus?.decision === 'REJECT') ? 'none' : '0 4px 14px rgba(21, 128, 61, 0.25)',
+                  }}
+                >
+                  {analyzing ? '🔍 जांच हो रही है... / Analyzing...' : '🔍 मिट्टी की जांच शुरू करें / Start Soil Test'}
+                </button>
               </div>
             )}
 

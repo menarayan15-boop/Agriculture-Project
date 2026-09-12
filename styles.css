@@ -2844,6 +2844,40 @@ input:checked + .slider:before {
     background: rgba(255, 255, 255, 0.12);
 }
 
+/* Google Translate Hidden Widget & Layout Reset */
+#google_translate_element {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
+body {
+    top: 0px !important;
+    position: static !important;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+    display: none !important;
+}
+
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+
 
 
 

@@ -1,23 +1,37 @@
 /**
  * Krishi Jal AI Assistant - Master Entry Point
  * Orchestrates Audio Recording, Speech-to-Text, Agricultural Prompt Engineering,
- * LLM Reasoning, and Text-to-Speech into a unified, high-level API.
+ * LLM Reasoning, Question Bank Retrieval, and Text-to-Speech into a unified, high-level API.
  */
 
-import { AudioRecorder } from './audioRecorder';
-import { transcribeAudio } from './transcribeService';
-import { buildAgronomyPrompt } from './promptBuilder';
-import { getAiAnswer, cleanAiResponse } from './aiReasoningService';
-import { TtsService, ttsEngine } from './ttsService';
+import { AudioRecorder } from './audioRecorder.js';
+import { transcribeAudio } from './transcribeService.js';
+import { buildDynamicAgronomyPrompt } from './agriculturalPromptBuilder.js';
+import { getAiAnswer, getAiAnswerDetails, cleanAiResponse } from './aiReasoningService.js';
+import { processAgriculturalQuery } from './krishiAIService.js';
+import { classifyIntent, INTENT_DEFINITIONS } from './intentClassifier.js';
+import { extractCropEntity, CROP_DATABASE } from './cropContextService.js';
+import { validateCropResponse } from './responseValidator.js';
+import { TtsService, ttsEngine } from './ttsService.js';
+import { AGRICULTURAL_QUESTION_BANK, QUESTION_CATEGORIES } from '../../data/agriculturalQuestionBank.js';
 
 export {
   AudioRecorder,
   transcribeAudio,
-  buildAgronomyPrompt,
+  buildDynamicAgronomyPrompt,
   getAiAnswer,
+  getAiAnswerDetails,
+  processAgriculturalQuery,
+  classifyIntent,
+  INTENT_DEFINITIONS,
+  extractCropEntity,
+  CROP_DATABASE,
+  validateCropResponse,
   cleanAiResponse,
   TtsService,
-  ttsEngine
+  ttsEngine,
+  AGRICULTURAL_QUESTION_BANK,
+  QUESTION_CATEGORIES
 };
 
 /**

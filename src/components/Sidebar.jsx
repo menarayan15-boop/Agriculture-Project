@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { LOCATIONS, SOILS, CROPS, getText } from '../data/constants';
+import { LOCATIONS, SOILS, CROPS, getText, getCropDisplayName } from '../data/constants';
 
 export function Sidebar() {
   const {
@@ -129,7 +129,7 @@ export function Sidebar() {
   };
 
   const stageOptions = [
-    { value: "", label: lang === 'hi' ? "-- फसल विकास चरण चुनें --" : "-- Select Growth Stage --" },
+    { value: "", label: getText('sidebar-stage-select', lang) },
     { value: "Initial / Germination", label: getText('stage-initial', lang) },
     { value: "Vegetative Growth", label: getText('stage-veg', lang) },
     { value: "Flowering & Yielding", label: getText('stage-flowering', lang) },
@@ -342,13 +342,8 @@ export function Sidebar() {
             />
             <datalist id="soil-options">
               {SOILS.map(s => (
-                <option key={s.id} value={s.nameEn || (s.nameKey ? getText(s.nameKey, lang) : s.id)} />
+                <option key={s.id} value={getText(s.nameKey, lang) || s.name} />
               ))}
-              <option value="Clayey Loam" />
-              <option value="Black Cotton Soil" />
-              <option value="Alluvial Soil" />
-              <option value="Sandy Loam" />
-              <option value="Red Laterite" />
             </datalist>
           </div>
           <div style={{
@@ -421,17 +416,8 @@ export function Sidebar() {
             />
             <datalist id="crop-options">
               {CROPS.map(c => (
-                <option key={c.id} value={c.nameEn || (c.nameKey ? getText(c.nameKey, lang) : c.id)} />
+                <option key={c.id} value={getCropDisplayName(c, lang)} />
               ))}
-              <option value="Rice / Paddy" />
-              <option value="Wheat (गेहूं)" />
-              <option value="Cotton (कपास)" />
-              <option value="Sugarcane (गन्ना)" />
-              <option value="Mustard (सरसों)" />
-              <option value="Tomato (टमाटर)" />
-              <option value="Maize (मक्का)" />
-              <option value="Soybean (सोयाबीन)" />
-              <option value="Potato (आलू)" />
             </datalist>
           </div>
         </div>
@@ -496,7 +482,7 @@ export function Sidebar() {
             color: 'var(--text-primary)'
           }}>
             <i className="fa-solid fa-calendar-days" style={{ color: 'var(--primary)', fontSize: '14px' }}></i>
-            <span>{lang === 'hi' ? 'बुआई की तारीख (Sowing Date)' : 'Sowing Date'}</span>
+            <span>{getText('sidebar-sowing-date', lang)}</span>
           </label>
           <div style={{ position: 'relative' }}>
             <input
@@ -548,7 +534,7 @@ export function Sidebar() {
               min="0.1"
               max="1000"
               step="0.5"
-              placeholder={lang === 'hi' ? "एकड़ में भूमि का आकार दर्ज करें..." : "Enter farm area in acres..."}
+              placeholder={getText('sidebar-area-ph', lang)}
               onChange={(e) => setArea(e.target.value === '' ? '' : parseFloat(e.target.value))}
               style={{
                 width: '100%',
@@ -671,7 +657,7 @@ export function Sidebar() {
           {loading ? (
             <>
               <i className="fa-solid fa-circle-notch fa-spin" style={{ fontSize: '15px' }}></i>
-              <span>{lang === 'hi' ? 'सलाह तैयार हो रही है...' : 'Generating Advisory...'}</span>
+              <span>{getText('sidebar-btn-loading', lang)}</span>
             </>
           ) : (
             <>
@@ -694,7 +680,7 @@ export function Sidebar() {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', fontWeight: 600, color: 'var(--primary-dark)' }}>
             <i className="fa-solid fa-user-check" style={{ color: 'var(--primary)' }}></i>
-            <span>{explicitProfile ? (lang === 'hi' ? 'प्रोफ़ाइल सक्रिय है' : 'Profile Active') : (lang === 'hi' ? 'त्वरित सेटअप' : 'Quick Setup')}</span>
+            <span>{explicitProfile ? getText('sidebar-profile-active', lang) : getText('sidebar-quick-setup', lang)}</span>
           </div>
           <button
             type="button"
@@ -718,7 +704,7 @@ export function Sidebar() {
             onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
           >
             <i className="fa-solid fa-pen-to-square"></i>
-            <span>{lang === 'hi' ? 'फार्म प्रोफ़ाइल अपडेट करें' : 'Edit Farm Profile'}</span>
+            <span>{getText('sidebar-edit-profile', lang)}</span>
           </button>
         </div>
 

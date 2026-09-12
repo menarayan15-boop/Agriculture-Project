@@ -19,11 +19,41 @@ import { GeminiKeyModal } from './components/modals/GeminiKeyModal';
 import { RentalBookingModal } from './components/modals/RentalBookingModal';
 import { OnboardingWizard } from './components/modals/OnboardingWizard';
 import { LandingPage } from './components/LandingPage';
+import { GoogleTranslate } from './components/GoogleTranslate';
+import { pageReader } from './services/ai/pageNarrationService';
+import { ttsEngine } from './services/ai/ttsService';
 
 export function App() {
   const { activeTab, setActiveTab, setShowOnboarding } = useApp();
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [bookingItem, setBookingItem] = useState(null);
+
+  // Stop speech only when shifting to a completely different browser tab, window, or route
+  useEffect(() => {
+    const stopAudio = () => {
+      try {
+        pageReader.stop(false);
+        ttsEngine.stop();
+      } catch (e) {}
+    };
+
+    // When switching to a completely different browser tab or minimizing
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAudio();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', stopAudio);
+    window.addEventListener('beforeunload', stopAudio);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', stopAudio);
+      window.removeEventListener('beforeunload', stopAudio);
+    };
+  }, []);
 
   // Routes: 'app' | 'landing'
   const [currentRoute, setCurrentRoute] = useState(() => {
@@ -35,6 +65,8 @@ export function App() {
   // Sync hash changes
   useEffect(() => {
     const handleHashChange = () => {
+      pageReader.stop(false);
+      ttsEngine.stop();
       const hash = window.location.hash.toLowerCase();
       if (hash.includes('landing')) {
         setCurrentRoute('landing');
@@ -60,6 +92,7 @@ export function App() {
 
   return (
     <>
+      <GoogleTranslate />
       {currentRoute === 'landing' ? (
         <LandingPage 
           onStartKrishiJal={() => handleNavigate('app')}

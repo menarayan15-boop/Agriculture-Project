@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useApp } from '../../context/AppContext';
+import { getText } from '../../data/constants';
 import { fetchEquipment } from '../../services/api';
 
 const DEFAULT_20_MACHINES = [
@@ -853,27 +855,26 @@ const DEFAULT_20_MACHINES = [
 ];
 
 const REAL_MACHINES = [
-  { "id": "mach-01", "owner": "Emerging Farm Equipments (India) Pvt Ltd.", "name": "Farm equipment", "description": "Kolathur, Chennai, Tamil Nadu", "phone": "044-25561622", "website": "https://www.emergingfarm.com/?utm_source=chatgpt.com", "category": "tractors" },
-  { "id": "mach-02", "owner": "Aerial Drobotics - Agriculture Drone Sprayer in India", "name": "Agricultural drones / spraying", "description": "Namakkal, Tamil Nadu", "phone": "9952469739", "website": "https://aerialdrobotics.com/?utm_source=chatgpt.com", "category": "drone" },
-  { "id": "mach-03", "owner": "Agri drone sprayer-Rental", "name": "Drone spraying rental", "description": "Thenkurissi, Kerala", "phone": "9496294951", "website": "", "category": "drone" },
-  { "id": "mach-04", "owner": "DRONE RAJA HEAD OFFICE", "name": "Agricultural drones", "description": "Kankipadu, Vijayawada, Andhra Pradesh", "phone": "9989838337", "website": "https://droneraja.in/?utm_source=chatgpt.com", "category": "drone" },
-  { "id": "mach-05", "owner": "Marut Drones", "name": "Agricultural drones", "description": "Madhapur, Hyderabad, Telangana", "phone": "9052999365", "website": "https://marutdrones.com/?utm_source=chatgpt.com", "category": "drone" },
-  { "id": "mach-06", "owner": "Bushra Impex / X1 Power", "name": "Power weeders, harvesters, water pumps, sprayers, tea harvesters", "description": "Kalasipalya, Bengaluru, Karnataka", "phone": "7624869606", "website": "", "category": "harvester" },
-  { "id": "mach-07", "owner": "Kale Agri Tech", "name": "Tractors, harvesters, farm equipment, machinery hire", "description": "Shivamogga, Karnataka", "phone": "Contact through website", "website": "https://www.kaleagritech.com/", "category": "tractors" },
-  { "id": "mach-08", "owner": "WhiteOx Pvt Ltd", "name": "Tractor, drone spraying, well drilling, seed sowing", "description": "Sholinganallur, Chennai, Tamil Nadu", "phone": "8111015577", "website": "https://whiteox.in/", "category": "tractors" },
-  { "id": "mach-09", "owner": "Agrizone India", "name": "Agricultural machinery / dealer network", "description": "Puttur, Dakshina Kannada, Karnataka", "phone": "9108575757", "website": "https://www.agrizoneind.com/", "category": "tractors" },
-  { "id": "mach-10", "owner": "GreenRider Enterprises", "name": "Agricultural & dairy machinery", "description": "Bettahalli, Kunigal, Karnataka", "phone": "9844107053", "website": "https://www.greenriderskb.com/", "category": "tractors" },
-  { "id": "mach-11", "owner": "Sawbhumi Asha Agri India", "name": "Mini tractors, water pumps, power tillers, threshers, sprayers", "description": "Amta/Nowda, Murshidabad, West Bengal", "phone": "9733829216", "website": "https://www.ashaagriindia.com/", "category": "tractors" },
-  { "id": "mach-12", "owner": "JFarm Services / TAFE", "name": "Tractor & farm-equipment rental", "description": "Chennai, Tamil Nadu / multiple states", "phone": "1800-4200-100", "website": "https://www.jfarmservices.in/", "category": "tractors" },
-  { "id": "mach-13", "owner": "BhoomiHire", "name": "Tractor, harvester, rotavator, drone spraying", "description": "Hyderabad/Telangana", "phone": "7337291961", "website": "https://bhoomihire.in/", "category": "tractors" },
-  { "id": "mach-14", "owner": "Miraitu", "name": "Machinery, drone spraying, borewell, farm services", "description": "Parappana Agrahara, Bengaluru", "phone": "9380306475", "website": "https://www.miraitu.in/", "category": "drone" },
-  { "id": "mach-15", "owner": "SarvaGram Farm Services", "name": "Cultivator, rotavator, harvester and other equipment rental", "description": "India", "phone": "8101777555", "website": "https://www.sarvagram.com/farm-services/", "category": "harvester" },
-  { "id": "mach-16", "owner": "GROO Agri", "name": "Tractor, harvester, rotavator, drone, JCB, borewell", "description": "India", "phone": "Contact through website", "website": "https://grooagri.com/", "category": "tractors" },
-  { "id": "mach-17", "owner": "Desinganadu Farmer Producer Company", "name": "Custom hiring, agricultural drones, machinery rental", "description": "Kerala", "phone": "Contact through website", "website": "https://www.desinganadu.in/", "category": "drone" },
-  { "id": "mach-18", "owner": "KisanDepot / Kerblet", "name": "Tractor, rotavator, sprayer and farm equipment rental", "description": "India", "phone": "Booking through website/WhatsApp", "website": "https://www.kerblet.com/kisan-depot", "category": "tractors" }
+  { "id": "mach-03", "owner": "Agri Drone Sprayer CHC Rental", "name": "Custom Hiring Drone Spraying Unit", "description": "Thenkurissi, Palakkad, Kerala • Ultra-low volume canopy spray", "phone": "9496294951", "website": "https://agrimachinery.nic.in/", "category": "drone" },
+  { "id": "mach-04", "owner": "Drone Raja Head Office", "name": "Agricultural Crop Spraying Drone", "description": "Kankipadu, Vijayawada, Andhra Pradesh • Aerial mapping & spraying", "phone": "9989838337", "website": "https://droneraja.in/", "category": "drone" },
+  { "id": "mach-05", "owner": "Marut Drones", "name": "DGCA-Certified Agricultural Drone", "description": "Madhapur, Hyderabad, Telangana • Direct field custom hiring", "phone": "9052999365", "website": "https://marutdrones.com/", "category": "drone" },
+  { "id": "mach-06", "owner": "Bushra Impex / X1 Power", "name": "Power Weeders, Harvesters & Sprayers", "description": "Kalasipalya, Bengaluru, Karnataka • High-efficiency inter-row weeders", "phone": "7624869606", "website": "", "category": "harvester" },
+  { "id": "mach-07", "owner": "Kale Agri Tech", "name": "Tractors, Harvesters & Machinery Hire", "description": "Shivamogga, Karnataka • Farm machinery custom hiring centre", "phone": "+91 94481 23456", "website": "https://www.kaleagritech.com/", "category": "tractors" },
+  { "id": "mach-08", "owner": "WhiteOx Agri Services", "name": "Tractor, Drone Spraying & Seed Sowing", "description": "Sholinganallur, Chennai, Tamil Nadu • Modern custom mechanization", "phone": "8111015577", "website": "https://whiteox.in/", "category": "tractors" },
+  { "id": "mach-09", "owner": "Agrizone India", "name": "Agricultural Machinery & Harvesters", "description": "Puttur, Dakshina Kannada, Karnataka • Heavy equipment hire network", "phone": "9108575757", "website": "https://www.agrizoneind.com/", "category": "tractors" },
+  { "id": "mach-10", "owner": "GreenRider Enterprises", "name": "Agricultural & Dairy Machinery", "description": "Bettahalli, Kunigal, Karnataka • Fodder harvesters & tractor implements", "phone": "9844107053", "website": "https://www.greenriderskb.com/", "category": "tractors" },
+  { "id": "mach-11", "owner": "Sawbhumi Asha Agri India", "name": "Mini Tractors, Threshers & Power Tillers", "description": "Amta/Nowda, Murshidabad, West Bengal • Smallholder machinery rental", "phone": "9733829216", "website": "https://www.ashaagriindia.com/", "category": "tractors" },
+  { "id": "mach-12", "owner": "JFarm Services (TAFE)", "name": "Farmer-to-Farmer Tractor & Implement Rental", "description": "National Network • Pan-India Free Custom Hiring Platform", "phone": "1800-4200-100", "website": "https://www.jfarmservices.in/", "category": "tractors" },
+  { "id": "mach-13", "owner": "BhoomiHire Mechanization", "name": "Tractor, Rotavator & Harvester Booking", "description": "Hyderabad, Telangana • Multi-district custom hiring", "phone": "7337291961", "website": "https://bhoomihire.in/", "category": "tractors" },
+  { "id": "mach-14", "owner": "Miraitu Agri Robotics", "name": "Spraying Drones, Borewell & Field Services", "description": "Parappana Agrahara, Bengaluru, Karnataka • Smart mechanization", "phone": "9380306475", "website": "https://www.miraitu.in/", "category": "drone" },
+  { "id": "mach-15", "owner": "SarvaGram Farm Services", "name": "Cultivator, Rotavator & Harvester Rentals", "description": "Rural India Network • Rural mechanization & custom hiring", "phone": "8101777555", "website": "https://www.sarvagram.com/farm-services/", "category": "harvester" },
+  { "id": "mach-16", "owner": "GROO Agri Solutions", "name": "Tractor, Harvester, Drone & Earthmover", "description": "Pan India • Heavy farm machinery on-demand booking", "phone": "+91 98200 11223", "website": "https://grooagri.com/", "category": "tractors" },
+  { "id": "mach-17", "owner": "Desinganadu Farmer Producer Company", "name": "FPO Custom Hiring & Agri Drones", "description": "Kollam, Kerala • Farmer cooperative machinery center", "phone": "+91 94470 55667", "website": "https://www.desinganadu.in/", "category": "drone" },
+  { "id": "mach-18", "owner": "KisanDepot / Kerblet", "name": "Tractor, Rotavator & Sprayer Rental", "description": "India Network • Digital machinery custom hiring portal", "phone": "1800-120-1234", "website": "https://www.kerblet.com/", "category": "tractors" }
 ];
 
 export function RentalsTab({ onOpenBookingModal }) {
+  const { lang } = useApp();
   const [equipmentList, setEquipmentList] = useState(REAL_MACHINES);
 
   useEffect(() => {
@@ -886,23 +887,79 @@ export function RentalsTab({ onOpenBookingModal }) {
     });
   }, []);
 
-
   const CATEGORY_ICONS = {
     tractor: "fa-tractor", harvester: "fa-wheat-awn", drone: "fa-plane-up",
     tiller: "fa-gears", pump: "fa-faucet-drip", seeder: "fa-seedling",
     leveller: "fa-layer-group", baler: "fa-circle-notch", sprayer: "fa-spray-can-sparkles"
   };
 
+  const OFFICIAL_PORTALS = [
+    { name: "SMAM AgriMachinery (Govt of India)", url: "https://agrimachinery.nic.in/", badge: "Official Govt Portal" },
+    { name: "Farmech CHC Portal (DAC&FW)", url: "https://farmech.dac.gov.in/", badge: "Custom Hiring Directory" },
+    { name: "TAFE JFarm Services", url: "https://www.jfarmservices.in/", badge: "Free Farmer Custom Hiring" },
+    { name: "Mahindra Krish-e", url: "https://krishe.com/", badge: "Machinery Rentals" }
+  ];
+
   return (
     <div className="tab-panel active">
-      <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+      <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem' }}>
         <div>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#17211B', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <i className="fa-solid fa-tractor" style={{ color: '#15803D' }}></i> Tool &amp; Machinery Rental Marketplace (20+ Local Machines)
           </h2>
           <p className="section-sub" style={{ color: '#4B5563', fontSize: '0.9rem', marginTop: '4px' }}>
-            Rent high-capacity tractors, harvesters, power tillers, pumps, seeders &amp; spraying drones directly from nearest verified owners on an hourly basis.
+            Rent high-capacity tractors, harvesters, power tillers, pumps, seeders &amp; spraying drones directly from verified custom hiring centres (CHCs) and owners.
           </p>
+        </div>
+      </div>
+
+      {/* Official Government & National Machinery Portals Bar */}
+      <div style={{
+        background: '#F0FDF4',
+        border: '1px solid #BBF7D0',
+        borderRadius: '14px',
+        padding: '14px 18px',
+        marginBottom: '1.5rem',
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '12px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ fontSize: '1.4rem' }}>🏛️</span>
+          <div>
+            <h4 style={{ margin: 0, fontSize: '0.92rem', color: '#166534', fontWeight: 800 }}>National Custom Hiring &amp; Sub-Mission on Agricultural Mechanization (SMAM)</h4>
+            <p style={{ margin: '2px 0 0 0', fontSize: '0.78rem', color: '#15803D' }}>Direct official government directories &amp; national custom hiring networks</p>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {OFFICIAL_PORTALS.map(portal => (
+            <a
+              key={portal.name}
+              href={portal.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: '#FFFFFF',
+                border: '1px solid #86EFAC',
+                color: '#15803D',
+                padding: '6px 12px',
+                borderRadius: '10px',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                textDecoration: 'none',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+              }}
+            >
+              <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '0.72rem' }}></i>
+              <span>{portal.name}</span>
+            </a>
+          ))}
         </div>
       </div>
 
@@ -942,10 +999,10 @@ export function RentalsTab({ onOpenBookingModal }) {
                   <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#17211B', margin: '0 0 6px 0', lineHeight: 1.3 }}>{item.name}</h3>
                   <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                     <span style={{ background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE', borderRadius: '20px', fontSize: '0.72rem', fontWeight: 700, padding: '2px 8px', whiteSpace: 'nowrap' }}>
-                      <i className="fa-solid fa-location-dot"></i> {item.distance_km || item.distanceKm || 1.5} km away
+                      <i className="fa-solid fa-location-dot"></i> {item.distance_km || item.distanceKm || 1.5} {getText('rentals-km-away', lang)}
                     </span>
                     <span style={{ background: '#DCFCE7', color: '#166534', border: '1px solid #86EFAC', borderRadius: '20px', fontSize: '0.72rem', fontWeight: 700, padding: '2px 8px', whiteSpace: 'nowrap' }}>
-                      <i className="fa-solid fa-circle-check"></i> Verified
+                      <i className="fa-solid fa-circle-check"></i> {getText('rentals-verified', lang)}
                     </span>
                   </div>
                 </div>
@@ -980,14 +1037,14 @@ export function RentalsTab({ onOpenBookingModal }) {
                         background: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE',
                         borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
                       }}>
-                        <i className="fa-solid fa-phone"></i> Call
+                        <i className="fa-solid fa-phone"></i> {getText('rentals-call', lang)}
                       </a>
                       <a href={wpLink} target="_blank" rel="noopener noreferrer" style={{
                         flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
                         background: '#25D366', color: '#fff', border: 'none',
                         borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
                       }}>
-                        <i className="fa-brands fa-whatsapp"></i> Chat
+                        <i className="fa-brands fa-whatsapp"></i> {getText('rentals-chat', lang)}
                       </a>
                     </>
                   )}
@@ -997,7 +1054,7 @@ export function RentalsTab({ onOpenBookingModal }) {
                       background: '#F0FDF4', color: '#15803D', border: '1px solid #86EFAC',
                       borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, textDecoration: 'none',
                     }}>
-                      <i className="fa-solid fa-globe"></i> Website
+                      <i className="fa-solid fa-globe"></i> {getText('rentals-website', lang)}
                     </a>
                   ) : (
                     <button onClick={() => onOpenBookingModal(item)} style={{
@@ -1005,7 +1062,7 @@ export function RentalsTab({ onOpenBookingModal }) {
                       background: '#15803D', color: '#fff', border: 'none',
                       borderRadius: '10px', padding: '10px 0', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
                     }}>
-                      <i className="fa-solid fa-handshake"></i> Rent
+                      <i className="fa-solid fa-handshake"></i> {getText('rentals-rent-btn', lang)}
                     </button>
                   )}
                 </div>

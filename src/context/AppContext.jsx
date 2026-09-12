@@ -4,13 +4,24 @@ import { fetchServerStatus, fetchFarmerProfile, saveFarmerProfile } from '../ser
 import { generateFarmerInsights } from '../services/farmerProfileEngine';
 import { applyPersonalizationRules } from '../services/personalizationRules';
 import { getCropRoadmap } from '../data/cropRoadmapData';
+import { pageReader } from '../services/ai/pageNarrationService';
+import { ttsEngine } from '../services/ai/ttsService';
 
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
   const [lang, setLang] = useState(() => localStorage.getItem('krishi_lang') || 'en');
   const [theme, setTheme] = useState(() => localStorage.getItem('krishi_theme') || 'dark');
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTabState] = useState('dashboard');
+
+  // Immediately cancel any active speech whenever the user navigates to a different tab or icon
+  const setActiveTab = (tab) => {
+    try {
+      pageReader.stop(false);
+      ttsEngine.stop();
+    } catch (e) { }
+    setActiveTabState(tab);
+  };
   const [location, setLocation] = useState(null);
   const [soil, setSoil] = useState(null);
   const [crop, setCrop] = useState(null);
@@ -68,7 +79,7 @@ export function AppProvider({ children }) {
       if (hostname) {
         document.cookie = `googtrans=/en/${newLang}; domain=${hostname}; path=/;`;
       }
-    } catch (e) {}
+    } catch (e) { }
 
     // Trigger Google Translate widget if loaded in DOM
     try {
@@ -93,7 +104,7 @@ export function AppProvider({ children }) {
             gtCombo.value = savedLang;
             gtCombo.dispatchEvent(new Event('change'));
           }
-        } catch (e) {}
+        } catch (e) { }
       }, 1200);
     }
   }, []);
@@ -101,8 +112,8 @@ export function AppProvider({ children }) {
   // Sync profile details into active advisor state
   const applyPersonalization = (profile) => {
     if (profile && profile.completed) {
-      const stateMatch = LOCATIONS.find(loc => 
-        loc.id === profile.state.toLowerCase() || 
+      const stateMatch = LOCATIONS.find(loc =>
+        loc.id === profile.state.toLowerCase() ||
         loc.nameEn.toLowerCase().includes(profile.state.toLowerCase())
       );
       if (stateMatch) {
@@ -113,15 +124,15 @@ export function AppProvider({ children }) {
           id: profile.state.toLowerCase(),
           nameEn: `${profile.state} (${profile.district}), India`,
           nameHi: `${profile.state} (${profile.district}), भारत`,
-          lat: 21.0, 
+          lat: 21.0,
           lon: 78.0,
           defaultSoil: "loamy"
         });
       }
 
       if (profile.primary_crop) {
-        const cropMatch = CROPS.find(c => 
-          c.id === profile.primary_crop.toLowerCase() || 
+        const cropMatch = CROPS.find(c =>
+          c.id === profile.primary_crop.toLowerCase() ||
           c.nameKey.toLowerCase().includes(profile.primary_crop.toLowerCase())
         );
         if (cropMatch) setCrop(cropMatch);

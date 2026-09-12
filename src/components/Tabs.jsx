@@ -1,6 +1,8 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import { getText } from '../data/constants';
+import { pageReader } from '../services/ai/pageNarrationService';
+import { ttsEngine } from '../services/ai/ttsService';
 
 const TAB_GROUPS = {
   dashboard: 'Plan', planner: 'Plan', calculator: 'Plan',
@@ -13,30 +15,30 @@ export function Tabs() {
   const { activeTab, setActiveTab, lang, farmerInsights } = useApp();
 
   const allTabs = [
-    { id: 'dashboard',   icon: 'fa-gauge-high',        label: getText('tab-dashboard', lang) },
-    { id: 'planner',     icon: 'fa-calendar-days',      label: getText('tab-planner', lang) },
-    { id: 'calculator',  icon: 'fa-calculator',         label: getText('tab-calculator', lang) },
-    { id: 'weather',     icon: 'fa-cloud-sun-rain',     label: getText('tab-weather', lang) },
-    { id: 'soillab',     icon: 'fa-flask-vial',         label: getText('tab-soillab', lang) },
-    { id: 'advisor',     icon: 'fa-robot',              label: getText('tab-advisor', lang) },
-    { id: 'voice-ai',    icon: 'fa-microphone-lines',   label: getText('tab-voice-ai', lang) },
-    { id: 'education',   icon: 'fa-book-open-reader',   label: getText('tab-education', lang) },
-    { id: 'rentals',     icon: 'fa-tractor',            label: getText('tab-rentals', lang) },
-    { id: 'marketplace', icon: 'fa-store',              label: getText('tab-marketplace', lang) },
-    { id: 'schemes',     icon: 'fa-building-columns',   label: getText('tab-schemes', lang) },
+    { id: 'dashboard', icon: 'fa-gauge-high', label: getText('tab-dashboard', lang) },
+    { id: 'planner', icon: 'fa-calendar-days', label: getText('tab-planner', lang) },
+    { id: 'calculator', icon: 'fa-calculator', label: getText('tab-calculator', lang) },
+    { id: 'weather', icon: 'fa-cloud-sun-rain', label: getText('tab-weather', lang) },
+    { id: 'soillab', icon: 'fa-flask-vial', label: getText('tab-soillab', lang) },
+    { id: 'advisor', icon: 'fa-robot', label: getText('tab-advisor', lang) },
+    { id: 'voice-ai', icon: 'fa-microphone-lines', label: getText('tab-voice-ai', lang) },
+    { id: 'education', icon: 'fa-book-open-reader', label: getText('tab-education', lang) },
+    { id: 'rentals', icon: 'fa-tractor', label: getText('tab-rentals', lang) },
+    { id: 'marketplace', icon: 'fa-store', label: getText('tab-marketplace', lang) },
+    { id: 'schemes', icon: 'fa-building-columns', label: getText('tab-schemes', lang) },
   ];
 
   let orderedTabs = allTabs;
   let recommendedSet = new Set();
-  
+
   if (farmerInsights && farmerInsights.priorityTabs) {
     orderedTabs = farmerInsights.priorityTabs
       .map(id => allTabs.find(t => t.id === id))
       .filter(Boolean);
-    
+
     const missing = allTabs.filter(t => !farmerInsights.priorityTabs.includes(t.id));
     orderedTabs = [...orderedTabs, ...missing];
-    
+
     if (farmerInsights.recommendedTabs) {
       recommendedSet = farmerInsights.recommendedTabs;
     }
@@ -82,7 +84,11 @@ export function Tabs() {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    pageReader.stop(false);
+                    ttsEngine.stop();
+                    setActiveTab(tab.id);
+                  }}
                   title={tab.label}
                   style={{
                     position: 'relative',
@@ -133,7 +139,7 @@ export function Tabs() {
                       zIndex: 1,
                     }}>
                       <i className="fa-solid fa-star" style={{ marginRight: '3px', fontSize: '0.55rem' }}></i>
-                      {lang === 'hi' ? 'सुझावित' : 'Top'}
+                      {getText('badge-recommended', lang)}
                     </span>
                   )}
                   <i

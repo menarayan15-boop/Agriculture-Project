@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { getText } from '../data/constants';
 import { pageReader } from '../services/ai/pageNarrationService';
+import { ttsEngine } from '../services/ai/ttsService';
 
 export function Header({ onOpenAiModal }) {
   const { lang, setLang, setShowOnboarding, activeTab, crop, soil, location, area, report } = useApp();
@@ -23,15 +24,15 @@ export function Header({ onOpenAiModal }) {
   }, []);
 
   // When activeTab or language changes:
-  // Immediately stops reading the previous page and, if not muted, reads the newly opened page!
+  // Stops reading previous page and, if unmuted, narrates newly opened page
   useEffect(() => {
     pageReader.handlePageChange(activeTab, lang, { crop, soil, location, area, report });
-  }, [activeTab, lang, crop, soil, location, area, report]);
+  }, [activeTab, lang]);
 
   // Handle Play/Listen Toggle
   const handleListenClick = () => {
     if (readerState.isReading) {
-      pageReader.readPage(activeTab, lang, { crop, soil, location, area, report });
+      pageReader.stop();
     } else {
       pageReader.unmuteAndRead(activeTab, lang, { crop, soil, location, area, report });
     }
@@ -106,7 +107,11 @@ export function Header({ onOpenAiModal }) {
             id="krishi-lang-select"
             className="lang-select"
             value={lang}
-            onChange={(e) => setLang(e.target.value)}
+            onChange={(e) => {
+              pageReader.stop(false);
+              ttsEngine.stop();
+              setLang(e.target.value);
+            }}
           >
             <option value="en">English</option>
             <option value="hi">हिन्दी (Hindi)</option>
@@ -324,7 +329,6 @@ export function Header({ onOpenAiModal }) {
             </div>
           )}
         </div>
-
       </div>
     </header>
   );

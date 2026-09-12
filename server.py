@@ -1780,7 +1780,7 @@ class KrishiJalHandler(SimpleHTTPRequestHandler):
                     return
 
                 lang_map = {
-                    "en": "en", "hi": "hi", "te": "te", "ta": "ta", "kn": "kn",
+                    "en": "en-IN", "hi": "hi", "te": "te", "ta": "ta", "kn": "kn",
                     "pa": "pa", "mr": "mr", "bn": "bn", "gu": "gu", "or": "hi"
                 }
                 target_lang = lang_map.get(tl, tl)
@@ -2236,32 +2236,7 @@ Please analyze the soil and return a JSON response with EXACTLY this structure (
                 self.send_response(201)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
-                self.wfile.write(json.dumps({
-                    "success": True,
-                    "message": "Your machine has been listed successfully on Krishi Jal Marketplace!",
-                    "machine_id": new_id
-                }).encode('utf-8'))
-                return
-
-            # 3. API: Save/Update Farmer Profile
-            if path == "/api/farmer/profile":
-                name = data.get("name", "").strip()
-                state = data.get("state", "").strip()
-                district = data.get("district", "").strip()
-                village = data.get("village", "").strip()
-                primary_crop = data.get("primary_crop", "").strip()
-                farm_size = data.get("farm_size", "").strip()
-                farming_type = data.get("farming_type", "").strip()
-                completed = int(data.get("completed", 1))
-
-                if not state or not district:
-                    self.send_response(400)
-                    self.send_header("Content-Type", "application/json")
-                    self.end_headers()
-                    self.wfile.write(json.dumps({"error": "State and District location details are required."}).encode('utf-8'))
-                    return
-
-                conn = sqlite3.connect(DB_FILE)
+                     conn = sqlite3.connect(DB_FILE)
                 c = conn.cursor()
                 c.execute('''
                     INSERT INTO farmer_profiles (
@@ -2289,10 +2264,10 @@ Please analyze the soil and return a JSON response with EXACTLY this structure (
             # 4. API: Groq Agricultural AI Chat Endpoint
             if path == "/api/groq/chat":
                 query = data.get("query", "").strip()
-                crop = data.get("crop", "").strip() or "Not specified"
-                soil = data.get("soil", "").strip() or "Not specified"
-                area = data.get("area", "") or "Not specified"
-                location = data.get("location", "").strip() or "Not specified"
+                profile_crop = data.get("crop", "").strip() or "Not specified"
+                soil = data.get("soil", "").strip() or "Loamy Soil"
+                area = data.get("area", "") or "1"
+                location = data.get("location", "").strip() or "India"
                 lang = data.get("lang", "en-IN")
                 api_key = data.get("apiKey", "").strip() or "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"
 
@@ -2303,26 +2278,40 @@ Please analyze the soil and return a JSON response with EXACTLY this structure (
                     self.wfile.write(json.dumps({"error": "Query string is required"}).encode('utf-8'))
                     return
 
-                # Intercept Greetings (hi, hello, hey, namaste, etc.) immediately
                 q_lower = query.lower().strip()
+
+                # Dynamic Crop Extraction from Query
+                detected_crop = None
+                crop_aliases = {
+                    "sugarcane": ["sugarcane", "sugar cane", "ganna", "गन्ना", "ਗੰਨਾ", "ऊस", "చెరకు", "கரும்பு"],
+                    "chickpea": ["chickpea", "gram", "chana", "chhole", "चना", "छोले", "छोला", "ਛੋਲੇ", "हरभरा", "శనగలు"],
+                    "rice": ["rice", "paddy", "dhan", "chawal", "धान", "चावल", "ਝੋਨਾ", "వరి", "நெல்", "भात"],
+                    "wheat": ["wheat", "gehu", "kanak", "gehun", "गेहूं", "गेहूँ", "ਕਣਕ", "गहू", "గోధుమలు"],
+                    "cotton": ["cotton", "kapas", "narma", "कपास", "नरमा", "ਕਪਾਹ", "ਨਰਮਾ", "कापूस", "పత్తి"],
+                    "tomato": ["tomato", "tamatar", "tamator", "टमाटर", "ਟਮਾਟਰ", "टोमॅटो", "టమోటా"],
+                    "mustard": ["mustard", "sarson", "rai", "सरसों", "राई", "ਸਰ੍ਹੋਂ", "मोहरी"],
+                    "maize": ["maize", "corn", "makka", "makki", "मक्का", "भुट्टा", "ਮੱਕੀ"],
+                    "soybean": ["soybean", "soya", "सोयाबीन", "ਸੋਇਆਬੀਨ"],
+                    "potato": ["potato", "aaloo", "alu", "आलू", "ਆਲੂ", "बटाटा"]
+                }
+
+                for c_id, aliases in crop_aliases.items():
+                    if any(a in q_lower for a in aliases):
+                        detected_crop = c_id
+                        break
+
+                active_crop = detected_crop or (profile_crop.lower() if profile_crop != "Not specified" else "general")
+
+                # Greetings
                 greetings = ["hi", "hello", "hey", "namaste", "namaskar", "greetings", "good morning", "good afternoon", "good evening", "नमस्कार", "नमस्ते", "ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ", "வணக்கம்", "నమస్కారం", "নমস্কার"]
                 if q_lower in greetings or any(q_lower.startswith(g + " ") for g in ["hi", "hello", "hey", "namaste"]):
-                    crop_hi = f" {crop}" if crop and crop != "Not specified" else ""
-                    crop_en = f" with your {crop} crop" if crop and crop != "Not specified" else ""
+                    crop_display = f" {profile_crop}" if profile_crop and profile_crop != "Not specified" else ""
                     if lang == "hi-IN" or "hi" in lang.lower():
-                        greet_ans = f"नमस्ते! 🙏 मैं आपका कृषी AI सहायक हूँ। आज मैं आपकी{crop_hi} फसल के लिए क्या सहायता कर सकता हूँ?"
+                        greet_ans = f"नमस्ते! 🙏 मैं आपका कृषि AI सहायक हूँ। आज मैं आपकी{crop_display} फसल के लिए क्या सहायता कर सकता हूँ?"
                     elif lang == "pa-IN" or "pa" in lang.lower():
-                        greet_ans = f"ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ{crop_hi} ਫਸਲ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?"
-                    elif lang == "mr-IN" or "mr" in lang.lower():
-                        greet_ans = f"नमस्कार! 🙏 मी कृषी AI सहाय्यक आहे. आज तुमच्या{crop_hi} पिकासाठी मी कशी मदत करू शकेन?"
-                    elif lang == "te-IN" or "te" in lang.lower():
-                        greet_ans = f"నమస్కారం! 🙏 నేను కృషి AI సహాయకుడిని. ఈ రోజు మీ{crop_hi} పంటకు నేను ఎలా సహాయపడగలను?"
-                    elif lang == "ta-IN" or "ta" in lang.lower():
-                        greet_ans = f"வணக்கம்! 🙏 நான் கிருஷ் AI உதவி. உங்கள்{crop_hi} பயிருக்கு இன்று எவ்வாறு உதவ முடியும்?"
-                    elif lang == "bn-IN" or "bn" in lang.lower():
-                        greet_ans = f"নমস্কার! 🙏 আমি কৃষি AI সহকারী। আপনার{crop_hi} ফসলের জন্য আমি আজ কীভাবে সাহায্য করতে পারি?"
+                        greet_ans = f"ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ{crop_display} ਫਸਲ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?"
                     else:
-                        greet_ans = f"Hello! 👋 I am Krishi AI, your personal farming assistant. How can I help you{crop_en} today?"
+                        greet_ans = f"Hello! 👋 I am Krishi AI, your personal farming assistant. How can I help you today?"
 
                     self.send_response(200)
                     self.send_header("Content-Type", "application/json")
@@ -2337,25 +2326,23 @@ Please analyze the soil and return a JSON response with EXACTLY this structure (
                     "mr-IN": "Marathi (सोपी, स्पष्ट मराठी)",
                     "te-IN": "Telugu (స్పష్టమైన తెలుగు)",
                     "ta-IN": "Tamil (தெளிவான தமிழ்)",
-                    "bn-IN": "Bengali (সহজ বাংলা)"
+                    "bn-IN": "Bengali (सहज বাংলা)"
                 }
                 target_lang = lang_map.get(lang, "English")
 
-                system_prompt = f"""You are "Krishi Jal AI Agronomist" — a senior agricultural scientist trained on comprehensive ICAR, PAU, and international agronomical research datasets.
+                system_prompt = f"""You are Krishi AI, an expert agricultural scientist advising Indian farmers.
 
-FARMER'S ACTIVE FIELD PROFILE:
-- Target Crop: {crop}
-- Soil Type: {soil}
-- Location / Region: {location}
-- Farm Area: {area} acres
-
-KNOWLEDGE & BEHAVIOR MANDATE:
-1. ANSWER EXACTLY WHAT IS ASKED: Provide direct, technically accurate, field-tested agronomic advice tailored specifically to the farmer's question.
-2. CHEMICAL & BIOLOGICAL PRECISION: When advising on pests/diseases, provide exact active chemical ingredients (e.g. Propiconazole 25% EC, Emamectin Benzoate 5% SG, Imidacloprid 17.8% SL), exact recommended dosages per acre (or per 100-200 liters of water), and safety intervals.
-3. FERTILIZER CALCULATION: When advising on fertilizers, compute exact quantities of Urea, DAP, MOP (Potash), and micronutrients (Zinc Sulphate, Boron) for {area} acres.
+IMPORTANT RULES:
+1. Focus 100% on the current user question: "{query}".
+2. Target Crop: {detected_crop or profile_crop}.
+3. STRICT BOTANICAL RULES:
+   - Sugarcane is propagated by stem setts (cuttings), requires heavy N and 1500-2500 mm water. Never say sow seeds at 4-5cm!
+   - Chickpea is a nitrogen-fixing legume; needs minimal urea, treated seeds at 8-10 cm depth, and only 1-2 light irrigations (never 5-6 irrigations).
+   - Rice/Paddy requires nursery transplanting in puddled flooded soil, standing water, and zinc sulphate.
+   - Cotton requires dibbling seeds on ridges, balanced NPK, and magnesium sulphate for leaf reddening.
+   - Tomato requires nursery transplanting on raised beds, staking, calcium nitrate, and boron.
 4. LANGUAGE: Answer strictly in {target_lang}.
-5. CONCISE & ACTIONABLE: Deliver 3-5 high-impact, actionable sentences. Avoid generic boilerplate filler.
-6. NO MARKDOWN: Output pure clean plain text without *, **, #, or bullet symbols for seamless text-to-speech audio."""
+5. CONCISE & ACTIONABLE: Deliver 3-5 clear sentences. No markdown symbols (*, #, _)."""
 
                 models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768", "gemma2-9b-it"]
                 ai_answer = None
@@ -2367,7 +2354,7 @@ KNOWLEDGE & BEHAVIOR MANDATE:
                         g_body = json.dumps({
                             "system_instruction": {"parts": [{"text": system_prompt}]},
                             "contents": [{"role": "user", "parts": [{"text": query}]}],
-                            "generationConfig": {"temperature": 0.7, "maxOutputTokens": 500}
+                            "generationConfig": {"temperature": 0.5, "maxOutputTokens": 500}
                         }).encode('utf-8')
                         req = urllib.request.Request(gemini_url, data=g_body, headers={"Content-Type": "application/json"})
                         ssl_ctx = ssl.create_default_context()
@@ -2383,7 +2370,7 @@ KNOWLEDGE & BEHAVIOR MANDATE:
                         print(f"[Gemini API Error]: {g_err}", flush=True)
 
                 if not ai_answer:
-                    # Fallback to Groq API using default or provided Groq key
+                    # Fallback to Groq API
                     groq_key = api_key if api_key.startswith("gsk_") else "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"
                     for model in models:
                         try:
@@ -2393,7 +2380,7 @@ KNOWLEDGE & BEHAVIOR MANDATE:
                                     {"role": "system", "content": system_prompt},
                                     {"role": "user", "content": query}
                                 ],
-                                "temperature": 0.7,
+                                "temperature": 0.5,
                                 "max_tokens": 550,
                                 "top_p": 0.95
                             }).encode('utf-8')
@@ -2423,15 +2410,50 @@ KNOWLEDGE & BEHAVIOR MANDATE:
                             print(f"[Groq AI Model {model} Error]: {type(err).__name__}: {err}", flush=True)
 
                 if not ai_answer:
-                    # Dynamic Fallback if all AI APIs fail
-                    q_lower = query.lower()
-                    try:
-                        area_num = float(area)
-                    except Exception:
-                        area_num = 1.0
+                    # Precision Agricultural Knowledge Fallback Engine
+                    is_hi = lang == "hi-IN" or "hi" in lang.lower()
 
-                    if any(g in q_lower for g in ["hi", "hello", "hey", "namaste", "namaskar", "greetings", "नमस्कार", "नमस्ते"]):
-                        if lang.lower().startswith("hi") or "hindi" in target_lang.lower().replace("english", ""):
+                    if ("red" in q_lower or "लाल" in q_lower) and ("cotton" in q_lower or "कपास" in q_lower or active_crop == "cotton"):
+                        ai_answer = "कपास में पत्तियां लाल होना (लालिया रोग) मैग्नीशियम की कमी और अचानक ठंड के कारण होता है। 1% मैग्नीशियम सल्फेट (10g/L) + 1% यूरिया या 19:19:19 का 150-200 लीटर पानी में मिलाकर 15 दिन के अंतराल पर 2 बार पर्णीय स्प्रे करें।" if is_hi else "Cotton leaf reddening is caused by Magnesium deficiency and cold stress. Spray Magnesium Sulphate @ 10g/L + 1% Urea or 19:19:19 in 150-200 liters of water per acre twice at 15-day intervals."
+                    elif "black soil" in q_lower or "काली मिट्टी" in q_lower:
+                        ai_answer = "काली मिट्टी (Black Soil) के लिए सबसे उपयुक्त फसलें हैं: कपास (Cotton), सोयाबीन (Soybean), गन्ना (Sugarcane), चना (Chickpea), गेहूं (Wheat), और ज्वार। जलभराव से बचने के लिए उचित जल निकासी की व्यवस्था रखें।" if is_hi else "Black soil (Regur) has high moisture retention. Best suitable crops are: Cotton, Soybean, Sugarcane, Chickpea (Gram), Wheat, and Sorghum. Ensure proper drainage to avoid waterlogging."
+                    elif ("after sowing" in q_lower or "बुवाई के बाद" in q_lower) and ("chickpea" in q_lower or "चना" in q_lower or active_crop == "chickpea"):
+                        ai_answer = "चना की बुवाई के बाद: (1) 48 घंटे के भीतर पेंडीमेथालिन खरपतवार स्प्रे करें। (2) 30-35 दिन बाद (15-20 सेमी ऊंचाई) मुख्य तने के ऊपरी सिरे की खुटाई (Nipping) करें जिससे अधिक शाखाएं बनें। (3) फूल आने पर सिंचाई न करें, केवल घेंटा भरते समय हल्की सिंचाई दें।" if is_hi else "After sowing Chickpea: Apply Pendimethalin within 48 hours for weed control. Perform nipping (apical pinching) at 30-35 DAS at 15-20 cm height to stimulate branching. Avoid irrigation during flowering to prevent flower drop."
+                    elif "sugarcane" in q_lower or "गन्ना" in q_lower:
+                        if "water" in q_lower or "पानी" in q_lower or "सिंचाई" in q_lower:
+                            ai_answer = "गन्ना में कुल 1500-2500 मिमी पानी की आवश्यकता होती है। गर्मियों में 8-10 दिन और सर्दियों में 15-20 दिन के अंतराल पर कुल 15-20 सिंचाइयां दें। ड्रिप सिंचाई से 40-50% पानी की बचत होती है।" if is_hi else "Sugarcane has high water requirement (1500-2500 mm). Provide 15-20 irrigations at 8-10 day intervals in summer and 15-20 days in winter. Drip irrigation saves 40-50% water."
+                        else:
+                            ai_answer = "गन्ना (Sugarcane) की खेती हेतु 35,000-40,000 दो-आंख वाले टुकड़ों (Setts) को कार्बेन्डाजिम 0.1% से उपचारित कर 75-90 सेमी दूरी की नालियों में लगाएं। 50kg DAP + 40kg पोटाश + 10kg जिंक दें। 45, 90 और 120 दिन पर यूरिया की टॉप ड्रेसिंग करें।" if is_hi else "For Sugarcane cultivation: Plant healthy 2-bud or 3-bud setts (stem cuttings) in furrows at 75-90 cm row spacing. Apply basal 50kg DAP + 40kg MOP + 10kg Zinc/acre. Top-dress Urea at 45, 90, and 120 days. Provide 15-20 timely irrigations."
+                    elif "chickpea" in q_lower or "चना" in q_lower:
+                        ai_answer = "चना (Chickpea) की खेती हेतु 25-30 किग्रा उपचारित बीज 8-10 सेमी नमी वाली गहराई में 30 सेमी कतार दूरी पर बोएं। राइजोबियम कल्चर से बीजोपचार करें। दलहनी फसल होने से केवल 40kg DAP + 20kg पोटाश + 10kg सल्फर बेस में दें (यूरिया न दें)। केवल 1-2 हल्की सिंचाइयां दें।" if is_hi else "For Chickpea cultivation: Sow 25-30 kg certified seed/acre at 8-10 cm depth with 30 cm row spacing. Inoculate with Rhizobium. As a nitrogen-fixing pulse, apply only basal 40-50kg DAP + 20kg MOP + 10kg Sulphur (avoid heavy urea). Provide only 1-2 light irrigations."
+                    elif "rice" in q_lower or "dhan" in q_lower or "धान" in q_lower:
+                        ai_answer = "धान (Paddy) की खेती हेतु 20-25 दिन के पौधों की रोपाई 20×15 सेमी दूरी पर लेव किए खेत में करें। बेसल खुराक 50kg DAP + 30kg पोटाश + 25kg जिंक सल्फेट दें (खैरा रोग बचाव हेतु)। कल्ले फूटते समय 2-5 सेमी पानी रखें।" if is_hi else "For Rice/Paddy cultivation: Transplant 20-25 day old seedlings at 20x15 cm spacing in puddled flooded soil. Apply basal 50kg DAP + 30kg MOP + 25kg Zinc Sulphate/acre (prevents Khaira disease). Maintain standing water during tillering."
+                    elif "wheat" in q_lower or "गेहूं" in q_lower:
+                        ai_answer = "गेहूं (Wheat) की बुवाई 40-45 किग्रा उपचारित बीज/एकड़ से 20-22.5 सेमी कतार दूरी पर 4-5 सेमी गहराई पर करें। 55kg DAP + 25kg पोटाश बेस में दें। पहली सिंचाई 21 दिन पर (CRI ताज जड़ अवस्था) देकर 45kg यूरिया डालें। कुल 5-6 सिंचाइयां दें।" if is_hi else "For Wheat cultivation: Sow 40-45 kg certified seed/acre at 4-5 cm depth with 20-22.5 cm row spacing. Basal dose: 55kg DAP + 25kg MOP. Apply 1st irrigation at 21-25 days (CRI stage) followed by 45kg Urea. Provide 5-6 stage-specific irrigations."
+                    elif "cotton" in q_lower or "कपास" in q_lower:
+                        ai_answer = "कपास (Cotton) की खेती हेतु 1.5-2 किग्रा बीटी बीज मेड़ों पर 90×60 सेमी दूरी पर डिबलिंग करें। 40kg DAP + 30kg पोटाश + 10kg मैग्नीशियम सल्फेट दें। 30, 60 और 90 दिन पर यूरिया दें। रसचूसक कीटों व गुलाबी सुंडी से बचाव हेतु नियमित निगरानी करें।" if is_hi else "For Cotton cultivation: Dibble 1.5-2 kg Bt hybrid seed/acre at 90x60 cm on ridges, 3-4 cm deep. Apply basal 40kg DAP + 30kg MOP + 10kg Magnesium Sulphate. Split Urea at 30, 60, and 90 DAS. Scout for bollworms and sucking pests."
+                    elif "tomato" in q_lower or "टमाटर" in q_lower:
+                        ai_answer = "टमाटर हेतु संतुलित खाद: रोपाई पर 50kg DAP + 40kg पोटाश + 10kg कैल्शियम नाइट्रेट प्रति एकड़ दें। फल सड़न (Blossom End Rot) से बचाव हेतु कैल्शियम नाइट्रेट (5g/L) और फूल झड़ने से रोकने हेतु बोरोन (1g/L) का छिड़काव करें।" if is_hi else "Fertilizer for Tomato: Basal dose = 50kg DAP + 40kg MOP + 10kg Calcium Nitrate/acre. Spray Calcium Nitrate @ 5g/L to prevent Blossom End Rot and Boron @ 1g/L during flowering for uniform fruit set."
+                    else:
+                        ai_answer = f"Regarding your inquiry for {detected_crop or profile_crop}: Conduct soil testing, use certified planting material, maintain balanced NPK with crop-specific micronutrients, and irrigate according to critical crop growth stages."
+
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({"success": True, "answer": ai_answer}).encode('utf-8'))
+                return��ोटाश बेस में दें। पहली सिंचाई 21 दिन पर (CRI ताज जड़ अवस्था) देकर 45kg यूरिया डालें। कुल 5-6 सिंचाइयां दें।" if is_hi else "For Wheat cultivation: Sow 40-45 kg certified seed/acre at 4-5 cm depth with 20-22.5 cm row spacing. Basal dose: 55kg DAP + 25kg MOP. Apply 1st irrigation at 21-25 days (CRI stage) followed by 45kg Urea. Provide 5-6 stage-specific irrigations."
+                    elif "cotton" in q_lower or "कपास" in q_lower:
+                        ai_answer = "कपास (Cotton) की खेती हेतु 1.5-2 किग्रा बीटी बीज मेड़ों पर 90×60 सेमी दूरी पर डिबलिंग करें। 40kg DAP + 30kg पोटाश + 10kg मैग्नीशियम सल्फेट दें। 30, 60 और 90 दिन पर यूरिया दें। रसचूसक कीटों व गुलाबी सुंडी से बचाव हेतु नियमित निगरानी करें।" if is_hi else "For Cotton cultivation: Dibble 1.5-2 kg Bt hybrid seed/acre at 90x60 cm on ridges, 3-4 cm deep. Apply basal 40kg DAP + 30kg MOP + 10kg Magnesium Sulphate. Split Urea at 30, 60, and 90 DAS. Scout for bollworms and sucking pests."
+                    elif "tomato" in q_lower or "टमाटर" in q_lower:
+                        ai_answer = "टमाटर हेतु संतुलित खाद: रोपाई पर 50kg DAP + 40kg पोटाश + 10kg कैल्शियम नाइट्रेट प्रति एकड़ दें। फल सड़न (Blossom End Rot) से बचाव हेतु कैल्शियम नाइट्रेट (5g/L) और फूल झड़ने से रोकने हेतु बोरोन (1g/L) का छिड़काव करें।" if is_hi else "Fertilizer for Tomato: Basal dose = 50kg DAP + 40kg MOP + 10kg Calcium Nitrate/acre. Spray Calcium Nitrate @ 5g/L to prevent Blossom End Rot and Boron @ 1g/L during flowering for uniform fruit set."
+                    else:
+                        ai_answer = f"Regarding your inquiry for {detected_crop or profile_crop}: Conduct soil testing, use certified planting material, maintain balanced NPK with crop-specific micronutrients, and irrigate according to critical crop growth stages."
+
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({"success": True, "answer": ai_answer}).encode('utf-8'))
+                return).replace("english", ""):
                             ai_answer = f"नमस्ते! 🙏 मैं आपका कृषी AI सहायक हूँ। आज मैं आपकी {crop} फसल के लिए क्या सहायता कर सकता हूँ?"
                         elif lang.lower().startswith("pa") or "punjabi" in target_lang.lower():
                             ai_answer = f"ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ! 🙏 ਮੈਂ ਕ੍ਰਿਸ਼ੀ AI ਸਹਾਇਕ ਹਾਂ। ਅੱਜ ਤੁਹਾਡੀ {crop} ਫਸਲ ਲਈ ਕੀ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?"
@@ -2578,3 +2600,4 @@ def run_server():
 
 if __name__ == "__main__":
     run_server()
+

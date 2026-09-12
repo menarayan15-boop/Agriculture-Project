@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useApp } from '../../context/AppContext';
+import { getCropDisplayName } from '../../data/constants';
 
 const CATEGORIES = ['All', 'Cereal', 'Pulses', 'Oilseeds', 'Cash Crop', 'Vegetable', 'Fruit'];
 const STATES = ['All States', 'Punjab', 'Haryana', 'Uttar Pradesh', 'Madhya Pradesh', 'Rajasthan',
@@ -56,7 +57,9 @@ function MspBar({ modal, msp }) {
 
 // ── Single Mandi Rate Card ────────────────────────────────────────────────────
 function MandiCard({ rate, onSell }) {
+  const { lang } = useApp();
   const color = catColor(rate.category);
+  const localizedCrop = getCropDisplayName(rate.crop, lang);
   return (
     <div style={{
       background: '#FFFFFF', border: `1px solid #E5E7EB`,
@@ -79,7 +82,7 @@ function MandiCard({ rate, onSell }) {
           <span style={{ fontSize: '1.6rem' }}>{rate.icon}</span>
           <div>
             <div style={{ fontWeight: 800, fontSize: '0.96rem', color: '#17211B' }}>{rate.crop}</div>
-            <div style={{ fontSize: '0.75rem', color: '#6B7280', fontWeight: 600 }}>{rate.crop_hi}</div>
+            <div style={{ fontSize: '0.75rem', color: '#6B7280', fontWeight: 600 }}>{localizedCrop || rate.crop_hi}</div>
           </div>
         </div>
         <ChangeBadge pct={rate.change_pct} />

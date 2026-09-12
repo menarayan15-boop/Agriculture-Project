@@ -212,11 +212,29 @@ class PageNarrationEngine {
     this.activeUtterances = [];
     this.listeners = new Set();
     this.voicesLoaded = false;
+    this.pageChangeTimer = null;
 
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.onvoiceschanged = () => {
-        this.voicesLoaded = true;
-      };
+    if (typeof window !== 'undefined') {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = () => {
+          this.voicesLoaded = true;
+        };
+      }
+
+      // Stop speech immediately if farmer leaves website tab or minimizes browser
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          this.stop(false);
+        }
+      });
+
+      window.addEventListener('pagehide', () => {
+        this.stop(false);
+      });
+
+      window.addEventListener('beforeunload', () => {
+        this.stop(false);
+      });
     }
   }
 
@@ -238,6 +256,10 @@ class PageNarrationEngine {
    * Stop any current speech immediately.
    */
   stop(keepMuteState = false) {
+    if (this.pageChangeTimer) {
+      clearTimeout(this.pageChangeTimer);
+      this.pageChangeTimer = null;
+    }
     ttsEngine.stop();
     this.activeUtterances = [];
     this.isReading = false;
@@ -260,6 +282,10 @@ class PageNarrationEngine {
    * Unmute and start assisting the farmer on the current page.
    */
   unmuteAndRead(tabId, lang, context) {
+    if (this.pageChangeTimer) {
+      clearTimeout(this.pageChangeTimer);
+      this.pageChangeTimer = null;
+    }
     this.isMuted = false;
     this.readPage(tabId, lang, context);
   }
@@ -268,6 +294,10 @@ class PageNarrationEngine {
    * Read the assistant guidance for the specified page in the chosen language.
    */
   readPage(tabId, lang, context = {}) {
+    if (this.pageChangeTimer) {
+      clearTimeout(this.pageChangeTimer);
+      this.pageChangeTimer = null;
+    }
     this.stop(true);
 
     this.currentTab = tabId || this.currentTab;
@@ -299,28 +329,26 @@ class PageNarrationEngine {
 
   /**
    * Called when active page/tab or language changes.
-   * Stops reading previous page immediately.
-   * If not muted, immediately starts assisting on the newly opened page!
+   * Immediately stops any speech so audio never leaks across tabs or icons.
    */
   handlePageChange(newTab, newLang, context) {
-    // 1. Immediately cancel previous page speech
-    ttsEngine.stop();
-    this.isReading = false;
-    this.currentTab = newTab;
-    this.currentLang = newLang;
-
-    // 2. If the user had audio enabled (not muted), immediately assist on the new page
-    if (!this.isMuted) {
-      setTimeout(() => {
-        if (!this.isMuted) {
-          this.readPage(newTab, newLang, context);
-        }
-      }, 250);
-    } else {
-      this.notify();
+    if (this.pageChangeTimer) {
+      clearTimeout(this.pageChangeTimer);
+      this.pageChangeTimer = null;
     }
+
+    // Immediately stop reading when changing to a different tab or icon
+    this.stop(false);
+
+    if (newTab) this.currentTab = newTab;
+    if (newLang) this.currentLang = newLang;
+
+    this.notify();
   }
 }
 
 export const pageReader = new PageNarrationEngine();
+if (typeof window !== 'undefined') {
+  window.__pageReader = pageReader;
+}
 export default pageReader;
